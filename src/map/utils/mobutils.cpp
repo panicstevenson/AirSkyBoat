@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -135,25 +135,54 @@ namespace mobutils
      *                                                                       *
      ************************************************************************/
 
-    uint16 GetBaseToRank(uint8 rank, uint16 lvl)
+    uint16 GetBaseToRank(CMobEntity * PMob, uint8 rank, uint16 lvl)
     {
-        switch (rank)
+        bool isNM = PMob->m_Type & MOBTYPE_NOTORIOUS && !PMob->isInDynamis();
+        bool isEventMob = PMob->m_Type & MOBTYPE_EVENT && !PMob->isInDynamis();
+        bool isBattlefieldMob = PMob->m_Type & MOBTYPE_BATTLEFIELD && !PMob->isInDynamis();
+        bool isDynamisNM = PMob->isInDynamis() && PMob->getMobMod(MOBMOD_CHECK_AS_NM) > 1;
+
+        if (isNM || isEventMob || isBattlefieldMob || isDynamisNM) // NMs, Event, and Battlefield Mobs
         {
-            case 1:
-                return (5 + ((lvl - 1) * 50) / 100); // A
-            case 2:
-                return (4 + ((lvl - 1) * 45) / 100); // B
-            case 3:
-                return (4 + ((lvl - 1) * 40) / 100); // C
-            case 4:
-                return (3 + ((lvl - 1) * 35) / 100); // D
-            case 5:
-                return (3 + ((lvl - 1) * 30) / 100); // E
-            case 6:
-                return (2 + ((lvl - 1) * 25) / 100); // F
-            case 7:
-                return (2 + ((lvl - 1) * 20) / 100); // G
+            switch (rank)
+            {
+                case 1:
+                    return (5 + ((lvl - 1) * 64) / 100); // A
+                case 2:
+                    return (4 + ((lvl - 1) * 59) / 100); // B
+                case 3:
+                    return (4 + ((lvl - 1) * 54) / 100); // C
+                case 4:
+                    return (3 + ((lvl - 1) * 47) / 100); // D
+                case 5:
+                    return (3 + ((lvl - 1) * 43) / 100); // E
+                case 6:
+                    return (2 + ((lvl - 1) * 42) / 100); // F
+                case 7:
+                    return (2 + ((lvl - 1) * 39) / 100); // G
+            }
         }
+        else // Normal Mobs
+        {
+            switch (rank)
+                {
+                    case 1:
+                        return (5 + ((lvl - 1) * 50) / 100); // A
+                    case 2:
+                        return (4 + ((lvl - 1) * 45) / 100); // B
+                    case 3:
+                        return (4 + ((lvl - 1) * 40) / 100); // C
+                    case 4:
+                        return (3 + ((lvl - 1) * 35) / 100); // D
+                    case 5:
+                        return (3 + ((lvl - 1) * 30) / 100); // E
+                    case 6:
+                        return (2 + ((lvl - 1) * 25) / 100); // F
+                    case 7:
+                        return (2 + ((lvl - 1) * 20) / 100); // G
+                }
+            }
+
         return 0;
     }
 
@@ -299,11 +328,11 @@ namespace mobutils
 
             if (isNM)
             {
-                PMob->health.maxhp = (int32)(PMob->health.maxhp * map_config.nm_hp_multiplier);
+                PMob->health.maxhp = (int32)(PMob->health.maxhp * settings::get<float>("map.NM_HP_MULTIPLIER"));
             }
             else
             {
-                PMob->health.maxhp = (int32)(PMob->health.maxhp * map_config.mob_hp_multiplier);
+                PMob->health.maxhp = (int32)(PMob->health.maxhp * settings::get<float>("map.MOB_HP_MULTIPLIER"));
             }
 
             bool hasMp = false;
@@ -365,11 +394,11 @@ namespace mobutils
 
                 if (isNM)
                 {
-                    PMob->health.maxmp = (int32)(PMob->health.maxmp * map_config.nm_mp_multiplier);
+                    PMob->health.maxmp = (int32)(PMob->health.maxmp * settings::get<float>("map.NM_MP_MULTIPLIER"));
                 }
                 else
                 {
-                    PMob->health.maxmp = (int32)(PMob->health.maxmp * map_config.mob_mp_multiplier);
+                    PMob->health.maxmp = (int32)(PMob->health.maxmp *settings::get<float>("map.MOB_MP_MULTIPLIER"));
                 }
             }
 
@@ -393,29 +422,29 @@ namespace mobutils
             PMob->m_dualWield = true;
         }
 
-        uint16 fSTR = GetBaseToRank(PMob->strRank, mLvl);
-        uint16 fDEX = GetBaseToRank(PMob->dexRank, mLvl);
-        uint16 fVIT = GetBaseToRank(PMob->vitRank, mLvl);
-        uint16 fAGI = GetBaseToRank(PMob->agiRank, mLvl);
-        uint16 fINT = GetBaseToRank(PMob->intRank, mLvl);
-        uint16 fMND = GetBaseToRank(PMob->mndRank, mLvl);
-        uint16 fCHR = GetBaseToRank(PMob->chrRank, mLvl);
+        uint16 fSTR = GetBaseToRank(PMob, PMob->strRank, mLvl);
+        uint16 fDEX = GetBaseToRank(PMob, PMob->dexRank, mLvl);
+        uint16 fVIT = GetBaseToRank(PMob, PMob->vitRank, mLvl);
+        uint16 fAGI = GetBaseToRank(PMob, PMob->agiRank, mLvl);
+        uint16 fINT = GetBaseToRank(PMob, PMob->intRank, mLvl);
+        uint16 fMND = GetBaseToRank(PMob, PMob->mndRank, mLvl);
+        uint16 fCHR = GetBaseToRank(PMob, PMob->chrRank, mLvl);
 
-        uint16 mSTR = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(), 2), mLvl);
-        uint16 mDEX = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(), 3), mLvl);
-        uint16 mVIT = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(), 4), mLvl);
-        uint16 mAGI = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(), 5), mLvl);
-        uint16 mINT = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(), 6), mLvl);
-        uint16 mMND = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(), 7), mLvl);
-        uint16 mCHR = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(), 8), mLvl);
+        uint16 mSTR = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetMJob(), 2), mLvl);
+        uint16 mDEX = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetMJob(), 3), mLvl);
+        uint16 mVIT = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetMJob(), 4), mLvl);
+        uint16 mAGI = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetMJob(), 5), mLvl);
+        uint16 mINT = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetMJob(), 6), mLvl);
+        uint16 mMND = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetMJob(), 7), mLvl);
+        uint16 mCHR = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetMJob(), 8), mLvl);
 
-        uint16 sSTR = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(), 2), PMob->GetSLevel());
-        uint16 sDEX = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(), 3), PMob->GetSLevel());
-        uint16 sVIT = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(), 4), PMob->GetSLevel());
-        uint16 sAGI = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(), 5), PMob->GetSLevel());
-        uint16 sINT = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(), 6), PMob->GetSLevel());
-        uint16 sMND = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(), 7), PMob->GetSLevel());
-        uint16 sCHR = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(), 8), PMob->GetSLevel());
+        uint16 sSTR = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 2), PMob->GetSLevel());
+        uint16 sDEX = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 3), PMob->GetSLevel());
+        uint16 sVIT = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 4), PMob->GetSLevel());
+        uint16 sAGI = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 5), PMob->GetSLevel());
+        uint16 sINT = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 6), PMob->GetSLevel());
+        uint16 sMND = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 7), PMob->GetSLevel());
+        uint16 sCHR = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 8), PMob->GetSLevel());
 
         // As per conversation with Jimmayus, all mobs at any level get bonus stats from subjobs.
         // From lvl 45 onwards, 1/2. Before lvl 30, 1/4. In between, the value gets progresively higher, from 1/4 at 30 to 1/2 at 44.
@@ -459,26 +488,14 @@ namespace mobutils
         PMob->stats.MND = fMND + mMND + sMND;
         PMob->stats.CHR = fCHR + mCHR + sCHR;
 
-        if (isNM)
-        {
-            PMob->stats.STR = (uint16)(PMob->stats.STR * map_config.nm_stat_multiplier);
-            PMob->stats.DEX = (uint16)(PMob->stats.DEX * map_config.nm_stat_multiplier);
-            PMob->stats.VIT = (uint16)(PMob->stats.VIT * map_config.nm_stat_multiplier);
-            PMob->stats.AGI = (uint16)(PMob->stats.AGI * map_config.nm_stat_multiplier);
-            PMob->stats.INT = (uint16)(PMob->stats.INT * map_config.nm_stat_multiplier);
-            PMob->stats.MND = (uint16)(PMob->stats.MND * map_config.nm_stat_multiplier);
-            PMob->stats.CHR = (uint16)(PMob->stats.CHR * map_config.nm_stat_multiplier);
-        }
-        else
-        {
-            PMob->stats.STR = (uint16)(PMob->stats.STR * map_config.mob_stat_multiplier);
-            PMob->stats.DEX = (uint16)(PMob->stats.DEX * map_config.mob_stat_multiplier);
-            PMob->stats.VIT = (uint16)(PMob->stats.VIT * map_config.mob_stat_multiplier);
-            PMob->stats.AGI = (uint16)(PMob->stats.AGI * map_config.mob_stat_multiplier);
-            PMob->stats.INT = (uint16)(PMob->stats.INT * map_config.mob_stat_multiplier);
-            PMob->stats.MND = (uint16)(PMob->stats.MND * map_config.mob_stat_multiplier);
-            PMob->stats.CHR = (uint16)(PMob->stats.CHR * map_config.mob_stat_multiplier);
-        }
+        auto statMultiplier = isNM ? settings::get<float>("map.NM_STAT_MULTIPLIER") : settings::get<float>("map.MOB_STAT_MULTIPLIER");
+        PMob->stats.STR = (uint16)(PMob->stats.STR * statMultiplier);
+        PMob->stats.DEX = (uint16)(PMob->stats.DEX * statMultiplier);
+        PMob->stats.VIT = (uint16)(PMob->stats.VIT * statMultiplier);
+        PMob->stats.AGI = (uint16)(PMob->stats.AGI * statMultiplier);
+        PMob->stats.INT = (uint16)(PMob->stats.INT * statMultiplier);
+        PMob->stats.MND = (uint16)(PMob->stats.MND * statMultiplier);
+        PMob->stats.CHR = (uint16)(PMob->stats.CHR * statMultiplier);
 
         // special case, give spell list to my pet
         if (PMob->getMobMod(MOBMOD_PET_SPELL_LIST) && PMob->PPet != nullptr)
@@ -1247,7 +1264,7 @@ Usage:
         STR, DEX, VIT, AGI, `INT`, MND, CHR, EVA, DEF, ATT, ACC, \
         slash_sdt, pierce_sdt, h2h_sdt, impact_sdt, \
         fire_sdt, ice_sdt, wind_sdt, earth_sdt, lightning_sdt, water_sdt, light_sdt, dark_sdt, \
-        fire_res, ice_res, wind_res, earth_res, lightning_res, water_res, light_res, dark_res, \
+        fire_meva, ice_meva, wind_meva, earth_meva, lightning_meva, water_meva, light_meva, dark_meva, \
         Element, mob_pools.familyid, name_prefix, entityFlags, animationsub, \
         (mob_family_system.HP / 100), (mob_family_system.MP / 100), hasSpellScript, spellList, mob_groups.poolid, \
         allegiance, namevis, aggro, mob_pools.skill_list_id, mob_pools.true_detection, mob_family_system.detects \
@@ -1329,14 +1346,25 @@ Usage:
                 PMob->setModifier(Mod::LIGHT_SDT, (int16)sql->GetFloatData(44));   // Modifier 60, base 10000 stored as signed integer. Positives signify less damage.
                 PMob->setModifier(Mod::DARK_SDT, (int16)sql->GetFloatData(45));    // Modifier 61, base 10000 stored as signed integer. Positives signify less damage.
 
-                PMob->setModifier(Mod::FIRE_RES, (int16)(sql->GetIntData(46))); // These are stored as signed integers which
-                PMob->setModifier(Mod::ICE_RES, (int16)(sql->GetIntData(47)));  // is directly the modifier starting value.
-                PMob->setModifier(Mod::WIND_RES, (int16)(sql->GetIntData(48))); // Positives signify increased resist chance.
-                PMob->setModifier(Mod::EARTH_RES, (int16)(sql->GetIntData(49)));
-                PMob->setModifier(Mod::THUNDER_RES, (int16)(sql->GetIntData(50)));
-                PMob->setModifier(Mod::WATER_RES, (int16)(sql->GetIntData(51)));
-                PMob->setModifier(Mod::LIGHT_RES, (int16)(sql->GetIntData(52)));
-                PMob->setModifier(Mod::DARK_RES, (int16)(sql->GetIntData(53)));
+                PMob->setModifier(Mod::FIRE_MEVA, (int16)(sql->GetIntData(46))); // These are stored as signed integers which
+                PMob->setModifier(Mod::ICE_MEVA, (int16)(sql->GetIntData(47)));  // is directly the modifier starting value.
+                PMob->setModifier(Mod::WIND_MEVA, (int16)(sql->GetIntData(48))); // Positives signify increased resist chance.
+                PMob->setModifier(Mod::EARTH_MEVA, (int16)(sql->GetIntData(49)));
+                PMob->setModifier(Mod::THUNDER_MEVA, (int16)(sql->GetIntData(50)));
+                PMob->setModifier(Mod::WATER_MEVA, (int16)(sql->GetIntData(51)));
+                PMob->setModifier(Mod::LIGHT_MEVA, (int16)(sql->GetIntData(52)));
+                PMob->setModifier(Mod::DARK_MEVA, (int16)(sql->GetIntData(53)));
+
+                /* Todo: hook this up, seems to force resist tiering
+                PMob->setModifier(Mod::FIRE_RES_RANK, (int16)(sql->GetIntData(??)));
+                PMob->setModifier(Mod::ICE_RES_RANK, (int16)(sql->GetIntData(??)));
+                PMob->setModifier(Mod::WIND_RES_RANK, (int16)(sql->GetIntData(??)));
+                PMob->setModifier(Mod::EARTH_RES_RANK, (int16)(sql->GetIntData(??)));
+                PMob->setModifier(Mod::THUNDER_RES_RANK, (int16)(sql->GetIntData(??)));
+                PMob->setModifier(Mod::WATER_RES_RANK, (int16)(sql->GetIntData(??)));
+                PMob->setModifier(Mod::LIGHT_RES_RANK, (int16)(sql->GetIntData(??)));
+                PMob->setModifier(Mod::DARK_RES_RANK, (int16)(sql->GetIntData(??)));
+                */
 
                 PMob->m_Element     = (uint8)sql->GetIntData(54);
                 PMob->m_Family      = (uint16)sql->GetIntData(55);
@@ -1399,7 +1427,7 @@ Usage:
         STR, DEX, VIT, AGI, `INT`, MND, CHR, EVA, DEF, ATT, ACC, \
         slash_sdt, pierce_sdt, h2h_sdt, impact_sdt, \
         fire_sdt, ice_sdt, wind_sdt, earth_sdt, lightning_sdt, water_sdt, light_sdt, dark_sdt, \
-        fire_res, ice_res, wind_res, earth_res, lightning_res, water_res, light_res, dark_res, \
+        fire_meva, ice_meva, wind_meva, earth_meva, lightning_meva, water_meva, light_meva, dark_meva, \
         Element, mob_pools.familyid, name_prefix, entityFlags, animationsub, \
         (mob_family_system.HP / 100), (mob_family_system.MP / 100), hasSpellScript, spellList, mob_groups.poolid, \
         allegiance, namevis, aggro, mob_pools.skill_list_id, mob_pools.true_detection, mob_family_system.detects \
@@ -1476,14 +1504,25 @@ Usage:
                 PMob->setModifier(Mod::LIGHT_SDT, (int16)sql->GetFloatData(44));   // Modifier 60, base 10000 stored as signed integer. Positives signify less damage.
                 PMob->setModifier(Mod::DARK_SDT, (int16)sql->GetFloatData(45));    // Modifier 61, base 10000 stored as signed integer. Positives signify less damage.
 
-                PMob->setModifier(Mod::FIRE_RES, (int16)(sql->GetIntData(46))); // These are stored as signed integers which
-                PMob->setModifier(Mod::ICE_RES, (int16)(sql->GetIntData(47)));  // is directly the modifier starting value.
-                PMob->setModifier(Mod::WIND_RES, (int16)(sql->GetIntData(48))); // Positives signify increased resist chance.
-                PMob->setModifier(Mod::EARTH_RES, (int16)(sql->GetIntData(49)));
-                PMob->setModifier(Mod::THUNDER_RES, (int16)(sql->GetIntData(50)));
-                PMob->setModifier(Mod::WATER_RES, (int16)(sql->GetIntData(51)));
-                PMob->setModifier(Mod::LIGHT_RES, (int16)(sql->GetIntData(52)));
-                PMob->setModifier(Mod::DARK_RES, (int16)(sql->GetIntData(53)));
+                PMob->setModifier(Mod::FIRE_MEVA, (int16)(sql->GetIntData(46)));   // These are stored as signed integers which
+                PMob->setModifier(Mod::ICE_MEVA, (int16)(sql->GetIntData(47)));    // is directly the modifier starting value.
+                PMob->setModifier(Mod::WIND_MEVA, (int16)(sql->GetIntData(48)));   // Positives signify increased resist chance.
+                PMob->setModifier(Mod::EARTH_MEVA, (int16)(sql->GetIntData(49)));
+                PMob->setModifier(Mod::THUNDER_MEVA, (int16)(sql->GetIntData(50)));
+                PMob->setModifier(Mod::WATER_MEVA, (int16)(sql->GetIntData(51)));
+                PMob->setModifier(Mod::LIGHT_MEVA, (int16)(sql->GetIntData(52)));
+                PMob->setModifier(Mod::DARK_MEVA, (int16)(sql->GetIntData(53)));
+
+                /* Todo: hook this up, seems to force resist tiering
+                PMob->setModifier(Mod::FIRE_RES_RANK, (int16)(sql->GetIntData(??)));
+                PMob->setModifier(Mod::ICE_RES_RANK, (int16)(sql->GetIntData(??)));
+                PMob->setModifier(Mod::WIND_RES_RANK, (int16)(sql->GetIntData(??)));
+                PMob->setModifier(Mod::EARTH_RES_RANK, (int16)(sql->GetIntData(??)));
+                PMob->setModifier(Mod::THUNDER_RES_RANK, (int16)(sql->GetIntData(??)));
+                PMob->setModifier(Mod::WATER_RES_RANK, (int16)(sql->GetIntData(??)));
+                PMob->setModifier(Mod::LIGHT_RES_RANK, (int16)(sql->GetIntData(??)));
+                PMob->setModifier(Mod::DARK_RES_RANK, (int16)(sql->GetIntData(??)));
+                */
 
                 PMob->m_Element     = (uint8)sql->GetIntData(54);
                 PMob->m_Family      = (uint16)sql->GetIntData(55);
