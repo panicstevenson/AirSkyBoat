@@ -28,28 +28,28 @@ xi.horizon = {}
 
 local spawnerMobs =
 {
-    -- [zoneId] =
+    -- [xi.zones.EXAMPLE] =
     -- {
-    --    {name, groupId, groupZone, functionLookup, min, max, xPos, yPos, zPos, rot, enabled, respawn(s), releaseId, spawnAnimation, drops, skills, spells}
+        -- {name = "something", groupId = 1, groupZone = 1, min = 1, max = 2, xPos = 1.123, yPos = 1.123, zPos = 1.123, rot = 0, respawn = 30, releaseId = false, spawnAnimation = false, drops = 123, skills = 234, spells = 345},
     -- }
 }
 
 local spawnerFunctions =
 {
-    -- ["Example"] =
-    -- {
-        -- onSpawn             = function(mob) end,
-        -- onEngaged           = function(mob, target) end,
-        -- onFight             = function(mob, target) end,
-        -- onDisengage         = function(mob, target) end,
-        -- onWeaponskilPrepare = function(mob, target, skill) end,
-        -- onWeaponskill       = function(mob, target, skill) end,
-        -- onMagicPrepare      = function(mob, target, spell) end,
-        -- onRoam              = function(mob) end,
-        -- onDeath             = function(mob, playerArg, isKiller) end,
-        -- onDespawn           = function(mob) end,
-        -- mixins = {},
-    -- }
+    ["Default"] =
+    {
+        onSpawn             = function(mob) end,
+        onEngaged           = function(mob, target) end,
+        onFight             = function(mob, target) end,
+        onDisengage         = function(mob, target) end,
+        onWeaponskilPrepare = function(mob, target, skill) end,
+        onWeaponskill       = function(mob, target, skill) end,
+        onMagicPrepare      = function(mob, target, spell) end,
+        onRoam              = function(mob) end,
+        onDeath             = function(mob, playerArg, isKiller) end,
+        onDespawn           = function(mob) end,
+        mixins = {},
+    }
 }
 
 -----------------------------------------------------------
