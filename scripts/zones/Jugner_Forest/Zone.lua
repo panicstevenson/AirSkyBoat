@@ -1,7 +1,5 @@
 -----------------------------------
---
 -- Zone: Jugner_Forest (104)
---
 -----------------------------------
 local ID = require("scripts/zones/Jugner_Forest/IDs")
 require("scripts/quests/i_can_hear_a_rainbow")
@@ -22,6 +20,9 @@ zone_object.onInitialize = function(zone)
 
     UpdateNMSpawnPoint(ID.mob.FRAELISSA)
     GetMobByID(ID.mob.FRAELISSA):setRespawnTime(math.random(900, 10800))
+
+    UpdateNMSpawnPoint(ID.mob.METEORMAULER)
+    GetMobByID(ID.mob.METEORMAULER):setRespawnTime(math.random(900, 10800))
 
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
 
@@ -52,6 +53,12 @@ zone_object.onZoneIn = function( player, prevZone)
     end
 
     return cs
+end
+
+zone_object.onZoneOut = function(player)
+    if player:hasStatusEffect(xi.effect.BATTLEFIELD) then
+        player:delStatusEffect(xi.effect.BATTLEFIELD)
+    end
 end
 
 zone_object.onConquestUpdate = function(zone, updatetype)

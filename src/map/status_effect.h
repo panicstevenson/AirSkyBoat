@@ -745,7 +745,7 @@ enum EFFECT
     // EFFECT_PLACEHOLDER           = 1023 // The client dat file seems to have only this many "slots", results of exceeding that are untested.
 };
 
-#define MAX_EFFECTID 805 // 768 real + 32 custom
+#define MAX_EFFECTID 1023 // 768 real + 232 custom
 
 /************************************************************************
  *                                                                       *
@@ -794,7 +794,7 @@ public:
 
     void addMod(Mod modType, int16 amount);
 
-    void SetName(string_t name);
+    void SetName(std::string name);
     void SetName(const int8* name);
 
     const int8* GetName();
@@ -824,7 +824,7 @@ private:
     time_point m_StartTime;      // время получения эффекта (млс)
     int        m_tickCount{ 0 }; // премя последнего выполнения эффекта (млс)
 
-    string_t m_Name; // имя эффекта для скриптов
+    std::string m_Name; // имя эффекта для скриптов
 };
 
 #endif
