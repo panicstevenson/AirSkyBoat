@@ -30,7 +30,7 @@ local spawnerMobs =
 {
     -- [xi.zones.EXAMPLE] =
     -- {
-        -- {name = "something", groupId = 1, groupZone = 1, min = 1, max = 2, xPos = 1.123, yPos = 1.123, zPos = 1.123, rot = 0, respawn = 30, releaseId = false, spawnAnimation = false, drops = 123, skills = 234, spells = 345},
+        -- {name = "something", groupId = 1, groupZone = 1, funcLookup = "Default", min = 1, max = 2, xPos = 1.123, yPos = 1.123, zPos = 1.123, rot = 0, respawn = 30, releaseId = false, spawnAnimation = false, drops = 123, skills = 234, spells = 345},
     -- }
 }
 
