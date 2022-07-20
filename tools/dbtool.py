@@ -88,6 +88,7 @@ player_data = [
     'linkshells.sql',
     'server_variables.sql',
     'unity_system.sql',
+    'zone_settings.sql',
 ]
 
 import_files = []
@@ -289,7 +290,6 @@ def fetch_files(express=False):
 
 def write_version(silent=False):
     global db_ver
-    success = False
     update_client = auto_update_client
     if not silent and current_client != release_client:
         update_client = input('Update client version? [y/N] ').lower() == 'y'

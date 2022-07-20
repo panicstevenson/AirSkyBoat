@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -108,7 +108,7 @@ CNavMesh::CNavMesh(uint16 zoneID)
 
 CNavMesh::~CNavMesh() = default;
 
-bool CNavMesh::load(const std::string& filename)
+bool CNavMesh::load(std::string const& filename)
 {
     this->filename = filename;
 
@@ -428,6 +428,73 @@ bool CNavMesh::validPosition(const position_t& position)
     }
 
     return m_navMesh->isValidPolyRef(startRef);
+}
+
+bool CNavMesh::findClosestValidPoint(const position_t& position, float* validPoint)
+{
+    float spos[3];
+    CNavMesh::ToDetourPos(&position, spos);
+
+    float closestPolyPickExt[3];
+    closestPolyPickExt[0] = 30;
+    closestPolyPickExt[1] = 60;
+    closestPolyPickExt[2] = 30;
+
+    dtQueryFilter filter;
+    filter.setIncludeFlags(0xffff);
+    filter.setExcludeFlags(0);
+
+    dtPolyRef startRef;
+
+    dtStatus status = m_navMeshQuery.findNearestPoly(spos, closestPolyPickExt, &filter, &startRef, validPoint);
+
+    if (dtStatusFailed(status))
+    {
+        return false;
+    }
+
+    CNavMesh::ToFFXIPos(validPoint);
+    return true;
+}
+
+bool CNavMesh::findFurthestValidPoint(const position_t& startPosition, const position_t& endPosition, float* validEndPoint)
+{
+    float spos[3];
+    CNavMesh::ToDetourPos(&startPosition, spos);
+
+    float furthestPolyPickExt[3];
+    furthestPolyPickExt[0] = 30;
+    furthestPolyPickExt[1] = 60;
+    furthestPolyPickExt[2] = 30;
+
+    dtQueryFilter filter;
+    filter.setIncludeFlags(0xffff);
+    filter.setExcludeFlags(0);
+
+    dtPolyRef startRef;
+    float     validStartPoint[3];
+
+    dtStatus status = m_navMeshQuery.findNearestPoly(spos, furthestPolyPickExt, &filter, &startRef, validStartPoint);
+    if (dtStatusFailed(status))
+    {
+        return false;
+    }
+
+    dtPolyRef visited[16];
+    int       visitedCount = 0;
+
+    float targetPoint[3];
+    CNavMesh::ToDetourPos(&endPosition, targetPoint);
+
+    status = m_navMeshQuery.moveAlongSurface(startRef, validStartPoint, targetPoint, &filter, validEndPoint, visited, &visitedCount, 16);
+
+    if (dtStatusFailed(status))
+    {
+        return false;
+    }
+
+    CNavMesh::ToFFXIPos(validEndPoint);
+    return true;
 }
 
 void CNavMesh::snapToValidPosition(position_t& position)

@@ -30,6 +30,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../../status_effect_container.h"
 #include "../../utils/battleutils.h"
 #include "../../utils/petutils.h"
+#include "../../utils/zoneutils.h"
 #include "../ai_container.h"
 #include "../helpers/targetfind.h"
 #include "../states/ability_state.h"
@@ -145,7 +146,7 @@ bool CMobController::CheckDetection(CBattleEntity* PTarget)
 {
     TracyZoneScoped;
     if (CanDetectTarget(PTarget) || CanPursueTarget(PTarget) ||
-        PMob->StatusEffectContainer->HasStatusEffect({ EFFECT_BIND, EFFECT_SLEEP, EFFECT_SLEEP_II, EFFECT_LULLABY }))
+        PMob->StatusEffectContainer->HasStatusEffect({ EFFECT_BIND, EFFECT_SLEEP, EFFECT_SLEEP_II, EFFECT_LULLABY, EFFECT_PETRIFICATION }))
     {
         TapDeaggroTime();
     }
@@ -171,7 +172,7 @@ void CMobController::TryLink()
             {
                 std::unique_ptr<CBasicPacket> errMsg;
                 if (!PTarget->PPet->CanAttack(PMob, errMsg))
-                return;
+                    return;
             }
 
             petutils::AttackTarget(PTarget, PMob);
@@ -207,6 +208,18 @@ void CMobController::TryLink()
                 }
             }
         }
+    }
+
+    if (PMob->getMobMod(MOBMOD_ATTRACT_FAMILY_NM))
+    {
+        zoneutils::GetZone(PMob->getZone())->ForEachMob([&](CMobEntity* PNm)
+                                                        {
+            if (PNm->PAI->IsRoaming() && PMob->m_Family == PNm->m_Family &&
+                PNm->CanLink(&PMob->loc.p, PNm->getMobMod(MOBMOD_SUPERLINK)))
+            {
+                PNm->PEnmityContainer->AddBaseEnmity(PTarget);
+                PNm->PAI->Engage(PTarget->targid);
+            } });
     }
 
     // ask my master for help
@@ -315,7 +328,7 @@ bool CMobController::MobSkill(int wsList)
 
     if (auto overrideSkill = luautils::OnMobWeaponSkillPrepare(PMob, PTarget); overrideSkill > 0)
     {
-        skillList = {overrideSkill};
+        skillList = { overrideSkill };
     }
 
     if (skillList.empty())
@@ -334,7 +347,7 @@ bool CMobController::MobSkill(int wsList)
             continue;
         }
 
-        if (PMobSkill->getValidTargets() == TARGET_ENEMY) // enemy
+        if (PMobSkill->getValidTargets() == TARGET_ENEMY && PMob->GetBattleTarget() != nullptr) // enemy
         {
             if (PMob->GetBattleTarget()->StatusEffectContainer->HasStatusEffect(EFFECT_ALL_MISS) && PMob->GetBattleTarget()->StatusEffectContainer->GetStatusEffect(EFFECT_ALL_MISS)->GetPower() == 2) // Handles Super Jump
             {
@@ -674,11 +687,24 @@ void CMobController::Move()
     else if (((currentDistance > attack_range - 0.2f) || move) && PMob->PAI->CanFollowPath())
     {
         //#TODO: can this be moved to scripts entirely?
-        if (PMob->getMobMod(MOBMOD_DRAW_IN) > 0)
+        if (PMob->getMobMod(MOBMOD_DRAW_IN))
         {
-            if (currentDistance >= PMob->GetMeleeRange() * 2 && battleutils::DrawIn(PTarget, PMob, PMob->GetMeleeRange() - 0.2f))
+            uint8  drawInRange  = PMob->getMobMod(MOBMOD_DRAW_IN_CUSTOM_RANGE) > 0 ? PMob->getMobMod(MOBMOD_DRAW_IN_CUSTOM_RANGE) : PMob->GetMeleeRange() * 2;
+            uint16 maximumReach = PMob->getMobMod(MOBMOD_DRAW_IN_MAXIMUM_REACH) > 0 ? PMob->getMobMod(MOBMOD_DRAW_IN_MAXIMUM_REACH) : 0xFFFF;
+            bool   includeParty = PMob->getMobMod(MOBMOD_DRAW_IN_INCLUDE_PARTY); // (and alliance)
+
+            if (currentDistance > drawInRange && currentDistance < maximumReach && battleutils::DrawIn(PTarget, PMob, PMob->GetMeleeRange() - 0.2f, drawInRange, maximumReach, includeParty))
             {
                 FaceTarget();
+            }
+            else
+            {
+                drawInRange = PMob->GetMeleeRange(); // if i'm bound/can't move, draw in the moment they leave my melee range
+                if ((PMob->speed == 0 || PMob->getMobMod(MOBMOD_NO_MOVE)) && !PMob->getMobMod(MOBMOD_DRAW_IN_IGNORE_STATIONARY) &&
+                    currentDistance > drawInRange && currentDistance < maximumReach && battleutils::DrawIn(PTarget, PMob, PMob->GetMeleeRange() - 1.2f, drawInRange, maximumReach, includeParty))
+                {
+                    FaceTarget();
+                }
             }
         }
         if (PMob->speed != 0 && PMob->getMobMod(MOBMOD_NO_MOVE) == 0 && m_Tick >= m_LastSpecialTime)
@@ -697,7 +723,7 @@ void CMobController::Move()
             }
             else if (CanMoveForward(currentDistance))
             {
-                if (!PMob->PAI->PathFind->IsFollowingPath() || distanceSquared(PMob->PAI->PathFind->GetDestination(), PTarget->loc.p) > 10)
+                if ((!PMob->PAI->PathFind->IsFollowingPath() || distanceSquared(PMob->PAI->PathFind->GetDestination(), PTarget->loc.p) > 10) && currentDistance > attack_range)
                 {
                     // path to the target if we don't have a path already
                     PMob->PAI->PathFind->PathInRange(PTarget->loc.p, attack_range - 0.2f, PATHFLAG_WALLHACK | PATHFLAG_RUN);
@@ -705,6 +731,8 @@ void CMobController::Move()
                 PMob->PAI->PathFind->FollowPath();
                 if (!PMob->PAI->PathFind->IsFollowingPath())
                 {
+                    bool needToMove = false;
+
                     // arrived at target - move if there is another mob under me
                     if (PTarget->objtype == TYPE_PC)
                     {
@@ -713,16 +741,34 @@ void CMobController::Move()
                             if (PSpawnedMob.second != PMob && !PSpawnedMob.second->PAI->PathFind->IsFollowingPath() &&
                                 distance(PSpawnedMob.second->loc.p, PMob->loc.p) < 1.f)
                             {
-                                auto       angle = worldAngle(PMob->loc.p, PTarget->loc.p) + 64;
-                                position_t new_pos{ PMob->loc.p.x - (cosf(rotationToRadian(angle)) * 1.5f), PTarget->loc.p.y,
-                                                    PMob->loc.p.z + (sinf(rotationToRadian(angle)) * 1.5f), 0, 0 };
+                                auto angle = worldAngle(PMob->loc.p, PTarget->loc.p) + 64;
+
+                                // clang-format off
+                                position_t new_pos
+                                {
+                                    PMob->loc.p.x - (cosf(rotationToRadian(angle)) * 1.5f),
+                                    PTarget->loc.p.y,
+                                    PMob->loc.p.z + (sinf(rotationToRadian(angle)) * 1.5f),
+                                    0,
+                                    0
+                                };
+                                // clang-format on
+
                                 if (PMob->PAI->PathFind->ValidPosition(new_pos))
                                 {
                                     PMob->PAI->PathFind->PathTo(new_pos, PATHFLAG_WALLHACK | PATHFLAG_RUN);
+                                    needToMove = true;
                                 }
                                 break;
                             }
                         }
+                    }
+
+                    // Fix corner case where mob is attacking target at essentially exactly the distance that canMoveForward returns true at.
+                    // where the mob doesn't rotate to face their target.
+                    if (!needToMove)
+                    {
+                        FaceTarget();
                     }
                 }
             }
@@ -828,6 +874,7 @@ void CMobController::DoRoamTick(time_point tick)
                     PMob->m_HiPCLvl     = 0;
                     PMob->m_HiPartySize = 0;
                     PMob->m_giveExp     = true;
+                    PMob->m_ExpPenalty  = 0;
                 }
             }
 

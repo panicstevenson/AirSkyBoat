@@ -673,7 +673,6 @@ namespace battleutils
 
     int32 CalculateSpikeDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, actionTarget_t* Action, uint16 damageTaken)
     {
-
         ELEMENT spikeElement = (ELEMENT)((uint8)GetSpikesDamageType(Action->spikesEffect) - (uint8)DAMAGE_TYPE::ELEMENTAL);
 
         int32 damage = Action->spikesParam;
@@ -739,7 +738,7 @@ namespace battleutils
                 bool crit = battleutils::GetCritHitRate(PDefender, PAttacker, true) > xirand::GetRandomNumber(100);
 
                 // Dmg math.
-                float  DamageRatio = GetDamageRatio(PDefender, PAttacker, crit, 0.f);
+                float  DamageRatio = GetDamageRatio(PDefender, PAttacker, crit, 0.f, SLOT_MAIN);
                 uint16 dmg         = (uint32)((PDefender->GetMainWeaponDmg() + battleutils::GetFSTR(PDefender, PAttacker, SLOT_MAIN)) * DamageRatio);
                 dmg                = attackutils::CheckForDamageMultiplier(((CCharEntity*)PDefender), dynamic_cast<CItemWeapon*>(PDefender->m_Weapons[SLOT_MAIN]), dmg,
                                                                            PHYSICAL_ATTACK_TYPE::NORMAL, SLOT_MAIN);
@@ -818,7 +817,7 @@ namespace battleutils
                             }
                             if (spikesDamage > 0) // do not add HP if spikes damage was absorbed.
                             {
-                                Action->spikesMessage  = MSGBASIC_SPIKES_EFFECT_HP_DRAIN;
+                                Action->spikesMessage = MSGBASIC_SPIKES_EFFECT_HP_DRAIN;
                                 PDefender->addHP(spikesDamage);
                             }
                         }
@@ -1531,7 +1530,7 @@ namespace battleutils
         // get ratio (not capped for RAs)
         float ratio = (float)rAttack / (float)PDefender->DEF();
 
-        ratio = std::clamp<float>(ratio, 0, 3);
+        ratio        = std::clamp<float>(ratio, 0, 3);
         float cRatio = ratio;
 
         // level correct (0.025 not 0.05 like for melee)
@@ -1933,6 +1932,11 @@ namespace battleutils
         else
         {
             damageType = weapon ? weapon->getDmgType() : DAMAGE_TYPE::NONE;
+
+            if ((PAttacker->objtype == TYPE_PET || (PAttacker->objtype == TYPE_MOB && PAttacker->isCharmed)) && PAttacker->PMaster->objtype == TYPE_PC)
+            {
+                damageType = PAttacker->m_dmgType == DAMAGE_TYPE::NONE ? DAMAGE_TYPE::IMPACT : PAttacker->m_dmgType;
+            }
 
             if (isRanged)
             {
@@ -2727,9 +2731,9 @@ namespace battleutils
      *                                                                       *
      ************************************************************************/
 
-    float GetDamageRatio(CBattleEntity* PAttacker, CBattleEntity* PDefender, bool isCritical, float bonusAttPercent)
+    float GetDamageRatio(CBattleEntity* PAttacker, CBattleEntity* PDefender, bool isCritical, float bonusAttPercent, uint16 slot)
     {
-        uint16 attack = PAttacker->ATT();
+        uint16 attack = PAttacker->ATT(slot);
         // Bonus attack currently only from footwork
         if (bonusAttPercent >= 1)
         {
@@ -2749,7 +2753,7 @@ namespace battleutils
         // Using 2013 model since it is the most up-to-date and tested version of the one used in 75 era
         // https://www.bg-wiki.com/index.php?title=PDIF&oldid=268066
         // Note that only player autoattacks use this function, weaponskill pDIF is calculated in scripts/global/weaponskills.lua
-        float ratio  = (static_cast<float>(attack)) / (static_cast<float>(defense));
+        float ratio    = (static_cast<float>(attack)) / (static_cast<float>(defense));
         float ratioCap = 2.25f;
 
         ratio = std::clamp<float>(ratio, 0, ratioCap);
@@ -2824,7 +2828,7 @@ namespace battleutils
         // https://www.bluegartr.com/threads/114636-Monster-Avatar-Pet-damage
         // Monster pDIF = Avatar pDIF = Pet pDIF
 
-        auto* targ_weapon = dynamic_cast<CItemWeapon*>(PAttacker->m_Weapons[SLOT_MAIN]);
+        auto* targ_weapon = dynamic_cast<CItemWeapon*>(PAttacker->m_Weapons[slot]);
 
         // Default for 1H is 2.0
         float maxRatio = 2.0f;
@@ -2883,7 +2887,7 @@ namespace battleutils
         }
         else if (wRatio < 2.625f)
         {
-            upperLimit = wRatio + 0.375f;
+            upperLimit = std::min(wRatio + 0.375f, maxRatio);
         }
         else
         {
@@ -2908,7 +2912,7 @@ namespace battleutils
         }
         else
         {
-            lowerLimit = wRatio - 0.375f;
+            lowerLimit = std::min(wRatio - 0.375f, maxRatio);
         }
 
         float pDIF = 0.0f;
@@ -2916,13 +2920,14 @@ namespace battleutils
         // Bernoulli distribution, applied for cRatio < 0.5 and 0.75 < cRatio < 1.25
         // Other cRatio values are uniformly distributed
         // https://www.bluegartr.com/threads/108161-pDif-and-damage?p=5308205&viewfull=1#post5308205
-        float U = std::max<float>(0.0, std::min<float>(0.333, 1.3 * (2.0 - std::abs(wRatio - 1)) - 1.96));
-        bool bernoulli = xirand::GetRandomNumber(0.0f, 1.0f) < U ? true : false;
+        float U         = std::max<float>(0.0, std::min<float>(0.333, 1.3 * (2.0 - std::abs(wRatio - 1)) - 1.96));
+        bool  bernoulli = xirand::GetRandomNumber(0.0f, 1.0f) < U ? true : false;
 
         if (bernoulli)
         {
             pDIF = std::round(wRatio);
-        } else
+        }
+        else
         {
             pDIF = xirand::GetRandomNumber(lowerLimit, upperLimit);
         }
@@ -4251,7 +4256,7 @@ namespace battleutils
     {
         if (!PSource || !PTarget)
         {
-            ShowWarning("battleutils::GenerateCureEnmity - PSource or PTarget was null.")
+            ShowWarning("battleutils::GenerateCureEnmity - PSource or PTarget was null.");
             return;
         }
 
@@ -4581,7 +4586,7 @@ namespace battleutils
                         AttMultiplerPercent = PAttacker->getMod(Mod::JUMP_ATT_BONUS) / 100.f;
                     }
 
-                    float DamageRatio = battleutils::GetDamageRatio(PAttacker, PVictim, false, AttMultiplerPercent);
+                    float DamageRatio = battleutils::GetDamageRatio(PAttacker, PVictim, false, AttMultiplerPercent, SLOT_MAIN);
                     damageForRound    = (uint16)((PAttacker->GetMainWeaponDmg() + battleutils::GetFSTR(PAttacker, PVictim, SLOT_MAIN)) * DamageRatio);
 
                     // bonus applies to jump only, not high jump
@@ -4921,12 +4926,13 @@ namespace battleutils
             charmerBSTlevel = charmerLvl;
         }
 
-        // FIXME: Level and CHR ratios are complete guesses
+        // Based on https://www.bluegartr.com/threads/57288-Charm-and-Magic-Accuracy where charm rate hit 50% w/ 11 dStat
+        // Result on EP mob at 75 MJob w/ 67 BST + 11 dCHR should be 50% according to gauge messages.
         const float levelRatio = (charmerBSTlevel - targetLvl) / 100.f;
         charmChance *= (1.f + levelRatio);
 
-        const float chrRatio = (PCharmer->CHR() - PTarget->CHR()) / 100.f;
-        charmChance *= (1.f + chrRatio);
+        float chrRatio = ((PCharmer->CHR() - PTarget->CHR())) / 100.f;
+        charmChance *= (1.f * (chrRatio * 5.83));
 
         // Retail doesn't take light/apollo into account for Gauge
         if (includeCharmAffinityAndChanceMods)
@@ -5760,8 +5766,13 @@ namespace battleutils
         }
     }
 
-    bool DrawIn(CBattleEntity* PTarget, CMobEntity* PMob, float offset)
+    bool DrawIn(CBattleEntity* PTarget, CMobEntity* PMob, float offset, uint8 drawInRange, uint16 maximumReach, bool includeParty)
     {
+        if (std::chrono::time_point_cast<std::chrono::seconds>(server_clock::now()).time_since_epoch().count() - PMob->GetLocalVar("DrawInTime") < 2)
+        {
+            return false;
+        }
+
         position_t& pos        = PMob->loc.p;
         position_t  nearEntity = nearPosition(pos, offset, (float)0);
 
@@ -5774,52 +5785,54 @@ namespace battleutils
         // Move the target a little higher, just in case
         nearEntity.y -= 1.0f;
 
-        bool  success        = false;
-        float drawInDistance = (float)(PMob->getMobMod(MOBMOD_DRAW_IN) > 1 ? PMob->getMobMod(MOBMOD_DRAW_IN) : PMob->GetMeleeRange() * 2);
+        bool success = false;
+        // float drawInDistance = (float)(PMob->getMobMod(MOBMOD_DRAW_IN) > 1 ? PMob->getMobMod(MOBMOD_DRAW_IN) : PMob->GetMeleeRange() * 2);
 
-        if (std::chrono::time_point_cast<std::chrono::seconds>(server_clock::now()).time_since_epoch().count() - PMob->GetLocalVar("DrawInTime") < 2)
-        {
-            return false;
-        }
+        // if (std::chrono::time_point_cast<std::chrono::seconds>(server_clock::now()).time_since_epoch().count() - PMob->GetLocalVar("DrawInTime") < 2)
+        // {
+        //     return false;
+        // }
 
-        std::function<void(CBattleEntity*)> drawInFunc = [PMob, drawInDistance, &nearEntity, &success](CBattleEntity* PMember)
+        std::function<void(CBattleEntity*)> drawInFunc = [PMob, drawInRange, maximumReach, &nearEntity, &success](CBattleEntity* PMember)
         {
             float pDistance = distance(PMob->loc.p, PMember->loc.p);
-
-            if (PMob->loc.zone == PMember->loc.zone && pDistance > drawInDistance && PMember->status != STATUS_TYPE::CUTSCENE_ONLY)
+            if (PMob->loc.zone == PMember->loc.zone && pDistance > drawInRange && pDistance < maximumReach &&
+                PMember->status != STATUS_TYPE::CUTSCENE_ONLY && !PMember->isDead() && !PMember->isMounted())
+            // if (PMob->loc.zone == PMember->loc.zone && dist > drawInRange && dist < maximumReach &&
+            //     PMember->status != STATUS_TYPE::STATUS_CUTSCENE_ONLY && !PMember->isDead() && !PMember->isMounted())
             {
-                // don't draw in dead players for now!
-                // see tractor
-                if (PMember->isDead() || PMember->isMounted())
+                // draw in!
+                if (PMob->getMobMod(MOBMOD_DRAW_IN_FRONT))
                 {
-                    // don't do anything
-                }
-                else
-                {
-                    // draw in!
                     PMember->loc.p.x = nearEntity.x;
                     PMember->loc.p.y = nearEntity.y;
                     PMember->loc.p.z = nearEntity.z;
-
-                    if (PMember->objtype == TYPE_PC)
-                    {
-                        CCharEntity* PChar = static_cast<CCharEntity*>(PMember);
-                        PChar->pushPacket(new CPositionPacket(PChar));
-                    }
-                    else
-                    {
-                        PMember->loc.zone->UpdateEntityPacket(PMember, ENTITY_UPDATE, UPDATE_POS);
-                    }
-
-                    luautils::OnMobDrawIn(PMob, PMember);
-                    PMob->loc.zone->PushPacket(PMob, CHAR_INRANGE, new CMessageBasicPacket(PMember, PMember, 0, 0, 232));
-                    success = true;
                 }
+                else
+                {
+                    PMember->loc.p.x = PMob->loc.p.x;
+                    PMember->loc.p.y = nearEntity.y;
+                    PMember->loc.p.z = PMob->loc.p.z;
+                }
+
+                if (PMember->objtype == TYPE_PC)
+                {
+                    CCharEntity* PChar = static_cast<CCharEntity*>(PMember);
+                    PChar->pushPacket(new CPositionPacket(PChar));
+                }
+                else
+                {
+                    PMember->loc.zone->UpdateEntityPacket(PMember, ENTITY_UPDATE, UPDATE_POS);
+                }
+
+                luautils::OnMobDrawIn(PMob, PMember);
+                PMob->loc.zone->PushPacket(PMob, CHAR_INRANGE, new CMessageBasicPacket(PMember, PMember, 0, 0, 232));
+                success = true;
             }
         };
 
         // check if i should draw-in party/alliance
-        if (PMob->getMobMod(MOBMOD_DRAW_IN) > 1)
+        if (includeParty)
         {
             PTarget->ForAlliance(drawInFunc);
         }
@@ -6103,7 +6116,7 @@ namespace battleutils
         return found;
     }
 
-    uint32 CalculateSpellCastTime(CBattleEntity* PEntity, CMagicState* PMagicState)
+    uint32 CalculateSpellCastTime(CBattleEntity* PEntity, CMagicState* PMagicState, uint16 spellid)
     {
         CSpell* PSpell = PMagicState->GetSpell();
         if (PSpell == nullptr)
@@ -6117,6 +6130,11 @@ namespace battleutils
         {
             PMagicState->SetInstantCast(true);
             return 0;
+        }
+
+        if (PEntity->GetLocalVar(("[CastTime]ID_" + std::to_string(spellid)).c_str()) != 0) // Usage: mob:setLocalVar("[CastTime]ID_spellId", casttimeseconds)
+        {
+            return PEntity->GetLocalVar(("[CastTime]ID_" + std::to_string(spellid)).c_str()) * 1000; // Convert to ms
         }
 
         bool   applyArts = true;
@@ -6893,9 +6911,9 @@ namespace battleutils
             RMainSub  = ((CItemWeapon*)PRangedSlot)->getSubSkillType();
         }
 
-        bool LongBowCurve  = (RMainType == 25 && RMainSub == 1); // Longbows Only
+        bool LongBowCurve  = (RMainType == 25 && RMainSub == 9);                                         // Longbows Only
         bool CrossBowCurve = ((RMainType == 25 && RMainSub == 0) || (RMainType == 26 && RMainSub == 0)); // Crossbows and Shortbows
-        bool GunCurve      = (RMainType == 26 && RMainSub == 1); // Guns Only
+        bool GunCurve      = (RMainType == 26 && RMainSub == 1);                                         // Guns Only
 
         if (LongBowCurve)
         {
@@ -6930,7 +6948,6 @@ namespace battleutils
                 return 1.00f + ((-1.10f * distance) / 100);
 
             return 0.86f; // Default to >20' Curve w/ 86% Cap
-
         }
         else if (GunCurve)
         {
@@ -6974,9 +6991,9 @@ namespace battleutils
 
                 uint8 runeAbsorbCount = 0;
 
-                for (int i = 0; i < numBits/4; i++) // unpacking is limited to the size of the return value of GetPower/GetSubPower. If this ever expands more Runes can be packed.
+                for (int i = 0; i < numBits / 4; i++) // unpacking is limited to the size of the return value of GetPower/GetSubPower. If this ever expands more Runes can be packed.
                 {
-                    DAMAGE_TYPE packedDamageType = (DAMAGE_TYPE) ( (absorbTypeBits >> i * 4) & 0xF ); //unpack damage type 4 bits at a time
+                    DAMAGE_TYPE packedDamageType = (DAMAGE_TYPE)((absorbTypeBits >> i * 4) & 0xF); // unpack damage type 4 bits at a time
 
                     if (packedDamageType == DamageType)
                     {
