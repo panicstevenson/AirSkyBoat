@@ -415,6 +415,27 @@ xi.spells.damage.calculateSDT = function(caster, target, spell, spellElement)
     return sdt
 end
 
+xi.spells.damage.calculateMEVA = function(caster, target, levelDiff, resMod)
+    local magiceva = target:getMod(xi.mod.MEVA)
+    local mobCheck = target:isMob() and target:isNM() == false
+    if target:isPC() then
+        print(magiceva + resMod)
+        return magiceva + resMod
+    elseif mobCheck and target:getMainLvl() <= 25 then
+        levelDiff = utils.clamp(levelDiff, 0, 99) -- Mobs should not have a disadvantage when targeted
+        print("MagicEVA: ", magiceva + (2 * levelDiff) + resMod)
+        return magiceva + (2 * levelDiff) + resMod
+    elseif mobCheck and target:getMainLvl() <= 50 then
+        levelDiff = utils.clamp(levelDiff, 0, 99) -- Mobs should not have a disadvantage when targeted
+        print("MagicEVA: ", magiceva + (3 * levelDiff) + resMod)
+        return magiceva + (3 * levelDiff) + resMod
+    else
+        levelDiff = utils.clamp(levelDiff, 0, 99) -- Mobs should not have a disadvantage when targeted
+        print("MagicEVA: ", magiceva + (4 * levelDiff) + resMod)
+        return magiceva + (4 * levelDiff) + resMod
+    end
+end
+
 -- This function is used to calculate Resist tiers. The resist tiers work differently for enfeebles (which usually affect duration, not potency) than for nukes.
 -- This is for nukes damage only. If an spell happens to do both damage and apply an status effect, they are calculated separately.
 xi.spells.damage.calculateResist = function(caster, target, spell, skillType, spellElement, statDiff, bonusMagicAccuracy)
@@ -601,13 +622,7 @@ xi.spells.damage.calculateResist = function(caster, target, spell, skillType, sp
     -- STEP 2: Get target magic evasion
     -- Base magic evasion (base magic evasion plus resistances(players), plus elemental defense(mobs)
     -----------------------------------
-    local magiceva = target:getMod(xi.mod.MEVA)
-    if target:isPC() then
-        magiceva = magiceva + resMod
-    else
-        levelDiff = utils.clamp(levelDiff, 0, 99) -- Mobs should not have a disadvantage when targeted
-        magiceva =  magiceva + (4 * levelDiff) + resMod
-    end
+    local magiceva = xi.spells.damage.calculateMEVA(caster, target, levelDiff, resMod)
 
     -----------------------------------
     -- STEP 3: Get Magic Hit Rate
