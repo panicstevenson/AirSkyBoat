@@ -419,19 +419,15 @@ xi.spells.damage.calculateMEVA = function(caster, target, levelDiff, resMod)
     local magiceva = target:getMod(xi.mod.MEVA)
     local mobCheck = target:isMob() and target:isNM() == false
     if target:isPC() then
-        print(magiceva + resMod)
         return magiceva + resMod
     elseif mobCheck and target:getMainLvl() <= 25 then
         levelDiff = utils.clamp(levelDiff, 0, 99) -- Mobs should not have a disadvantage when targeted
-        print("MagicEVA: ", magiceva + (2 * levelDiff) + resMod)
         return magiceva + (2 * levelDiff) + resMod
     elseif mobCheck and target:getMainLvl() <= 50 then
         levelDiff = utils.clamp(levelDiff, 0, 99) -- Mobs should not have a disadvantage when targeted
-        print("MagicEVA: ", magiceva + (3 * levelDiff) + resMod)
         return magiceva + (3 * levelDiff) + resMod
     else
         levelDiff = utils.clamp(levelDiff, 0, 99) -- Mobs should not have a disadvantage when targeted
-        print("MagicEVA: ", magiceva + (4 * levelDiff) + resMod)
         return magiceva + (4 * levelDiff) + resMod
     end
 end
