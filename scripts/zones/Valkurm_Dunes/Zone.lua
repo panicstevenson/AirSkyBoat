@@ -17,6 +17,7 @@ zone_object.onChocoboDig = function(player, precheck)
 end
 
 zone_object.onInitialize = function(zone)
+    xi.horizon.spawnInitialMobs(zone)
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
     xi.mogTablet.onZoneInitialize(zone)
     local results = zone:queryEntitiesByName("qm2")

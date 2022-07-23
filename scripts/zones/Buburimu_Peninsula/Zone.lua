@@ -16,6 +16,7 @@ zone_object.onChocoboDig = function(player, precheck)
 end
 
 zone_object.onInitialize = function(zone)
+    xi.horizon.spawnInitialMobs(zone)
     local hour = VanadielHour()
 
     if hour >= 6 and hour < 16 then

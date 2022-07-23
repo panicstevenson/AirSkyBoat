@@ -828,6 +828,7 @@ public:
     bool deleteRaisedChocobo();
 
     bool clearSession(std::string const& playerName);
+    void setSpawnType(SPAWNTYPE spawnType);
 
     static void Register();
 };
