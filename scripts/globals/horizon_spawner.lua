@@ -28,10 +28,25 @@ xi.horizon = {}
 
 local spawnerMobs =
 {
-    -- [xi.zones.EXAMPLE] =
+    -- [xi.zone.EXAMPLE] =
     -- {
-        -- {name = "something", groupId = 1, groupZone = 1, funcLookup = "Default", min = 1, max = 2, xPos = 1.123, yPos = 1.123, zPos = 1.123, rot = 0, respawn = 30, releaseId = false, spawnAnimation = false, drops = 123, skills = 234, spells = 345},
+        -- {name = "something", groupId = 1, groupZone = 1, funcLookup = "Default", min = 1, max = 2, xPos = 1.123, yPos = 1.123, zPos = 1.123, rot = 0, respawn = 30, releaseId = false, spawnAnimation = false, drops = 123, skills = 234, spells = 345, enabled = true},
     -- }
+
+    -- ZoneID: 109
+    [xi.zone.PASHHOW_MARSHLANDS] =
+    {
+        -- Camp 1
+        {name = "Gadfly",        groupId =   6, groupZone = 109, funcLookup = "Default", min = 18, max = 21, xPos = 592.0, yPos =  25.0, zPos = 183.8, rot =  51, respawn = 330, releaseId = false, spawnAnimation = false, drops =  923, skills = 113, spells = 0, enabled = true},
+        {name = "Gadfly",        groupId =   6, groupZone = 109, funcLookup = "Default", min = 18, max = 21, xPos = 634.8, yPos =  25.0, zPos = 208.1, rot =  51, respawn = 330, releaseId = false, spawnAnimation = false, drops =  923, skills = 113, spells = 0, enabled = true},
+        {name = "Gadfly",        groupId =   6, groupZone = 109, funcLookup = "Default", min = 18, max = 21, xPos = 547.7, yPos =  24.6, zPos = 215.0, rot =  51, respawn = 330, releaseId = false, spawnAnimation = false, drops =  923, skills = 113, spells = 0, enabled = true},
+        {name = "Gadfly",        groupId =   6, groupZone = 109, funcLookup = "Default", min = 18, max = 21, xPos = 621.1, yPos =  25.3, zPos = 230.8, rot =  51, respawn = 330, releaseId = false, spawnAnimation = false, drops =  923, skills = 113, spells = 0, enabled = true},
+        {name = "Bog Dog",       groupId =  10, groupZone = 109, funcLookup = "Default", min = 18, max = 25, xPos = 634.1, yPos =  25.0, zPos = 185.4, rot =   0, respawn = 330, releaseId = false, spawnAnimation = false, drops =  328, skills = 143, spells = 0, enabled = true},
+        {name = "Bog Dog",       groupId =  10, groupZone = 109, funcLookup = "Default", min = 18, max = 25, xPos = 655.3, yPos =  25.0, zPos = 208.4, rot =   0, respawn = 330, releaseId = false, spawnAnimation = false, drops =  328, skills = 143, spells = 0, enabled = true},
+        {name = "Marsh Funguar", groupId =  36, groupZone = 109, funcLookup = "Default", min = 21, max = 25, xPos = 582.0, yPos =  25.0, zPos = 285.0, rot =  65, respawn = 330, releaseId = false, spawnAnimation = false, drops = 1633, skills = 116, spells = 0, enabled = true},
+        {name = "Marsh Funguar", groupId =  36, groupZone = 109, funcLookup = "Default", min = 21, max = 25, xPos = 578.4, yPos =  24.3, zPos = 185.9, rot =   4, respawn = 330, releaseId = false, spawnAnimation = false, drops = 1633, skills = 116, spells = 0, enabled = true},
+        {name = "Marsh Funguar", groupId =  36, groupZone = 109, funcLookup = "Default", min = 21, max = 25, xPos = 613.8, yPos =  24.7, zPos = 249.6, rot = 127, respawn = 330, releaseId = false, spawnAnimation = false, drops = 1633, skills = 116, spells = 0, enabled = true},
+    }
 }
 
 local spawnerFunctions =

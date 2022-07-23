@@ -16,6 +16,9 @@ zone_object.onChocoboDig = function(player, precheck)
 end
 
 zone_object.onInitialize = function(zone)
+    -- Dynamic Spawner
+    xi.horizon.spawnInitialMobs(zone)
+
     UpdateNMSpawnPoint(ID.mob.BOWHO_WARMONGER)
     GetMobByID(ID.mob.BOWHO_WARMONGER):setRespawnTime(75600 + math.random(600, 900)) -- 21 hours, plus 10 to 15 min
 
@@ -45,7 +48,7 @@ end
 zone_object.onZoneOut = function(player)
     if player:hasStatusEffect(xi.effect.BATTLEFIELD) then
         player:delStatusEffect(xi.effect.BATTLEFIELD)
-	end
+    end
 end
 
 zone_object.onConquestUpdate = function(zone, updatetype)
