@@ -2831,7 +2831,7 @@ namespace battleutils
         auto* targ_weapon = dynamic_cast<CItemWeapon*>(PAttacker->m_Weapons[slot]);
 
         // Default for 1H is 2.0
-        float maxRatio = 2.0f;
+        float maxRatio = 2.25f;
 
         if (attackerType == TYPE_MOB || attackerType == TYPE_PET)
         {
