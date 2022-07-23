@@ -240,6 +240,76 @@ local attackTypeShields =
 }
 
 xi.summon.avatarFinalAdjustments = function(dmg, mob, skill, target, skilltype, damagetype, shadowbehav)
+    local bpRageTpGain =
+    {
+        -- 2-Hours
+        [912]  = 100, -- Searing Light
+        [838]  = 100, -- Howling Moon
+        [848]  = 100, -- Inferno
+        [857]  = 100, -- Earthen Fury
+        [866]  = 100, -- Tidal Wave
+        [875]  = 100, -- Aerial Blast
+        [884]  = 100, -- Diamond Dust
+        [893]  = 100, -- Judgement Bolt
+        [1911] = 100, -- Ruinous Omen
+
+        -- Lv1 Blood Pact: Rage
+        [840]  = 100, -- Punch
+        [849]  = 100, -- Rock Throw
+        [858]  = 100, -- Barracuda Dive
+        [867]  = 100, -- Claw
+        [876]  = 100, -- Axe Kick
+        [885]  = 100, -- Shock Strike
+        [1903] = 100, -- Camisado
+
+        -- Lv5 Blood Pact: Rage
+        [907]  = 100, -- Poison Nails
+        [831]  = 100, -- Moonlit Charge
+
+        -- Lv10 Blood Pact: Rage
+        [832]  = 100, -- Crescent Fang
+        [841]  = 100, -- Fire II
+        [850]  = 100, -- Stone II
+        [859]  = 100, -- Water II
+        [868]  = 100, -- Aero II
+        [877]  = 100, -- Blizzard II
+        [886]  = 100, -- Thunder II
+
+        -- Lv19 -> Lv55 Blood Pact: Rage
+        [888]  = 100, -- Thunderspark
+        [851]  = 150, -- Rock Buster
+        [842]  = 150, -- Burning Strike
+        [860]  = 150, -- Tail Whip
+        [843]  = 150, -- Double Punch
+        [852]  = 150, -- Megalith Throw
+        [880]  = 150, -- Double Slap
+        [910]  = 150, -- Meteorite
+
+        -- Lv56 -> Lv70 Blood Pact: Rage
+        [845]  = 150, -- Fire IV
+        [854]  = 150, -- Stone IV
+        [863]  = 150, -- Water IV
+        [872]  = 150, -- Aero IV
+        [881]  = 150, -- Blizzard IV
+        [890]  = 150, -- Thunder IV
+        [836]  = 150, -- Eclipse Bite
+        [1910] = 150, -- Nether Blast
+        [846]  = 200, -- Flaming Crush
+        [855]  = 200, -- Mountain Buster
+        [864]  = 200, -- Spinning Dive
+        [873]  = 200, -- Predator Claws
+        [882]  = 200, -- Rush
+        [891]  = 200, -- Chaotic Strike
+
+        -- Lv75 Merit Blood Pact: Rage
+        [847]  = 200, -- Meteor Strike
+        [883]  = 200, -- Heavenly Strike
+        [874]  = 200, -- Wind Blade
+        [856]  = 200, -- Geocrush
+        [892]  = 200, -- Thunderstorm
+        [865]  = 200, -- Grand Fall
+    }
+
     -- Physical Attack Missed
     if
         skilltype == xi.attackType.PHYSICAL and
@@ -332,6 +402,10 @@ xi.summon.avatarFinalAdjustments = function(dmg, mob, skill, target, skilltype, 
 
     -- handling stoneskin
     dmg = utils.stoneskin(target, dmg)
+
+    if bpRageTpGain[skill:getID()] ~= nil and target:isMob() then -- Add TP Based on Rage Level
+        target:addTP(bpRageTpGain[skill:getID()])
+    end
 
     return dmg
 end
