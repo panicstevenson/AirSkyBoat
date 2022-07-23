@@ -946,6 +946,63 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     local ninFutaeBonus               = xi.spells.damage.calculateNinFutaeBonus(caster, target, spell, skillType)
     local undeadDivinePenalty         = xi.spells.damage.calculateUndeadDivinePenalty(caster, target, spell, skillType)
     local nukeAbsorbOrNullify         = xi.spells.damage.calculateNukeAbsorbOrNullify(caster, target, spell, spellElement)
+    local nukes =
+    {
+        [xi.magic.spell.FIRE        ] = 100,
+        [xi.magic.spell.FIRE_II     ] = 150,
+        [xi.magic.spell.FIRE_III    ] = 200,
+        [xi.magic.spell.FIRE_IV     ] = 250,
+        [xi.magic.spell.FIRAGA      ] = 150,
+        [xi.magic.spell.FIRAGA_II   ] = 200,
+        [xi.magic.spell.FIRAGA_III  ] = 250,
+        [xi.magic.spell.STONE       ] = 100,
+        [xi.magic.spell.STONE_II    ] = 150,
+        [xi.magic.spell.STONE_III   ] = 200,
+        [xi.magic.spell.STONE_IV    ] = 250,
+        [xi.magic.spell.STONEGA     ] = 150,
+        [xi.magic.spell.STONEGA_II  ] = 200,
+        [xi.magic.spell.STONEGA_III ] = 250,
+        [xi.magic.spell.WATER       ] = 100,
+        [xi.magic.spell.WATER_II    ] = 150,
+        [xi.magic.spell.WATER_III   ] = 200,
+        [xi.magic.spell.WATER_IV    ] = 250,
+        [xi.magic.spell.WATERGA     ] = 150,
+        [xi.magic.spell.WATERGA_II  ] = 200,
+        [xi.magic.spell.WATERGA_III ] = 250,
+        [xi.magic.spell.AERO        ] = 100,
+        [xi.magic.spell.AERO_II     ] = 150,
+        [xi.magic.spell.AERO_III    ] = 200,
+        [xi.magic.spell.AERO_IV     ] = 250,
+        [xi.magic.spell.AEROGA      ] = 150,
+        [xi.magic.spell.AEROGA_II   ] = 200,
+        [xi.magic.spell.AEROGA_III  ] = 250,
+        [xi.magic.spell.BLIZZARD    ] = 100,
+        [xi.magic.spell.BLIZZARD_II ] = 150,
+        [xi.magic.spell.BLIZZARD_III] = 200,
+        [xi.magic.spell.BLIZZARD_IV ] = 250,
+        [xi.magic.spell.BLIZZAGA    ] = 150,
+        [xi.magic.spell.BLIZZAGA_II ] = 200,
+        [xi.magic.spell.BLIZZAGA_III] = 250,
+        [xi.magic.spell.THUNDER     ] = 100,
+        [xi.magic.spell.THUNDER_II  ] = 150,
+        [xi.magic.spell.THUNDER_III ] = 200,
+        [xi.magic.spell.THUNDER_IV  ] = 250,
+        [xi.magic.spell.THUNDAGA    ] = 150,
+        [xi.magic.spell.THUNDAGA_II ] = 200,
+        [xi.magic.spell.THUNDAGA_III] = 250,
+        [xi.magic.spell.FLARE       ] = 200,
+        [xi.magic.spell.FLARE_II    ] = 250,
+        [xi.magic.spell.QUAKE       ] = 200,
+        [xi.magic.spell.QUAKE_II    ] = 250,
+        [xi.magic.spell.FLOOD       ] = 200,
+        [xi.magic.spell.FLOOD_II    ] = 250,
+        [xi.magic.spell.TORNADO     ] = 200,
+        [xi.magic.spell.TORNADO_II  ] = 250,
+        [xi.magic.spell.FREEZE      ] = 200,
+        [xi.magic.spell.FREEZE_II   ] = 250,
+        [xi.magic.spell.BURST       ] = 200,
+        [xi.magic.spell.BURST_II    ] = 250,
+    }
 
     -- Debug
     -- printf("=====================")
@@ -1020,7 +1077,11 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
 
         -- Only add TP if the target is a mob and if the spell actually does damage.
         if target:getObjType() ~= xi.objType.PC and finalDamage > 0 then
-            target:addTP(100)
+            if nukes[spell:getID()] ~= nil then
+                target:addTP(nukes[spell:getID()])
+            else
+                target:addTP(100)
+            end
         end
 
         -- Add "Magic Burst!" message
