@@ -81,7 +81,7 @@ end
 
 xi.horizon.spawnMob = function(zone, index)
     local table = spawnerMobs[zone:getID()][index]
-    if table.enabled == true then
+    if table.enabled ~= false then
         local functionTable = spawnerFunctions[table.funcLookup]
         local mob = zone:insertDynamicEntity({
             objtype = xi.objType.MOB,
