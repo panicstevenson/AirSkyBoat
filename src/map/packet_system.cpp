@@ -525,7 +525,7 @@ void SmallPacket0x00D(map_session_data_t* const PSession, CCharEntity* const PCh
         sql->Query("UPDATE char_stats SET zoning = 1 WHERE charid = %u", PChar->id);
         charutils::CheckEquipLogic(PChar, SCRIPT_CHANGEZONE, PChar->getZone());
 
-        if (PChar->CraftContainer->getItemsCount() > 0 && PChar->animation == ANIMATION_SYNTH)
+        if ((PChar->CraftContainer->getItemsCount() > 0 && PChar->animation == ANIMATION_SYNTH) || PChar->GetLocalVar("InSynth") != 0)
         {
             // NOTE:
             // Supposed non-losable items are reportely lost if this condition is met:
@@ -534,7 +534,9 @@ void SmallPacket0x00D(map_session_data_t* const PSession, CCharEntity* const PCh
             // interrupted in some way, such as by being attacked or moving to another area (e.g. ship docking).
 
             ShowWarning("SmallPacket0x00D: %s attempting to zone in the middle of a synth, failing their synth!", PChar->GetName());
+            PChar->CraftContainer->m_failType = 3;
             synthutils::doSynthFail(PChar);
+            PChar->SetLocalVar("InSynth", 0);
         }
     }
 
@@ -1022,7 +1024,7 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
                     charutils::UpdateItem(PChar, LOC_INVENTORY, slotID, -1);
 
                     PChar->pushPacket(new CInventoryFinishPacket());
-                    PChar->pushPacket(new CChocoboDiggingPacket(PChar));
+                    PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, new CChocoboDiggingPacket(PChar));
 
                     // dig is possible
                     luautils::OnChocoboDig(PChar, false);
