@@ -4366,6 +4366,42 @@ namespace charutils
                         }
                     }
 
+                    if (lua["xi"]["settings"]["main"]["LEVEL_SYNC_DYNAMIC_PENALTY"].get<bool>() == true)
+                    {
+                        float maxPenalty         = lua["xi"]["settings"]["main"]["LEVEL_SYNC_PENALTY_CAP"].get<uint8>() / 100.f; // Maximum % Of XP Penalty
+                        uint8 graceMax           = lua["xi"]["settings"]["main"]["LEVEL_SYNC_PENALTY_GRACE_MAX"].get<uint8>(); // Maximum Grace Level Range Above Sync Without Penalty
+                        uint8 penaltyRangeMax    = lua["xi"]["settings"]["main"]["LEVEL_SYNC_PENALTY_RANGE_MAX"].get<uint8>(); // Maximum Level Sync Range Before Penalty Is Fully Applied
+                        float perLevelPenalty    = maxPenalty / (penaltyRangeMax - graceMax); // Per Level % Decrease in XP
+                        CCharEntity* PMemberChar = static_cast<CCharEntity*>(PMember);
+                        uint8 penaltyStart       = PMemberChar->StatusEffectContainer->GetStatusEffect(EFFECT_LEVEL_SYNC)->GetPower() + graceMax; // Level Where Penalty Starts To Apply
+                        uint8 levelTarget        = PMemberChar->m_orgLevel; // Original Level of the Member
+
+                        if (levelTarget > penaltyStart) // If Level > Penalty Level Start
+                        {
+                            uint32 recruitFriend1 = PMemberChar->getCharVar("[RAF]Friend1"); // Recruit a Friend ID
+                            uint32 recruitFriend2 = PMemberChar->getCharVar("[RAF]Friend2"); // Recruit a Friend ID
+                            uint32 recruitFriend3 = PMemberChar->getCharVar("[RAF]Friend3"); // Recruit a Friend ID
+                            PMember->ForParty([&levelTarget, &recruitFriend1, &recruitFriend2, &recruitFriend3, &PMemberChar](CBattleEntity* PBattleFriend)
+                            {
+                                CCharEntity* PFriend       = static_cast<CCharEntity*>(PBattleFriend);
+                                CBaseEntity* PFriendEntity = static_cast<CBaseEntity*>(PFriend);
+                                uint32 friendId            = PFriendEntity->id; // ID of PFriend
+
+                                if ((PFriend->getZone() == PMemberChar->getZone()) && (friendId == recruitFriend1 || friendId == recruitFriend2 || friendId == recruitFriend3) && (PFriend->m_orgLevel < levelTarget)) // Check Zone Is The Same | Check If Player Is Friend | Check If Friend's Level Is Less Than Current Target
+                                {
+                                    levelTarget = PFriend->m_orgLevel; // If The Above Is True Then Set New Target Level
+                                }
+                            });
+                            if (levelTarget > penaltyStart) // If Target Level Still Greater Than Penalty Start Apply Penalty
+                            {
+                                uint8 penaltyLevels  = levelTarget - penaltyStart; // Determine How Many Levels Over We Are
+                                float penaltyApplied = perLevelPenalty * penaltyLevels; // Determine Total Penalty As Float
+
+                                exp -= penaltyApplied; // Remove Penalty From EXP
+                            }
+                        }
+                    }
+
                     exp = charutils::AddExpBonus(PMember, exp);
 
                     charutils::AddExperiencePoints(false, PMember, PMob, (uint32)exp, mobCheck, chainactive);

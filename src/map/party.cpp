@@ -592,6 +592,7 @@ void CParty::AddMember(CBattleEntity* PEntity)
             PChar->pushPacket(new CCharSyncPacket(PChar));
         }
         PChar->PTreasurePool->UpdatePool(PChar);
+        PChar->m_orgLevel = PChar->GetMLevel();
 
         // Apply level sync if the party is level synced
         if (m_PSyncTarget != nullptr)

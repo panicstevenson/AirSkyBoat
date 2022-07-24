@@ -567,7 +567,8 @@ public:
 
     void clearCharVarsWithPrefix(std::string const& prefix);
 
-    bool m_Locked; // Is the player locked in a cutscene
+    bool  m_Locked; // Is the player locked in a cutscene
+    uint8 m_orgLevel;
 
     CCharEntity();
     ~CCharEntity();

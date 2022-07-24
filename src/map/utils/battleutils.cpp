@@ -1728,7 +1728,7 @@ namespace battleutils
     {
         int8   shieldSize   = 3;
         int32  base         = 0;
-        float  blockRateMod = (100.0f + PDefender->getMod(Mod::SHIELDBLOCKRATE)) / 100.0f;
+        float  blockRateMod = (110.0f + PDefender->getMod(Mod::SHIELDBLOCKRATE)) / 100.0f; // Increased Shield Block Rate by 10%
         auto*  weapon       = dynamic_cast<CItemWeapon*>(PAttacker->m_Weapons[SLOT_MAIN]);
         uint16 attackskill  = PAttacker->GetSkill((SKILLTYPE)(weapon ? weapon->getSkillType() : 0));
         uint16 blockskill   = PDefender->GetSkill(SKILL_SHIELD);

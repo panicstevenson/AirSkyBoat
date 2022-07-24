@@ -217,4 +217,10 @@ xi.settings.main =
     ENM_COOLDOWN                 = 120,  -- Number of hours before a player can obtain same KI for ENMs (default: 5 days)
     FORCE_SPAWN_QM_RESET_TIME    = 300,  -- Number of seconds the ??? remains hidden for after the despawning of the mob it force spawns.
     GOBBIE_BOX_MIN_AGE           = 45,   -- Minimum character age in days before a character can sign up for Gobbie Mystery Box
+
+    -- Horizon Dynamic Level Sync
+    LEVEL_SYNC_DYNAMIC_PENALTY   = true, -- Enabling Dynamic Level Sync EXP Penalty (bool)
+    LEVEL_SYNC_PENALTY_CAP       = 20, -- Maximum % Of EXP Loss (uint8)
+    LEVEL_SYNC_PENALTY_GRACE_MAX = 10, -- Number of Levels Before EXP Penalty Kicks In (uint8)
+    LEVEL_SYNC_PENALTY_RANGE_MAX = 20, -- Number of Levels Before The Player Receives Maximum Penalty (uint8)
 }
