@@ -202,6 +202,14 @@ xi.settings.main =
     -- Please visit scripts/globals/events/login_campaign.lua for assigning the correct campaign dates.
     ENABLE_LOGIN_CAMPAIGN = 0,
 
+    -- Chocobo digging
+    DIG_RATE                     = 85, -- % chance to receive an item from chocbo digging during favorable weather.  Set between 0 and 100.
+    DIG_FATIGUE                  = 100,  -- Set max amount of items a player can dig every 24 hours. Set to 0 to disable.
+    DIG_ZONE_LIMIT               = 120,  -- Set max amount of items that can be dug from a specific zone every Vana'Diel Day. Set to 0 to disable.
+    DIG_GRANT_BURROW             = 0,
+    DIG_GRANT_BORE               = 0,
+    DIG_DISTANCE_REQ             = 0, -- Sets the distance squared in yalms of how far a player has to move.
+
     -- MISC
     RIVERNE_PORTERS              = 120,  -- Time in seconds that Unstable Displacements in Cape Riverne stay open after trading a scale.
     LANTERNS_STAY_LIT            = 1200, -- time in seconds that lanterns in the Den of Rancor stay lit.
@@ -211,19 +219,10 @@ xi.settings.main =
     NUMBER_OF_DM_EARRINGS        = 1,    -- Number of earrings players can simultaneously own from Divine Might before scripts start blocking them (Default: 1)
     HOMEPOINT_TELEPORT           = 0,    -- Enables the homepoint teleport system
     DIG_ABUNDANCE_BONUS          = 0,    -- Increase chance of digging up an item (450  = item digup chance +45)
-    DIG_FATIGUE                  = 1,    -- Set to 0 to disable Dig Fatigue
-    DIG_GRANT_BURROW             = 0,    -- Set to 1 to grant burrow ability
-    DIG_GRANT_BORE               = 0,    -- Set to 1 to grant bore ability
     ENM_COOLDOWN                 = 120,  -- Number of hours before a player can obtain same KI for ENMs (default: 5 days)
     FORCE_SPAWN_QM_RESET_TIME    = 300,  -- Number of seconds the ??? remains hidden for after the despawning of the mob it force spawns.
     GOBBIE_BOX_MIN_AGE           = 45,   -- Minimum character age in days before a character can sign up for Gobbie Mystery Box
 
     -- Synergy
     ENABLE_SYNERGY = 0, -- Default to off as Synergy is not coded
-
-    -- Horizon Dynamic Level Sync
-    LEVEL_SYNC_DYNAMIC_PENALTY   = true, -- Enabling Dynamic Level Sync EXP Penalty (bool) (Default: true (Enabled))
-    LEVEL_SYNC_PENALTY_CAP       = 20, -- Maximum % Of EXP Loss (uint8) (Default: 20% EXP Lost At Max Penalty)
-    LEVEL_SYNC_PENALTY_GRACE_MAX = 10, -- Number of Levels Before EXP Penalty Kicks In (uint8) (Default: 10 Levels Grace)
-    LEVEL_SYNC_PENALTY_RANGE_MAX = 20, -- Number of Levels Before The Player Receives Maximum Penalty (uint8) (Default: 20 Levels To Reach Max (Makes Total Above Sync 30 Levels))
 }

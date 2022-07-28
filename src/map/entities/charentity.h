@@ -77,6 +77,7 @@ struct profile_t
     location_t home_point; // Renaissance point character
     uint8      campaign_allegiance;
     uint8      unity_leader;
+    uint16     raf[15]; // Recruit a Friend
 
     profile_t()
     {

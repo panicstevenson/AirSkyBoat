@@ -827,7 +827,9 @@ public:
     bool setChocoboRaisingInfo(sol::table table);
     bool deleteRaisedChocobo();
 
-    bool clearSession(std::string const& playerName);
+    bool   clearSession(std::string const& playerName);
+    uint32 getWorldPassRedeemTime();
+    uint32 getWorldpassId(uint32 targid);
 
     static void Register();
 };
