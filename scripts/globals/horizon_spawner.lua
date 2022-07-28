@@ -106,6 +106,17 @@ local spawnerMobs =
         -- Additional mobs to (E-9) Pugil camp
         {name = "Beach Pugil",          groupId =   28, groupZone = 103, funcLookup = "Default", min = 23, max = 26, xPos = -232.1026, yPos =  4.3, zPos = -49.2252, rot =  4, respawn = 330, drops =  248, skills = 197, spells = 0},
     },
+    [xi.zone.LA_THEINE_PLATEAU] =
+    {
+        -- Manaburn Camp 1, Worms
+        {name = "Eikon Worm", groupId =   8, groupZone = 107, funcLookup = "Manaburn_Low", min = 19, max = 23, xPos = -189.53, yPos =  7.09, zPos = 267.21, rot =  51, respawn = 330},
+        {name = "Eikon Worm", groupId =   8, groupZone = 107, funcLookup = "Manaburn_Low", min = 19, max = 23, xPos = -170.55, yPos =  7.35, zPos = 264.01, rot =  51, respawn = 330},
+        {name = "Eikon Worm", groupId =   8, groupZone = 107, funcLookup = "Manaburn_Low", min = 19, max = 23, xPos = -160.24, yPos =  8.00, zPos = 277.61, rot =  51, respawn = 330},
+        {name = "Eikon Worm", groupId =   8, groupZone = 107, funcLookup = "Manaburn_Low", min = 19, max = 23, xPos = -150.67, yPos =  5.78, zPos = 233.19, rot =  51, respawn = 330},
+        {name = "Eikon Worm", groupId =   8, groupZone = 107, funcLookup = "Manaburn_Low", min = 19, max = 23, xPos = -177.37, yPos =  4.78, zPos = 223.24, rot =  51, respawn = 330},
+        {name = "Eikon Worm", groupId =   8, groupZone = 107, funcLookup = "Manaburn_Low", min = 19, max = 23, xPos = -199.03, yPos =  8.00, zPos = 237.35, rot =  51, respawn = 330},
+        {name = "Eikon Worm", groupId =   8, groupZone = 107, funcLookup = "Manaburn_Low", min = 19, max = 23, xPos = -189.93, yPos =  8.30, zPos = 281.38, rot =  51, respawn = 330},
+    }
 }
 
 local spawnerFunctions =
@@ -114,6 +125,20 @@ local spawnerFunctions =
     {
         onSpawn             = function(mob) end,
         onEngaged           = function(mob, target) end,
+        onFight             = function(mob, target) end,
+        onDisengage         = function(mob, target) end,
+        onWeaponskilPrepare = function(mob, target, skill) end,
+        onWeaponskill       = function(mob, target, skill) end,
+        onMagicPrepare      = function(mob, target, spell) end,
+        onRoam              = function(mob) end,
+        onDeath             = function(mob, playerArg, isKiller) end,
+        onDespawn           = function(mob) end,
+        mixins = {},
+    },
+    ["Manaburn_Low"] =
+    {
+        onSpawn             = function(mob) end,
+        onEngaged           = function(mob, target) mob:addMod(xi.mod.DMGPHYS, -9000) mob:addMod(xi.mod.DMGMAGIC, 1500) mob:addMod(xi.mod.MEVA, -20) end,
         onFight             = function(mob, target) end,
         onDisengage         = function(mob, target) end,
         onWeaponskilPrepare = function(mob, target, skill) end,

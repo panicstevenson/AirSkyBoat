@@ -1,0 +1,1 @@
+UPDATE mob_groups SET minLevel = 18, maxLevel = 21 WHERE groupid = "33" AND zoneid = "102";

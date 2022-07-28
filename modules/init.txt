@@ -68,5 +68,9 @@ era/lua_dynamis/globals/era_dynamis_zones.lua
 #-----------------------
 renamer
 #-----------------------
+#		HorizonXI
+#----------------------
+horizon
+#-----------------------
 #		Custom
 #----------------------
