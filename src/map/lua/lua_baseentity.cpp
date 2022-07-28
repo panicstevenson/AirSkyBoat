@@ -14425,6 +14425,22 @@ bool CLuaBaseEntity::clearSession(std::string const& playerName)
 }
 
 /************************************************************************
+ *  Function: spawnType()
+ *  Purpose : Sets the spawn type of a mob.
+ *  Example : mob:setSpawnType(xi.spawnType.AT_NIGHT)
+ ************************************************************************/
+void CLuaBaseEntity::setSpawnType(SPAWNTYPE spawnType)
+{
+    if (m_PBaseEntity->objtype != TYPE_MOB)
+    {
+        return;
+    }
+
+    CMobEntity* PMob  = static_cast<CMobEntity*>(m_PBaseEntity);
+    PMob->m_SpawnType = spawnType;
+}
+
+/************************************************************************
  *  Function: getWorldPassRedeemTime()
  *  Purpose : Returns the time when the character was created with a
  *            world pass.
@@ -15237,8 +15253,10 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("getHistory", CLuaBaseEntity::getHistory);
 
     SOL_REGISTER("clearSession", CLuaBaseEntity::clearSession);
+    SOL_REGISTER("setSpawnType", CLuaBaseEntity::setSpawnType);
     SOL_REGISTER("getWorldPassRedeemTime", CLuaBaseEntity::getWorldPassRedeemTime);
     SOL_REGISTER("getWorldpassId", CLuaBaseEntity::getWorldpassId);
+    
 }
 
 std::ostream& operator<<(std::ostream& os, const CLuaBaseEntity& entity)
