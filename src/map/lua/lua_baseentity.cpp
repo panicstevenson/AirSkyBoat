@@ -14440,6 +14440,53 @@ void CLuaBaseEntity::setSpawnType(SPAWNTYPE spawnType)
     PMob->m_SpawnType = spawnType;
 }
 
+/************************************************************************
+ *  Function: getWorldPassRedeemTime()
+ *  Purpose : Returns the time when the character was created with a
+ *            world pass.
+ *  Example : player:getWorldPassRedeemTime()
+ ************************************************************************/
+
+uint32 CLuaBaseEntity::getWorldPassRedeemTime()
+{
+    const char* wpQuery = "SELECT UNIX_TIMESTAMP(redeemtime) FROM world_pass WHERE rafid = '%u';";
+
+    uint64 timeStamp    = std::chrono::duration_cast<std::chrono::seconds>(server_clock::now().time_since_epoch()).count();
+    uint64 ret          = sql->Query(wpQuery, m_PBaseEntity->id);
+    uint64 rafTime      = 0;
+
+    if (ret != SQL_ERROR && sql->NumRows() != 0)
+    {
+        sql->NextRow();
+        rafTime = sql->GetUInt64Data(0);
+        return (((timeStamp - rafTime) / 3600) / 24);
+    }
+
+    return rafTime;
+}
+
+/************************************************************************
+ *  Function: getWorldPassRedeemTime()
+ *  Purpose : Returns the time when the character was created with a
+ *            world pass.
+ *  Example : player:getWorldPassRedeemTime()
+ ************************************************************************/
+
+uint32 CLuaBaseEntity::getWorldpassId(uint32 targid)
+{
+    const char* wpQuery = "SELECT worldpass FROM world_pass WHERE purchaseid = '%u' AND rafid = '%u';";
+
+    uint32 ret = sql->Query(wpQuery, m_PBaseEntity->id, targid);
+
+    if (ret != SQL_ERROR && sql->NumRows() != 0)
+    {
+        sql->NextRow();
+        return sql->GetUIntData(0);
+    }
+
+    return 0;
+}
+
 //==========================================================//
 
 void CLuaBaseEntity::Register()
@@ -15207,6 +15254,9 @@ void CLuaBaseEntity::Register()
 
     SOL_REGISTER("clearSession", CLuaBaseEntity::clearSession);
     SOL_REGISTER("setSpawnType", CLuaBaseEntity::setSpawnType);
+    SOL_REGISTER("getWorldPassRedeemTime", CLuaBaseEntity::getWorldPassRedeemTime);
+    SOL_REGISTER("getWorldpassId", CLuaBaseEntity::getWorldpassId);
+    
 }
 
 std::ostream& operator<<(std::ostream& os, const CLuaBaseEntity& entity)

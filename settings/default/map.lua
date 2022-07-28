@@ -228,4 +228,10 @@ xi.settings.map =
     --  Gobbie Mystery Box settings
     DAILY_TALLY_AMOUNT = 10,
     DAILY_TALLY_LIMIT  = 50000,
+
+    -- Horizon Dynamic Level Sync
+    LEVEL_SYNC_DYNAMIC_PENALTY   = true, -- Enabling Dynamic Level Sync EXP Penalty (bool) (Default: true (Enabled))
+    LEVEL_SYNC_PENALTY_CAP       = 20, -- Maximum % Of EXP Loss (uint8) (Default: 20% EXP Lost At Max Penalty)
+    LEVEL_SYNC_PENALTY_GRACE_MAX = 10, -- Number of Levels Before EXP Penalty Kicks In (uint8) (Default: 10 Levels Grace)
+    LEVEL_SYNC_PENALTY_RANGE_MAX = 20, -- Number of Levels Before The Player Receives Maximum Penalty (uint8) (Default: 20 Levels To Reach Max (Makes Total Above Sync 30 Levels))
 }

@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS `raf_friends` (
+  `playerid` int(10) NOT NULL,
+  `recruiterid` int(10) DEFAULT 0,
+  `rafid1` int(10) DEFAULT 0,
+  `rafid2` int(10) DEFAULT 0,
+  `rafid3` int(10) DEFAULT 0,
+  `rafid4` int(10) DEFAULT 0,
+  `rafid5` int(10) DEFAULT 0,
+  `rafid6` int(10) DEFAULT 0,
+  `rafid7` int(10) DEFAULT 0,
+  `rafid8` int(10) DEFAULT 0,
+  `rafid9` int(10) DEFAULT 0,
+  `rafid10` int(10) DEFAULT 0,
+  `rafid11` int(10) DEFAULT 0,
+  `rafid12` int(10) DEFAULT 0,
+  `rafid13` int(10) DEFAULT 0,
+  `rafid14` int(10) DEFAULT 0,
+  `rafid15` int(10) DEFAULT 0,
+  PRIMARY KEY (`playerid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

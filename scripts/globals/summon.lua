@@ -403,8 +403,10 @@ xi.summon.avatarFinalAdjustments = function(dmg, mob, skill, target, skilltype, 
     -- handling stoneskin
     dmg = utils.stoneskin(target, dmg)
 
-    if bpRageTpGain[skill:getID()] ~= nil and target:isMob() then -- Add TP Based on Rage Level
-        target:addTP(bpRageTpGain[skill:getID()])
+    if dmg > 0 then
+        target:updateEnmityFromDamage(mob, dmg)
+        target:handleAfflatusMiseryDamage(dmg)
+        target:updateEnmityFromDamage(mob:getMaster(), dmg * 0.20)
     end
 
     return dmg
