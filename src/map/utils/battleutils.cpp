@@ -2150,9 +2150,9 @@ namespace battleutils
                 {
                     baseTp += ((CCharEntity*)PAttacker)->PMeritPoints->GetMeritValue(MERIT_IKISHOTEN, (CCharEntity*)PAttacker);
                 }
-
-                PAttacker->addTP(
-                    (int16)(tpMultiplier * (baseTp * (1.0f + 0.01f * (float)((PAttacker->getMod(Mod::STORETP) + getStoreTPbonusFromMerit(PAttacker)))))));
+                int16 attackerTp = (tpMultiplier * (baseTp * (1.0f + 0.01f * (float)((PAttacker->getMod(Mod::STORETP) + getStoreTPbonusFromMerit(PAttacker))))));
+                PAttacker->addTP(attackerTp);
+                PAttacker->SetLocalVar("[Attack]Tp_Gain", attackerTp);
             }
 
             if (giveTPtoVictim)
@@ -2172,9 +2172,11 @@ namespace battleutils
                 }
                 else
                 {
-                    PDefender->addTP((uint16)(tpMultiplier *
-                                              (std::ceil(baseTp * 1.25) * sBlowMult *
-                                               (1.0f + 0.01f * (float)PDefender->getMod(Mod::STORETP))))); // subtle blow also reduces the "+30" on mob tp gain
+                    uint16 defenderTp = (tpMultiplier *
+                                        (std::ceil(PAttacker->GetLocalVar("[Attack]Tp_Gain") * 1.25) * sBlowMult *
+                                        (1.0f + 0.01f * (float)PDefender->getMod(Mod::STORETP)))); // subtle blow also reduces the "+30" on mob tp gain
+                    printf("Defender TP Gain: %u \n", defenderTp);
+                    PDefender->addTP(defenderTp);
                 }
             }
         }

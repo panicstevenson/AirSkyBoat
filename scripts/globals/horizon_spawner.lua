@@ -112,7 +112,26 @@ local spawnerFunctions =
 {
     ["Default"] =
     {
-        onSpawn             = function(mob) end,
+        onSpawn = function(mob)
+            local index = mob:getZone():getLocalVar(string.format("[SPAWNER]Index_", mob:getID()))
+            local table = spawnerMobs[mob:getZone():getID()][index]
+
+            if table.min ~= nil and table.max ~= nil then
+                mob:setMobLevel(math.random(table.min, table.max))
+            end
+
+            if table.drops ~= nil then
+                mob:setDropID(table.drops)
+            end
+
+            if table.skills ~= nil then
+                mob:setMobMod(xi.mobMod.SKILL_LIST, table.skills)
+            end
+
+            if table.spells ~= nil then
+                mob:setSpellList(table.spells)
+            end
+        end,
         onEngaged           = function(mob, target) end,
         onFight             = function(mob, target) end,
         onDisengage         = function(mob, target) end,
@@ -177,24 +196,9 @@ xi.horizon.spawnMob = function(zone, index)
         mob:setSpawn(table.xPos, table.yPos, table.zPos, table.rot)
         mob:spawn()
 
-        if table.min ~= nil and table.max ~= nil then
-            mob:setMobLevel(math.random(table.min, table.max))
-        end
-
         if table.respawn ~= nil then
             mob:setRespawnTime(table.respawn)
-        end
-
-        if table.drops ~= nil then
-            mob:setDropID(table.drops)
-        end
-
-        if table.skills ~= nil then
-            mob:setMobMod(xi.mobMod.SKILL_LIST, table.skills)
-        end
-
-        if table.spells ~= nil then
-            mob:setSpellList(table.spells)
+            zone:setLocalVar(string.format("[SPAWNER]Index_", mob:getID()), index)
         end
 
         if table.spawnType ~= nil then
