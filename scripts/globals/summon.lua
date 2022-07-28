@@ -407,6 +407,12 @@ xi.summon.avatarFinalAdjustments = function(dmg, mob, skill, target, skilltype, 
         target:addTP(bpRageTpGain[skill:getID()])
     end
 
+    if dmg > 0 then
+        target:updateEnmityFromDamage(mob, dmg)
+        target:handleAfflatusMiseryDamage(dmg)
+        target:updateEnmityFromDamage(mob:getMaster(), dmg * 0.20)
+    end
+
     return dmg
 end
 
