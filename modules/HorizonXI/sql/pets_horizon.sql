@@ -1,4 +1,4 @@
 -- ------------------------------------------------------------
--- Horizon Spell Cost Changes
+-- Horizon Pet Changes
 -- ------------------------------------------------------------
-UPDATE spell_list SET mpCost = '80' WHERE name = "Refresh";
+UPDATE pet_list SET maxLevel = '75' WHERE petid > '35' AND petid < '48'; -- Set all HQ to cap at 75

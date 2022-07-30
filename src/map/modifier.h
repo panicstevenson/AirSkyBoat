@@ -916,6 +916,18 @@ enum class Mod
     LIGHT_EEM   = 1164, // Elemental Evasion Multiplier (Known as SDT in common magic accuracy formulas) (out of 100)
     DARK_EEM    = 1165, // Elemental Evasion Multiplier (Known as SDT in common magic accuracy formulas) (out of 100)
 
+    // Horizon Specific Mods
+    CURE_SPELL_COST          = 1400, // Sets Cure Cost Reduction (Out of 100)
+    DMG_AGAINST_UNDEAD_MULT  = 1401, // Adds bonus% Multiplier to Damage Against Undead (Out of 100) (Used in Circle Abilities)
+    DMG_AGAINST_DEMON_MULT   = 1402, // Adds bonus% Multiplier to Damage Against Demons (Out of 100) (Used in Circle Abilities)
+    DMG_AGAINST_DRAGON_MULT  = 1403, // Adds bonus% Multiplier to Damage Against Dragons (Out of 100) (Used in Circle Abilities)
+    DMG_AGAINST_ARCANA_MULT  = 1404, // Adds bonus% Multiplier to Damage Against Arcana (Out of 100) (Used in Circle Abilities)
+    UNDEAD_MITIGATION_MULT   = 1405, // Adds bonus mitigation to status effects and elemental attacks from Undead (Out of 100) (Used in Circle Abilities)
+    DEMON_MITIGATION_MULT    = 1406, // Adds bonus mitigation to status effects and elemental attacks from Demons (Out of 100) (Used in Circle Abilities)
+    DRAGON_MITIGATION_MULT   = 1407, // Adds bonus mitigation to status effects and elemental attacks from Dragons (Out of 100) (Used in Circle Abilities)
+    ARCANA_MITIGATION_MULT   = 1408, // Adds bonus mitigation to status effects and elemental attacks from Arcana (Out of 100) (Used in Circle Abilities)
+    SOUL_EATER_NULLIFICATION = 1409, // Nullifies Soul Eater Damage (1 = on, 0 = off)
+
     // IF YOU ADD ANY NEW MODIFIER HERE, ADD IT IN scripts/globals/status.lua ASWELL!
 
     // The spares take care of finding the next ID to use so long as we don't forget to list IDs that have been freed up by refactoring.

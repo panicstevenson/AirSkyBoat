@@ -504,7 +504,7 @@ function applyResistanceEffect(caster, target, spell, params)
     end
 
     if effect ~= nil then
-        effectRes = effectRes - getEffectResistance(target, effect)
+        effectRes = effectRes - getEffectResistance(target, effect, nil, caster)
     end
 
     local p = getMagicHitRate(caster, target, skill, element, effectRes, magicaccbonus, diff)
@@ -722,10 +722,11 @@ end
 
 -- Returns the amount of resistance the
 -- target has to the given effect (stun, sleep, etc..)
-function getEffectResistance(target, effect, returnBuild)
+function getEffectResistance(target, effect, returnBuild, caster)
     local effectres = 0
     local buildres = 0
     local statusres = target:getMod(xi.mod.STATUSRES)
+    local ecoBonus = 0
     local resTable =
     {
         [xi.effect.SLEEP_I] = { effectres = xi.mod.SLEEPRES, buildres = xi.mod.SLEEPRESBUILD },
@@ -749,6 +750,16 @@ function getEffectResistance(target, effect, returnBuild)
         [xi.effect.CHARM_II] = { effectres = xi.mod.CHARMRES, buildres = xi.mod.CHARMRESBUILD },
         [xi.effect.AMNESIA] = { effectres = xi.mod.AMNESIARES, buildres = xi.mod.AMNESIARESBUILD },
     }
+    local circleTable =
+    {
+        [xi.effect.BLINDNESS] = { ecosystem = xi.ecosystem.UNDEAD, statuseffect = xi.effect.HOLY_CIRCLE, mod = xi.mod.UNDEAD_MITIGATION_MULT },
+        [xi.effect.DISEASE]   = { ecosystem = xi.ecosystem.UNDEAD, statuseffect = xi.effect.HOLY_CIRCLE, mod = xi.mod.UNDEAD_MITIGATION_MULT },
+        [xi.effect.SLOW]      = { ecosystem = xi.ecosystem.DEMON, statuseffect = xi.effect.DEMON_CIRCLE, mod = xi.mod.DEMON_MITIGATION_MULT },
+        [xi.effect.GRAVITY]   = { ecosystem = xi.ecosystem.DEMON, statuseffect = xi.effect.DEMON_CIRCLE, mod = xi.mod.DEMON_MITIGATION_MULT },
+        [xi.effect.AMNESIA]   = { ecosystem = xi.ecosystem.DEMON, statuseffect = xi.effect.DEMON_CIRCLE, mod = xi.mod.DEMON_MITIGATION_MULT },
+        [xi.effect.PARALYSIS] = { ecosystem = xi.ecosystem.DRAGON, statuseffect = xi.effect.ANCIENT_CIRCLE, mod = xi.mod.DRAGON_MITIGATION_MULT },
+        [xi.effect.STUN]      = { ecosystem = xi.ecosystem.ARCANA, statuseffect = xi.effect.HOLY_CIRCLE, mod = xi.mod.ARCANA_MITIGATION_MULT },
+    }
 
     for effectIndex, effectTable in pairs(resTable) do
         if effectIndex == effect then
@@ -756,6 +767,10 @@ function getEffectResistance(target, effect, returnBuild)
             buildres = effectTable.buildres
             break
         end
+    end
+
+    if caster:getSystem() == circleTable[effect].ecosystem and target:hasStatusEffect(circleTable[effect].statuseffect) then
+        ecoBonus = (circleTable[effect].mod / 100)
     end
 
     if returnBuild ~= nil then
@@ -767,7 +782,7 @@ function getEffectResistance(target, effect, returnBuild)
     end
 
     if effectres ~= 0 then
-        return target:getMod(effectres) + statusres
+        return target:getMod(effectres) + statusres + ecoBonus
     end
 
     return statusres

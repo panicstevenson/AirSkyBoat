@@ -518,7 +518,7 @@ void CAttack::ProcessDamage(bool isCritical)
     }
 
     // Soul eater.
-    if (m_attacker->objtype == TYPE_PC)
+    if (m_attacker->objtype == TYPE_PC && m_victim->getMod(Mod::SOUL_EATER_NULLIFICATION) == 0)
     {
         m_damage = battleutils::doSoulEaterEffect((CCharEntity*)m_attacker, m_damage);
     }
@@ -555,6 +555,27 @@ void CAttack::ProcessDamage(bool isCritical)
     if (m_attacker->getMod(Mod::AUGMENTS_TA) > 0 && m_trickAttackDamage > 0 && m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_TRICK_ATTACK))
     {
         m_damage += (int32)(m_damage * ((100 + (m_attacker->getMod(Mod::AUGMENTS_TA))) / 100.0f));
+    }
+
+    if (m_victim->objtype == TYPE_MOB)
+    {
+        auto* PMob = static_cast<CMobEntity*>(m_victim);
+        if (PMob != nullptr && m_attacker->getMod(Mod::DMG_AGAINST_UNDEAD_MULT) != 0 && PMob->m_EcoSystem == ECOSYSTEM::UNDEAD)
+        {
+            m_damage *= 1 + (m_attacker->getMod(Mod::DMG_AGAINST_UNDEAD_MULT) / 100);
+        }
+        else if (PMob != nullptr && m_attacker->getMod(Mod::DMG_AGAINST_DEMON_MULT) != 0 && PMob->m_EcoSystem == ECOSYSTEM::DEMON)
+        {
+            m_damage *= 1 + (m_attacker->getMod(Mod::DMG_AGAINST_DEMON_MULT) / 100);
+        }
+        if (PMob != nullptr && m_attacker->getMod(Mod::DMG_AGAINST_DRAGON_MULT) != 0 && PMob->m_EcoSystem == ECOSYSTEM::DRAGON)
+        {
+            m_damage *= 1 + (m_attacker->getMod(Mod::DMG_AGAINST_DRAGON_MULT) / 100);
+        }
+        if (PMob != nullptr && m_attacker->getMod(Mod::DMG_AGAINST_ARCANA_MULT) != 0 && PMob->m_EcoSystem == ECOSYSTEM::ARCANA)
+        {
+            m_damage *= 1 + (m_attacker->getMod(Mod::DMG_AGAINST_ARCANA_MULT) / 100);
+        }
     }
 
     // Try skill up.

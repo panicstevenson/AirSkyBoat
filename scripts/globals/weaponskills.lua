@@ -16,6 +16,24 @@ require("scripts/globals/magic")
 require("scripts/globals/utils")
 require("scripts/globals/msg")
 
+local circleEffects =
+{
+    [xi.ecosystem.UNDEAD] = xi.mod.DMG_AGAINST_UNDEAD_MULT,
+    [xi.ecosystem.DEMON]  = xi.mod.DMG_AGAINST_DEMON_MULT,
+    [xi.ecosystem.DRAGON] = xi.mod.DMG_AGAINST_DRAGON_MULT,
+    [xi.ecosystem.ARCANA] = xi.mod.DMG_AGAINST_ARCANA_MULT,
+}
+
+local function getCircleEffect(attacker, target, finaldmg)
+    for ecosystem, bonus in pairs(circleEffects) do
+        if target:getSystem() == ecosystem and attacker:getMod(bonus) ~= 0 then
+            finaldmg = finaldmg * (1 + (attacker:getMod(bonus) / 100))
+            break
+        end
+    end
+
+    return finaldmg
+end
 -- Obtains alpha, used for working out WSC on legacy servers
 local function getAlpha(level)
     -- Retail has no alpha anymore as of 2014. Weaponskill functions
@@ -621,6 +639,7 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
 
     finaldmg = finaldmg * ((100 + bonusdmg) / 100) -- Apply our "all hits" WS dmg bonuses
     finaldmg = finaldmg + firstHitBonus -- Finally add in our "first hit" WS dmg bonus from before
+    finaldmg = getCircleEffect(attacker, target, finaldmg)
 
     -- Return our raw damage to then be modified by enemy reductions based off of melee/ranged
     calcParams.finalDmg = finaldmg
@@ -823,6 +842,7 @@ function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primar
         -- Add in bonusdmg
         dmg = dmg * ((100 + bonusdmg) / 100) -- Apply our "all hits" WS dmg bonuses
         dmg = dmg + ((dmg * attacker:getMod(xi.mod.ALL_WSDMG_FIRST_HIT)) / 100) -- Add in our "first hit" WS dmg bonus
+        dmg = getCircleEffect(attacker, target, dmg)
 
         -- Calculate magical bonuses and reductions
         dmg = addBonusesAbility(attacker, wsParams.element, target, dmg, wsParams)

@@ -496,8 +496,13 @@ xi.mobskills.mobBreathMove = function(mob, target, percent, base, element, cap)
     local globalDamageTaken   = target:getMod(xi.mod.DMG) / 10000          -- Mod is base 10000
     local breathDamageTaken   = target:getMod(xi.mod.DMGBREATH) / 10000    -- Mod is base 10000
     local combinedDamageTaken = 1.0 +  utils.clamp(breathDamageTaken + globalDamageTaken, -0.5, 0.5) -- The combination of regular "Damage Taken" and "Breath Damage Taken" caps at 50%. There is no BDTII known as of yet.
+    local ecoDamageTaken              = 0
 
-    damage = math.floor(damage * combinedDamageTaken)
+    if mob:getSystem() == xi.ecosystem.DRAGON then
+        ecoDamageTaken = target:getMod(xi.mod.DRAGON_MITIGATION_MULT) / 100 -- Mod is base 100
+    end
+
+    damage = math.floor(damage * (combinedDamageTaken + ecoDamageTaken))
 
     if target:hasStatusEffect(xi.effect.ALL_MISS) and target:getStatusEffect(xi.effect.ALL_MISS):getPower() > 1 then
         return 0

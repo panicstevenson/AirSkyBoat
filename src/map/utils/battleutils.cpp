@@ -2175,7 +2175,6 @@ namespace battleutils
                     uint16 defenderTp = (tpMultiplier *
                                         (std::ceil(PAttacker->GetLocalVar("[Attack]Tp_Gain") * 1.25) * sBlowMult *
                                         (1.0f + 0.01f * (float)PDefender->getMod(Mod::STORETP)))); // subtle blow also reduces the "+30" on mob tp gain
-                    printf("Defender TP Gain: %u \n", defenderTp);
                     PDefender->addTP(defenderTp);
                 }
             }
@@ -4611,7 +4610,7 @@ namespace battleutils
         }
 
         // check for soul eater
-        if (PAttacker->objtype == TYPE_PC)
+        if (PAttacker->objtype == TYPE_PC && PVictim->getMod(Mod::SOUL_EATER_NULLIFICATION) == 0)
         {
             totalDamage = battleutils::doSoulEaterEffect((CCharEntity*)PAttacker, totalDamage);
         }
@@ -6350,6 +6349,10 @@ namespace battleutils
             else if (applyArts)
             {
                 cost += (int16)(base * (PEntity->getMod(Mod::WHITE_MAGIC_COST) / 100.0f));
+            }
+            if (PSpell->getSpellFamily() == SPELLFAMILY_CURA || PSpell->getSpellFamily() == SPELLFAMILY_CURAGA || PSpell->getSpellFamily() == SPELLFAMILY_CURE || PSpell->getSpellFamily() == SPELLFAMILY_REGEN)
+            {
+                cost -= cost * (PEntity->getMod(Mod::CURE_SPELL_COST) / 100);
             }
         }
         if (xirand::GetRandomNumber(100) < (PEntity->getMod(Mod::NO_SPELL_MP_DEPLETION)))
