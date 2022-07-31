@@ -74,7 +74,7 @@ local spawnerMobs =
     },
     [xi.zone.SAUROMUGUE_CHAMPAIGN] =
     {
-       -- Camp 1, Beetles/Cockatrice
+        -- Camp 1, Beetles/Cockatrice
         {name = "Diving Beetle",        groupId =   36, groupZone = 120, funcLookup = "Default", min = 30, max = 32, xPos = -258.104, yPos =  7.783, zPos = 67.375, rot =  127, respawn = 330, drops =  670, skills = 49, spells = 0},
         {name = "Diving Beetle",        groupId =   36, groupZone = 120, funcLookup = "Default", min = 30, max = 32, xPos = -270.230, yPos =  7.692, zPos = 79.879, rot =  127, respawn = 330, drops =  670, skills = 49, spells = 0},
         {name = "Diving Beetle",        groupId =   36, groupZone = 120, funcLookup = "Default", min = 30, max = 32, xPos = -265.657, yPos =  7.717, zPos = 48.222, rot =  72, respawn = 330, drops =  670, skills = 49, spells = 0},
@@ -194,11 +194,11 @@ xi.horizon.spawnMob = function(zone, index)
         })
 
         mob:setSpawn(table.xPos, table.yPos, table.zPos, table.rot)
+        zone:setLocalVar(string.format("[SPAWNER]Index_", mob:getID()), index)
         mob:spawn()
 
         if table.respawn ~= nil then
             mob:setRespawnTime(table.respawn)
-            zone:setLocalVar(string.format("[SPAWNER]Index_", mob:getID()), index)
         end
 
         if table.spawnType ~= nil then
