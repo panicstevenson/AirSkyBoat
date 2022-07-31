@@ -26,7 +26,7 @@ local battlefields =
         { 0,  640,    0},   -- Flames of the Dead (PM5-3 U3)
      -- { 1,  641,    0},   -- Follow the White Rabbit (ENM)
      -- { 2,  642,    0},   -- When Hell Freezes Over (ENM)
-     -- { 3,  643,    0},   -- Brothers (ENM) -- TODO: Chthonian Ray mobskill
+        { 3,  643,    0},   -- Brothers (ENM)
         { 4,  644,    0},   -- Holy Cow (ENM)
      -- { 5,    ?, 3454},   -- Taurassic Park (HKC30)
     },
@@ -239,12 +239,12 @@ local battlefields =
         { 1,    1, 1131},   -- Tails of Woe (BS40)
         { 2,    2, 1130},   -- Dismemberment Brigade (BS60)
         { 3,    3,    0},   -- The Secret Weapon (Sandy 7-2)
-     -- { 4,    4, 1177},   -- Hostile Herbivores (BS50) -- TODO: mobs need knockback on melee attacks
+        { 4,    4, 1177},   -- Hostile Herbivores (BS50)
         { 5,    5, 1426},   -- Shattering Stars (WAR LB5)
         { 6,    6, 1429},   -- Shattering Stars (BLM LB5)
         { 7,    7, 1436},   -- Shattering Stars (RNG LB5)
         { 8,    8, 1552},   -- Carapace Combatants (BS30)
-     -- { 9,    9, 1551},   -- Shooting Fish (BS20) -- TODO: mobs use ranged attacks with knockback
+        { 9,    9, 1551},   -- Shooting Fish (BS20)
         {10,   10, 1552},   -- Dropping Like Flies (BS30)
         {11,   11, 1553},   -- Horns of War (KS99)
         {12,   12, 1131},   -- Under Observation (BS40)
@@ -291,9 +291,9 @@ local battlefields =
         {11,   75, 1552},   -- Grove Guardians (BS30)
         {12,   76, 1553},   -- The Hills are Alive (KS99)
      -- {13,   77, 1131},   -- Royal Jelly (BS40) -- TODO: all combat mechanics, loot
-     -- {14,   78, 1177},   -- The Final Bout (BS50) -- TODO: mobskills Big Blow and Counterstance
+        {14,   78, 1177},   -- The Final Bout (BS50)
         {15,   79, 1130},   -- Up in Arms (BS60)
-     -- {16,   80, 1175},   -- Copycat (KS30)
+        {16,   80, 1175},   -- Copycat (KS30)
      -- {17,   81, 1178},   -- Operation Desert Swarm (KS30) -- TODO: Wild Rage gets stronger as they die. Build sleep resistance. Testing.
      -- {18,   82, 1180},   -- Prehistoric Pigeons (KS30) -- TODO: Build resistance to sleep quickly. When one dies, remaining ones become more powerful.
      -- {19,   83, 3351},   -- The Palborough Project (KC30)
@@ -325,7 +325,7 @@ local battlefields =
         {12,  108, 1131},   -- Royal Succession (BS40)
         {13,  109, 1177},   -- Rapid Raptors (BS50)
         {14,  110, 1130},   -- Wild Wild Whiskers (BS60) -- TODO: should use petrifactive breath more often than other mobskill. Message before spellcasting.
-     -- {15,  111, 1175},   -- Seasons Greetings (KS30)
+        {15,  111, 1175},   -- Seasons Greetings (KS30)
      -- {16,  112, 1178},   -- Royale Ramble (KS30)
      -- {17,  113, 1180},   -- Moa Constrictors (KS30)
      -- {18,  114, 3351},   -- The V Formation (KC30)
@@ -474,7 +474,7 @@ local battlefields =
     [xi.zone.QUBIA_ARENA] =
     {
         { 0,  512,    0},   -- The Rank 5 Mission (Mission 5-1)
-     -- { 1,  513, 1175},   -- Come Into My Parlor (KS30)
+        { 1,  513, 1175},   -- Come Into My Parlor (KS30)
      -- { 2,  514, 1178},   -- E-vase-ive Action (KS30)
      -- { 3,  515, 1180},   -- Infernal Swarm (KS30)
         { 4,  516,    0},   -- The Heir to the Light (Sandy 9-2)

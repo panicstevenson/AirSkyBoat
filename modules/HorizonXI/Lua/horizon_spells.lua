@@ -54,10 +54,6 @@ m:addOverride("xi.globals.spells.black.drain.onSpellCast", function(caster, targ
 
     caster:addHP(dmg)
 
-    if (target:getHP() < dmg) then
-        target:setHP(0)
-    end
-
     return dmg
 end)
 
@@ -116,10 +112,6 @@ m:addOverride("xi.globals.spells.black.drain_ii.onSpellCast", function(caster, t
     dmg = finalMagicAdjustments(caster, target, spell, dmg)
     caster:addHP(dmg)
     spell:setMsg(xi.msg.basic.MAGIC_DRAIN_HP) --change msg to 'xxx hp drained from the yyyy.'
-
-    if (target:getHP() < dmg) then
-        target:setHP(0)
-    end
 
     return dmg
 end)
