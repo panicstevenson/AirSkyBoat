@@ -3360,7 +3360,6 @@ INSERT INTO `mob_droplist` VALUES (352,0,0,1000,17397,@VCOMMON); -- Shell Bug (V
 INSERT INTO `mob_droplist` VALUES (352,0,0,1000,607,@RARE);      -- Quadav Fetich Torso (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (352,0,0,1000,608,@RARE);      -- Quadav Fetich Arms (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (352,0,0,1000,1025,@RARE);     -- Palborough Chest Key (Rare, 5%)
-INSERT INTO `mob_droplist` VALUES (352,0,0,1000,2758,30);        -- Quadav Backscale (3.0%)
 INSERT INTO `mob_droplist` VALUES (352,0,0,1000,12449,@VRARE);   -- Brass Cap (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (352,0,0,1000,12705,@VRARE);   -- Brass Mittens (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (352,0,0,1000,12833,@VRARE);   -- Brass Subligar (Very Rare, 1%)
@@ -4653,7 +4652,6 @@ INSERT INTO `mob_droplist` VALUES (513,2,0,1000,750,0);          -- Silver Beast
 INSERT INTO `mob_droplist` VALUES (514,0,0,1000,1984,@UNCOMMON); -- Snapping Mole (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (514,0,0,1000,1025,@RARE);     -- Palborough Chest Key (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (514,0,0,1000,1529,@RARE);     -- Darksteel Engraving (Rare, 5%)
-INSERT INTO `mob_droplist` VALUES (514,0,0,1000,2758,30);        -- Quadav Backscale (3.0%)
 INSERT INTO `mob_droplist` VALUES (514,0,0,1000,12449,@VRARE);   -- Brass Cap (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (514,0,0,1000,12705,@VRARE);   -- Brass Mittens (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (514,0,0,1000,12833,@VRARE);   -- Brass Subligar (Very Rare, 1%)
@@ -7129,7 +7127,7 @@ INSERT INTO `mob_droplist` VALUES (849,0,0,1000,643,@VCOMMON); -- Chunk Of Iron 
 INSERT INTO `mob_droplist` VALUES (849,0,0,1000,768,@RARE);    -- Flint Stone (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (849,2,0,1000,17296,0);      -- Pebble (Steal)
 
--- ZoneID: Unknown - Unknown
+-- ZoneID: 166 - Floating Eye
 INSERT INTO `mob_droplist` VALUES (850,0,0,1000,921,@UNCOMMON); -- Bottle Of Ahriman Tears (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (850,0,0,1000,557,@RARE);     -- Ahriman Lens (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (850,2,0,1000,921,0);         -- Bottle Of Ahriman Tears (Steal)
@@ -8409,7 +8407,6 @@ INSERT INTO `mob_droplist` VALUES (1019,2,0,1000,17336,0);        -- Crossbow Bo
 -- ZoneID: 191 - Goblin Ambusher
 INSERT INTO `mob_droplist` VALUES (1020,0,0,1000,937,@VCOMMON);   -- Block Of Animal Glue (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (1020,0,0,1000,656,@UNCOMMON);  -- Beastcoin (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (1020,0,0,1000,2758,@UNCOMMON); -- Quadav Backscale (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (1020,0,0,1000,510,@RARE);      -- Goblin Armor (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1020,0,0,1000,511,@RARE);      -- Goblin Mask (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1020,0,0,1000,1028,@RARE);     -- Dangruf Chest Key (Rare, 5%)
@@ -8547,7 +8544,6 @@ INSERT INTO `mob_droplist` VALUES (1033,2,0,1000,656,0);          -- Beastcoin (
 -- ZoneID: 191 - Goblin Butcher
 INSERT INTO `mob_droplist` VALUES (1034,0,0,1000,656,@UNCOMMON);  -- Beastcoin (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (1034,0,0,1000,1028,@UNCOMMON); -- Dangruf Chest Key (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (1034,0,0,1000,2758,@UNCOMMON); -- Quadav Backscale (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (1034,0,0,1000,507,@VRARE);     -- Goblin Mail (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1034,0,0,1000,508,@VRARE);     -- Goblin Helm (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1034,0,0,1000,12432,@VRARE);   -- Faceguard (Very Rare, 1%)
@@ -8977,7 +8973,7 @@ INSERT INTO `mob_droplist` VALUES (1080,0,0,1000,2757,@UNCOMMON); -- Orcish Armo
 INSERT INTO `mob_droplist` VALUES (1080,0,0,1000,952,@RARE);      -- Bag Of Poison Flour (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1080,2,0,1000,750,0);          -- Silver Beastcoin (Steal)
 
--- ZoneID: Unknown - Unknown
+-- ZoneID: 191 - Goblin Gambler
 INSERT INTO `mob_droplist` VALUES (1081,0,0,1000,952,@RARE);    -- Bag Of Poison Flour (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1081,0,0,1000,12473,@VRARE); -- Poets Circlet (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1081,0,0,1000,12985,@VRARE); -- Holly Clogs (Very Rare, 1%)
@@ -9211,7 +9207,7 @@ INSERT INTO `mob_droplist` VALUES (1106,0,0,1000,12729,@VRARE);   -- Linen Cuffs
 INSERT INTO `mob_droplist` VALUES (1106,0,0,1000,12857,@VRARE);   -- Linen Slops (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1106,2,0,1000,750,0);          -- Silver Beastcoin (Steal)
 
--- ZoneID: Unknown - Unknown
+-- ZoneID: 191 -- Goblin Leecher
 INSERT INTO `mob_droplist` VALUES (1107,0,0,1000,4666,@RARE);   -- Scroll Of Paralyze (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1107,0,0,1000,4733,@RARE);   -- Scroll Of Protectra (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1107,0,0,1000,4744,@RARE);   -- Scroll Of Invisible (Rare, 5%)
@@ -9355,9 +9351,8 @@ INSERT INTO `mob_droplist` VALUES (1118,0,0,1000,12833,@VRARE);   -- Brass Subli
 INSERT INTO `mob_droplist` VALUES (1118,0,0,1000,12961,@VRARE);   -- Brass Leggings (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1118,2,0,1000,750,0);          -- Silver Beastcoin (Steal)
 
--- ZoneID: Unknown - Unknown
+-- ZoneID: 191 - Goblin Mugger
 INSERT INTO `mob_droplist` VALUES (1119,0,0,1000,750,@UNCOMMON);  -- Silver Beastcoin (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (1119,0,0,1000,2758,@UNCOMMON); -- Quadav Backscale (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (1119,0,0,1000,510,@RARE);      -- Goblin Armor (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1119,0,0,1000,511,@RARE);      -- Goblin Mask (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1119,0,0,1000,12449,@VRARE);   -- Brass Cap (Very Rare, 1%)
@@ -9448,7 +9443,7 @@ INSERT INTO `mob_droplist` VALUES (1130,0,0,1000,12817,@VRARE); -- Brass Cuisses
 INSERT INTO `mob_droplist` VALUES (1130,0,0,1000,12945,@VRARE); -- Brass Greaves (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1130,2,0,1000,750,0);        -- Silver Beastcoin (Steal)
 
--- ZoneID: Unknown - Unknown
+-- ZoneID: 166 - Goblin Pathfinder
 INSERT INTO `mob_droplist` VALUES (1131,0,0,1000,12433,@VRARE); -- Brass Mask (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1131,0,0,1000,12689,@VRARE); -- Brass Finger Gauntlets (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1131,0,0,1000,12817,@VRARE); -- Brass Cuisses (Very Rare, 1%)
@@ -9652,7 +9647,7 @@ INSERT INTO `mob_droplist` VALUES (1151,0,0,1000,12858,@VRARE); -- Wool Slops (V
 INSERT INTO `mob_droplist` VALUES (1151,0,0,1000,12986,@VRARE); -- Chestnut Sabots (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1151,2,0,1000,750,0);        -- Silver Beastcoin (Steal)
 
--- ZoneID: Unknown - Unknown
+-- ZoneID: 166 - Goblin Shaman
 INSERT INTO `mob_droplist` VALUES (1152,0,0,1000,12474,@VRARE); -- Wool Hat (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1152,0,0,1000,12858,@VRARE); -- Wool Slops (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1152,2,0,1000,750,0);        -- Silver Beastcoin (Steal)
@@ -9734,7 +9729,7 @@ INSERT INTO `mob_droplist` VALUES (1162,0,0,1000,12808,@VRARE); -- Chain Hose (V
 INSERT INTO `mob_droplist` VALUES (1162,0,0,1000,12936,@VRARE); -- Greaves (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1162,2,0,1000,750,0);        -- Silver Beastcoin (Steal)
 
--- ZoneID: Unknown - Unknown
+-- ZoneID: 166 - Goblin Smithy
 INSERT INTO `mob_droplist` VALUES (1163,0,0,1000,12424,@VRARE); -- Iron Mask (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1163,0,0,1000,12680,@VRARE); -- Chain Mittens (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1163,0,0,1000,12808,@VRARE); -- Chain Hose (Very Rare, 1%)
@@ -10298,7 +10293,6 @@ INSERT INTO `mob_droplist` VALUES (1235,0,0,1000,609,@VRARE);     -- Quadav Feti
 INSERT INTO `mob_droplist` VALUES (1235,2,0,1000,656,0);          -- Beastcoin (Steal)
 
 -- ZoneID: 143 - Greater Quadav
-INSERT INTO `mob_droplist` VALUES (1236,0,0,1000,2758,@UNCOMMON);  -- Quadav Backscale (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (1236,0,0,1000,13116,@UNCOMMON); -- Silver Name Tag (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (1236,0,0,1000,606,@RARE);       -- Quadav Fetich Head (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1236,0,0,1000,607,@RARE);       -- Quadav Fetich Torso (Rare, 5%)
@@ -13967,7 +13961,7 @@ INSERT INTO `mob_droplist` VALUES (1746,0,0,1000,1150,@VRARE);  -- Snobby Letter
 INSERT INTO `mob_droplist` VALUES (1746,4,0,1000,834,0);        -- Ball Of Saruta Cotton (Despoil)
 INSERT INTO `mob_droplist` VALUES (1746,4,0,1000,4368,0);       -- Two-Leaf Mandragora Bud (Despoil)
 
--- ZoneID: Unknown - Unknown
+-- ZoneID: 172 - Mouse Bat
 INSERT INTO `mob_droplist` VALUES (1747,0,0,1000,922,@VCOMMON); -- Bat Wing (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (1747,0,0,1000,560,@COMMON);  -- Pinch Of Zeruhn Soot (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (1747,0,0,1000,924,@VRARE);   -- Vial Of Fiend Blood (Very Rare, 1%)
@@ -15174,7 +15168,6 @@ INSERT INTO `mob_droplist` VALUES (1849,0,0,1000,609,@UNCOMMON);  -- Quadav Feti
 INSERT INTO `mob_droplist` VALUES (1849,0,0,1000,1984,@UNCOMMON); -- Snapping Mole (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (1849,0,0,1000,1025,@RARE);     -- Palborough Chest Key (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1849,0,0,1000,1984,@RARE);     -- Snapping Mole (Rare, 5%)
-INSERT INTO `mob_droplist` VALUES (1849,0,0,1000,2758,20);        -- Quadav Backscale (2.0%)
 INSERT INTO `mob_droplist` VALUES (1849,0,0,1000,12449,@VRARE);   -- Brass Cap (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1849,0,0,1000,12705,@VRARE);   -- Brass Mittens (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1849,0,0,1000,12961,@VRARE);   -- Brass Leggings (Very Rare, 1%)
@@ -15310,7 +15303,6 @@ INSERT INTO `mob_droplist` VALUES (1864,0,0,1000,609,@VRARE); -- Quadav Fetich L
 INSERT INTO `mob_droplist` VALUES (1864,2,0,1000,656,0);      -- Beastcoin (Steal)
 
 -- ZoneID: 143 - Onyx Quadav
-INSERT INTO `mob_droplist` VALUES (1865,0,0,1000,2758,@UNCOMMON);  -- Quadav Backscale (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (1865,0,0,1000,13116,@UNCOMMON); -- Silver Name Tag (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (1865,0,0,1000,606,@RARE);       -- Quadav Fetich Head (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1865,0,0,1000,607,@RARE);       -- Quadav Fetich Torso (Rare, 5%)
@@ -21460,7 +21452,6 @@ INSERT INTO `mob_droplist` VALUES (2578,0,0,1000,2504,@VRARE);    -- Heavy Quada
 INSERT INTO `mob_droplist` VALUES (2578,2,0,1000,2531,0);         -- Shard Of Obsidian (Steal)
 
 -- ZoneID: 143 - Veteran Quadav
-INSERT INTO `mob_droplist` VALUES (2579,0,0,1000,2758,@UNCOMMON); -- Quadav Backscale (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (2579,0,0,1000,606,@RARE);      -- Quadav Fetich Head (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (2579,0,0,1000,607,@RARE);      -- Quadav Fetich Torso (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (2579,0,0,1000,608,@RARE);      -- Quadav Fetich Arms (Rare, 5%)
@@ -26705,6 +26696,9 @@ INSERT INTO `mob_droplist` VALUES (3224,0,0,1000,2815,@COMMON);  -- Aptant Of Ar
 
 -- ZoneID: 125 - Picolaton
 INSERT INTO `mob_droplist` VALUES (3225,0,0,1000,11343,@COMMON); -- Thrakon Breastplate (Common, 15%)
+
+-- ZoneID: 191 - Stickpin
+INSERT INTO `mob_droplist` VALUES (3226,0,0,1000,924,@UNCOMMON); -- Vial Of Fiend Blood (Uncommon, 10%)
 
 /*!40000 ALTER TABLE `mob_droplist` ENABLE KEYS */;
 UNLOCK TABLES;
