@@ -9,6 +9,7 @@ require("scripts/globals/conquest")
 local zone_object = {}
 
 zone_object.onInitialize = function(zone)
+    xi.horizon.spawnInitialMobs(zone)
     -- pick a random Taisaijin PH and set its do not disturb time
     local phIndex = math.random(1, 3)
     local ph = GetMobByID(ID.mob.TAISAIJIN_PH[phIndex])

@@ -11,6 +11,7 @@ require("scripts/globals/status")
 local zone_object = {}
 
 zone_object.onInitialize = function(zone)
+    xi.horizon.spawnInitialMobs(zone)
     -- Banishing Gate #1
     zone:registerRegion(1, -208, -1, 224, -206, 1, 227)
     zone:registerRegion(2, -208, -1, 212, -206, 1, 215)
