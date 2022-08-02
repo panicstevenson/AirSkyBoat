@@ -6922,4 +6922,75 @@ namespace charutils
         return 0;
     }
 
+    uint8 GetHighestLevel(CCharEntity* PChar)
+    {
+        uint8 maxJobLevel = 0;
+
+        for (uint8 jobId = 0; jobId < MAX_JOBTYPE; jobId++) {
+            if (PChar->jobs.job[jobId] > maxJobLevel)
+            {
+                maxJobLevel = PChar->jobs.job[jobId];
+            }
+        }
+
+        return maxJobLevel;
+    }
+
+    bool CanUseYell(CCharEntity* PChar)
+    {
+        if (PChar->isNewPlayer())
+        {
+            // Yells aren't enabled for new players
+            return false;
+        }
+
+        if (GetHighestLevel(PChar) <= lua["xi"]["settings"]["map"]["YELL_MIN_LEVEL"].get<uint8>())
+        {
+            // Player's max level is too low.
+            return false;
+        }
+
+        auto OptedIn = GetCharVar(PChar, "YellOptedIn");
+        if (OptedIn == 0)
+        {
+            // Player didn't opt-in to the rules.
+            return false;
+        }
+
+        auto YellMuteTime = GetCharVar(PChar, "YellMuteTime");
+        if (YellMuteTime > 0)
+        {
+            auto CurrentTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+            if (YellMuteTime > CurrentTime)
+            {
+                // Player is currently muted.
+                return false;
+            }
+
+            // Mute expired.
+            SetCharVar(PChar, "YellMuteTime", 0);
+        }
+
+        // Yaaaaaargh!
+        return true;
+    }
+
+    bool IsYellSpamFiltered(CCharEntity* PChar)
+    {
+        auto YellSpamTime = GetCharVar(PChar, "YellSpamTime");
+        if (YellSpamTime > 0)
+        {
+            auto CurrentTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+            if (YellSpamTime > CurrentTime)
+            {
+                // Player is currently marked as spam.
+                return true;
+            }
+
+            SetCharVar(PChar, "YellSpamTime", 0);
+        }
+
+        return false;
+    }
+
 }; // namespace charutils

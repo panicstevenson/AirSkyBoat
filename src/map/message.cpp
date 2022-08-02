@@ -185,8 +185,11 @@ namespace message
                     if (PZone->CanUseMisc(MISC_YELL))
                     {
                         PZone->ForEachChar([&packet, &extra](CCharEntity* PChar) {
+                            auto serverId = ref<uint32>((uint8*)extra.data(), 0);
+                            auto isMarkedSpam = (ref<uint32>((uint8*)extra.data(), 4) != 0) && charutils::IsYellSpamFiltered(PChar);
+
                             // don't push to sender
-                            if (PChar->id != ref<uint32>((uint8*)extra.data(), 0))
+                            if (PChar->id != serverId && !charutils::IsYellSpamFiltered(PChar) && !isMarkedSpam)
                             {
                                 CBasicPacket* newPacket = new CBasicPacket();
                                 memcpy(*newPacket, packet.data(), std::min<size_t>(packet.size(), PACKET_SIZE));
