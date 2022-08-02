@@ -2240,6 +2240,12 @@ namespace charutils
                 }
                 break;
             case SLOT_RANGED:
+                if (hasValidStyle(PChar, PItem, appearance))
+                    PChar->mainlook.ranged = appearanceModel;
+                else
+                    PChar->mainlook.ranged = PChar->look.ranged;
+                break;
+
             case SLOT_AMMO:
                 // Appears as though these aren't implemented by SE.
                 break;
@@ -6331,7 +6337,7 @@ namespace charutils
                                 "WHERE charid = %u;";
 
             sql->Query(Query, PChar->loc.destination,
-                       (PChar->m_moghouseID || PChar->loc.destination == PChar->getZone()) ? PChar->loc.prevzone : PChar->getZone(), PChar->loc.p.rotation,
+                       (PChar->m_moghouseID || PChar->loc.destination == PChar->getZone()) ? PChar->getZone() : PChar->loc.prevzone, PChar->loc.p.rotation,
                        PChar->loc.p.x, PChar->loc.p.y, PChar->loc.p.z, PChar->m_moghouseID, PChar->loc.boundary, PChar->id);
         }
         else
