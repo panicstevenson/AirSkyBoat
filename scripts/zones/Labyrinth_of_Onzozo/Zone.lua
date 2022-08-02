@@ -10,6 +10,7 @@ require("scripts/globals/treasure")
 local zone_object = {}
 
 zone_object.onInitialize = function(zone)
+    xi.horizon.spawnInitialMobs(zone)
     UpdateNMSpawnPoint(ID.mob.MYSTICMAKER_PROFBLIX)
     GetMobByID(ID.mob.MYSTICMAKER_PROFBLIX):setRespawnTime(math.random(900, 10800))
 
