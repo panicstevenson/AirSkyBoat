@@ -1466,9 +1466,14 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast);
 
         uint16 recastID = PAbility->getRecastId();
-        if (settings::get<bool>("map.BLOOD_PACT_SHARED_TIMER") && (recastID == 173 || recastID == 174))
+        if (lua["xi"]["settings"]["map"]["BLOOD_PACT_SHARED_TIMER"].get<bool>() && (recastID == 173 || recastID == 174))
         {
             PRecastContainer->Add(RECAST_ABILITY, (recastID == 173 ? 174 : 173), action.recast);
+        }
+
+        if (lua["xi"]["settings"]["map"]["HASSO_SEIGAN_SHARED_TIMER"].get<bool>() && (recastID == 138 || recastID == 139))
+        {
+            PRecastContainer->Add(RECAST_ABILITY, (recastID == 138 ? 139 : 138), action.recast);
         }
 
         pushPacket(new CCharRecastPacket(this));

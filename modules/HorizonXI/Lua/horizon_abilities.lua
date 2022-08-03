@@ -14,7 +14,7 @@ local chakraStatusEffects =
 {
     POISON       = 0, -- Removed by default
     BLINDNESS    = 0, -- Removed by default
-    PARALYSIS    = 1,
+    PARALYSIS    = 0, -- Removed by default
     DISEASE      = 2,
     PLAGUE       = 4,
 }
@@ -38,6 +38,8 @@ m:addOverride("xi.globals.abilities.chakra.onUseAbility", function(player, targe
             player:delStatusEffect(xi.effect[k])
         end
     end
+
+    player:delStatusEffectsByFlag(xi.effectFlag.ERASABLE, true)
 
     local jpLevel = target:getJobPointLevel(xi.jp.CHAKRA_EFFECT) * 10
     local recover = player:getStat(xi.mod.VIT) * (1 + player:getMod(xi.mod.CHAKRA_MULT) / 10) -- TODO: Figure out "function of level" addition (August 2017 update)
@@ -93,9 +95,9 @@ m:addOverride("xi.globals.abilities.ancient_circle.onUseAbility", function(playe
 
     if player:getMainJob() == xi.job.DRG then
         power = 15 + jpValue
-        target:addStatusEffect(xi.effect.ANCIENT_CIRCLE, power, 0, duration, xi.effect.ANCIENT_CIRCLE_SUB, 2)
+        target:addStatusEffect(xi.effect.ANCIENT_CIRCLE, power, 0, duration)
     else
-        target:addStatusEffect(xi.effect.ANCIENT_CIRCLE, power, 0, duration, xi.effect.ANCIENT_CIRCLE_SUB, 1)
+        target:addStatusEffect(xi.effect.ANCIENT_CIRCLE, power, 0, duration)
     end
 end)
 
@@ -104,9 +106,9 @@ m:addOverride("xi.globals.abilities.arcane_circle.onUseAbility", function(player
     local power = 15
 
     if player:getMainJob() == xi.job.DRK then
-        target:addStatusEffect(xi.effect.ARCANE_CIRCLE, power, 0, duration, xi.effect.ARCANE_CIRCLE_SUB, 2)
+        target:addStatusEffect(xi.effect.ARCANE_CIRCLE, power, 0, duration)
     else
-        target:addStatusEffect(xi.effect.ARCANE_CIRCLE, power, 0, duration, xi.effect.ARCANE_CIRCLE_SUB, 1)
+        target:addStatusEffect(xi.effect.ARCANE_CIRCLE, power, 0, duration)
     end
 end)
 
@@ -116,20 +118,21 @@ m:addOverride("xi.globals.abilities.warding_circle.onUseAbility", function(playe
 
     if player:getMainJob() == xi.job.SAM then
         power = 15
-        target:addStatusEffect(xi.effect.WARDING_CIRCLE, power, 0, duration, xi.effect.WARDING_CIRCLE_SUB, 2)
+        target:addStatusEffect(xi.effect.WARDING_CIRCLE, power, 0, duration)
     else
-        target:addStatusEffect(xi.effect.WARDING_CIRCLE, power, 0, duration, xi.effect.WARDING_CIRCLE_SUB, 1)
+        target:addStatusEffect(xi.effect.WARDING_CIRCLE, power, 0, duration)
     end
 end)
 
 m:addOverride("xi.globals.abilities.holy_circle.onUseAbility", function(player, target, ability)
     local duration = 180 + player:getMod(xi.mod.HOLY_CIRCLE_DURATION)
-    local power = 15
+    local power = 14
 
     if player:getMainJob() == xi.job.PLD then
-        target:addStatusEffect(xi.effect.HOLY_CIRCLE, power, 0, duration, xi.effect.HOLY_CIRCLE_SUB, 2)
+        power = 15
+        target:addStatusEffect(xi.effect.HOLY_CIRCLE, power, 0, duration)
     else
-        target:addStatusEffect(xi.effect.HOLY_CIRCLE, power, 0, duration, xi.effect.HOLY_CIRCLE_SUB, 1)
+        target:addStatusEffect(xi.effect.HOLY_CIRCLE, power, 0, duration)
     end
 end)
 

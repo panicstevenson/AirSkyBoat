@@ -243,6 +243,9 @@ xi.settings.map =
     LEVEL_SYNC_PENALTY_GRACE_MAX = 10, -- Number of Levels Before EXP Penalty Kicks In (uint8) (Default: 10 Levels Grace)
     LEVEL_SYNC_PENALTY_RANGE_MAX = 20, -- Number of Levels Before The Player Receives Maximum Penalty (uint8) (Default: 20 Levels To Reach Max (Makes Total Above Sync 30 Levels))
 
+    -- Horizon Ability Changes
+    HASSO_SEIGAN_SHARED_TIMER    = true, -- Force Hasso and Seigan to share a timer.
+
     -- Paralysis Settings
     ITEM_PARALYSIS_LOSS              = true, -- Allow items to be put on recast or deleted when used during a paralysis tick.
     ITEM_PARALYSIS_SCROLL_PROTECTION = false, -- Stops scrolls from being deleted if a paralysis tick occurs.
