@@ -2535,7 +2535,7 @@ INSERT INTO `mob_droplist` VALUES (248,2,0,1000,864,0);          -- Handful Of F
 INSERT INTO `mob_droplist` VALUES (249,0,0,1000,846,@VCOMMON);  -- Insect Wing (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (249,0,0,1000,894,@UNCOMMON); -- Beetle Jaw (Uncommon, 10%)
 
--- ZoneID: Unknown - Unknown
+-- ZoneID: 192 - Beady Beetle
 INSERT INTO `mob_droplist` VALUES (250,0,0,1000,889,@COMMON);   -- Beetle Shell (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (250,0,0,1000,846,@UNCOMMON); -- Insect Wing (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (250,0,0,1000,894,@UNCOMMON); -- Beetle Jaw (Uncommon, 10%)
@@ -26699,6 +26699,30 @@ INSERT INTO `mob_droplist` VALUES (3225,0,0,1000,11343,@COMMON); -- Thrakon Brea
 
 -- ZoneID: 191 - Stickpin
 INSERT INTO `mob_droplist` VALUES (3226,0,0,1000,924,@UNCOMMON); -- Vial Of Fiend Blood (Uncommon, 10%)
+
+-- ZoneID: 192 - Goblin Tinkerer
+-- ZoneID: 192 - Goblin Butcher
+INSERT INTO `mob_droplist` VALUES (3227,0,0,1000,656,@UNCOMMON); -- Beastcoin (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (3227,0,0,1000,1029,@RARE);    -- Horutoto Chest Key (Rare, 5%)
+INSERT INTO `mob_droplist` VALUES (3227,0,0,1000,507,@VRARE);    -- Goblin Mail (Very Rare, 1%)
+INSERT INTO `mob_droplist` VALUES (3227,0,0,1000,508,@VRARE);    -- Goblin Helm (Very Rare, 1%)
+INSERT INTO `mob_droplist` VALUES (3227,0,0,1000,12432,@VRARE);  -- Faceguard (Very Rare, 1%)
+INSERT INTO `mob_droplist` VALUES (3227,0,0,1000,12688,@VRARE);  -- Scale Finger Gauntlets (Very Rare, 1%)
+INSERT INTO `mob_droplist` VALUES (3227,0,0,1000,12816,@VRARE);  -- Scale Cuisses (Very Rare, 1%)
+INSERT INTO `mob_droplist` VALUES (3227,0,0,1000,12944,@VRARE);  -- Scale Greaves (Very Rare, 1%)
+INSERT INTO `mob_droplist` VALUES (3227,2,0,1000,656,0);         -- Beastcoin (Steal)
+
+--ZoneID: 192 - Gobling Ambusher
+INSERT INTO `mob_droplist` VALUES (3228,0,0,1000,656,@UNCOMMON); -- Beastcoin (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (3228,0,0,1000,937,@UNCOMMON); -- Block Of Animal Glue (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (3228,0,0,1000,1029,@RARE);    -- Horutoto Chest Key (Rare, 5%)
+INSERT INTO `mob_droplist` VALUES (3228,0,0,1000,510,@RARE);     -- Goblin Armor (Rare, 5%)
+INSERT INTO `mob_droplist` VALUES (3228,0,0,1000,511,@RARE);     -- Goblin Mask (Rare, 5%)
+INSERT INTO `mob_droplist` VALUES (3228,0,0,1000,12440,@VRARE);  -- Leather Bandana (Very Rare, 1%)
+INSERT INTO `mob_droplist` VALUES (3228,0,0,1000,12696,@VRARE);  -- Leather Gloves (Very Rare, 1%)
+INSERT INTO `mob_droplist` VALUES (3228,0,0,1000,12824,@VRARE);  -- Leather Trousers (Very Rare, 1%)
+INSERT INTO `mob_droplist` VALUES (3228,0,0,1000,12952,@VRARE);  -- Leather Highboots (Very Rare, 1%)
+INSERT INTO `mob_droplist` VALUES (3228,2,0,1000,17336,0);       -- Crossbow Bolt (Steal)
 
 /*!40000 ALTER TABLE `mob_droplist` ENABLE KEYS */;
 UNLOCK TABLES;
