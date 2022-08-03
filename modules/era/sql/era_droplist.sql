@@ -8888,7 +8888,7 @@ INSERT INTO `mob_droplist` VALUES (1070,0,0,1000,12698,@VRARE); -- Studded Glove
 INSERT INTO `mob_droplist` VALUES (1070,0,0,1000,12826,@VRARE); -- Studded Trousers (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1070,2,0,1000,17336,0);      -- Crossbow Bolt (Steal)
 
--- ZoneID: Unknown - Unknown
+-- ZoneID: 166 - Goblin Furrier
 INSERT INTO `mob_droplist` VALUES (1071,0,0,1000,510,@RARE);    -- Goblin Armor (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1071,0,0,1000,511,@RARE);    -- Goblin Mask (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1071,0,0,1000,848,@RARE);    -- Square Of Dhalmel Leather (Rare, 5%)
