@@ -327,7 +327,7 @@ local battlefields =
         {14,  110, 1130},   -- Wild Wild Whiskers (BS60) -- TODO: should use petrifactive breath more often than other mobskill. Message before spellcasting.
         {15,  111, 1175},   -- Seasons Greetings (KS30)
      -- {16,  112, 1178},   -- Royale Ramble (KS30)
-     -- {17,  113, 1180},   -- Moa Constrictors (KS30)
+        {17,  113, 1180},   -- Moa Constrictors (KS30)
      -- {18,  114, 3351},   -- The V Formation (KC30)
      -- {19,  115, 3352},   -- Avian Apostates (KC50)
         {20,  116,    0},   -- Beyond Infinity (Quest)
@@ -475,8 +475,8 @@ local battlefields =
     {
         { 0,  512,    0},   -- The Rank 5 Mission (Mission 5-1)
         { 1,  513, 1175},   -- Come Into My Parlor (KS30)
-     -- { 2,  514, 1178},   -- E-vase-ive Action (KS30)
-     -- { 3,  515, 1180},   -- Infernal Swarm (KS30)
+        { 2,  514, 1178},   -- E-vase-ive Action (KS30)
+        { 3,  515, 1180},   -- Infernal Swarm (KS30)
         { 4,  516,    0},   -- The Heir to the Light (Sandy 9-2)
         { 5,  517, 1432},   -- Shattering Stars (PLD LB5)
         { 6,  518, 1433},   -- Shattering Stars (DRK LB5)
@@ -588,7 +588,7 @@ local function checkReqs(player, npc, bfid, registrant)
         [ 160] = function() return ( nat == mi.nation.SHADOW_LORD and natStat == 3                                                                                         ) end, -- Mission 5-2
         [ 161] = function() return ( basty == mi.bastok.WHERE_TWO_PATHS_CONVERGE and natStat == 1                                                                          ) end, -- Basty 9-2: Where Two Paths Converge
         [ 163] = function() return ( mjob == xi.job.SCH and mlvl >= 66                                                                                                     ) end, -- Quest: Survival of the Wisest (SCH LB5)
-        [ 192] = function() return ( roz == mi.zilart.THROUGH_THE_QUICKSAND_CAVES                                                                                          ) end, -- ZM6: Through the Quicksand Caves
+        [ 192] = function() return ( roz == mi.zilart.THROUGH_THE_QUICKSAND_CAVES and roz < mi.zilart.RETURN_TO_DELKFUTTS_TOWER                                            ) end, -- ZM6: Through the Quicksand Caves
         [ 194] = function() return ( mjob == xi.job.SAM and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (SAM LB5)
         [ 195] = function() return ( mjob == xi.job.NIN and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (NIN LB5)
         [ 196] = function() return ( mjob == xi.job.DRG and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (DRG LB5)
