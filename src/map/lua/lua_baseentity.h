@@ -840,6 +840,7 @@ public:
     void   setSpawnType(SPAWNTYPE spawnType);
     uint32 getWorldPassRedeemTime();
     uint32 getWorldpassId(uint32 targid);
+    void   sendNpcEmote(CLuaBaseEntity* PBaseEntity, sol::object const& p0, sol::object const& p1, sol::object const& p2);
 
     static void Register();
 };
