@@ -46,7 +46,7 @@ m:addOverride("xi.globals.spells.black.drain.onSpellCast", function(caster, targ
         return dmg
     end
 
-    if caster:getSystem() == xi.ecosystem.UNDEAD and target:isPC() and target:hasStatusEffect(xi.effect.HOLY_CIRCLE) then
+    if caster:isUndead() and target:hasStatusEffect(xi.effect.HOLY_CIRCLE)  then
         dmg = dmg / 2
     end
 
@@ -97,7 +97,7 @@ m:addOverride("xi.globals.spells.black.drain_ii.onSpellCast", function(caster, t
         return dmg
     end
 
-    if caster:getSystem() == xi.ecosystem.UNDEAD and target:isPC() and target:hasStatusEffect(xi.effect.HOLY_CIRCLE) then
+    if caster:isUndead() and target:hasStatusEffect(xi.effect.HOLY_CIRCLE) then
         dmg = dmg / 2
     end
 
@@ -114,6 +114,198 @@ m:addOverride("xi.globals.spells.black.drain_ii.onSpellCast", function(caster, t
     spell:setMsg(xi.msg.basic.MAGIC_DRAIN_HP) --change msg to 'xxx hp drained from the yyyy.'
 
     return dmg
+end)
+
+m:addOverride("xi.globals.spells.black.absorb-acc.onSpellCast", function(caster, target, spell)
+    if (caster:hasStatusEffect(xi.effect.ACCURACY_BOOST)) then
+        spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT) -- no effect
+    else
+        -- local dINT = caster:getStat(xi.mod.INT) - target:getStat(xi.mod.INT)
+        local params = {}
+        params.diff = nil
+        params.attribute = xi.mod.INT
+        params.skillType = xi.skill.DARK_MAGIC
+        params.bonus = 0
+        params.effect = nil
+        local resist = applyResistance(caster, target, spell, params)
+        if (resist <= 0.125) then
+            spell:setMsg(xi.msg.basic.MAGIC_RESIST)
+        else
+            spell:setMsg(xi.msg.basic.MAGIC_ABSORB_ACC)
+            caster:addStatusEffect(xi.effect.ACCURACY_BOOST, xi.settings.main.ABSORB_SPELL_AMOUNT*resist*((100+(caster:getMod(xi.mod.AUGMENTS_ABSORB)))/100), xi.settings.main.ABSORB_SPELL_TICK, 90 * resist)
+            target:addStatusEffect(xi.effect.ACCURACY_DOWN, xi.settings.main.ABSORB_SPELL_AMOUNT*resist*((100+(caster:getMod(xi.mod.AUGMENTS_ABSORB)))/100), xi.settings.main.ABSORB_SPELL_TICK, 90 * resist)
+        end
+    end
+
+    return xi.effect.ACCURACY_BOOST
+end)
+
+m:addOverride("xi.globals.spells.black.absorb-agi.onSpellCast", function(caster, target, spell)
+    if (target:hasStatusEffect(xi.effect.AGI_DOWN) or caster:hasStatusEffect(xi.effect.AGI_BOOST)) then
+        spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT) -- no effect
+    else
+        -- local dINT = caster:getStat(xi.mod.INT) - target:getStat(xi.mod.INT)
+        local params = {}
+        params.diff = nil
+        params.attribute = xi.mod.INT
+        params.skillType = xi.skill.DARK_MAGIC
+        params.bonus = 0
+        params.effect = nil
+        local resist = applyResistance(caster, target, spell, params)
+        if (resist <= 0.125) then
+            spell:setMsg(xi.msg.basic.MAGIC_RESIST)
+        else
+            spell:setMsg(xi.msg.basic.MAGIC_ABSORB_AGI)
+            caster:addStatusEffect(xi.effect.AGI_BOOST, xi.settings.main.ABSORB_SPELL_AMOUNT*resist*((100+(caster:getMod(xi.mod.AUGMENTS_ABSORB)))/100), xi.settings.main.ABSORB_SPELL_TICK, 90 * resist)
+            target:addStatusEffect(xi.effect.AGI_DOWN, xi.settings.main.ABSORB_SPELL_AMOUNT*resist*((100+(caster:getMod(xi.mod.AUGMENTS_ABSORB)))/100), xi.settings.main.ABSORB_SPELL_TICK, 90 * resist)
+        end
+    end
+
+    return xi.effect.AGI_DOWN
+end)
+
+m:addOverride("xi.globals.spells.black.absorb-chr.onSpellCast", function(caster, target, spell)
+    if (target:hasStatusEffect(xi.effect.CHR_DOWN) or caster:hasStatusEffect(xi.effect.CHR_BOOST)) then
+        spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT) -- no effect
+    else
+        -- local dINT = caster:getStat(xi.mod.INT) - target:getStat(xi.mod.INT)
+        local params = {}
+        params.diff = nil
+        params.attribute = xi.mod.INT
+        params.skillType = xi.skill.DARK_MAGIC
+        params.bonus = 0
+        params.effect = nil
+        local resist = applyResistance(caster, target, spell, params)
+        if (resist <= 0.125) then
+            spell:setMsg(xi.msg.basic.MAGIC_RESIST)
+        else
+            spell:setMsg(xi.msg.basic.MAGIC_ABSORB_CHR)
+            caster:addStatusEffect(xi.effect.CHR_BOOST, xi.settings.main.ABSORB_SPELL_AMOUNT*resist*((100+(caster:getMod(xi.mod.AUGMENTS_ABSORB)))/100), xi.settings.main.ABSORB_SPELL_TICK, 90 * resist)
+            target:addStatusEffect(xi.effect.CHR_DOWN, xi.settings.main.ABSORB_SPELL_AMOUNT*resist*((100+(caster:getMod(xi.mod.AUGMENTS_ABSORB)))/100), xi.settings.main.ABSORB_SPELL_TICK, 90 * resist)
+        end
+    end
+
+    return xi.effect.CHR_DOWN
+end)
+
+m:addOverride("xi.globals.spells.black.absorb-dex.onSpellCast", function(caster, target, spell)
+    if (target:hasStatusEffect(xi.effect.DEX_DOWN) or caster:hasStatusEffect(xi.effect.DEX_BOOST)) then
+        spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT) -- no effect
+    else
+        -- local dINT = caster:getStat(xi.mod.INT) - target:getStat(xi.mod.INT)
+        local params = {}
+        params.diff = nil
+        params.attribute = xi.mod.INT
+        params.skillType = xi.skill.DARK_MAGIC
+        params.bonus = 0
+        params.effect = nil
+        local resist = applyResistance(caster, target, spell, params)
+        if (resist <= 0.125) then
+            spell:setMsg(xi.msg.basic.MAGIC_RESIST)
+        else
+            spell:setMsg(xi.msg.basic.MAGIC_ABSORB_DEX)
+            caster:addStatusEffect(xi.effect.DEX_BOOST, xi.settings.main.ABSORB_SPELL_AMOUNT*resist*((100+(caster:getMod(xi.mod.AUGMENTS_ABSORB)))/100), xi.settings.main.ABSORB_SPELL_TICK, 90 * resist)
+            target:addStatusEffect(xi.effect.DEX_DOWN, xi.settings.main.ABSORB_SPELL_AMOUNT*resist*((100+(caster:getMod(xi.mod.AUGMENTS_ABSORB)))/100), xi.settings.main.ABSORB_SPELL_TICK, 90 * resist)
+        end
+    end
+
+    return xi.effect.DEX_DOWN
+end)
+
+m:addOverride("xi.globals.spells.black.absorb-int.onSpellCast", function(caster, target, spell)
+    if (target:hasStatusEffect(xi.effect.INT_DOWN) or caster:hasStatusEffect(xi.effect.INT_BOOST)) then
+        spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT) -- no effect
+    else
+        -- local dINT = caster:getStat(xi.mod.INT) - target:getStat(xi.mod.INT)
+        local params = {}
+        params.diff = nil
+        params.attribute = xi.mod.INT
+        params.skillType = xi.skill.DARK_MAGIC
+        params.bonus = 0
+        params.effect = nil
+        local resist = applyResistance(caster, target, spell, params)
+        if (resist <= 0.125) then
+            spell:setMsg(xi.msg.basic.MAGIC_RESIST)
+        else
+            spell:setMsg(xi.msg.basic.MAGIC_ABSORB_INT)
+            caster:addStatusEffect(xi.effect.INT_BOOST, xi.settings.main.ABSORB_SPELL_AMOUNT*resist*((100+(caster:getMod(xi.mod.AUGMENTS_ABSORB)))/100), xi.settings.main.ABSORB_SPELL_TICK, 90 * resist)
+            target:addStatusEffect(xi.effect.INT_DOWN, xi.settings.main.ABSORB_SPELL_AMOUNT*resist*((100+(caster:getMod(xi.mod.AUGMENTS_ABSORB)))/100), xi.settings.main.ABSORB_SPELL_TICK, 90 * resist)
+        end
+    end
+
+    return xi.effect.INT_DOWN
+end)
+
+m:addOverride("xi.globals.spells.black.absorb-mnd.onSpellCast", function(caster, target, spell)
+    if (target:hasStatusEffect(xi.effect.MND_DOWN) or caster:getStatusEffect(xi.effect.MND_BOOST)) then
+        spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT) -- no effect
+    else
+        -- local dINT = caster:getStat(xi.mod.INT) - target:getStat(xi.mod.INT)
+        local params = {}
+        params.diff = nil
+        params.attribute = xi.mod.INT
+        params.skillType = xi.skill.DARK_MAGIC
+        params.bonus = 0
+        params.effect = nil
+        local resist = applyResistance(caster, target, spell, params)
+        if (resist <= 0.125) then
+            spell:setMsg(xi.msg.basic.MAGIC_RESIST)
+        else
+            spell:setMsg(xi.msg.basic.MAGIC_ABSORB_MND)
+            caster:addStatusEffect(xi.effect.MND_BOOST, xi.settings.main.ABSORB_SPELL_AMOUNT*resist*((100+(caster:getMod(xi.mod.AUGMENTS_ABSORB)))/100), xi.settings.main.ABSORB_SPELL_TICK, 90 * resist)
+            target:addStatusEffect(xi.effect.MND_DOWN, xi.settings.main.ABSORB_SPELL_AMOUNT*resist*((100+(caster:getMod(xi.mod.AUGMENTS_ABSORB)))/100), xi.settings.main.ABSORB_SPELL_TICK, 90 * resist)
+        end
+    end
+
+    return xi.effect.MND_DOWN
+end)
+
+m:addOverride("xi.globals.spells.black.absorb-str.onSpellCast", function(caster, target, spell)
+    if (target:hasStatusEffect(xi.effect.STR_DOWN) or caster:hasStatusEffect(xi.effect.STR_BOOST)) then
+        spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT) -- no effect
+    else
+        -- local dINT = caster:getStat(xi.mod.INT) - target:getStat(xi.mod.INT)
+        local params = {}
+        params.diff = nil
+        params.attribute = xi.mod.INT
+        params.skillType = xi.skill.DARK_MAGIC
+        params.bonus = 0
+        params.effect = nil
+        local resist = applyResistance(caster, target, spell, params)
+        if (resist <= 0.125) then
+            spell:setMsg(xi.msg.basic.MAGIC_RESIST)
+        else
+            spell:setMsg(xi.msg.basic.MAGIC_ABSORB_STR)
+            caster:addStatusEffect(xi.effect.STR_BOOST, xi.settings.main.ABSORB_SPELL_AMOUNT*resist*((100+(caster:getMod(xi.mod.AUGMENTS_ABSORB)))/100), xi.settings.main.ABSORB_SPELL_TICK, 90 * resist)
+            target:addStatusEffect(xi.effect.STR_DOWN, xi.settings.main.ABSORB_SPELL_AMOUNT*resist*((100+(caster:getMod(xi.mod.AUGMENTS_ABSORB)))/100), xi.settings.main.ABSORB_SPELL_TICK, 90 * resist)
+        end
+    end
+
+    return xi.effect.STR_DOWN
+end)
+
+m:addOverride("xi.globals.spells.black.absorb-vit.onSpellCast", function(caster, target, spell)
+    if (target:hasStatusEffect(xi.effect.VIT_DOWN) or caster:hasStatusEffect(xi.effect.VIT_BOOST)) then
+        spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT) -- no effect
+    else
+        -- local dINT = caster:getStat(xi.mod.INT) - target:getStat(xi.mod.INT)
+        local params = {}
+        params.diff = nil
+        params.attribute = xi.mod.INT
+        params.skillType = xi.skill.DARK_MAGIC
+        params.bonus = 0
+        params.effect = nil
+        local resist = applyResistance(caster, target, spell, params)
+        if (resist <= 0.125) then
+            spell:setMsg(xi.msg.basic.MAGIC_RESIST)
+        else
+            spell:setMsg(xi.msg.basic.MAGIC_ABSORB_VIT)
+            caster:addStatusEffect(xi.effect.VIT_BOOST, xi.settings.main.ABSORB_SPELL_AMOUNT*resist*((100+(caster:getMod(xi.mod.AUGMENTS_ABSORB)))/100), xi.settings.main.ABSORB_SPELL_TICK, 90 * resist)
+            target:addStatusEffect(xi.effect.VIT_DOWN, xi.settings.main.ABSORB_SPELL_AMOUNT*resist*((100+(caster:getMod(xi.mod.AUGMENTS_ABSORB)))/100), xi.settings.main.ABSORB_SPELL_TICK, 90 * resist)
+        end
+    end
+
+    return xi.effect.VIT_DOWN
 end)
 
 m:addOverride("xi.globals.spells.songs.horde_lullaby.onSpellCast", function(caster, target, spell)

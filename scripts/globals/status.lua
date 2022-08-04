@@ -840,12 +840,6 @@ xi.effect =
     HYSTERIA                 = 804, -- Used for Hysteroanima to stop after readying a weaponskill with no msg.
     TOMAHAWK                 = 805, -- Silent status effect inflicted by a Warrior using the "Tomahawk" job ability
 
-    -- Horizon Specific Status Effects
-    HOLY_CIRCLE_SUB          = 900, -- Additional Effect of Holy Circle
-    WARDING_CIRCLE_SUB       = 901, -- Additional Effect of Warding Circle
-    ANCIENT_CIRCLE_SUB       = 902, -- Additional Effect of Ancient Circle
-    ARCANE_CIRCLE_SUB        = 903, -- Additional Effect of Arcane Circle
-
     -- 806-1022
     -- PLACEHOLDER             = 1023 -- The client dat file seems to have only this many "slots", results of exceeding that are untested.
 }

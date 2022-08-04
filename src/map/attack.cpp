@@ -571,19 +571,19 @@ void CAttack::ProcessDamage(bool isCritical)
         auto* PMob = static_cast<CMobEntity*>(m_victim);
         if (PMob != nullptr && m_attacker->getMod(Mod::DMG_AGAINST_UNDEAD_MULT) != 0 && PMob->m_EcoSystem == ECOSYSTEM::UNDEAD)
         {
-            m_damage *= 1 + (m_attacker->getMod(Mod::DMG_AGAINST_UNDEAD_MULT) / 100);
+            m_damage *= ((100 + m_attacker->getMod(Mod::DMG_AGAINST_UNDEAD_MULT)) / 100.f);
         }
         else if (PMob != nullptr && m_attacker->getMod(Mod::DMG_AGAINST_DEMON_MULT) != 0 && PMob->m_EcoSystem == ECOSYSTEM::DEMON)
         {
-            m_damage *= 1 + (m_attacker->getMod(Mod::DMG_AGAINST_DEMON_MULT) / 100);
+            m_damage *= ((100 + m_attacker->getMod(Mod::DMG_AGAINST_DEMON_MULT)) / 100.f);
         }
         if (PMob != nullptr && m_attacker->getMod(Mod::DMG_AGAINST_DRAGON_MULT) != 0 && PMob->m_EcoSystem == ECOSYSTEM::DRAGON)
         {
-            m_damage *= 1 + (m_attacker->getMod(Mod::DMG_AGAINST_DRAGON_MULT) / 100);
+            m_damage *= ((100 + m_attacker->getMod(Mod::DMG_AGAINST_DRAGON_MULT)) / 100.f);
         }
         if (PMob != nullptr && m_attacker->getMod(Mod::DMG_AGAINST_ARCANA_MULT) != 0 && PMob->m_EcoSystem == ECOSYSTEM::ARCANA)
         {
-            m_damage *= 1 + (m_attacker->getMod(Mod::DMG_AGAINST_ARCANA_MULT) / 100);
+            m_damage *= ((100 + m_attacker->getMod(Mod::DMG_AGAINST_ARCANA_MULT)) / 100.f);
         }
     }
 

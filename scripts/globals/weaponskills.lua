@@ -18,21 +18,23 @@ require("scripts/globals/msg")
 
 local circleEffects =
 {
-    [xi.ecosystem.UNDEAD] = xi.mod.DMG_AGAINST_UNDEAD_MULT,
-    [xi.ecosystem.DEMON]  = xi.mod.DMG_AGAINST_DEMON_MULT,
-    [xi.ecosystem.DRAGON] = xi.mod.DMG_AGAINST_DRAGON_MULT,
-    [xi.ecosystem.ARCANA] = xi.mod.DMG_AGAINST_ARCANA_MULT,
+    {xi.eco.UNDEAD, xi.mod.DMG_AGAINST_UNDEAD_MULT},
+    {xi.eco.DEMON,  xi.mod.DMG_AGAINST_DEMON_MULT},
+    {xi.eco.DRAGON, xi.mod.DMG_AGAINST_DRAGON_MULT},
+    {xi.eco.ARCANA, xi.mod.DMG_AGAINST_ARCANA_MULT},
 }
 
-local function getCircleEffect(attacker, target, finaldmg)
-    for ecosystem, bonus in pairs(circleEffects) do
-        if target:getSystem() == ecosystem and attacker:getMod(bonus) ~= 0 then
-            finaldmg = finaldmg * (1 + (attacker:getMod(bonus) / 100))
+local function getCircleEffect(attacker, target)
+    local targetSystem = target:getSystem()
+    bonusMult = 1
+    for _, bonus in pairs(circleEffects) do
+        if targetSystem == bonus[1] and attacker:getMod(bonus[2]) ~= 0 then
+            bonusMult = 1 + (attacker:getMod(bonus[2]) / 100)
             break
         end
     end
 
-    return finaldmg
+    return bonusMult
 end
 -- Obtains alpha, used for working out WSC on legacy servers
 local function getAlpha(level)
@@ -639,7 +641,7 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
 
     finaldmg = finaldmg * ((100 + bonusdmg) / 100) -- Apply our "all hits" WS dmg bonuses
     finaldmg = finaldmg + firstHitBonus -- Finally add in our "first hit" WS dmg bonus from before
-    finaldmg = getCircleEffect(attacker, target, finaldmg)
+    finaldmg = finaldmg * getCircleEffect(attacker, target)
 
     -- Return our raw damage to then be modified by enemy reductions based off of melee/ranged
     calcParams.finalDmg = finaldmg
@@ -842,7 +844,7 @@ function doMagicWeaponskill(attacker, target, wsID, wsParams, tp, action, primar
         -- Add in bonusdmg
         dmg = dmg * ((100 + bonusdmg) / 100) -- Apply our "all hits" WS dmg bonuses
         dmg = dmg + ((dmg * attacker:getMod(xi.mod.ALL_WSDMG_FIRST_HIT)) / 100) -- Add in our "first hit" WS dmg bonus
-        dmg = getCircleEffect(attacker, target, dmg)
+        dmg = dmg * getCircleEffect(attacker, target)
 
         -- Calculate magical bonuses and reductions
         dmg = addBonusesAbility(attacker, wsParams.element, target, dmg, wsParams)

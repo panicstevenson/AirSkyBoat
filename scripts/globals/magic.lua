@@ -754,13 +754,13 @@ function getEffectResistance(target, effect, returnBuild, caster)
     }
     local circleTable =
     {
-        [xi.effect.BLINDNESS] = { ecosystem = xi.ecosystem.UNDEAD, statuseffect = xi.effect.HOLY_CIRCLE, mod = xi.mod.UNDEAD_MITIGATION_MULT },
-        [xi.effect.DISEASE]   = { ecosystem = xi.ecosystem.UNDEAD, statuseffect = xi.effect.HOLY_CIRCLE, mod = xi.mod.UNDEAD_MITIGATION_MULT },
-        [xi.effect.SLOW]      = { ecosystem = xi.ecosystem.DEMON, statuseffect = xi.effect.DEMON_CIRCLE, mod = xi.mod.DEMON_MITIGATION_MULT },
-        [xi.effect.GRAVITY]   = { ecosystem = xi.ecosystem.DEMON, statuseffect = xi.effect.DEMON_CIRCLE, mod = xi.mod.DEMON_MITIGATION_MULT },
-        [xi.effect.AMNESIA]   = { ecosystem = xi.ecosystem.DEMON, statuseffect = xi.effect.DEMON_CIRCLE, mod = xi.mod.DEMON_MITIGATION_MULT },
-        [xi.effect.PARALYSIS] = { ecosystem = xi.ecosystem.DRAGON, statuseffect = xi.effect.ANCIENT_CIRCLE, mod = xi.mod.DRAGON_MITIGATION_MULT },
-        [xi.effect.STUN]      = { ecosystem = xi.ecosystem.ARCANA, statuseffect = xi.effect.HOLY_CIRCLE, mod = xi.mod.ARCANA_MITIGATION_MULT },
+        [xi.effect.BLINDNESS] = {xi.eco.UNDEAD, xi.effect.HOLY_CIRCLE,    xi.mod.UNDEAD_MITIGATION_MULT },
+        [xi.effect.PLAGUE]    = {xi.eco.UNDEAD, xi.effect.HOLY_CIRCLE,    xi.mod.UNDEAD_MITIGATION_MULT },
+        [xi.effect.SLOW]      = {xi.eco.DEMON,  xi.effect.WARDING_CIRCLE, xi.mod.DEMON_MITIGATION_MULT  },
+        [xi.effect.WEIGHT]    = {xi.eco.DEMON,  xi.effect.WARDING_CIRCLE, xi.mod.DEMON_MITIGATION_MULT  },
+        [xi.effect.AMNESIA]   = {xi.eco.DEMON,  xi.effect.WARDING_CIRCLE, xi.mod.DEMON_MITIGATION_MULT  },
+        [xi.effect.PARALYSIS] = {xi.eco.DRAGON, xi.effect.ANCIENT_CIRCLE, xi.mod.DRAGON_MITIGATION_MULT },
+        [xi.effect.STUN]      = {xi.eco.ARCANA, xi.effect.HOLY_CIRCLE,    xi.mod.ARCANA_MITIGATION_MULT },
     }
 
     for effectIndex, effectTable in pairs(resTable) do
@@ -771,8 +771,10 @@ function getEffectResistance(target, effect, returnBuild, caster)
         end
     end
 
-    if caster:getSystem() == circleTable[effect].ecosystem and target:hasStatusEffect(circleTable[effect].statuseffect) then
-        ecoBonus = (circleTable[effect].mod / 100)
+    if circleTable[effect] ~= nil then
+        if caster:getSystem() == circleTable[effect][1] and target:hasStatusEffect(circleTable[effect][2]) then
+            ecoBonus = (circleTable[effect][3] / 100)
+        end
     end
 
     if returnBuild ~= nil then
@@ -788,6 +790,7 @@ function getEffectResistance(target, effect, returnBuild, caster)
     end
 
     return statusres
+
 end
 
 function handleAfflatusMisery(caster, spell, dmg)

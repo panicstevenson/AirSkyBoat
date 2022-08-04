@@ -375,7 +375,7 @@ xi.mobskills.applyPlayerResistance = function(mob, effect, target, diff, bonus, 
     end
 
     if effect ~= nil then
-        percentBonus = percentBonus - getEffectResistance(target, effect)
+        percentBonus = percentBonus - getEffectResistance(target, effect, nil, mob)
     end
 
     local p = getMagicHitRate(mob, target, 0, element, percentBonus, magicaccbonus)

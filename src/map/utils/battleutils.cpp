@@ -6508,9 +6508,9 @@ namespace battleutils
             {
                 cost += (int16)(base * (PEntity->getMod(Mod::WHITE_MAGIC_COST) / 100.0f));
             }
-            if (PSpell->getSpellFamily() == SPELLFAMILY_CURA || PSpell->getSpellFamily() == SPELLFAMILY_CURAGA || PSpell->getSpellFamily() == SPELLFAMILY_CURE || PSpell->getSpellFamily() == SPELLFAMILY_REGEN)
+            if (PSpell->isCure() || PSpell->isRegen())
             {
-                cost -= cost * (PEntity->getMod(Mod::CURE_SPELL_COST) / 100);
+                cost *= 1 - (PEntity->getMod(Mod::CURE_SPELL_COST) / 100.f);
             }
         }
         if (xirand::GetRandomNumber(100) < (PEntity->getMod(Mod::NO_SPELL_MP_DEPLETION)))
