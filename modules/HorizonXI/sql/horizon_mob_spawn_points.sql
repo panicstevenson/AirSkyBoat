@@ -510,7 +510,7 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `mobname`, `polutils_name`, `groupid`,
 (17457225,'Giant_Scorpion','Giant Scorpion',16,-1.376,-36,161.381,55),
 (17457226,'Bat_Eye','Bat Eye',17,-1.376,-36,161.381,55),
 (17457162,'Wind_Bats','Wind Bats',1,-128.7076,4.6766,-261.6407,29),
-(17457233,'Hecteyes','Hecteyes',18,)
+(17457233,'Hecteyes','Hecteyes',18,),
 
 -- Zeruhn Mines
 (17481750,'Burrower_Worm','Burrower Worm',2,0,0,0,0),
