@@ -1655,6 +1655,22 @@ xi.dynamis.setMobStats = function(mob)
     end
 end
 
+local mdbValues =
+{
+    [93] = 162, -- Orc Statue
+    [193] = 100, -- Wyvern
+    [229] = 100, -- Hecteyes
+    [334] = 100, -- Orc
+}
+
+xi.dynamis.setMDB = function(mob)
+    for family, mdb in ipairs(mdbValues) do
+        if mob:getFamily() == family then
+            mob:setMod(xi.mod.MDEF, mdb)
+        end
+    end
+end
+
 xi.dynamis.setNMStats = function(mob)
     local job = mob:getMainJob()
     mob:setMobType(xi.mobskills.mobType.BATTLEFIELD)
@@ -1665,7 +1681,7 @@ xi.dynamis.setNMStats = function(mob)
     mob:setHP(mob:getMaxHP())
     mob:setMobLevel(math.random(80,82))
     mob:setTrueDetection(true)
-    mob:setMobMod(xi.mobMod.CHECK_AS_NM, 2)
+    xi.dynamis.setMDB(mob)
 
     if job == xi.job.NIN then
         local params = { }
@@ -1693,6 +1709,7 @@ xi.dynamis.setStatueStats = function(mob, mobIndex)
     mob:setMod(xi.mod.MPHEAL, 0)
     mob:setMobMod(xi.mobMod.CHECK_AS_NM, 2)
     mob:setSpeed(20)
+    xi.dynamis.setMDB(mob)
     if mob:getFamily() >= 92 and mob:getFamily() <= 95 then -- If statue
         if eyes ~= nil then
             mob:setLocalVar("eyeColor", eyes) -- Set Eyes if need be
@@ -1714,6 +1731,7 @@ xi.dynamis.setMegaBossStats = function(mob)
     mob:setMobLevel(88)
     mob:setMod(xi.mod.STR, -10)
     mob:setTrueDetection(true)
+    xi.dynamis.setMDB(mob)
 end
 
 xi.dynamis.setPetStats = function(mob)
@@ -1725,6 +1743,7 @@ xi.dynamis.setPetStats = function(mob)
     mob:setMobMod(xi.mobMod.CHECK_AS_NM, 1)
     mob:setMobLevel(78)
     mob:setTrueDetection(true)
+    xi.dynamis.setMDB(mob)
 end
 
 xi.dynamis.setAnimatedWeaponStats = function(mob)
