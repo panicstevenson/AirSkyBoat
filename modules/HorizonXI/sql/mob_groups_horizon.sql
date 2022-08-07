@@ -53,3 +53,8 @@ UPDATE mob_groups SET respawntime = '960' WHERE zoneid = 11     -- Oldton_Movalp
                                              OR zoneid = 176    -- Sea_Serpent_Grotto
                                              OR zoneid = 184    -- Lower_Delkfutts_Tower
                                              OR zoneid = 208;   -- Quicksand_Caves
+
+-- NM Adjustments
+UPDATE mob_groups SET spawntype = 32, respawntime = 0 WHERE name = "Bat_Eye" and zoneid = 166;
+UPDATE mob_groups SET dropid = 256 WHERE name = "King_Crawler" and zoneid = 197; -- Sets King Crawler drop to match Soldier Crawler (KC is OOE) This NEEDS dynaamic renamer
+UPDATE mob_groups SET spawntype = 32, respawntime = 0 WHERE name = "Wyvern" and zoneid = 213;

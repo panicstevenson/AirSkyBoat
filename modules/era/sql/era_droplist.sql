@@ -18317,7 +18317,7 @@ INSERT INTO `mob_droplist` VALUES (2282,0,0,1000,4400,@RARE);   -- Slice Of Land
 INSERT INTO `mob_droplist` VALUES (2282,0,0,1000,881,@VRARE);   -- Crab Shell (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (2282,2,0,1000,936,0);        -- Chunk Of Rock Salt (Steal)
 
--- ZoneID: Unknown - Unknown
+-- ZoneID: 191 - Snipper
 INSERT INTO `mob_droplist` VALUES (2283,0,0,1000,936,@UNCOMMON); -- Chunk Of Rock Salt (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (2283,0,0,1000,1028,@RARE);    -- Dangruf Chest Key (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (2283,2,0,1000,936,0);         -- Chunk Of Rock Salt (Steal)

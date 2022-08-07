@@ -10,11 +10,6 @@ local zone_object = {}
 
 zone_object.onInitialize = function(zone)
     xi.horizon.spawnInitialMobs(zone)
-    local mobs = zone:getMobs()
-    for _, mob in pairs(mobs) do
-        mob:setMobMod(xi.mobMod.NO_MOVE, 1)
-    end
-
     UpdateNMSpawnPoint(ID.mob.DREXERION_THE_CONDEMNED)
     GetMobByID(ID.mob.DREXERION_THE_CONDEMNED):setRespawnTime(math.random(900, 10800))
 
