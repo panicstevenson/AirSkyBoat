@@ -938,13 +938,8 @@ xi.dynamis.registerDynamis = function(player)
     xi.dynamis.onNewDynamis(player) -- Start spawning wave 1.
 
     local dynamisToken = GetServerVariable(string.format("[DYNA]Token_%s", xi.dynamis.dynaInfoEra[zoneID].dynaZone))
-
     zone:setLocalVar(string.format("[DYNA]Token_%s", xi.dynamis.dynaInfoEra[zoneID].dynaZone), dynamisToken)
-    if dynamisToken ~= 0 and dynamisToken ~= nil then -- Double check that we have a token.
-        player:createHourglass(xi.dynamis.dynaInfoEra[zoneID].dynaZone, dynamisToken, player:getID()) -- Create initial perpetual.
-        player:messageSpecial(xi.dynamis.dynaIDLookup[zoneID].text.INFORMATION_RECORDED, dynamis_perpetual) -- Send player the recorded message.
-        player:messageSpecial(zones[zoneID].text.ITEM_OBTAINED, dynamis_perpetual) -- Give player a message stating the perpetual has been obtained.
-    end
+    player:getZone():setLocalVar(string.format("[DYNA]Token_%s", xi.dynamis.dynaInfoEra[zoneID].dynaZone), dynamisToken)
 end
 
 xi.dynamis.registerPlayer = function(player)
@@ -1085,8 +1080,7 @@ m:addOverride("xi.dynamis.entryNpcOnTrigger", function(player, npc)
         return
     end
 
-
-    if xi.dynamis.entryInfoEra[zoneID].csSand ~= nil and player:getCharVar("HasSeenXarcabardDynamisCS") == 1 and player:hasKeyItem(xi.ki.VIAL_OF_SHROUDED_SAND) == false then -- If player does not have sand, start CS to give sand.
+    if xi.dynamis.entryInfoEra[zoneID].csSand ~= nil and player:getCharVar("Dynamis_Status") == 1 and not player:hasKeyItem(xi.ki.VIAL_OF_SHROUDED_SAND) then -- If player does not have sand, start CS to give sand.
         player:startEvent(xi.dynamis.entryInfoEra[zoneID].csSand)
     elseif xi.dynamis.entryInfoEra[zoneID].csWin ~= nil and player:hasKeyItem(xi.dynamis.entryInfoEra[zoneID].winKI) and player:getCharVar(xi.dynamis.entryInfoEra[zoneID].hasSeenWinCSVar) == 0 then -- If player hasn't seen win CS play win CS.
         player:startEvent(xi.dynamis.entryInfoEra[zoneID].csWin)
@@ -1101,10 +1095,16 @@ xi.dynamis.entryNpcOnEventUpdate = function(player, csid, option)
     if csid == xi.dynamis.entryInfoEra[zoneID].csRegisterGlass then -- If dynamis register glass cs.
         if option == 0 then -- If completes the cutscene.
             xi.dynamis.registerDynamis(player) -- Trigger the generation of a token, timepoint, and start spawning wave 1.
-            player:tradeComplete()
-            player:release()
+            player:timer(5000, function(playerArg)
+                playerArg:tradeComplete()
+                local dynamisToken = playerArg:getZone():getLocalVar(string.format("[DYNA]Token_%s", xi.dynamis.dynaInfoEra[zoneID].dynaZone))
+                playerArg:createHourglass(xi.dynamis.dynaInfoEra[zoneID].dynaZone, dynamisToken, playerArg:getID()) -- Create initial perpetual.
+                playerArg:messageSpecial(xi.dynamis.dynaIDLookup[zoneID].text.INFORMATION_RECORDED, dynamis_perpetual) -- Send player the recorded message.
+                playerArg:messageSpecial(zones[zoneID].text.ITEM_OBTAINED, dynamis_perpetual) -- Give player a message stating the perpetual has been obtained.
+                playerArg:release(1)
+            end)
         else
-            player:release() -- Failed to complete CS.
+            player:release(1) -- Failed to complete CS.
             player:messageSpecial(xi.dynamis.dynaIDLookup[zoneID].text.UNABLE_TO_CONNECT)
         end
     end

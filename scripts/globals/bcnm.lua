@@ -294,7 +294,7 @@ local battlefields =
         {14,   78, 1177},   -- The Final Bout (BS50)
         {15,   79, 1130},   -- Up in Arms (BS60)
         {16,   80, 1175},   -- Copycat (KS30)
-     -- {17,   81, 1178},   -- Operation Desert Swarm (KS30) -- TODO: Wild Rage gets stronger as they die. Build sleep resistance. Testing.
+        {17,   81, 1178},   -- Operation Desert Swarm (KS30)
      -- {18,   82, 1180},   -- Prehistoric Pigeons (KS30) -- TODO: Build resistance to sleep quickly. When one dies, remaining ones become more powerful.
      -- {19,   83, 3351},   -- The Palborough Project (KC30)
      -- {20,   84, 3352},   -- Shell Shocked (KC50)
@@ -379,7 +379,7 @@ local battlefields =
         { 2,  194, 1437},   -- Shattering Stars (SAM LB5)
         { 3,  195, 1438},   -- Shattering Stars (NIN LB5)
         { 4,  196, 1439},   -- Shattering Stars (DRG LB5)
-     -- { 5,  197, 1175},   -- Cactuar Suave (KS30)
+        { 5,  197, 1175},   -- Cactuar Suave (KS30)
         { 6,  198, 1178},   -- Eye of the Storm (KS30)
         { 7,  199, 1180},   -- The Scarlet King (KS30)
      -- { 8,  200,    0},   -- Roar! A Cat Burglar Bares Her Fangs (MKD10)
@@ -672,9 +672,8 @@ local function checkReqs(player, npc, bfid, registrant)
         [ 992] = function() return ( cop == mi.cop.ONE_TO_BE_FEARED and player:getCharVar('Mission[6][638]Status') == 3                                                    ) end, -- PM6-4: One to be Feared
         [ 993] = function() return ( cop == mi.cop.THE_WARRIORS_PATH and player:getCharVar('Mission[6][748]Status') == 1                                                   ) end, -- PM7-5: The Warrior's Path
         [1024] = function() return ( player:getCharVar('Mission[6][828]Status') == 4                                                                                       ) end, -- PM8-3: When Angels Fall
-        [1056] = function() return ( cop == mi.cop.DAWN and player:getCharVar('Mission[6][840]Status') == 2                                                               ) end, -- PM8-4: Dawn
-        [1057] = function() return ( player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.APOCALYPSE_NIGH) == QUEST_ACCEPTED and
-                                     player:getCharVar('ApocalypseNigh') == 4                                                                                              ) end, -- Apocalypse Nigh
+        [1056] = function() return ( cop == mi.cop.DAWN and player:getCharVar('Mission[6][840]Status') == 2                                                                ) end, -- PM8-4: Dawn
+        [1057] = function() return ( player:getCharVar("Quest[3][89]Prog") == 3                                                                                            ) end, -- Apocalypse Nigh
         [1090] = function() return ( player:hasKeyItem(xi.ki.TOGGLE_SWITCH)                                                                                                ) end, -- Quest: Puppetmaster Blues
         [1091] = function() return ( mjob == xi.job.COR and mlvl >= 66                                                                                                     ) end, -- Quest: Breaking the Bonds of Fate (COR LB5)
         [1092] = function() return ( toau == mi.toau.LEGACY_OF_THE_LOST                                                                                                    ) end, -- TOAU35: Legacy of the Lost
@@ -733,10 +732,8 @@ local function checkReqs(player, npc, bfid, registrant)
                                    ( cop == mi.cop.ANCIENT_VOWS and player:getCharVar('Mission[6][248]Status') >= 2)                                       ) end, -- Quest: Ouryu Cometh
         [1024] = function() return ( player:hasCompletedMission(xi.mission.log_id.COP, mi.cop.WHEN_ANGELS_FALL) or
                                     player:getCharVar('Mission[6][828]Status') >= 4                                                                        ) end, -- PM8-3: When Angels Fall
-        [1056] = function() return ( player:hasCompletedMission(xi.mission.log_id.COP, mi.cop.DAWN) or player:getCharVar('Mission[6][840]Status') >= 2    ) end, -- PM8-4: Dawn
-        [1057] = function() return ( player:hasCompletedQuest(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.APOCALYPSE_NIGH) or
-                                   ( player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.APOCALYPSE_NIGH) == QUEST_ACCEPTED and
-                                     player:getCharVar('ApocalypseNigh') == 4)                                                                             ) end, -- Quest: Apocalypse Nigh
+        [1056] = function() return ( player:hasCompletedMission(xi.mission.log_id.COP, mi.cop.DAWN) or player:getCharVar('Mission[6][840]Status') >= 2     ) end, -- PM8-4: Dawn
+        [1057] = function() return ( player:getCharVar("Quest[3][89]Prog") >= 3                                                                            ) end, -- Quest: Apocalypse Nigh
         [1290] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and player:hasKeyItem(xi.ki.RED_CARD) and npcid == getEntranceOffset(0)        ) end, -- NW Apollyon
         [1291] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and player:hasKeyItem(xi.ki.RED_CARD) and npcid == getEntranceOffset(0)        ) end, -- SW Apollyon
         [1292] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and player:hasKeyItem(xi.ki.BLACK_CARD) and npcid == getEntranceOffset(1)      ) end, -- NE Apollyon
@@ -859,8 +856,8 @@ local function checkSkip(player, bfid)
         [ 961] = function() return ( player:hasCompletedMission(xi.mission.log_id.COP, mi.cop.THE_SAVAGE) or (cop == mi.cop.THE_SAVAGE and player:getCharVar('Mission[6][418]Status') > 1)        ) end, -- PM4-2: The Savage
         [ 993] = function() return ( player:hasCompletedMission(xi.mission.log_id.COP, mi.cop.THE_WARRIORS_PATH)                                                                                  ) end, -- PM7-5: The Warrior's Path
         [1024] = function() return ( player:hasCompletedMission(xi.mission.log_id.COP, mi.cop.WHEN_ANGELS_FALL) or player:getCharVar('Mission[6][828]Status') > 4                                 ) end, -- PM8-3: When Angels Fall
-        [1056] = function() return ( player:hasCompletedMission(xi.mission.log_id.COP, mi.cop.DAWN) or player:getCharVar('Mission[6][840]Status') > 2                                            ) end, -- PM8-4: Dawn
-        [1057] = function() return ( player:hasCompletedQuest(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.APOCALYPSE_NIGH)                                                                           ) end, -- Apocalypse Nigh
+        [1056] = function() return ( player:hasCompletedMission(xi.mission.log_id.COP, mi.cop.DAWN) or player:getCharVar('Mission[6][840]Status') > 2                                             ) end, -- PM8-4: Dawn
+        [1057] = function() return ( player:getCharVar("Quest[3][89]Prog") > 3                                                                                                                    ) end, -- Apocalypse Nigh
         [2721] = function() return ( player:hasCompletedMission(xi.mission.log_id.WOTG, mi.wotg.PURPLE_THE_NEW_BLACK)                                                                             ) end, -- WOTG07: Purple, The New Black
     }
 

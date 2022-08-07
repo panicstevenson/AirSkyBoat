@@ -5106,13 +5106,14 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                 break;
                 case MESSAGE_YELL:
                 {
-                    if (PChar->loc.zone->CanUseMisc(MISC_YELL))
+                    if (PChar->loc.zone->CanUseMisc(MISC_YELL) && charutils::CanUseYell(PChar))
                     {
                         if (gettick() >= PChar->m_LastYell)
                         {
                             PChar->m_LastYell = gettick() + settings::get<uint16>("map.YELL_COOLDOWN") * 1000;
-                            int8 packetData[4]{};
+                            int8 packetData[8]{};
                             ref<uint32>(packetData, 0) = PChar->id;
+                            ref<uint32>(packetData, 4) = charutils::IsYellSpamFiltered(PChar);
 
                             message::send(MSG_CHAT_YELL, packetData, sizeof packetData, new CChatMessagePacket(PChar, MESSAGE_YELL, (const char*)data[6]));
                         }
