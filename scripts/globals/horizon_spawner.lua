@@ -605,14 +605,6 @@ local spawnerMobs =
         {name = "Magicked Bones", groupId = 5, groupZone = 192, funcLookup = "Default", min = 3, max = 8, xPos = 171.00, yPos = -1.000, zPos = 58.000, rot = 128, respawn = 420, drops = 0, skills = 227, spells = 0},
         {name = "Magicked Bones", groupId = 5, groupZone = 192, funcLookup = "Default", min = 3, max = 8, xPos = 95.000, yPos = -1.000, zPos = 59.000, rot = 128, respawn = 420, drops = 0, skills = 227, spells = 0},
     },
-    [xi.zone.THE_SANCTUARY_OF_ZITAH] =
-    {
-        {name = "Hell Hound",    groupId = 29, groupZone = 121, funcLookup = "Default", min = 46, max = 50, xPos = -197.1521, yPos = 0.1734, zPos =  -71.3263, rot =  80, respawn = 330, drops = 1297, skills = 143, spells = 0},
-        {name = "Master Coeurl", groupId = 28, groupZone = 121, funcLookup = "Default", min = 44, max = 47, xPos = -420.7602, yPos = 2.5763, zPos =  -34.0150, rot = 197, respawn = 330, drops = 1639, skills =  71, spells = 0},
-        {name = "Master Coeurl", groupId = 28, groupZone = 121, funcLookup = "Default", min = 44, max = 47, xPos = -429.1223, yPos = 0.6461, zPos =   73.4895, rot =   7, respawn = 330, drops = 1639, skills =  71, spells = 0},
-        {name = "Ogrefly",       groupId = 13, groupZone = 121, funcLookup = "Default", min = 41, max = 44, xPos =  325.9213, yPos = 0.1657, zPos = -114.5734, rot =  81, respawn = 330, drops = 1843, skills = 113, spells = 0},
-        {name = "Ogrefly",       groupId = 13, groupZone = 121, funcLookup = "Default", min = 41, max = 44, xPos =  166.7821, yPos = 0.1381, zPos = -116.6038, rot =  90, respawn = 330, drops = 1843, skills = 113, spells = 0},
-    },
 }
 
 local spawnerFunctions =
