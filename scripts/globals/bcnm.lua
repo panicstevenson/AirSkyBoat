@@ -24,7 +24,7 @@ local battlefields =
     [xi.zone.BEARCLAW_PINNACLE] =
     {
         { 0,  640,    0},   -- Flames of the Dead (PM5-3 U3)
-     -- { 1,  641,    0},   -- Follow the White Rabbit (ENM)
+        { 1,  641,    0},   -- Follow the White Rabbit (ENM)
      -- { 2,  642,    0},   -- When Hell Freezes Over (ENM)
         { 3,  643,    0},   -- Brothers (ENM)
         { 4,  644,    0},   -- Holy Cow (ENM)
@@ -65,21 +65,21 @@ local battlefields =
     [xi.zone.SPIRE_OF_HOLLA] =
     {
         { 0,  768,    0},   -- Ancient Flames Beckon (PM1-3)
-     -- { 1,  769,    0},   -- Simulant (ENM)
+        { 1,  769,    0},   -- Simulant (ENM)
      -- { 2,  770, 3351},   -- Empty Hopes (KC30)
     },
 
     [xi.zone.SPIRE_OF_DEM] =
     {
         { 0,  800,    0},   -- Ancient Flames Beckon (PM1-3)
-     -- { 1,  801,    0},   -- You Are What You Eat (ENM)
+        { 1,  801,    0},   -- You Are What You Eat (ENM)
      -- { 2,  802, 3351},   -- Empty Dreams (KC30)
     },
 
     [xi.zone.SPIRE_OF_MEA] =
     {
         { 0,  832,    0},   -- Ancient Flames Beckon (PM1-3)
-     -- { 1,  833,    0},   -- Playing Host (ENM)
+        { 1,  833,    0},   -- Playing Host (ENM)
      -- { 2,  834, 3351},   -- Empty Desires (KC30)
     },
 
@@ -105,8 +105,8 @@ local battlefields =
     {
         { 0,  960,    0},   -- Ancient Vows (PM2-5)
         { 1,  961,    0},   -- The Savage (PM4-2)
-     -- { 2,  962,    0},   -- Fire in the Sky (ENM)
-     -- { 3,  963,    0},   -- Bad Seed (ENM)
+        { 2,  962,    0},   -- Fire in the Sky (ENM)
+        { 3,  963,    0},   -- Bad Seed (ENM)
      -- { 4,  964,    0},   -- Bugard in the Clouds (ENM)
      -- { 5,  965,    0},   -- Beloved of the Atlantes (ENM)
         { 6,  966,    0},   -- Uninvited Guests (Quest)
@@ -248,7 +248,7 @@ local battlefields =
         {10,   10, 1552},   -- Dropping Like Flies (BS30)
         {11,   11, 1553},   -- Horns of War (KS99)
         {12,   12, 1131},   -- Under Observation (BS40)
-        {13,   13, 1177},   -- Eye of the Tiger (BS50) -- TODO: Crossthrash mobskill
+        {13,   13, 1177},   -- Eye of the Tiger (BS50)
      -- {14,   14, 1130},   -- Shots in the Dark (BS60) -- TODO: Warmachine combat behavior
         {15,   15, 1175},   -- Double Dragonian (KS30) -- TODO: Chaos Blade strengthens after 2hr
         {16,   16, 1178},   -- Today's Horoscope (KS30)
@@ -269,9 +269,9 @@ local battlefields =
     {
         { 0,   32,    0},   -- Save the Children (Sandy 1-3)
         { 1,   33,    0},   -- The Holy Crest (Quest)
-        { 2,   34, 1551},   -- Wings of Fury (BS20) -- TODO: mobskills Slipstream and Turbulence
+        { 2,   34, 1551},   -- Wings of Fury (BS20)
         { 3,   35, 1552},   -- Petrifying Pair (BS30)
-        { 4,   36, 1552},   -- Toadal Recall (BS30) -- TODO: shroom-in-cap mechanic
+        { 4,   36, 1552},   -- Toadal Recall (BS30)
      -- { 5,   37,    0},   -- Mirror, Mirror (Quest)
     },
 
@@ -363,7 +363,7 @@ local battlefields =
     {
         { 0,  160,    0},   -- The Shadow Lord Battle (Mission 5-2)
         { 1,  161,    0},   -- Where Two Paths Converge (Basty 9-2)
-     -- { 2,  162, 1130},   -- Kindred Spirits (BS60)
+        { 2,  162, 1130},   -- Kindred Spirits (BS60)
         { 3,  163, 2557},   -- Survival of the Wisest (SCH LB5)
      -- { 4,  164,    0},   -- Smash! A Malevolent Menace (MKD14)
      -- { 5,    ?, 4063},   -- *Kindred Spirits (SKC20)
@@ -486,10 +486,10 @@ local battlefields =
         {10,  522, 1552},   -- Let Sleeping Dogs Die (BS30)
         {11,  523, 1130},   -- Brothers D'Aurphe (BS60)
         {12,  524, 1131},   -- Undying Promise (BS40) -- TODO: model size increases with each reraise
-        {13,  525, 1131},   -- Factory Rejects (BS40) -- TODO: dolls grow size/power based on hidden timer. (wikis disagree on TP moves? factory immune? factory model?)
+        {13,  525, 1131},   -- Factory Rejects (BS40)
         {14,  526, 1177},   -- Idol Thoughts (BS50)
-        {15,  527, 1177},   -- An Awful Autopsy (BS50) -- TODO: mobskill Infernal Pestilence
-     -- {16,  528, 1130},   -- Celery (BS60) -- TODO: mobs do not have their specific weaknesses. mobskill Bane.
+        {15,  527, 1177},   -- An Awful Autopsy (BS50)
+        {16,  528, 1130},   -- Celery (BS60)
      -- {17,  529,    0},   -- Mirror Images (Quest)
         {18,  530, 2556},   -- A Furious Finale (DNC LB5)
      -- {19,  531,    0},   -- Clash of the Comrades (Quest)

@@ -10,6 +10,7 @@ require("scripts/globals/magic")
 require("scripts/globals/utils")
 require("scripts/globals/msg")
 require("scripts/globals/weaponskills")
+require("scripts/globals/damage")
 -----------------------------------
 xi = xi or {}
 xi.mobskills = xi.mobskills or {}
@@ -358,6 +359,10 @@ xi.mobskills.mobMagicalMove = function(mob, target, skill, damage, element, dmgm
         finaldmg = finaldmg * (target:getMod(xi.mod.PET_DMG_TAKEN_MAGICAL) / 100)
     end
 
+    local targetMDTA = xi.spells.damage.calculateTMDA(mob, target, element)
+
+    finaldmg = finaldmg * targetMDTA
+
     returninfo.dmg = finaldmg
 
     return returninfo
@@ -445,10 +450,6 @@ xi.mobskills.mobAddBonuses = function(caster, target, dmg, ele) -- used for SMN 
     local mab = (100 + caster:getMod(xi.mod.MATT)) / (100 + target:getMod(xi.mod.MDEF) + mdefBarBonus)
 
     dmg = math.floor(dmg * mab)
-
-    local magicDmgMod = (10000 + target:getMod(xi.mod.DMGMAGIC)) / 10000
-
-    dmg = math.floor(dmg * magicDmgMod)
 
     return dmg
 end
@@ -605,16 +606,6 @@ xi.mobskills.mobFinalAdjustments = function(dmg, mob, skill, target, attackType,
             analyzerHits = 0
         end
         target:setLocalVar("analyzer_hits", analyzerHits)
-    end
-
-    if attackType == xi.attackType.PHYSICAL then
-        dmg = target:physicalDmgTaken(dmg, damageType)
-    elseif attackType == xi.attackType.MAGICAL then
-        dmg = target:magicDmgTaken(dmg, damageType - xi.damageType.ELEMENTAL)
-    elseif attackType == xi.attackType.BREATH then
-        dmg = target:breathDmgTaken(dmg)
-    elseif attackType == xi.attackType.RANGED then
-        dmg = target:rangedDmgTaken(dmg)
     end
 
     if dmg < 0 then
