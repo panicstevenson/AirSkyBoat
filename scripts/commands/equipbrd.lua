@@ -57,6 +57,11 @@ function onTrigger(player, target)
         sendUpdate = false
         save = true
 		
+		if player:getFreeSlotsCount() == 0 then
+			player:PrintToPlayer("IInventory is full, please check your inventory and try again.")
+        return
+		end
+				
 		itemToGet = tonumber(item)
 		
 		if (targ:hasItem(itemToGet)) then

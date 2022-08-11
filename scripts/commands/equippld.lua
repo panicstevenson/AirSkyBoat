@@ -8,7 +8,6 @@
 -- SH 12579
 -- Rutter sab 15349
 -- heavy xbow 17220
--- tiph sting 18254
 -----------------------------------
 
 cmdprops =
@@ -25,15 +24,15 @@ end
 function onTrigger(player, target)
     local itemsToGet =
     {
-		--Weapon - Uli GK
-        17804,
+		--Weapon joyeuse, durandal,
+        17652, 17700, 12387, 18372,
 		--Gear
-		12818, 15457, 19025, 18139, 14813, 15543, 13280, 13645, 13106,
-		13231, 15294, 12556, 12701, 12957, 15184, 13915, 14021, 12579, 
-		15349, 17220, 14764, 18254, 13014, 14260, 13061, 13123, 14806,
-        14874, 15327, 12555,
+		12420, 15457, 19025, 15543, 13280, 13645, 13106, 13231, 15294, 
+		12701, 12957, 15184, 13915, 15506, 13748, 12804, 12548, 15468,
+		14021, 12579, 15349, 14764, 13805, 14782, 13301, 12677, 14758,
+		13014, 14260, 13061, 13123, 14806, 13740, 13453, 14659, 
 		--AF Below
-		13781, 14225, 13868, 13972, 14100,
+		14220, 12515, 13967, 14095, 12644,
 		
     }
 
@@ -61,9 +60,9 @@ function onTrigger(player, target)
 		
 		if player:getFreeSlotsCount() == 0 then
 			player:PrintToPlayer("IInventory is full, please check your inventory and try again.")
-        return		
+        return
 		end
-				
+		
 		itemToGet = tonumber(item)
 		
 		if (targ:hasItem(itemToGet)) then
