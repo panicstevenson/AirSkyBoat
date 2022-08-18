@@ -55,6 +55,7 @@ CBattleEntity::CBattleEntity()
     m_ModelRadius = 0;
     m_mlvl        = 0;
     m_slvl        = 0;
+    m_subRatio    = 1; // Most battle entities halved by default
 
     m_mjob = JOB_WAR;
     m_sjob = JOB_WAR;
@@ -946,7 +947,26 @@ void CBattleEntity::SetSLevel(uint8 slvl)
     {
         // Technically, we shouldn't be assuming mobs even have a ratio they must adhere to.
         // But there is no place in the DB to set subLV right now.
-        m_slvl = (slvl > (m_mlvl >> 1) ? (m_mlvl == 1 ? 1 : (m_mlvl >> 1)) : slvl);
+        auto ratio = this->m_subRatio;
+
+        // m_slvl = (slvl > (m_mlvl >> 1) ? (m_mlvl == 1 ? 1 : (m_mlvl >> 1)) : slvl);   // Code retained for reference
+        switch (ratio)
+        {
+            case 0: // no SJ
+                m_slvl = 0;
+                break;
+            case 1: // 1/2 (75/37, 99/49)
+                m_slvl = (slvl > (m_mlvl >> 1) ? (m_mlvl == 1 ? 1 : (m_mlvl >> 1)) : slvl);
+                break;
+            case 2: // 2/3 (75/50, 99/66)
+                m_slvl = (slvl > (m_mlvl * 2) / 3 ? (m_mlvl == 1 ? 1 : (m_mlvl * 2) / 3) : slvl);
+                break;
+            case 3:
+            default:  // equal (75/75, 99/99)
+                m_slvl = (slvl > m_mlvl ? (m_mlvl == 1 ? 1 : m_mlvl) : slvl);
+                break;
+        }
+
     }
     else
     {

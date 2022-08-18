@@ -753,6 +753,8 @@ public:
     bool            m_dualWield;   // True/false depending on if the entity is using two weapons
     DEATH_TYPE      m_DeathType;
 
+    uint8 m_subRatio; // 0: None, 1: Halved, 2: Two/thirds, 3: Equal
+
     TraitList_t TraitList; // список постянно активных способностей в виде указателей
 
     EntityID_t m_OwnerID; // ID атакующей сущности (после смерти будет хранить ID сущности, нанесщей последний удар)
@@ -780,6 +782,7 @@ private:
     JOBTYPE    m_sjob; // дополнительная профессия
     uint8      m_mlvl; // ТЕКУЩИЙ уровень главной профессии
     uint8      m_slvl; // ТЕКУЩИЙ уровень дополнительной профессии
+
     uint16     m_battleTarget{ 0 };
     time_point m_battleStartTime;
 

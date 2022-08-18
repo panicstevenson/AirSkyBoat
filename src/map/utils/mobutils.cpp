@@ -226,6 +226,7 @@ namespace mobutils
         JOBTYPE   mJob     = PMob->GetMJob();
         JOBTYPE   sJob     = PMob->GetSJob();
         uint8     mLvl     = PMob->GetMLevel();
+        uint8     sLvl     = PMob->GetSLevel();
         ZONE_TYPE zoneType = PMob->loc.zone->GetType();
 
         if (recover == true)
@@ -407,55 +408,66 @@ namespace mobutils
         uint16 mMND = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetMJob(), 7), mLvl);
         uint16 mCHR = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetMJob(), 8), mLvl);
 
-        uint16 sSTR = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 2), PMob->GetSLevel());
-        uint16 sDEX = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 3), PMob->GetSLevel());
-        uint16 sVIT = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 4), PMob->GetSLevel());
-        uint16 sAGI = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 5), PMob->GetSLevel());
-        uint16 sINT = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 6), PMob->GetSLevel());
-        uint16 sMND = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 7), PMob->GetSLevel());
-        uint16 sCHR = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 8), PMob->GetSLevel());
+        uint16 sSTR = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 2), sLvl);
+        uint16 sDEX = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 3), sLvl);
+        uint16 sVIT = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 4), sLvl);
+        uint16 sAGI = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 5), sLvl);
+        uint16 sINT = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 6), sLvl);
+        uint16 sMND = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 7), sLvl);
+        uint16 sCHR = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 8), sLvl);
 
         // As per conversation with Jimmayus, all mobs at any level get bonus stats from subjobs.
         // From lvl 45 onwards, 1/2. Before lvl 30, 1/4. In between, the value gets progresively higher, from 1/4 at 30 to 1/2 at 44.
         // Im leaving that range at 1/3, for now.
+
+        uint8 sLvlBonusRatio = 1;
+        uint8 mLvlBonusRatio = 1;
+
+        // Adjust the main job bonus multiplier
         if (mLvl >= 45)
         {
-            sSTR /= 2;
-            sDEX /= 2;
-            sAGI /= 2;
-            sINT /= 2;
-            sMND /= 2;
-            sCHR /= 2;
-            sVIT /= 2;
+            mLvlBonusRatio = 2;
         }
         else if (mLvl > 30)
         {
-            sSTR /= 3;
-            sDEX /= 3;
-            sAGI /= 3;
-            sINT /= 3;
-            sMND /= 3;
-            sCHR /= 3;
-            sVIT /= 3;
+            mLvlBonusRatio = 3;
         }
         else
         {
-            sSTR /= 4;
-            sDEX /= 4;
-            sAGI /= 4;
-            sINT /= 4;
-            sMND /= 4;
-            sCHR /= 4;
-            sVIT /= 4;
+            mLvlBonusRatio = 4;
         }
 
-        PMob->stats.STR = fSTR + mSTR + sSTR;
-        PMob->stats.DEX = fDEX + mDEX + sDEX;
-        PMob->stats.VIT = fVIT + mVIT + sVIT;
-        PMob->stats.AGI = fAGI + mAGI + sAGI;
-        PMob->stats.INT = fINT + mINT + sINT;
-        PMob->stats.MND = fMND + mMND + sMND;
-        PMob->stats.CHR = fCHR + mCHR + sCHR;
+        sSTR /= mLvlBonusRatio;
+        sDEX /= mLvlBonusRatio;
+        sAGI /= mLvlBonusRatio;
+        sINT /= mLvlBonusRatio;
+        sMND /= mLvlBonusRatio;
+        sCHR /= mLvlBonusRatio;
+        sVIT /= mLvlBonusRatio;
+
+        // Ref: Discussion w/ Monti
+        // 
+        // Adjust the subjob bonus multiplier
+        if (sLvl >= 45)
+        {
+            sLvlBonusRatio = 2;
+        }
+        else if (sLvl > 30)
+        {
+            sLvlBonusRatio = 3;
+        }
+        else
+        {
+            sLvlBonusRatio = 4;
+        }
+
+        PMob->stats.STR = fSTR + mSTR + sSTR + (sSTR / sLvlBonusRatio);
+        PMob->stats.DEX = fDEX + mDEX + sDEX + (sDEX / sLvlBonusRatio);
+        PMob->stats.VIT = fVIT + mVIT + sVIT + (sVIT / sLvlBonusRatio);
+        PMob->stats.AGI = fAGI + mAGI + sAGI + (sAGI / sLvlBonusRatio);
+        PMob->stats.INT = fINT + mINT + sINT + (sINT / sLvlBonusRatio);
+        PMob->stats.MND = fMND + mMND + sMND + (sMND / sLvlBonusRatio);
+        PMob->stats.CHR = fCHR + mCHR + sCHR + (sCHR / sLvlBonusRatio);
 
         auto statMultiplier = isNM ? settings::get<float>("map.NM_STAT_MULTIPLIER") : settings::get<float>("map.MOB_STAT_MULTIPLIER");
         PMob->stats.STR     = (uint16)(PMob->stats.STR * statMultiplier);
@@ -1248,7 +1260,8 @@ Usage:
         fire_meva, ice_meva, wind_meva, earth_meva, lightning_meva, water_meva, light_meva, dark_meva, \
         Element, mob_pools.familyid, name_prefix, entityFlags, animationsub, \
         (mob_family_system.HP / 100), (mob_family_system.MP / 100), hasSpellScript, spellList, mob_groups.poolid, \
-        allegiance, namevis, aggro, mob_pools.skill_list_id, mob_pools.true_detection, mob_family_system.detects \
+        allegiance, namevis, aggro, mob_pools.skill_list_id, mob_pools.true_detection, mob_family_system.detects, \
+        subratio, \
         FROM mob_groups INNER JOIN mob_pools ON mob_groups.poolid = mob_pools.poolid \
         INNER JOIN mob_resistances ON mob_pools.resist_id = mob_resistances.resist_id \
         INNER JOIN mob_family_system ON mob_pools.familyid = mob_family_system.familyID \
@@ -1278,6 +1291,7 @@ Usage:
                 PMob->m_minLevel = (uint8)sql->GetIntData(8);
                 PMob->m_maxLevel = (uint8)sql->GetIntData(9);
 
+                PMob->m_subRatio = (uint8)sql->GetIntData(70);
                 uint16 sqlModelID[10];
                 memcpy(&sqlModelID, sql->GetData(10), 20);
                 PMob->look = look_t(sqlModelID);
@@ -1419,7 +1433,8 @@ Usage:
         mob_groups.allegiance, namevis, aggro, mob_pools.skill_list_id, mob_pools.true_detection, mob_family_system.detects, \
         mob_family_system.charmable, \
         mob_ele_evasion.fire_eem, mob_ele_evasion.ice_eem, mob_ele_evasion.wind_eem, mob_ele_evasion.earth_eem, \
-        mob_ele_evasion.lightning_eem, mob_ele_evasion.water_eem, mob_ele_evasion.light_eem, mob_ele_evasion.dark_eem \
+        mob_ele_evasion.lightning_eem, mob_ele_evasion.water_eem, mob_ele_evasion.light_eem, mob_ele_evasion.dark_eem, \
+        subratio \
         FROM mob_groups \
         INNER JOIN mob_pools ON mob_groups.poolid = mob_pools.poolid \
         INNER JOIN mob_resistances ON mob_pools.resist_id = mob_resistances.resist_id \

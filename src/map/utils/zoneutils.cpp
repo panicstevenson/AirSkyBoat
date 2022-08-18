@@ -358,7 +358,8 @@ namespace zoneutils
         mob_pools.roamflag, mob_pools.skill_list_id, mob_pools.true_detection, mob_family_system.detects, mob_family_system.charmable, \
         mob_groups.content_tag, \
         mob_ele_evasion.fire_eem, mob_ele_evasion.ice_eem, mob_ele_evasion.wind_eem, mob_ele_evasion.earth_eem, \
-        mob_ele_evasion.lightning_eem, mob_ele_evasion.water_eem, mob_ele_evasion.light_eem, mob_ele_evasion.dark_eem \
+        mob_ele_evasion.lightning_eem, mob_ele_evasion.water_eem, mob_ele_evasion.light_eem, mob_ele_evasion.dark_eem, \
+        subratio \
         FROM mob_groups INNER JOIN mob_pools ON mob_groups.poolid = mob_pools.poolid \
         INNER JOIN mob_resistances ON mob_resistances.resist_id = mob_pools.resist_id \
         INNER JOIN mob_ele_evasion ON mob_ele_evasion.ele_eva_id = mob_pools.ele_eva_id \
@@ -409,6 +410,7 @@ namespace zoneutils
 
                     PMob->m_minLevel = (uint8)sql->GetIntData(12);
                     PMob->m_maxLevel = (uint8)sql->GetIntData(13);
+                    PMob->m_subRatio = (uint8)sql->GetIntData(86);
 
                     uint16 sqlModelID[10];
                     memcpy(&sqlModelID, sql->GetData(14), 20);
