@@ -86,6 +86,7 @@
 #include "automatonentity.h"
 #include "charentity.h"
 #include "trustentity.h"
+#include <map/utils/petutils.h>
 
 CCharEntity::CCharEntity()
 {
@@ -413,21 +414,17 @@ bool CCharEntity::isNewPlayer() const
 
 void CCharEntity::setPetZoningInfo()
 {
+    //edge case protection in case zone and despawn/pet death occur around same time.
+    if (PPet == nullptr)
+        return;
+
+    //Always save pet zoning information.  Use constructor to determine whether or not we spawn the pet based on pet type.
     if (PPet->objtype == TYPE_PET)
     {
-        switch (((CPetEntity*)PPet)->getPetType())
-        {
-            case PET_TYPE::JUG_PET:
-            case PET_TYPE::AUTOMATON:
-            case PET_TYPE::WYVERN:
-                petZoningInfo.petHP   = PPet->health.hp;
-                petZoningInfo.petTP   = PPet->health.tp;
-                petZoningInfo.petMP   = PPet->health.mp;
-                petZoningInfo.petType = ((CPetEntity*)PPet)->getPetType();
-                break;
-            default:
-                break;
-        }
+        petZoningInfo.petHP   = PPet->health.hp;
+        petZoningInfo.petTP   = PPet->health.tp;
+        petZoningInfo.petMP   = PPet->health.mp;
+        petZoningInfo.petType = ((CPetEntity*)PPet)->getPetType();
     }
 }
 
@@ -2118,6 +2115,10 @@ void CCharEntity::Die()
     {
         this->m_raiseLevel = 0;
     }
+
+    //fix to despawn pet if player dies.
+    if (this->PPet != nullptr)
+        petutils::DespawnPet(this);
 
     luautils::OnPlayerDeath(this);
 }
