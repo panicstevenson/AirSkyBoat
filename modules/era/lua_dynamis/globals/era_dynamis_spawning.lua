@@ -1755,6 +1755,7 @@ xi.dynamis.setStatueStats = function(mob, mobIndex)
     mob:setMod(xi.mod.MPHEAL, 0)
     mob:setMobMod(xi.mobMod.CHECK_AS_NM, 2)
     mob:setSpeed(20)
+
     xi.dynamis.setMDB(mob)
     if mob:getFamily() >= 92 and mob:getFamily() <= 95 then -- If statue
         if eyes ~= nil then

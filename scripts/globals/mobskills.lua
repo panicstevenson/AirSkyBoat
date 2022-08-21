@@ -279,8 +279,14 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numberofhits, accmod
         skill:setMsg(xi.msg.basic.SKILL_MISS)
     end
 
-    if target:getMod(xi.mod.PET_DMG_TAKEN_PHYSICAL) ~= 0 then
-        finaldmg = finaldmg * (target:getMod(xi.mod.PET_DMG_TAKEN_PHYSICAL) / 100)
+    if tpeffect == xi.mobskills.magicalTpBonus.RANGED then
+        finaldmg = xi.damage.applyDamageTaken(target, finaldmg, xi.attackType.RANGED)
+    else
+        if target:getMod(xi.mod.PET_DMG_TAKEN_PHYSICAL) ~= 0 then
+            finaldmg = finaldmg * (target:getMod(xi.mod.PET_DMG_TAKEN_PHYSICAL) / 100)
+        end
+
+        finaldmg = xi.damage.applyDamageTaken(target, finaldmg, xi.attackType.PHYSICAL)
     end
 
     returninfo.dmg = finaldmg
@@ -501,16 +507,7 @@ xi.mobskills.mobBreathMove = function(mob, target, percent, base, element, cap)
     -- 2500 would mean 25% ADDITIONAL damage taken.
     -- The effects of the "Shell" spells are also included in this step. The effect also aplies a negative value.
 
-    local globalDamageTaken   = target:getMod(xi.mod.DMG) / 10000          -- Mod is base 10000
-    local breathDamageTaken   = target:getMod(xi.mod.DMGBREATH) / 10000    -- Mod is base 10000
-    local combinedDamageTaken = 1.0 +  utils.clamp(breathDamageTaken + globalDamageTaken, -0.5, 0.5) -- The combination of regular "Damage Taken" and "Breath Damage Taken" caps at 50%. There is no BDTII known as of yet.
-    local ecoDamageTaken              = 0
-
-    if mob:getSystem() == xi.ecosystem.DRAGON then
-        ecoDamageTaken = target:getMod(xi.mod.DRAGON_MITIGATION_MULT) / 100 -- Mod is base 100
-    end
-
-    damage = math.floor(damage * (combinedDamageTaken + ecoDamageTaken))
+    damage = xi.damage.applyDamageTaken(target, damage, xi.attackType.BREATH)
 
     if target:hasStatusEffect(xi.effect.ALL_MISS) and target:getStatusEffect(xi.effect.ALL_MISS):getPower() > 1 then
         return 0

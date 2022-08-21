@@ -19,8 +19,10 @@ zone_object.onInitialize = function(zone)
     xi.horizon.spawnInitialMobs(zone)
     local hour = VanadielHour()
 
-    if hour >= 6 and hour < 16 then
-        GetMobByID(ID.mob.BACKOO):setRespawnTime(1)
+    if xi.settings.main.ENABLE_WOTG == 1 then
+        if hour >= 6 and hour < 16 then
+            GetMobByID(ID.mob.BACKOO):setRespawnTime(1)
+        end
     end
 
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
