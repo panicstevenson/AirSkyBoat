@@ -1,6 +1,7 @@
 -- func: getfame
 -- desc: Gets fame level of a target player
 -----------------------------------
+require("scripts/globals/msg")
 
 cmdprops =
 {
@@ -10,7 +11,7 @@ cmdprops =
 
 function error(player, msg)
     if msg == nil then
-        msg = "!getfame <player> <fame_zone 0-15>"
+        msg = "!getfame [player] <fame_zone 0-15>"
     end
     player:PrintToPlayer(msg)
 end
@@ -24,9 +25,9 @@ function onTrigger(player, target, famezone)
         error(player)
         return
     else
-        targ = GetPlayerByName( target )
+        targ = GetPlayerByName(target)
         if (targ == nil) then
-            error(player, string.format( "Player named '%s' not found or not a valid player!", target ) )
+            error(player, string.format("Player named '%s' not found or not a valid player!", target))
             return
         end
     end
@@ -53,10 +54,15 @@ function onTrigger(player, target, famezone)
 
     -- Validate famezone
     if famezone == nil then
-        error(player)
-        return
+        -- error(player)
+        -- return
+        player:PrintToPlayer(string.format("Fame Report for player: %s", targ:getName()), xi.msg.channel.SYSTEM_3)
+        for i=0, 15 do
+            player:PrintToPlayer(string.format("Area %s (%s): %s (Level: %s)", i, fameAreas[i+1], player:getFame(i), player:getFameLevel(i)), xi.msg.channel.SYSTEM_3)
+        end
+
     elseif famezone < 0 or famezone > 15 then
-        error(player, "Fame zone must be a value from 0 to 15.")
+        error(player, "Fame zone must be a value from 0 to 15, or omit for complete list.")
         return
     end
 
@@ -64,14 +70,9 @@ function onTrigger(player, target, famezone)
     local fame = player:getFame(famezone)
     local level = player:getFameLevel(famezone)
 
-
-    -- if (level > 6 and (famezone >= 6 and famezone <= 14)) then -- Abyssea fame caps at level 6
-    --     level = 6
-    --     error(player, "Abyssea fame capped at level 6.  Setting to level 6.")
-    -- end
     if level < 9 then
-        player:PrintToPlayer( string.format( "%s's reputation in fame area %i (%s) is %i (Level %i). Next level at %i (%i points to go).", targ:getName(), famezone, fameAreas[famezone+1], fame, level, fameBaseValues[level+1], fameBaseValues[level+1]-fame))
+        player:PrintToPlayer( string.format( "%s's reputation in fame area %i (%s) is %i (Level %i). Next level at %i (%i points to go).", targ:getName(), famezone, fameAreas[famezone+1], fame, level, fameBaseValues[level+1], fameBaseValues[level+1]-fame), xi.msg.channel.SYSTEM_3)
     else
-        player:PrintToPlayer( string.format( "%s's reputation in fame area %i (%s) is %i (Level %i).", targ:getName(), famezone, fameAreas[famezone+1], fame, level))
+        player:PrintToPlayer( string.format( "%s's reputation in fame area %i (%s) is %i (Level %i).", targ:getName(), famezone, fameAreas[famezone+1], fame, level), xi.msg.channel.SYSTEM_3)
     end 
 end
