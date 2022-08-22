@@ -102,18 +102,6 @@ local spawnerMobs =
         {name = "Midnight Wings",       groupId =   7, groupZone = 120, funcLookup = "Default",  min = 35, max = 37, xPos = 570.9258, yPos = -0.7598, zPos = -236.1827, rot =  55,  respawn = 330, drops =  1668, skills = 47, spells = 0, spawnType = xi.spawnType.SPAWNTYPE_ATNIGHT},
         {name = "Yagudo Votary",        groupId =   10, groupZone = 120, funcLookup = "Default", min = 36, max = 38, xPos = 541.4835, yPos = -0.0323, zPos = -221.0322, rot =  43,  respawn = 330, drops =  2775, skills = 270, spells = 0},
         {name = "Yagudo Interrogator",  groupId =   17, groupZone = 120, funcLookup = "Default", min = 36, max = 38, xPos = 547.334,  yPos =  7.5221, zPos = -129.7686, rot =  127, respawn = 330, drops =  2772, skills = 270, spells = 0},
-        -- Zone Revamp
-        {name = "Diving Beetle",     groupId = 36, groupZone = 120, funcLookup = "Default", min = 25, max = 28, xPos = -362.4743, yPos = 0.9088, zPos = 301.8038, rot = 203.0000, respawn = 330, drops = 670, skills = 49, spells = 0},
-        {name = "Diving Beetle",     groupId = 36, groupZone = 120, funcLookup = "Default", min = 25, max = 28, xPos = -401.7371, yPos = 0.8563, zPos = 302.8536, rot = 13.0000, respawn = 330, drops = 670, skills = 49, spells = 0},
-        {name = "Goblin Mugger",     groupId = 21, groupZone = 120, funcLookup = "Default", min = 26, max = 30, xPos = -319.3690, yPos = 8.0377, zPos = 322.9174, rot = 52.0000, respawn = 330, drops = 1117, skills = 133, spells = 0},
-        {name = "Goblin Shaman",     groupId = 28, groupZone = 120, funcLookup = "Default", min = 30, max = 36, xPos = -350.9561, yPos = 0.4197, zPos = 286.4107, rot = 100.0000, respawn = 330, drops = 1150, skills = 133, spells = 2},
-        {name = "Goblin Pathfinder", groupId = 22, groupZone = 120, funcLookup = "Default", min = 30, max = 36, xPos = -332.5544, yPos = 0.3006, zPos = 274.5396, rot = 188.0000, respawn = 330, drops = 1129, skills = 133, spells = 0},
-        {name = "Goblin Furrier",    groupId = 25, groupZone = 120, funcLookup = "Default", min = 30, max = 36, xPos = -339.2939, yPos = 6.6272, zPos = 342.6162, rot = 10.0000, respawn = 330, drops = 1067, skills = 133, spells = 0},
-        {name = "Sauromugue Skink",  groupId = 32, groupZone = 120, funcLookup = "Default", min = 28, max = 32, xPos = -338.0416, yPos = 8.9010, zPos = 441.9147, rot = 118.0000, respawn = 330, drops = 2935, skills = 376, spells = 0},
-        {name = "Sauromugue Skink",  groupId = 32, groupZone = 120, funcLookup = "Default", min = 28, max = 32, xPos = -375.9368, yPos = 4.8330, zPos = 453.0955, rot = 147.0000, respawn = 330, drops = 2935, skills = 376, spells = 0},
-        {name = "Sauromugue Skink",  groupId = 32, groupZone = 120, funcLookup = "Default", min = 28, max = 32, xPos = -354.6268, yPos = 0.1520, zPos = 285.7087, rot = 137.0000, respawn = 330, drops = 2935, skills = 376, spells = 0},
-
-
     },
     [xi.zone.VALKURM_DUNES] =
     {
@@ -442,11 +430,6 @@ local spawnerMobs =
         {name = "Torama",              groupId = 19, groupZone = 213, funcLookup = "Default", min = 70, max = 73, xPos =  -18.0341, yPos =  4.7336, zPos =  148.8873, rot = 114, respawn = 420, drops = 2455, skills =  71, spells = 0},
         {name = "Torama",              groupId = 19, groupZone = 213, funcLookup = "Default", min = 70, max = 73, xPos = -106.0512, yPos = -0.2368, zPos =  132.0096, rot = 100, respawn = 420, drops = 2455, skills =  71, spells = 0},
     },
-    [xi.zone.ROMAEVE] =
-    {
-        {name = "Apocalyptic Weapon", groupId = 10, groupZone = 122, funcLookup = "Default", min = 78, max = 80, xPos = -125.9527, yPos = 4.0000, zPos = 107.9046, rot =  99, respawn = 330, drops = 0, skills = 110, spells = 0},
-        {name = "Apocalyptic Weapon", groupId = 10, groupZone = 122, funcLookup = "Default", min = 78, max = 80, xPos = -264.2483, yPos = 4.0000, zPos = -63.2815, rot = 203, respawn = 330, drops = 0, skills = 110, spells = 0},
-    },
     [xi.zone.BOSTAUNIEUX_OUBLIETTE] =
     {
         {name = "Dark Aspic",  groupId =  9, groupZone = 167, funcLookup = "Default", min = 52, max = 54, xPos =  -22.3973, yPos = 1.0963, zPos =   22.5263, rot =  31, respawn = 420, drops = 567, skills = 229, spells = 0},
@@ -493,14 +476,6 @@ local spawnerMobs =
         {name = "Werebat", groupId =  6, groupZone = 167, funcLookup = "Default", min = 55, max = 59, xPos = 101.1830, yPos = 1.0076, zPos = -143.9786, rot = 59, respawn = 420, drops = 2641, skills = 46, spells = 0},
         {name = "Werebat", groupId =  6, groupZone = 167, funcLookup = "Default", min = 55, max = 59, xPos = 98.5108, yPos = 1.1954, zPos = -174.3887, rot = 67, respawn = 420, drops = 2641, skills = 46, spells = 0},
         {name = "Werebat", groupId =  6, groupZone = 167, funcLookup = "Default", min = 55, max = 59, xPos = 77.7063, yPos = 1.0000, zPos = -179.6279, rot = 130, respawn = 420, drops = 2641, skills = 46, spells = 0},
-    },
-    [xi.zone.TAHRONGI_CANYON] =
-    {
-        {name = "Goblin Weaver",     groupId = 13, groupZone = 117, funcLookup = "Default", min = 8, max = 10, xPos = -36.3284, yPos = -15.7060, zPos = -209.9016, rot = 14, respawn = 330, drops = 1186, skills = 133, spells = 3},
-        {name = "Killer Bee",        groupId =  9, groupZone = 117, funcLookup = "Default", min = 8, max = 12, xPos = -321.7630, yPos = -8.2048, zPos = 74.4088, rot = 230, respawn = 330, drops = 1439, skills = 48, spells = 0},
-        {name = "Strolling Sapling", groupId =  3, groupZone = 117, funcLookup = "Default", min = 7, max = 11, xPos = -75.1870, yPos = 8.0304, zPos = -395.8121, rot = 195, respawn = 330, drops = 2347, skills = 216, spells = 0},
-        {name = "Strolling Sapling", groupId =  3, groupZone = 117, funcLookup = "Default", min = 7, max = 11, xPos = -37.0629, yPos = 8.0000, zPos = -361.5097, rot = 91, respawn = 330, drops = 2347, skills = 216, spells = 0},
-        {name = "Strolling Sapling", groupId =  3, groupZone = 117, funcLookup = "Default", min = 7, max = 11, xPos = -240.6574, yPos = 0.1920, zPos = 71.4587, rot = 20, respawn = 330, drops = 2347, skills = 216, spells = 0},
     },
     [xi.zone.FEIYIN] =
     {
