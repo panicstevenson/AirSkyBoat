@@ -408,66 +408,46 @@ namespace mobutils
         uint16 mMND = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetMJob(), 7), mLvl);
         uint16 mCHR = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetMJob(), 8), mLvl);
 
-        uint16 sSTR = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 2), sLvl);
-        uint16 sDEX = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 3), sLvl);
-        uint16 sVIT = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 4), sLvl);
-        uint16 sAGI = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 5), sLvl);
-        uint16 sINT = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 6), sLvl);
-        uint16 sMND = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 7), sLvl);
-        uint16 sCHR = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 8), sLvl);
+        uint16 sSTR = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 2), sLvl) / 2;
+        uint16 sDEX = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 3), sLvl) / 2;
+        uint16 sVIT = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 4), sLvl) / 2;
+        uint16 sAGI = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 5), sLvl) / 2;
+        uint16 sINT = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 6), sLvl) / 2;
+        uint16 sMND = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 7), sLvl) / 2;
+        uint16 sCHR = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 8), sLvl) / 2;
 
         // As per conversation with Jimmayus, all mobs at any level get bonus stats from subjobs.
         // From lvl 45 onwards, 1/2. Before lvl 30, 1/4. In between, the value gets progresively higher, from 1/4 at 30 to 1/2 at 44.
         // Im leaving that range at 1/3, for now.
 
-        uint8 sLvlBonusRatio = 1;
-        uint8 mLvlBonusRatio = 1;
+        uint8 sLvlBonusRatio = 4; // 1/4 by default (below level 30)
 
-        // Adjust the main job bonus multiplier
-        if (mLvl >= 45)
-        {
-            mLvlBonusRatio = 2;
-        }
-        else if (mLvl > 30)
-        {
-            mLvlBonusRatio = 3;
-        }
-        else
-        {
-            mLvlBonusRatio = 4;
-        }
-
-        sSTR /= mLvlBonusRatio;
-        sDEX /= mLvlBonusRatio;
-        sAGI /= mLvlBonusRatio;
-        sINT /= mLvlBonusRatio;
-        sMND /= mLvlBonusRatio;
-        sCHR /= mLvlBonusRatio;
-        sVIT /= mLvlBonusRatio;
-
-        // Ref: Discussion w/ Monti
-        // 
         // Adjust the subjob bonus multiplier
         if (sLvl >= 45)
         {
-            sLvlBonusRatio = 2;
+            sLvlBonusRatio = 2; // 1/2 at level 45
         }
         else if (sLvl > 30)
         {
-            sLvlBonusRatio = 3;
-        }
-        else
-        {
-            sLvlBonusRatio = 4;
+            sLvlBonusRatio = 3; // 1/3 at level 30
         }
 
-        PMob->stats.STR = fSTR + mSTR + sSTR + (sSTR / sLvlBonusRatio);
-        PMob->stats.DEX = fDEX + mDEX + sDEX + (sDEX / sLvlBonusRatio);
-        PMob->stats.VIT = fVIT + mVIT + sVIT + (sVIT / sLvlBonusRatio);
-        PMob->stats.AGI = fAGI + mAGI + sAGI + (sAGI / sLvlBonusRatio);
-        PMob->stats.INT = fINT + mINT + sINT + (sINT / sLvlBonusRatio);
-        PMob->stats.MND = fMND + mMND + sMND + (sMND / sLvlBonusRatio);
-        PMob->stats.CHR = fCHR + mCHR + sCHR + (sCHR / sLvlBonusRatio);
+        uint16 lSTR = sSTR / sLvlBonusRatio;
+        uint16 lDEX = sDEX / sLvlBonusRatio;
+        uint16 lAGI = sAGI / sLvlBonusRatio;
+        uint16 lINT = sINT / sLvlBonusRatio;
+        uint16 lMND = sMND / sLvlBonusRatio;
+        uint16 lCHR = sCHR / sLvlBonusRatio;
+        uint16 lVIT = sVIT / sLvlBonusRatio;
+
+        // [stat] = [family Stat] + [main job Stat] + [sub job Stat] + [sub job Stat Bonus]
+        PMob->stats.STR = fSTR + mSTR + sSTR + lSTR;
+        PMob->stats.DEX = fDEX + mDEX + sDEX + lDEX;
+        PMob->stats.VIT = fVIT + mVIT + sVIT + lVIT;
+        PMob->stats.AGI = fAGI + mAGI + sAGI + lAGI;
+        PMob->stats.INT = fINT + mINT + sINT + lINT;
+        PMob->stats.MND = fMND + mMND + sMND + lMND;
+        PMob->stats.CHR = fCHR + mCHR + sCHR + lCHR;
 
         auto statMultiplier = isNM ? settings::get<float>("map.NM_STAT_MULTIPLIER") : settings::get<float>("map.MOB_STAT_MULTIPLIER");
         PMob->stats.STR     = (uint16)(PMob->stats.STR * statMultiplier);
