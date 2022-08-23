@@ -53,9 +53,6 @@ function onTrigger(player, famezone, level, target)
     if famezone == nil then
         error(player)
         return
-    elseif famezone == 3 then
-        error(player, "Cannot directly set Jeuno fame - Must be combination of other cities.")
-        return
     elseif famezone < 0 or famezone > 15 then
         error(player, "You must provide a fame zone from 0 to 15.")
         return

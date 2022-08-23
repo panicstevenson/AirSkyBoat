@@ -60,7 +60,7 @@ function onTrigger(player, target, famezone)
         for i=0, 15 do
             player:PrintToPlayer(string.format("Area %s (%s): %s (Level: %s)", i, fameAreas[i+1], player:getFame(i), player:getFameLevel(i)), xi.msg.channel.SYSTEM_3)
         end
-
+        return
     elseif famezone < 0 or famezone > 15 then
         error(player, "Fame zone must be a value from 0 to 15, or omit for complete list.")
         return
