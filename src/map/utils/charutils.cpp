@@ -458,25 +458,24 @@ namespace charutils
             PChar->search.language = (uint8)sql->GetUIntData(30);
             PChar->chatFilterFlags = sql->GetUInt64Data(31);
 
-            uint32 ret2 = sql->Query(wpQuery, PChar->id); // Recruit a Friend Query
+            uint32 ret2 = sql->Query(wpQuery, PChar->id);                                  // Recruit a Friend Query
             if (ret2 != SQL_ERROR && sql->NumRows() != 0 && sql->NextRow() == SQL_SUCCESS) // Load Into Memory To Reduce Queries During XP
             {
-                PChar->profile.raf[0]  = sql->GetUIntData(0); // Recruit a Friend Recruiter
-                PChar->profile.raf[1]  = sql->GetUIntData(1); // Recruit a Friend
-                PChar->profile.raf[2]  = sql->GetUIntData(2); // Recruit a Friend
-                PChar->profile.raf[3]  = sql->GetUIntData(3); // Recruit a Friend
-                PChar->profile.raf[4]  = sql->GetUIntData(4); // Recruit a Friend
-                PChar->profile.raf[5]  = sql->GetUIntData(5); // Recruit a Friend
-                PChar->profile.raf[6]  = sql->GetUIntData(6); // Recruit a Friend
-                PChar->profile.raf[7]  = sql->GetUIntData(7); // Recruit a Friend
-                PChar->profile.raf[8]  = sql->GetUIntData(8); // Recruit a Friend
-                PChar->profile.raf[9]  = sql->GetUIntData(9); // Recruit a Friend
+                PChar->profile.raf[0]  = sql->GetUIntData(0);  // Recruit a Friend Recruiter
+                PChar->profile.raf[1]  = sql->GetUIntData(1);  // Recruit a Friend
+                PChar->profile.raf[2]  = sql->GetUIntData(2);  // Recruit a Friend
+                PChar->profile.raf[3]  = sql->GetUIntData(3);  // Recruit a Friend
+                PChar->profile.raf[4]  = sql->GetUIntData(4);  // Recruit a Friend
+                PChar->profile.raf[5]  = sql->GetUIntData(5);  // Recruit a Friend
+                PChar->profile.raf[6]  = sql->GetUIntData(6);  // Recruit a Friend
+                PChar->profile.raf[7]  = sql->GetUIntData(7);  // Recruit a Friend
+                PChar->profile.raf[8]  = sql->GetUIntData(8);  // Recruit a Friend
+                PChar->profile.raf[9]  = sql->GetUIntData(9);  // Recruit a Friend
                 PChar->profile.raf[10] = sql->GetUIntData(10); // Recruit a Friend
                 PChar->profile.raf[11] = sql->GetUIntData(11); // Recruit a Friend
                 PChar->profile.raf[12] = sql->GetUIntData(12); // Recruit a Friend
                 PChar->profile.raf[13] = sql->GetUIntData(13); // Recruit a Friend
                 PChar->profile.raf[14] = sql->GetUIntData(14); // Recruit a Friend
-                PChar->profile.raf[15] = sql->GetUIntData(15); // Recruit a Friend
             }
         }
 
@@ -4480,47 +4479,44 @@ namespace charutils
                         uint8 graceMax           = lua["xi"]["settings"]["map"]["LEVEL_SYNC_PENALTY_GRACE_MAX"].get<uint8>(); // Maximum Grace Level Range Above Sync Without Penalty
                         uint8 penaltyRangeMax    = lua["xi"]["settings"]["map"]["LEVEL_SYNC_PENALTY_RANGE_MAX"].get<uint8>(); // Maximum Level Sync Range Before Penalty Is Fully Applied
                         float perLevelPenalty    = maxPenalty / (penaltyRangeMax - graceMax); // Per Level % Decrease in XP
-                        CCharEntity* PMemberChar = static_cast<CCharEntity*>(PMember);
                         uint8 penaltyStart       = 0;
 
-                        if (PMemberChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_SYNC))
+                        if (PMember->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_SYNC))
                         {
-                            penaltyStart  = PMemberChar->StatusEffectContainer->GetStatusEffect(EFFECT_LEVEL_SYNC)->GetPower() + graceMax; // Level Where Penalty Starts To Apply
+                            penaltyStart  = PMember->StatusEffectContainer->GetStatusEffect(EFFECT_LEVEL_SYNC)->GetPower() + graceMax; // Level Where Penalty Starts To Apply
                         }
 
-                        uint8 levelTarget = PMemberChar->m_orgLevel; // Original Level of the Member
+                        uint8 levelTarget = PMember->m_orgLevel; // Original Level of the Member
 
                         if (penaltyStart != 0 && levelTarget > penaltyStart) // If Level > Penalty Level Start
                         {
-                            uint32 recruiter       = PMemberChar->profile.raf[0]; // Recruiter ID
-                            uint32 recruitFriend1  = PMemberChar->profile.raf[1]; // Recruit a Friend ID
-                            uint32 recruitFriend2  = PMemberChar->profile.raf[2]; // Recruit a Friend ID
-                            uint32 recruitFriend3  = PMemberChar->profile.raf[3]; // Recruit a Friend ID
-                            uint32 recruitFriend4  = PMemberChar->profile.raf[4]; // Recruit a Friend ID
-                            uint32 recruitFriend5  = PMemberChar->profile.raf[5]; // Recruit a Friend ID
-                            uint32 recruitFriend6  = PMemberChar->profile.raf[6]; // Recruit a Friend ID
-                            uint32 recruitFriend7  = PMemberChar->profile.raf[7]; // Recruit a Friend ID
-                            uint32 recruitFriend8  = PMemberChar->profile.raf[8]; // Recruit a Friend ID
-                            uint32 recruitFriend9  = PMemberChar->profile.raf[9]; // Recruit a Friend ID
-                            uint32 recruitFriend10 = PMemberChar->profile.raf[10]; // Recruit a Friend ID
-                            uint32 recruitFriend11 = PMemberChar->profile.raf[11]; // Recruit a Friend ID
-                            uint32 recruitFriend12 = PMemberChar->profile.raf[12]; // Recruit a Friend ID
-                            uint32 recruitFriend13 = PMemberChar->profile.raf[13]; // Recruit a Friend ID
-                            uint32 recruitFriend14 = PMemberChar->profile.raf[14]; // Recruit a Friend ID
-                            uint32 recruitFriend15 = PMemberChar->profile.raf[15]; // Recruit a Friend ID
+                            uint32 recruiter       = PMember->profile.raf[0]; // Recruiter ID
+                            uint32 recruitFriend1  = PMember->profile.raf[1]; // Recruit a Friend ID
+                            uint32 recruitFriend2  = PMember->profile.raf[2]; // Recruit a Friend ID
+                            uint32 recruitFriend3  = PMember->profile.raf[3]; // Recruit a Friend ID
+                            uint32 recruitFriend4  = PMember->profile.raf[4]; // Recruit a Friend ID
+                            uint32 recruitFriend5  = PMember->profile.raf[5]; // Recruit a Friend ID
+                            uint32 recruitFriend6  = PMember->profile.raf[6]; // Recruit a Friend ID
+                            uint32 recruitFriend7  = PMember->profile.raf[7]; // Recruit a Friend ID
+                            uint32 recruitFriend8  = PMember->profile.raf[8]; // Recruit a Friend ID
+                            uint32 recruitFriend9  = PMember->profile.raf[9]; // Recruit a Friend ID
+                            uint32 recruitFriend10 = PMember->profile.raf[10]; // Recruit a Friend ID
+                            uint32 recruitFriend11 = PMember->profile.raf[11]; // Recruit a Friend ID
+                            uint32 recruitFriend12 = PMember->profile.raf[12]; // Recruit a Friend ID
+                            uint32 recruitFriend13 = PMember->profile.raf[13]; // Recruit a Friend ID
+                            uint32 recruitFriend14 = PMember->profile.raf[14]; // Recruit a Friend ID
 
                             PMember->ForParty([&levelTarget, &recruiter, &recruitFriend1, &recruitFriend2, &recruitFriend3, &recruitFriend4, &recruitFriend5, &recruitFriend6, &recruitFriend7, &recruitFriend8,
-                                               &recruitFriend9, &recruitFriend10, &recruitFriend11, &recruitFriend12, &recruitFriend13, &recruitFriend14, &recruitFriend15, &PMemberChar](CBattleEntity* PBattleFriend)
+                                               &recruitFriend9, &recruitFriend10, &recruitFriend11, &recruitFriend12, &recruitFriend13, &recruitFriend14, &PMember](CBattleEntity* PBattleFriend)
                             {
                                 if (PBattleFriend != nullptr)
                                 {
                                     CCharEntity* PFriend       = static_cast<CCharEntity*>(PBattleFriend);
                                     uint32 friendId            = PFriend->id; // ID of PFriend
 
-                                    if ((PFriend->getZone() == PMemberChar->getZone()) && (friendId == recruiter || friendId == recruitFriend1 || friendId == recruitFriend2 || friendId == recruitFriend3
+                                    if ((PFriend->getZone() == PMember->getZone()) && (friendId == recruiter || friendId == recruitFriend1 || friendId == recruitFriend2 || friendId == recruitFriend3
                                         || friendId == recruitFriend4 || friendId == recruitFriend5 || friendId == recruitFriend6 || friendId == recruitFriend7 || friendId == recruitFriend8 || friendId == recruitFriend9
-                                        || friendId == recruitFriend10 || friendId == recruitFriend11 || friendId == recruitFriend12 || friendId == recruitFriend13 || friendId == recruitFriend14
-                                        || friendId == recruitFriend15) && (PFriend->m_orgLevel < levelTarget)) // Check Zone Is The Same | Check If Player Is Friend | Check If Friend's Level Is Less Than Current Target
+                                        || friendId == recruitFriend10 || friendId == recruitFriend11 || friendId == recruitFriend12 || friendId == recruitFriend13 || friendId == recruitFriend14) && (PFriend->m_orgLevel < levelTarget)) // Check Zone Is The Same | Check If Player Is Friend | Check If Friend's Level Is Less Than Current Target
                                     {
                                         levelTarget = PFriend->m_orgLevel; // If The Above Is True Then Set New Target Level
                                     }
@@ -7003,7 +6999,8 @@ namespace charutils
     {
         uint8 maxJobLevel = 0;
 
-        for (uint8 jobId = 0; jobId < MAX_JOBTYPE; jobId++) {
+        for (uint8 jobId = 0; jobId < MAX_JOBTYPE; jobId++)
+        {
             if (PChar->jobs.job[jobId] > maxJobLevel)
             {
                 maxJobLevel = PChar->jobs.job[jobId];

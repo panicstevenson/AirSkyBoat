@@ -651,9 +651,10 @@ namespace zoneutils
 
                 if (PMaster == nullptr)
                 {
-                    ShowError("zoneutils::loadMOBList PMaster is NULL. masterid: %d. Make sure x,y,z are not zeros, and that all entities are entered in the "
-                              "database!",
-                              masterid);
+                    // ShowError("zoneutils::loadMOBList PMaster is NULL. masterid: %d. Make sure x,y,z are not zeros, and that all entities are entered in the "
+                    //   "database!",
+                    //   masterid);
+                    continue;
                 }
                 else if (PPet == nullptr)
                 {
