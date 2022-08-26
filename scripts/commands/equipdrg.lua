@@ -27,9 +27,9 @@ function onTrigger(player, target)
 		--Weapon colossal lance
         16855, 
 		--Gear
-		12818, 15457, 19025, 18139, 14813, 15543, 13280, 13645, 13106,
-		13231, 15294, 12556, 12701, 12957, 15184, 13915, 14021, 12579, 
-		15349, 17220, 14764, 13805, 14403, 12725, 13014, 14260, 13061,
+		15457, 19025, 14813, 15543, 13280, 13645,
+		13231, 15294, 12701, 12957, 15184, 13915, 14021, 12579, 
+		15349, 14764, 13805, 13014, 14260, 13061,
         13123, 14806,
 		--AF Below
 		12519, 14227, 13974, 14102, 12649,
@@ -57,6 +57,11 @@ function onTrigger(player, target)
         silent = false
         sendUpdate = false
         save = true
+		
+		if player:getFreeSlotsCount() == 0 then
+			player:PrintToPlayer("IInventory is full, please check your inventory and try again.")
+        return
+		end
 		
 		itemToGet = tonumber(item)
 		

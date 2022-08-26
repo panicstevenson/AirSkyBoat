@@ -1,4 +1,0 @@
-UPDATE mob_resistances SET fire_eem = '85', wind_eem = '115', lightning_eem = '115', light_eem = '115', ice_eem = '85', earth_eem = '115', water_eem = '130', dark_eem = ' 115' WHERE resist_id = 334; -- Vanguard Orc / Orc NMs
-UPDATE mob_resistances SET fire_eem = '130', wind_eem = '130', lightning_eem = '130', light_eem = '130', ice_eem = '130', earth_eem = '130', water_eem = '130', dark_eem = '70' WHERE resist_id = 229; -- Vanguard Hecteyes
-UPDATE mob_resistances SET fire_eem = '130', wind_eem = '130', lightning_eem = '130', light_eem = '115', ice_eem = '85', earth_eem = '130', water_eem = '130', dark_eem = ' 130' WHERE resist_id = 193; -- Vanguards Wyvern
-UPDATE mob_resistances SET fire_eem = '85', wind_eem = '115', lightning_eem = '115', light_eem = '115', ice_eem = '85', earth_eem = '115', water_eem = '130', dark_eem = ' 115' WHERE resist_id = 93; -- Serjeant Tombstone

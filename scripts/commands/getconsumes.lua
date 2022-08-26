@@ -19,11 +19,10 @@ function onTrigger(player, target)
 	local consumes =
 	{
 		5314, --toolbag shihei
-		5777, --pear crepe
-		5718, --cream puff
         5335, --acid quivers
         4224, --DEMON QUIVERS
         5752, --pot au feu
+		4339, --rolan pie+1
 	}
 
     -- validate target
@@ -45,6 +44,12 @@ function onTrigger(player, target)
 
 	-- get consumes
 	for _, item in pairs(consumes) do
+	
+		if player:getFreeSlotsCount() == 0 then
+			player:PrintToPlayer("IInventory is full, please check your inventory and try again.")
+        return
+		end
+	
 		itemToGet = tonumber(item)
 		player:addItem(itemToGet, 12, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val, trialId)
 		--player:messageSpecial(ID.text.ITEM_OBTAINED, itemToGet)

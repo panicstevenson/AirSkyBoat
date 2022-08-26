@@ -55,6 +55,7 @@ CBattleEntity::CBattleEntity()
     m_ModelRadius = 0;
     m_mlvl        = 0;
     m_slvl        = 0;
+    m_subRatio    = 1; // Most battle entities halved by default
 
     m_mjob = JOB_WAR;
     m_sjob = JOB_WAR;
@@ -194,7 +195,14 @@ void CBattleEntity::UpdateHealth()
 
 uint8 CBattleEntity::GetHPP() const
 {
-    return (uint8)ceil(((float)health.hp / (float)GetMaxHP()) * 100);
+    uint8 hpp = (uint8)floor(((float)health.hp / (float)GetMaxHP()) * 100);
+    // handle the edge case where a floor would show a mob with 1/1000 hp as 0
+    if (hpp == 0 && health.hp > 0)
+    {
+        hpp = 1;
+    }
+
+    return hpp;
 }
 
 int32 CBattleEntity::GetMaxHP() const
@@ -939,7 +947,26 @@ void CBattleEntity::SetSLevel(uint8 slvl)
     {
         // Technically, we shouldn't be assuming mobs even have a ratio they must adhere to.
         // But there is no place in the DB to set subLV right now.
-        m_slvl = (slvl > (m_mlvl >> 1) ? (m_mlvl == 1 ? 1 : (m_mlvl >> 1)) : slvl);
+        auto ratio = this->m_subRatio;
+
+        // m_slvl = (slvl > (m_mlvl >> 1) ? (m_mlvl == 1 ? 1 : (m_mlvl >> 1)) : slvl);   // Code retained for reference
+        switch (ratio)
+        {
+            case 0: // no SJ
+                m_slvl = 0;
+                break;
+            case 1: // 1/2 (75/37, 99/49)
+                m_slvl = (slvl > (m_mlvl >> 1) ? (m_mlvl == 1 ? 1 : (m_mlvl >> 1)) : slvl);
+                break;
+            case 2: // 2/3 (75/50, 99/66)
+                m_slvl = (slvl > (m_mlvl * 2) / 3 ? (m_mlvl == 1 ? 1 : (m_mlvl * 2) / 3) : slvl);
+                break;
+            case 3:
+            default:  // equal (75/75, 99/99)
+                m_slvl = (slvl > m_mlvl ? (m_mlvl == 1 ? 1 : m_mlvl) : slvl);
+                break;
+        }
+
     }
     else
     {
@@ -2083,6 +2110,11 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
 
             // Check & Handle Afflatus Misery Accuracy Bonus
             battleutils::HandleAfflatusMiseryAccuracyBonus(this);
+
+            if (PTarget->objtype == TYPE_PC)
+            {
+                charutils::TrySkillUP((CCharEntity*)PTarget, SKILL_EVASION, GetMLevel());
+            }
         }
 
         // If we didn't hit at all, set param to 0 if we didn't blink any shadows.
@@ -2112,7 +2144,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
         }
 
         // try zanshin only on single swing attack rounds - it is last priority in the multi-hit order
-        // if zanshin procs, the attack is repeated
+        // if zanshin procs, add a new zanshin based attack.
         if (attack.IsFirstSwing() && attackRound.GetAttackSwingCount() == 1)
         {
             uint16 zanshinChance = this->getMod(Mod::ZANSHIN) + battleutils::GetMeritValue(this, MERIT_ZASHIN_ATTACK_RATE);
@@ -2122,18 +2154,12 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                  xirand::GetRandomNumber(100) < zanshinChance) ||
                 (GetMJob() == JOB_SAM && this->StatusEffectContainer->HasStatusEffect(EFFECT_HASSO) && xirand::GetRandomNumber(100) < (zanshinChance / 4)))
             {
-                attack.SetAttackType(PHYSICAL_ATTACK_TYPE::ZANSHIN);
-                attack.SetAsFirstSwing(false);
-            }
-            else
-            {
-                attackRound.DeleteAttackSwing();
+                attackRound.AddAttackSwing(PHYSICAL_ATTACK_TYPE::ZANSHIN, PHYSICAL_ATTACK_DIRECTION::RIGHTATTACK, 1);
             }
         }
-        else
-        {
-            attackRound.DeleteAttackSwing();
-        }
+
+        attackRound.DeleteAttackSwing();
+
         if (list.actionTargets.size() == 8)
         {
             break;

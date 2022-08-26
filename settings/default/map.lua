@@ -207,6 +207,7 @@ xi.settings.map =
 
     -- Minimum time between uses of yell command (in seconds).
     YELL_COOLDOWN = 30,
+    YELL_MIN_LEVEL = 10,
 
     -- Command Audit [logging] commands with lower permission than this will not be logged.
     -- Zero for no logging at all. Commands given to non GMs are not logged.
