@@ -140,7 +140,6 @@ jobs:
           exit 1
         fi
         exit 0
-
   Linux_Clang14_64bit:
     runs-on: [self-hosted, linux]
     steps:
@@ -484,7 +483,6 @@ jobs:
         chmod +x xi_map
         chmod +x xi_search
         ls -l
-
         printf "\nStart server processes\n"
         screen -d -m -S xi_connect ./xi_connect --log login-server.log
         screen -d -m -S xi_search ./xi_search --log search-server.log

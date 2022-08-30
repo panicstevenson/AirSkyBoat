@@ -97,10 +97,10 @@ INSERT INTO `mob_skill_lists` VALUES ('Avatar-Carbuncle',34,907);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Carbuncle',34,910);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Carbuncle',34,911);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Carbuncle',34,912);
--- INSERT INTO `mob_skill_lists` VALUES ('Avatar-Diabolos',35,1903);
--- INSERT INTO `mob_skill_lists` VALUES ('Avatar-Diabolos',35,1905);
--- INSERT INTO `mob_skill_lists` VALUES ('Avatar-Diabolos',35,1906);
--- INSERT INTO `mob_skill_lists` VALUES ('Avatar-Diabolos',35,1908);
+INSERT INTO `mob_skill_lists` VALUES ('CoP-Diabolos',35,1903);
+INSERT INTO `mob_skill_lists` VALUES ('CoP-Diabolos',35,1905);
+INSERT INTO `mob_skill_lists` VALUES ('CoP-Diabolos',35,1906);
+INSERT INTO `mob_skill_lists` VALUES ('CoP-Diabolos',35,1908);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Fenrir',36,831);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Fenrir',36,832);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Fenrir',36,833);
@@ -424,11 +424,11 @@ INSERT INTO `mob_skill_lists` VALUES ('IceLizard',97,371);
 INSERT INTO `mob_skill_lists` VALUES ('IceLizard',97,372);
 INSERT INTO `mob_skill_lists` VALUES ('IceLizard',97,373);
 INSERT INTO `mob_skill_lists` VALUES ('IceLizard',97,621);
-INSERT INTO `mob_skill_lists` VALUES ('Eft',98,515);
-INSERT INTO `mob_skill_lists` VALUES ('Eft',98,516);
-INSERT INTO `mob_skill_lists` VALUES ('Eft',98,517);
-INSERT INTO `mob_skill_lists` VALUES ('Eft',98,518);
-INSERT INTO `mob_skill_lists` VALUES ('Eft',98,519);
+INSERT INTO `mob_skill_lists` VALUES ('Eft',98,515); -- toxic spit
+INSERT INTO `mob_skill_lists` VALUES ('Eft',98,516); -- geist wall
+INSERT INTO `mob_skill_lists` VALUES ('Eft',98,517); -- numbing noise
+INSERT INTO `mob_skill_lists` VALUES ('Eft',98,518); -- nimble snap
+INSERT INTO `mob_skill_lists` VALUES ('Eft',98,519); -- cyclotail
 -- 99 to 106: Elementals
 INSERT INTO `mob_skill_lists` VALUES ('Eruca',107,344);
 INSERT INTO `mob_skill_lists` VALUES ('Eruca',107,346);
@@ -1776,14 +1776,14 @@ INSERT INTO `mob_skill_lists` VALUES ('Raptor',377,374);
 INSERT INTO `mob_skill_lists` VALUES ('Raptor',377,377);
 INSERT INTO `mob_skill_lists` VALUES ('Raptor',377,379);
 INSERT INTO `mob_skill_lists` VALUES ('Raptor',377,380);
--- INSERT INTO `mob_skill_lists` VALUES ('Avatar-Diabolos',378,1903);
--- INSERT INTO `mob_skill_lists` VALUES ('Avatar-Diabolos',378,1904);
--- INSERT INTO `mob_skill_lists` VALUES ('Avatar-Diabolos',378,1905);
--- INSERT INTO `mob_skill_lists` VALUES ('Avatar-Diabolos',378,1906);
--- INSERT INTO `mob_skill_lists` VALUES ('Avatar-Diabolos',378,1907);
--- INSERT INTO `mob_skill_lists` VALUES ('Avatar-Diabolos',378,1908);
--- INSERT INTO `mob_skill_lists` VALUES ('Avatar-Diabolos',378,1909);
--- INSERT INTO `mob_skill_lists` VALUES ('Avatar-Diabolos',378,1910);
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Diabolos',378,1903);
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Diabolos',378,1904);
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Diabolos',378,1905);
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Diabolos',378,1906);
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Diabolos',378,1907);
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Diabolos',378,1908);
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Diabolos',378,1909);
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Diabolos',378,1910);
 -- INSERT INTO `mob_skill_lists` VALUES ('Avatar-Diabolos',378,1911);
 INSERT INTO `mob_skill_lists` VALUES ('Pet-Carbuncle',379,906);
 INSERT INTO `mob_skill_lists` VALUES ('Pet-Carbuncle',379,907);
@@ -1948,7 +1948,17 @@ INSERT INTO `mob_skill_lists` VALUES ('Cogitator',413,1242); -- empty cutter
 INSERT INTO `mob_skill_lists` VALUES ('Cogitator',413,1243); -- trinary tap
 INSERT INTO `mob_skill_lists` VALUES ('Cogitator',413,1251); -- trinary tap
 INSERT INTO `mob_skill_lists` VALUES ('Cogitator',413,1252); -- shadow spread
--- 414 to 430: free
+-- 414 to 428:
+INSERT INTO `mob_skill_lists` VALUES ('Orcish_Onager',429,635); -- Burst
+INSERT INTO `mob_skill_lists` VALUES ('Orcish_Onager',429,636); -- Flame Arrow
+INSERT INTO `mob_skill_lists` VALUES ('Orcish_Onager',429,637); -- Fire bomb
+INSERT INTO `mob_skill_lists` VALUES ('Orcish_Onager',429,638); -- Blast Bomb
+INSERT INTO `mob_skill_lists` VALUES ('Automaton_Assault',430,49); -- Power Slash
+INSERT INTO `mob_skill_lists` VALUES ('Automaton_Assault',430,50); -- Frostbite
+INSERT INTO `mob_skill_lists` VALUES ('Automaton_Assault',430,51); -- Freezebite
+INSERT INTO `mob_skill_lists` VALUES ('Automaton_Assault',430,52); -- Shockwave
+INSERT INTO `mob_skill_lists` VALUES ('Automaton_Assault',430,53); -- Crescent Moon
+INSERT INTO `mob_skill_lists` VALUES ('Automaton_Assault',430,54); -- Sickle Moon
 INSERT INTO `mob_skill_lists` VALUES ('Gladiatorial_Weapon',431,396); -- Smite of Fury
 INSERT INTO `mob_skill_lists` VALUES ('Gladiatorial_Weapon',431,397); -- Flurry of Rage
 INSERT INTO `mob_skill_lists` VALUES ('Gladiatorial_Weapon',431,398); -- Whispers of ire
