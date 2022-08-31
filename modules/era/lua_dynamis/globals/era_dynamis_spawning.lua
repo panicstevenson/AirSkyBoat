@@ -1938,16 +1938,16 @@ xi.dynamis.mobOnEngaged = function(mob, target)
             mob:SetAutoAttackEnabled(false)
             mob:SetMagicCastingEnabled(false)
             mob:SetMobAbilityEnabled(false)
-
-        mob:timer(3000, function(mob)
-            if mob:isAlive() then
-                xi.dynamis.spawnDynamicPet(target, mob, mob:getMainJob())
-                mob:entityAnimationPacket("shsm")
-                mob:SetAutoAttackEnabled(true)
-                mob:SetMagicCastingEnabled(true)
-                mob:SetMobAbilityEnabled(true)
-            end
-        end)
+            mob:timer(3000, function(mob)
+                if mob:isAlive() then
+                    xi.dynamis.spawnDynamicPet(target, mob, mob:getMainJob())
+                    mob:entityAnimationPacket("shsm")
+                    mob:SetAutoAttackEnabled(true)
+                    mob:SetMagicCastingEnabled(true)
+                    mob:SetMobAbilityEnabled(true)
+                end
+            end)
+        end
     elseif mob:getMainJob() == xi.job.DRG then
         mob:useMobAbility(xi.jsa.CALL_WYVERN)
         xi.dynamis.spawnDynamicPet(target, mob, mob:getMainJob())
