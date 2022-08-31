@@ -21,7 +21,7 @@ zone_object.onInitialize = function(zone)
 
     if xi.settings.main.ENABLE_WOTG == 1 then
         if hour >= 6 and hour < 16 then
-            GetMobByID(ID.mob.BACKOO):setRespawnTime(1)
+            --GetMobByID(ID.mob.BACKOO):setRespawnTime(1) Commenting out on horizon for now
         end
     end
 
