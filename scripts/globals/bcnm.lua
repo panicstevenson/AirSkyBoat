@@ -37,7 +37,7 @@ local battlefields =
         { 1,  673,    0},   -- Like the Wind (ENM)
         { 2,  674,    0},   -- Sheep in Antlion's Clothing (ENM)
         { 3,  675,    0},   -- Shell We Dance? (ENM)
-     -- { 4,  676,    0},   -- Totentanz (ENM)
+        { 4,  676,    0},   -- Totentanz (ENM)
      -- { 5,  677,    0},   -- Tango with a Tracker (Quest)
      -- { 6,  678,    0},   -- Requiem of Sin (Quest)
      -- { 7,  679, 3454},   -- Antagonistic Ambuscade (HKC30)
@@ -326,7 +326,7 @@ local battlefields =
         {13,  109, 1177},   -- Rapid Raptors (BS50)
         {14,  110, 1130},   -- Wild Wild Whiskers (BS60)
         {15,  111, 1175},   -- Seasons Greetings (KS30)
-     -- {16,  112, 1178},   -- Royale Ramble (KS30)
+        {16,  112, 1178},   -- Royale Ramble (KS30)
         {17,  113, 1180},   -- Moa Constrictors (KS30)
      -- {18,  114, 3351},   -- The V Formation (KC30)
      -- {19,  115, 3352},   -- Avian Apostates (KC50)
@@ -956,11 +956,27 @@ local function getItemById(player, bfid)
     return 0
 end
 
+local function rejectLevelSyncedParty(player, npc)
+    for _, member in pairs(player:getAlliance()) do
+        if member:isLevelSync() then
+            local zoneId = player:getZoneID()
+            local ID = zones[zoneId]
+            -- Your party is unable to participate because certain members' levels are restricted
+            player:messageText(npc, ID.text.MEMBERS_LEVELS_ARE_RESTRICTED, false)
+            return true
+        end
+    end
+    return false
+end
 -----------------------------------
 -- onTrade Action
 -----------------------------------
 
 xi.bcnm.onTrade = function(player, npc, trade, onUpdate)
+    if rejectLevelSyncedParty(player, npc) then -- player's party has level sync, abort.
+        return false
+    end
+
     -- Validate trade
     local itemId
 
@@ -1030,6 +1046,11 @@ end
 -- onTrigger Action
 -----------------------------------
 xi.bcnm.onTrigger = function(player, npc)
+    -- Cannot enter if anyone in party is level/master sync'd
+    if rejectLevelSyncedParty(player, npc) then
+        return false
+    end
+
     -- Player has battlefield status effect. That means a battlefield is open OR the player is inside a battlefield.
     if player:hasStatusEffect(xi.effect.BATTLEFIELD) then
         -- Player is inside battlefield. Attempting to leave.

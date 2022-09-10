@@ -726,6 +726,7 @@ enum class SpellID : uint16
     Gain_MND             = 491,
     Gain_CHR             = 492,
     Temper               = 493,
+    Arise                = 494,
     Adloquium            = 495,
     Firaja               = 496,
     Blizzaja             = 497,
@@ -1087,6 +1088,7 @@ public:
     bool        isRegen();          // is a Regen spell
     bool        isDebuff();         // is a debuff spell
     bool        isNa();             // is a -na spell
+    bool        isRaise();          // is a raise spell (e.g. Trust: Ferreous Coffin)
     bool        canHitShadow();     // check if spell ignores shadows
 
     void setRadius(float radius);
