@@ -4,11 +4,11 @@
 -- ZONE 145 - Giddeus
 
 REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`, `groupid`, `pos_x`, `pos_y`, `pos_z`, `pos_rot`) VALUES
-(17371137, 0 , 'Pugil',                    'Pugil',                    1,   1,         1,         1,         0  ),
-(17371138, 0 , 'Pugil',                    'Pugil',                    1,   1,         1,         1,         0  ),
-(17371139, 0 , 'Pug_Pugil',                'Pug Pugil',                2,   1,         1,         1,         0  ),
-(17371140, 0 , 'Puffer_Pugil',             'Puffer Pugil',             3,   1,         1,         1,         0  ),
-(17371141, 0 , 'Land_Pugil',               'Land Pugil',               4,   1,         1,         1,         0  ),
+(17371137, 0 , 'Pugil',                    'Pugil',                    1,   1,         1,         1,         0   ),
+(17371138, 0 , 'Pugil',                    'Pugil',                    1,   1,         1,         1,         0   ),
+(17371139, 0 , 'Pug_Pugil',                'Pug Pugil',                2,   1,         1,         1,         0   ),
+(17371140, 0 , 'Puffer_Pugil',             'Puffer Pugil',             3,   1,         1,         1,         0   ),
+(17371141, 0 , 'Land_Pugil',               'Land Pugil',               4,   1,         1,         1,         0   ),
 (17371142, 0,  'Eyy_Mon_the_Ironbreaker',  'Eyy Mon the Ironbreaker',  5,   -103.14,   16.67,     110.314,   136 ),
 (17371143, 0,  'Zhuu_Buxu_the_Silent',     'Zhuu Buxu the Silent',     6,   -12.092,   16.4,      112.098,   21  ),
 (17371144, 1,  'Yagudo_Initiate',          'Yagudo Initiate',          7,   -173.005,  3.464,     313.786,   199 ),
