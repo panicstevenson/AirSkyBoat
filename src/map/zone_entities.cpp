@@ -992,10 +992,14 @@ void CZoneEntities::TOTDChange(TIMETYPE TOTD)
             {
                 CMobEntity* PMob = (CMobEntity*)it->second;
 
-                if (PMob->m_SpawnType & SPAWNTYPE_ATNIGHT)
+                if ((PMob->m_SpawnType & SPAWNTYPE_ATNIGHT) && PMob->m_spawnSet == 0) // Normal At Night Mob
                 {
                     PMob->SetDespawnTime(1ms);
                     PMob->m_AllowRespawn = false;
+                }
+                else if ((PMob->m_SpawnType & SPAWNTYPE_ATNIGHT) && PMob->m_spawnSet != 0) // Multispawn At Night
+                {
+                    PMob->SetDespawnTime(1ms); // Only force despawn as we need to keep respawning in case the spawner fails.
                 }
             }
         }
@@ -1008,10 +1012,14 @@ void CZoneEntities::TOTDChange(TIMETYPE TOTD)
             {
                 CMobEntity* PMob = (CMobEntity*)it->second;
 
-                if (PMob->m_SpawnType & SPAWNTYPE_ATEVENING)
+                if ((PMob->m_SpawnType & SPAWNTYPE_ATEVENING) && PMob->m_spawnSet == 0) // Normal At Evening Mob
                 {
                     PMob->SetDespawnTime(1ms);
                     PMob->m_AllowRespawn = false;
+                }
+                else if ((PMob->m_SpawnType & SPAWNTYPE_ATEVENING) && PMob->m_spawnSet != 0) // Multispawn At Evening
+                {
+                    PMob->SetDespawnTime(1ms); // Only force despawn as we need to keep respawning in case the spawner fails.
                 }
             }
         }
@@ -1034,7 +1042,7 @@ void CZoneEntities::TOTDChange(TIMETYPE TOTD)
             {
                 CMobEntity* PMob = (CMobEntity*)it->second;
 
-                if (PMob->m_SpawnType & SPAWNTYPE_ATEVENING)
+                if ((PMob->m_SpawnType & SPAWNTYPE_ATEVENING) && PMob->m_spawnSet == 0)
                 {
                     PMob->SetDespawnTime(0s);
                     PMob->m_AllowRespawn = true;
@@ -1049,7 +1057,7 @@ void CZoneEntities::TOTDChange(TIMETYPE TOTD)
             {
                 CMobEntity* PMob = (CMobEntity*)it->second;
 
-                if (PMob->m_SpawnType & SPAWNTYPE_ATNIGHT)
+                if ((PMob->m_SpawnType & SPAWNTYPE_ATNIGHT) && PMob->m_spawnSet == 0)
                 {
                     PMob->SetDespawnTime(0s);
                     PMob->m_AllowRespawn = true;
