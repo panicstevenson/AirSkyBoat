@@ -511,6 +511,8 @@ typedef std::map<uint16, zoneWeather_t> weatherVector_t;
 
 typedef std::map<uint16, CBaseEntity*> EntityList_t;
 
+typedef std::map<uint8, std::vector<uint32>> multispawnVector_t;
+
 int32 zone_update_weather(uint32 tick, CTaskMgr::CTask* PTask);
 
 class CZone
@@ -591,6 +593,8 @@ public:
 
     time_point      m_RegionCheckTime; // время последней проверки регионов
     weatherVector_t m_WeatherVector;   // вероятность появления каждого типа погоды
+
+    multispawnVector_t m_MultiSpawnVector; // Initialize Map With a Vector Component
 
     virtual void ZoneServer(time_point tick, bool check_regions);
     void         CheckRegions(CCharEntity* PChar);

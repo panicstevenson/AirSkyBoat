@@ -32,6 +32,7 @@
 #include "../entities/mobentity.h"
 #include "../entities/npcentity.h"
 #include "../items/item_weapon.h"
+#include "../lua/lua_baseentity.h"
 #include "../lua/luautils.h"
 #include "../map.h"
 #include "../mob_modifier.h"
@@ -359,7 +360,7 @@ namespace zoneutils
         mob_groups.content_tag, \
         mob_ele_evasion.fire_eem, mob_ele_evasion.ice_eem, mob_ele_evasion.wind_eem, mob_ele_evasion.earth_eem, \
         mob_ele_evasion.lightning_eem, mob_ele_evasion.water_eem, mob_ele_evasion.light_eem, mob_ele_evasion.dark_eem, \
-        subratio \
+        mob_groups.subratio, mob_spawn_points.spawnset \
         FROM mob_groups INNER JOIN mob_pools ON mob_groups.poolid = mob_pools.poolid \
         INNER JOIN mob_resistances ON mob_resistances.resist_id = mob_pools.resist_id \
         INNER JOIN mob_ele_evasion ON mob_ele_evasion.ele_eva_id = mob_pools.ele_eva_id \
@@ -576,6 +577,9 @@ namespace zoneutils
 
                     PMob->setMobMod(MOBMOD_CHARMABLE, sql->GetUIntData(76));
 
+                    PMob->m_spawnSet     = (uint8)sql->GetUIntData(87); // Which spawnSet a specific mob belongs to.
+                    PMob->m_setMaxSpawns = 0;
+
                     // Overwrite base family charmables depending on mob type. Disallowed mobs which should be charmable
                     // can be set in mob_spawn_mods or in their onInitialize
                     if (PMob->m_Type & MOBTYPE_EVENT || PMob->m_Type & MOBTYPE_FISHED || PMob->m_Type & MOBTYPE_BATTLEFIELD ||
@@ -608,15 +612,50 @@ namespace zoneutils
                 PMob->saveMobModifiers();
                 PMob->m_AllowRespawn = PMob->m_SpawnType == SPAWNTYPE_NORMAL;
 
-                if (PMob->m_AllowRespawn)
+                // Setup Vectors and Max Spawn Vars for Multispawn Mobs
+                if (PMob->m_spawnSet > 0) // If I am a multispawn mob
+                {
+                    
+                    if (PMob->loc.zone->m_MultiSpawnVector.empty()) // If the vector doesn't exist I should make a new one.
+                    {
+                        PMob->loc.zone->m_MultiSpawnVector.insert(std::make_pair(PMob->m_spawnSet, std::vector<uint32>{})); // Create spawnSet Row, Initialize Empty Vector
+                    }
+
+                    const char* SpawnSetQuery = "SELECT maxspawns FROM mob_spawn_sets WHERE zoneid = %u AND spawnsetid = %u;";
+                    if (sql->Query(SpawnSetQuery, PMob->loc.zone->GetID(), PMob->m_spawnSet) != SQL_ERROR && sql->NumRows() != 0 && sql->NextRow() == SQL_SUCCESS)
+                    {
+                        PMob->m_setMaxSpawns = (uint8)sql->GetUIntData(0); // Set the number of spawns allowed for this spawnSet
+                    }
+
+                    PMob->loc.zone->m_MultiSpawnVector[PMob->m_spawnSet].push_back(PMob->id); // Push Back the ID Into the Correct Vector
+                    PMob->m_AllowRespawn = false; // Turn off my respawn since I may not be spawned immediately.
+                }
+
+                if (PMob->m_AllowRespawn) // If I can respawn then spawn me.
                 {
                     PMob->Spawn();
                 }
-                else
+                else // Otherwise, set my respawn timer to be ready when needed.
                 {
                     PMob->PAI->Internal_Respawn(std::chrono::milliseconds(PMob->m_RespawnTime));
                 }
             });
+
+            // Spawn Initial Amount For Each Multispawn Group
+            for (auto const& [key, val] : PZone->m_MultiSpawnVector) { // Iterates through each key to pull the vector associated.
+                auto* PMobOrg = static_cast<CMobEntity*>(zoneutils::GetEntity(val[0], TYPE_MOB | TYPE_PET)); // Use val (vector) index 0 to pull PMob data.
+                if (PMobOrg != nullptr)
+                {
+                   for (int i = 0; i < PMobOrg->m_setMaxSpawns; i++) { // Start at index 0 and go as long as we are under the max spawns. This will get us the exact amount.
+                       auto* PMob = static_cast<CMobEntity*>(zoneutils::GetEntity(val[i], TYPE_MOB | TYPE_PET)); // Use val (vector) at index i to pull PMob.
+                        if (PMob != nullptr)
+                        {
+                          PMob->m_AllowRespawn = true; // Allow respawn just in case something fails.
+                          PMob->Spawn(); // Spawn PMob for initial set.
+                        }
+                    }
+                }
+            }
         });
         // clang-format on
 
