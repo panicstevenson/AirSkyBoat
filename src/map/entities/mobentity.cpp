@@ -1690,6 +1690,13 @@ void CMobEntity::OnDespawn(CDespawnState& /*unused*/)
                         PMob->PAI->Internal_Respawn(std::chrono::milliseconds(PMob->m_RespawnTime)); // Set my friend's internal respawn time.
                         success = true;                                                              // Mark this as a success
                     }
+                    else if (PMob->m_SpawnType == SPAWNTYPE_ATDUSK && (hourAdj >= 17 || hourAdj < 7)) // If I only spawn at dusk
+                    {
+                        this->m_AllowRespawn = false;                                                // Stop me from respawning
+                        PMob->m_AllowRespawn = true;                                                 // Let my friend respawn
+                        PMob->PAI->Internal_Respawn(std::chrono::milliseconds(PMob->m_RespawnTime)); // Set my friend's internal respawn time.
+                        success = true;                                                              // Mark this as a success
+                    }
                     else
                     {
                         i += 1; // It up as we failed.

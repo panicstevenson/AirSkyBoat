@@ -1027,11 +1027,43 @@ void CZoneEntities::TOTDChange(TIMETYPE TOTD)
         case TIME_DAY:
         {
             ScriptType = SCRIPT_TIME_DAY;
+
+            for (EntityList_t::const_iterator it = m_mobList.begin(); it != m_mobList.end(); ++it)
+            {
+                CMobEntity* PMob = (CMobEntity*)it->second;
+                if ((PMob->m_SpawnType & SPAWNTYPE_ATDUSK) && PMob->m_spawnSet == 0) // Normal At Evening Mob
+                {
+                    PMob->SetDespawnTime(1ms);
+                    PMob->m_AllowRespawn = false;
+                }
+                else if ((PMob->m_SpawnType & SPAWNTYPE_ATDUSK) && PMob->m_spawnSet != 0) // Multispawn At Evening
+                {
+                    if (PMob->loc.zone->GetID() == 121)
+                    {
+                        PMob->SetDespawnTime(12000ms); // Only force despawn as we need to keep respawning in case the spawner fails.
+                    }
+                    else
+                    {
+                        PMob->SetDespawnTime(1ms); // Only force despawn as we need to keep respawning in case the spawner fails.
+                    }
+                }
+            }
         }
         break;
         case TIME_DUSK:
         {
             ScriptType = SCRIPT_TIME_DUSK;
+
+            for (EntityList_t::const_iterator it = m_mobList.begin(); it != m_mobList.end(); ++it)
+            {
+                CMobEntity* PMob = (CMobEntity*)it->second;
+                if ((PMob->m_SpawnType & SPAWNTYPE_ATDUSK) && PMob->m_spawnSet == 0)
+                {
+                    PMob->SetDespawnTime(0s);
+                    PMob->m_AllowRespawn = true;
+                    PMob->Spawn();
+                }
+            }
         }
         break;
         case TIME_EVENING:
