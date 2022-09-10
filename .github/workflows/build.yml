@@ -468,6 +468,50 @@ jobs:
           echo -e "Importing $f into the database..."
           sudo mysql xidb -h 127.0.0.1 -uroot -proot < $f
         done
+        for f in modules/HorizonXI/sql/mob_zones/00_original/*/*.sql; do
+          echo -e "Importing $f into the database..."
+          sudo mysql xidb -h 127.0.0.1 -uroot -proot < $f
+        done
+        for f in modules/HorizonXI/sql/mob_zones/01_roz/*/*.sql; do
+          echo -e "Importing $f into the database..."
+          sudo mysql xidb -h 127.0.0.1 -uroot -proot < $f
+        done
+        for f in modules/HorizonXI/sql/mob_zones/02_cop/*/*.sql; do
+          echo -e "Importing $f into the database..."
+          sudo mysql xidb -h 127.0.0.1 -uroot -proot < $f
+        done
+        for f in modules/HorizonXI/sql/mob_zones/03_toau/*/*.sql; do
+          echo -e "Importing $f into the database..."
+          sudo mysql xidb -h 127.0.0.1 -uroot -proot < $f
+        done
+        for f in modules/HorizonXI/sql/mob_zones/04_wotg/*/*.sql; do
+          echo -e "Importing $f into the database..."
+          sudo mysql xidb -h 127.0.0.1 -uroot -proot < $f
+        done
+        for f in modules/HorizonXI/sql/mob_zones/05_abyssea/*.sql; do
+          echo -e "Importing $f into the database..."
+          sudo mysql xidb -h 127.0.0.1 -uroot -proot < $f
+        done
+        for f in modules/HorizonXI/sql/mob_zones/06_soa/*/*.sql; do
+          echo -e "Importing $f into the database..."
+          sudo mysql xidb -h 127.0.0.1 -uroot -proot < $f
+        done
+        for f in modules/HorizonXI/sql/mob_zones/07_rov/*.sql; do
+          echo -e "Importing $f into the database..."
+          sudo mysql xidb -h 127.0.0.1 -uroot -proot < $f
+        done
+        for f in modules/HorizonXI/sql/mob_zones/10_dynamis_d/*.sql; do
+          echo -e "Importing $f into the database..."
+          sudo mysql xidb -h 127.0.0.1 -uroot -proot < $f
+        done
+        for f in modules/HorizonXI/sql/mob_zones/11_legion/*.sql; do
+          echo -e "Importing $f into the database..."
+          sudo mysql xidb -h 127.0.0.1 -uroot -proot < $f
+        done
+        for f in modules/HorizonXI/sql/mob_zones/99_misc/*.sql; do
+          echo -e "Importing $f into the database..."
+          sudo mysql xidb -h 127.0.0.1 -uroot -proot < $f
+        done
         sudo mysql xidb -h 127.0.0.1 -uroot -proot -e "SHOW tables"
     - name: Assign odd zones a different port
       run: |

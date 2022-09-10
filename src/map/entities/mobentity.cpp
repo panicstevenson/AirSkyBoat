@@ -47,6 +47,7 @@
 #include "../utils/itemutils.h"
 #include "../utils/mobutils.h"
 #include "../utils/petutils.h"
+#include "../utils/zoneutils.h"
 #include "../weapon_skill.h"
 #include "common/timer.h"
 #include "common/utils.h"
@@ -108,6 +109,9 @@ CMobEntity::CMobEntity()
     defRank = 3;
     accRank = 3;
     evaRank = 3;
+
+    m_spawnSet     = 0;
+    m_setMaxSpawns = 0;
 
     m_dmgMult = 100;
 
@@ -1640,7 +1644,69 @@ void CMobEntity::OnDespawn(CDespawnState& /*unused*/)
 {
     TracyZoneScoped;
     FadeOut();
-    PAI->Internal_Respawn(std::chrono::milliseconds(m_RespawnTime));
+
+    if (this->m_spawnSet > 0)
+    {
+        bool  success  = false;
+        uint8 maxTries = 50;
+        uint8 i        = 1;
+
+        while (success == false && i <= maxTries) // While no success, try until maxTries then use failback of respawning same mob.
+        {
+            int    vectorSize   = static_cast<int>(this->loc.zone->m_MultiSpawnVector[this->m_spawnSet].size() - 1); // Get size of the vector for random purposes minus 1 to account for 0 position
+            uint8  randomChoice = xirand::GetRandomNumber(0, vectorSize);                                            // Find a random iterator between 0 and max vector size
+            uint32 mobId        = this->loc.zone->m_MultiSpawnVector[this->m_spawnSet][randomChoice];
+            auto*  PMob         = static_cast<CMobEntity*>(zoneutils::GetEntity(mobId, TYPE_MOB | TYPE_PET));
+
+            if (PMob != nullptr) // Failure results in ID removal and vector cleaning to reduce nullptr issues and improve runtime
+            {
+                if (PMob->status == STATUS_TYPE::DISAPPEAR)
+                {
+                    uint32 hourAdj = std::round(CVanaTime::getInstance()->getHour() + ((PMob->m_RespawnTime / 1000) / 144)); // 2m 24s per Vana Hour
+
+                    if (hourAdj > 24)
+                    {
+                        hourAdj -= 24;
+                    }
+
+                    if (PMob->m_SpawnType == SPAWNTYPE_NORMAL) // If I am a normal spawn
+                    {
+                        this->m_AllowRespawn = false;                                                // Stop me from respawning
+                        PMob->m_AllowRespawn = true;                                                 // Let my friend respawn
+                        PMob->PAI->Internal_Respawn(std::chrono::milliseconds(PMob->m_RespawnTime)); // Set my friend's internal respawn time.
+                        success = true;                                                              // Mark this as a success
+                    }
+                    else if (PMob->m_SpawnType == SPAWNTYPE_ATNIGHT && (hourAdj >= 20 || hourAdj < 4)) // If I only spawn during night
+                    {
+                        this->m_AllowRespawn = false;                                                // Stop me from respawning
+                        PMob->m_AllowRespawn = true;                                                 // Let my friend respawn
+                        PMob->PAI->Internal_Respawn(std::chrono::milliseconds(PMob->m_RespawnTime)); // Set my friend's internal respawn time.
+                        success = true;                                                              // Mark this as a success
+                    }
+                    else if (PMob->m_SpawnType == SPAWNTYPE_ATEVENING && (hourAdj >= 18 || hourAdj < 6)) // If I only spawn in the evening
+                    {
+                        this->m_AllowRespawn = false;                                                // Stop me from respawning
+                        PMob->m_AllowRespawn = true;                                                 // Let my friend respawn
+                        PMob->PAI->Internal_Respawn(std::chrono::milliseconds(PMob->m_RespawnTime)); // Set my friend's internal respawn time.
+                        success = true;                                                              // Mark this as a success
+                    }
+                    else
+                    {
+                        i += 1; // It up as we failed.
+                    }
+                }
+                else
+                {
+                    i += 1; // It up as the mob was alive and we can't respawn it.
+                }
+            }
+        }
+    }
+    else
+    {
+        PAI->Internal_Respawn(std::chrono::milliseconds(m_RespawnTime));
+    }
+
     luautils::OnMobDespawn(this);
     //#event despawn
     PAI->EventHandler.triggerListener("DESPAWN", CLuaBaseEntity(this));

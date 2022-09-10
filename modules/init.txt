@@ -69,7 +69,6 @@ renamer
 HorizonXI/Lua
 HorizonXI/commands
 HorizonXI/sql
-#HorizonXI/clustering
 #-----------------------
 #		Custom
 #----------------------
