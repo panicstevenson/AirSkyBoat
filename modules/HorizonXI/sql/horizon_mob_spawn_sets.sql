@@ -563,7 +563,6 @@ INSERT INTO `mob_spawn_sets` VALUES (104, 25, 6);
 -- Konschtat Highlands
 INSERT INTO `mob_spawn_sets` VALUES (108, 1, 4);
 INSERT INTO `mob_spawn_sets` VALUES (108, 2, 3);
-INSERT INTO `mob_spawn_sets` VALUES (108, 2, 3);
 INSERT INTO `mob_spawn_sets` VALUES (108, 3, 3);
 INSERT INTO `mob_spawn_sets` VALUES (108, 4, 4);
 INSERT INTO `mob_spawn_sets` VALUES (108, 5, 5);
