@@ -1,5 +1,5 @@
 -----------------------------------
--- Counterspore (datmod)
+-- Aqua Ball (datmod)
 -- Deals ranged water damage that causes knockback.
 -- Used by pugils in BCNM: Shooting Fish
 -----------------------------------
