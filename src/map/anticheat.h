@@ -35,6 +35,7 @@ namespace anticheat
         // crafts to fail.
         // Argument is the time spent on synth animation.
         CHEAT_ID_FASTSYNTH = 1,
+        CHEAT_ID_CLAIMBOT  = 2,
         // For boundary checks
         CHEAT_ID_LAST
     };

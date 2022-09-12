@@ -34,8 +34,10 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../ai_container.h"
 #include "../helpers/targetfind.h"
 #include "../states/ability_state.h"
+#include "../states/claimshield_state.h"
 #include "../states/inactive_state.h"
 #include "../states/magic_state.h"
+#include "../states/mobshield_state.h"
 #include "../states/weaponskill_state.h"
 
 CMobController::CMobController(CMobEntity* PEntity)
@@ -1184,6 +1186,16 @@ bool CMobController::CanAggroTarget(CBattleEntity* PTarget)
     }
 
     if (PTarget->isDead() || PTarget->isMounted())
+    {
+        return false;
+    }
+
+    if (PMob->PAI && PMob->PAI->IsCurrentState<CClaimShieldState>())
+    {
+        return false;
+    }
+
+    if (PMob->PAI && PMob->PAI->IsCurrentState<CMobShieldState>())
     {
         return false;
     }
