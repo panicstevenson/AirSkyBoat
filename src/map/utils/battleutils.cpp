@@ -2264,8 +2264,8 @@ namespace battleutils
                 else
                 {
                     uint16 defenderTp = (tpMultiplier *
-                                        (std::ceil(PAttacker->GetLocalVar("[Attack]Tp_Gain") * 1.25) * sBlowMult *
-                                        (1.0f + 0.01f * (float)PDefender->getMod(Mod::STORETP)))); // subtle blow also reduces the "+30" on mob tp gain
+                                         (std::ceil(PAttacker->GetLocalVar("[Attack]Tp_Gain") * 1.25) * sBlowMult *
+                                          (1.0f + 0.01f * (float)PDefender->getMod(Mod::STORETP)))); // subtle blow also reduces the "+30" on mob tp gain
                     PDefender->addTP(defenderTp);
                 }
             }
@@ -4125,6 +4125,10 @@ namespace battleutils
                 PPlayer->StatusEffectContainer->DelStatusEffect(EFFECT_HEALING);
                 PPlayer->updatemask |= UPDATE_HP;
             }
+            else if (PPlayer->isSitting())
+            {
+                PPlayer->animation = ANIMATION_NONE;
+            }
         }
     }
 
@@ -4599,10 +4603,14 @@ namespace battleutils
             return 0;
         }
 
-        uint8 lvl       = PChar->jobs.job[JOB_RNG]; // Get Ranger level of char
-        uint8 shotCount = 0;                        // the total number of extra hits
+        uint8 shotCount = 0; // the total number of extra hits
 
-        if (PChar->GetSJob() == JOB_RNG)
+        uint8 lvl = 0; // Get Ranger level of char
+        if (PChar->GetMJob() == JOB_RNG)
+        {
+            lvl = PChar->GetMLevel();
+        }
+        else if (PChar->GetSJob() == JOB_RNG)
         { // if rng is sub then use the sub level
             lvl = PChar->GetSLevel();
         }

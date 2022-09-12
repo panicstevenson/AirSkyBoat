@@ -211,6 +211,11 @@ UPDATE `synth_recipes` SET ContentTag='TOAU' WHERE ResultName='Bannaret Mail';
 UPDATE `synth_recipes` SET ContentTag='TOAU' WHERE ResultName='Augmenting Belt';
 UPDATE `synth_recipes` SET ContentTag='TOAU' WHERE ResultName='Assailant\'s Axe';
 UPDATE `synth_recipes` SET ContentTag='TOAU' WHERE ResultName='Aiming Gloves';
+UPDATE `synth_recipes` SET ContentTag='TOAU' WHERE ResultName='Silken Cuffs';
+UPDATE `synth_recipes` SET ContentTag='TOAU' WHERE ResultName='Silken Hat';
+UPDATE `synth_recipes` SET ContentTag='TOAU' WHERE ResultName='Silken Coat';
+UPDATE `synth_recipes` SET ContentTag='TOAU' WHERE ResultName='Silken Slops';
+UPDATE `synth_recipes` SET ContentTag='TOAU' WHERE ResultName='Silken Pigaches';
 
 -- ------------------------------------------------------------
 -- WotG Synths
