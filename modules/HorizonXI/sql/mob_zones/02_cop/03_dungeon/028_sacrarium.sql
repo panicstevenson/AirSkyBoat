@@ -194,4 +194,4 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
 (16892092, 0,  'Aqueduct_Spider',          'Aqueduct Spider',          41,  0,         0,         0,         0   ),
 (16892093, 0,  'Aqueduct_Spider',          'Aqueduct Spider',          41,  0,         0,         0,         0   ),
 (16892094, 0,  'Aqueduct_Spider',          'Aqueduct Spider',          41,  0,         0,         0,         0   ),
-(16892095, 0,  'Aqueduct_Spider',          'Aqueduct Spider',          41,  ,          ,          ,              );
+(16892095, 0,  'Aqueduct_Spider',          'Aqueduct Spider',          41,  0,         0,         0,         0   );
