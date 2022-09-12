@@ -24773,6 +24773,7 @@ INSERT INTO `mob_droplist` VALUES (3102,0,0,1000,4518,@RARE); -- Strip Of Sheep 
 INSERT INTO `mob_droplist` VALUES (3103,0,0,1000,4435,@VCOMMON); -- Slice Of Cockatrice Meat (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (3103,0,0,1000,842,@UNCOMMON); -- Giant Bird Feather (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (3103,0,0,1000,854,@VRARE);    -- Cockatrice Skin (Very Rare, 1%)
+INSERT INTO `mob_droplist` VALUES (3103,2,0,1000,842,@UNCOMMON); -- Giant Bird Feather (Uncommon, 10%)
 
 -- ZoneID: 102 - Goblin Archaeologist
 -- ZoneID: 108 - Goblin Archaeologist

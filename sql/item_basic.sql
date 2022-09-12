@@ -14419,7 +14419,7 @@ INSERT INTO `item_basic` VALUES (17115,0,'warhammer_+1','warhammer_+1',1,2080,11
 INSERT INTO `item_basic` VALUES (17116,0,'misery_staff','misery_staff',1,2052,12,0,447);
 INSERT INTO `item_basic` VALUES (17117,0,'hypno_staff','hypno_staff',1,2052,12,0,811);
 INSERT INTO `item_basic` VALUES (17118,0,'lituus_+1','lituus_+1',1,2048,0,0,0);
-INSERT INTO `item_basic` VALUES (17119,0,'elm_pole_+1','elm_pole_+1',1,2080,12,0,5561);
+INSERT INTO `item_basic` VALUES (17119,0,'elm_pole_+1','elm_pole_+1',1,2080,12,0,817);
 INSERT INTO `item_basic` VALUES (17120,0,'oak_pole_+1','oak_pole_+1',1,2080,12,0,1692);
 INSERT INTO `item_basic` VALUES (17121,0,'maul_+1','maul_+1',1,2080,11,0,2850);
 INSERT INTO `item_basic` VALUES (17122,0,'ash_pole_+1','ash_pole_+1',1,2080,12,0,120);
