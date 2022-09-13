@@ -65,23 +65,23 @@ entity.onEventFinish = function(player, csid, option)
 
     -- TODO: This can easily be handled as a table, keyed by csid - 250 when in range
     elseif csid == 251 then
-        npcUtil.completeQuest(player, xi.quest.log_id.WINDURST, xi.quest.id.windurst.MANDRAGORA_MAD, { fame = 10, fameArea = xi.quest.fame_area.WINDURST })
+        npcUtil.completeQuest(player, xi.quest.log_id.WINDURST, xi.quest.id.windurst.MANDRAGORA_MAD, { fame = 23, fameArea = xi.quest.fame_area.WINDURST })
         player:addGil(xi.settings.main.GIL_RATE*200)
         player:confirmTrade()
     elseif csid == 252 then
-        npcUtil.completeQuest(player, xi.quest.log_id.WINDURST, xi.quest.id.windurst.MANDRAGORA_MAD, { fame = 25, fameArea = xi.quest.fame_area.WINDURST })
+        npcUtil.completeQuest(player, xi.quest.log_id.WINDURST, xi.quest.id.windurst.MANDRAGORA_MAD, { fame = 40, fameArea = xi.quest.fame_area.WINDURST })
         player:addGil(xi.settings.main.GIL_RATE*250)
         player:confirmTrade()
     elseif csid == 253 then
-        npcUtil.completeQuest(player, xi.quest.log_id.WINDURST, xi.quest.id.windurst.MANDRAGORA_MAD, { fame = 50, fameArea = xi.quest.fame_area.WINDURST })
+        npcUtil.completeQuest(player, xi.quest.log_id.WINDURST, xi.quest.id.windurst.MANDRAGORA_MAD, { fame = 60, fameArea = xi.quest.fame_area.WINDURST })
         player:addGil(xi.settings.main.GIL_RATE*1200)
         player:confirmTrade()
     elseif csid == 254 then
-        npcUtil.completeQuest(player, xi.quest.log_id.WINDURST, xi.quest.id.windurst.MANDRAGORA_MAD, { fame = 10, fameArea = xi.quest.fame_area.WINDURST })
+        npcUtil.completeQuest(player, xi.quest.log_id.WINDURST, xi.quest.id.windurst.MANDRAGORA_MAD, { fame = 18, fameArea = xi.quest.fame_area.WINDURST })
         player:addGil(xi.settings.main.GIL_RATE*120)
         player:confirmTrade()
     elseif csid == 255 then
-        npcUtil.completeQuest(player, xi.quest.log_id.WINDURST, xi.quest.id.windurst.MANDRAGORA_MAD, { fame = 100, fameArea = xi.quest.fame_area.WINDURST })
+        npcUtil.completeQuest(player, xi.quest.log_id.WINDURST, xi.quest.id.windurst.MANDRAGORA_MAD, { fame = 80, fameArea = xi.quest.fame_area.WINDURST })
         player:addGil(xi.settings.main.GIL_RATE*5500)
         player:confirmTrade()
     end

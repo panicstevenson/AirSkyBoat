@@ -34830,8 +34830,8 @@ INSERT INTO `item_mods` VALUES (17572,5,22);  -- MP: 22
 INSERT INTO `item_mods` VALUES (17572,116,3); -- DARK: 3
 
 -- Himmel Stock
-INSERT INTO `item_mods` VALUES (17573,5,63);  -- MP: 63
-INSERT INTO `item_mods` VALUES (17573,357,3); -- BP_DELAY: 3
+INSERT INTO `item_mods` VALUES (17573,5,63);   -- MP: 63
+INSERT INTO `item_mods` VALUES (17573,357,-3); -- BP_DELAY: +3
 
 -- Archalauss Pole
 INSERT INTO `item_mods` VALUES (17574,12,4);   -- INT: 4

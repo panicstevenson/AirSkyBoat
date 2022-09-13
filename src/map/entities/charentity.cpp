@@ -417,11 +417,11 @@ bool CCharEntity::isNewPlayer() const
 
 void CCharEntity::setPetZoningInfo()
 {
-    //edge case protection in case zone and despawn/pet death occur around same time.
+    // edge case protection in case zone and despawn/pet death occur around same time.
     if (PPet == nullptr)
         return;
 
-    //Always save pet zoning information.  Use constructor to determine whether or not we spawn the pet based on pet type.
+    // Always save pet zoning information.  Use constructor to determine whether or not we spawn the pet based on pet type.
     if (PPet->objtype == TYPE_PET)
     {
         switch (((CPetEntity*)PPet)->getPetType())
@@ -1103,7 +1103,7 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
                 actionTarget.messageID = primary ? 224 : 276; // restores mp msg
                 actionTarget.reaction  = REACTION::HIT;
                 damage                 = std::max(damage, 0);
-                actionTarget.param     = addMP(damage);
+                actionTarget.param     = PTarget->addMP(damage);
             }
 
             if (primary)
@@ -2177,7 +2177,7 @@ void CCharEntity::Die()
         this->m_raiseLevel = 0;
     }
 
-    //fix to despawn pet if player dies.
+    // fix to despawn pet if player dies.
     if (this->PPet != nullptr)
         petutils::DespawnPet(this);
 

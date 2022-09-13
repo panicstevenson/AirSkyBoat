@@ -12,7 +12,7 @@ ability_object.onAbilityCheck = function(player, target, ability)
     local level = player:getMainLvl() * 2
 
     if(player:getMP()<level) then
-       return 87, 0
+        return 87, 0
     end
 
     return 0, 0
@@ -24,7 +24,7 @@ ability_object.onPetAbility = function(target, pet, skill, master)
     local damage = pet:getMainLvl() + 2 + (0.30 * pet:getStat(xi.mod.INT)) + (dINT * 1.5)
     damage = xi.mobskills.mobMagicalMove(pet, target, skill, damage, xi.magic.ele.WIND, 9, xi.mobskills.magicalTpBonus.NO_EFFECT, 0)
     damage = xi.mobskills.mobAddBonuses(pet, target, damage.dmg, xi.magic.ele.WIND)
-    damage = xi.summon.avatarFinalAdjustments(damage, pet, skill, target, xi.attackType.MAGICAL, xi.damageType.WIND, 1)
+    damage = xi.summon.avatarFinalAdjustments(damage, pet, skill, target, xi.attackType.MAGICAL, xi.damageType.WIND, xi.mobskills.shadowBehavior.WIPE_SHADOWS)
 
     master:setMP(0)
     target:takeDamage(damage, pet, xi.attackType.MAGICAL, xi.damageType.WIND)
