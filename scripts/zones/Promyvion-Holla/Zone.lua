@@ -9,9 +9,7 @@ require('scripts/globals/status')
 local zone_object = {}
 
 zone_object.onInitialize = function(zone)
-
     xi.horizon.spawnInitialMobs(zone)
-
 --    UpdateNMSpawnPoint(ID.mob.CEREBRATOR)
 --    GetMobByID(ID.mob.CEREBRATOR):setRespawnTime(math.random(3600, 21600))
 
