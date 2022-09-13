@@ -40,12 +40,13 @@ local keyitems =
         cost = 10000
     },
 
-    [4] =
-    {
-        id = xi.ki.WAY_OF_THE_CARPENTER,
-        rank = 9,
-        cost = 20000
-    }
+    -- OOE KIs
+    -- [4] =
+    -- {
+    --     id = xi.ki.WAY_OF_THE_CARPENTER,
+    --     rank = 9,
+    --     cost = 20000
+    -- }
 }
 
 local items =

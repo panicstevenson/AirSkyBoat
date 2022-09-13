@@ -10301,6 +10301,10 @@ void CLuaBaseEntity::updateEnmityFromCure(CLuaBaseEntity* PEntity, int32 amount)
         {
             return static_cast<CBattleEntity*>(m_PBaseEntity);
         }
+        else if (m_PBaseEntity->objtype == TYPE_PET || static_cast<CPetEntity*>(PBattle->PPet)->m_PetID == PETID_LIGHTSPIRIT)
+        {
+            return static_cast<CBattleEntity*>(m_PBaseEntity);
+        }
         else if (m_PBaseEntity->objtype == TYPE_PET && static_cast<CPetEntity*>(m_PBaseEntity)->getPetType() != PET_TYPE::AUTOMATON)
         {
             auto* PMaster = static_cast<CPetEntity*>(m_PBaseEntity)->PMaster;
