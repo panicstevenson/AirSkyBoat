@@ -61,6 +61,7 @@
 #include "../battlefield.h"
 #include "../char_recast_container.h"
 #include "../conquest_system.h"
+#include "../enmity_container.h"
 #include "../item_container.h"
 #include "../items/item_furnishing.h"
 #include "../items/item_usable.h"
@@ -82,9 +83,11 @@
 #include "../utils/charutils.h"
 #include "../utils/gardenutils.h"
 #include "../utils/moduleutils.h"
+#include "../utils/petutils.h"
 #include "../weapon_skill.h"
 #include "automatonentity.h"
 #include "charentity.h"
+#include "mobentity.h"
 #include "trustentity.h"
 #include <map/utils/petutils.h>
 
@@ -414,17 +417,32 @@ bool CCharEntity::isNewPlayer() const
 
 void CCharEntity::setPetZoningInfo()
 {
-    //edge case protection in case zone and despawn/pet death occur around same time.
+    // edge case protection in case zone and despawn/pet death occur around same time.
     if (PPet == nullptr)
         return;
 
-    //Always save pet zoning information.  Use constructor to determine whether or not we spawn the pet based on pet type.
+    // Always save pet zoning information.  Use constructor to determine whether or not we spawn the pet based on pet type.
     if (PPet->objtype == TYPE_PET)
     {
-        petZoningInfo.petHP   = PPet->health.hp;
-        petZoningInfo.petTP   = PPet->health.tp;
-        petZoningInfo.petMP   = PPet->health.mp;
-        petZoningInfo.petType = ((CPetEntity*)PPet)->getPetType();
+        switch (((CPetEntity*)PPet)->getPetType())
+        {
+            case PET_TYPE::JUG_PET:
+                if (!settings::get<bool>("map.KEEP_JUGPET_THROUGH_ZONING"))
+                {
+                    break;
+                }
+                [[fallthrough]];
+            case PET_TYPE::AVATAR:
+            case PET_TYPE::AUTOMATON:
+            case PET_TYPE::WYVERN:
+                petZoningInfo.petHP   = PPet->health.hp;
+                petZoningInfo.petTP   = PPet->health.tp;
+                petZoningInfo.petMP   = PPet->health.mp;
+                petZoningInfo.petType = ((CPetEntity*)PPet)->getPetType();
+                break;
+            default:
+                break;
+        }
     }
 }
 
@@ -807,6 +825,10 @@ void CCharEntity::delTrait(CTrait* PTrait)
 bool CCharEntity::ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags)
 {
     TracyZoneScoped;
+    if (PInitiator->objtype == TYPE_PC && StatusEffectContainer->GetLevelRestrictionEffect() != PInitiator->StatusEffectContainer->GetLevelRestrictionEffect())
+    {
+        return false;
+    }
     if (StatusEffectContainer->GetConfrontationEffect() != PInitiator->StatusEffectContainer->GetConfrontationEffect())
     {
         return false;
@@ -1081,7 +1103,7 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
                 actionTarget.messageID = primary ? 224 : 276; // restores mp msg
                 actionTarget.reaction  = REACTION::HIT;
                 damage                 = std::max(damage, 0);
-                actionTarget.param     = addMP(damage);
+                actionTarget.param     = PTarget->addMP(damage);
             }
 
             if (primary)
@@ -1252,16 +1274,28 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 PRecastContainer->Del(RECAST_ABILITY, PAbility->getRecastId());
             }
         }
-        else if (PAbility->getID() >= ABILITY_HEALING_RUBY && PAbility->getID() <= ABILITY_PERFECT_DEFENSE)
+        else if (PAbility->getRecastId() == 173 || PAbility->getRecastId() == 174) // BP rage, BP ward
         {
-            if (this->StatusEffectContainer->HasStatusEffect(EFFECT_APOGEE))
+            uint16 favorReduction          = 0;
+            uint16 bloodPact_I_Reduction   = std::min<int16>(getMod(Mod::BP_DELAY), 15);
+            uint16 bloodPact_II_Reduction  = std::min<int16>(getMod(Mod::BP_DELAY_II), 15);
+            uint16 bloodPact_III_Reduction = 0; // std::min<int16>(getMod(Mod::BP_DELAY_III, 10); TODO: BP Delay III (SMN JP gift) not implemented
+
+            CStatusEffect* avatarsFavor = this->StatusEffectContainer->GetStatusEffect(EFFECT_AVATARS_FAVOR);
+            if (avatarsFavor)
             {
-                action.recast = 0;
+                favorReduction = std::min<int16>(avatarsFavor->GetPower(), 10);
             }
-            else
+
+            int16 bloodPactDelayReduction = favorReduction + std::min<int16>(bloodPact_I_Reduction + bloodPact_II_Reduction + bloodPact_III_Reduction, 30);
+            action.recast                 = static_cast<uint16>(std::max<int16>(0, action.recast - bloodPactDelayReduction));
+
+            if (PAbility->getID() >= ABILITY_HEALING_RUBY && PAbility->getID() <= ABILITY_PERFECT_DEFENSE) // old mobskill impl of Apogee. As things move to petskill this will need to be obsoleted. scripts/job_utils/summoner.lua handles apogee retail-like.
             {
-                action.recast -= std::min<int16>(getMod(Mod::BP_DELAY), 15);
-                action.recast -= std::min<int16>(getMod(Mod::BP_DELAY_II), 15);
+                if (this->StatusEffectContainer->HasStatusEffect(EFFECT_APOGEE))
+                {
+                    action.recast = 0;
+                }
             }
         }
 
@@ -1447,7 +1481,15 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             actionTarget.param           = 0;
             auto prevMsg                 = actionTarget.messageID;
 
+            // Check for special situations from Steal (The Tenshodo Showdown quest)
+            if (PAbility->getID() == ABILITY_STEAL)
+            {
+                // Force a specific result to be stolen based on the mob LUA
+                actionTarget.param = luautils::OnSteal(this, PTarget, PAbility, &action);
+            }
+
             int32 value = luautils::OnUseAbility(this, PTarget, PAbility, &action);
+
             if (prevMsg == actionTarget.messageID)
             {
                 actionTarget.messageID = PAbility->getMessage();
@@ -1468,7 +1510,15 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
 
             state.ApplyEnmity();
         }
-        PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast);
+
+        if (charge)
+        {
+            PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast, charge->chargeTime, charge->maxCharges);
+        }
+        else
+        {
+            PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast);
+        }
 
         uint16 recastID = PAbility->getRecastId();
         if (lua["xi"]["settings"]["map"]["BLOOD_PACT_SHARED_TIMER"].get<bool>() && (recastID == 173 || recastID == 174))
@@ -1730,6 +1780,11 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
         }
 
         StatusEffectContainer->DelStatusEffect(EFFECT_SANGE);
+    }
+    else if (!hitOccured && PTarget->objtype == TYPE_MOB)
+    {
+        // 1 ce for a missed attack for TH application
+        ((CMobEntity*)PTarget)->PEnmityContainer->UpdateEnmity((CBattleEntity*)this, 1, 0);
     }
 
     battleutils::ClaimMob(PTarget, this);
@@ -2088,6 +2143,12 @@ void CCharEntity::Die()
     }
 
     battleutils::RelinquishClaim(this);
+
+    if (this->PPet)
+    {
+        petutils::DespawnPet(this);
+    }
+
     Die(death_duration);
     SetDeathTimestamp((uint32)time(nullptr));
 
@@ -2116,7 +2177,7 @@ void CCharEntity::Die()
         this->m_raiseLevel = 0;
     }
 
-    //fix to despawn pet if player dies.
+    // fix to despawn pet if player dies.
     if (this->PPet != nullptr)
         petutils::DespawnPet(this);
 

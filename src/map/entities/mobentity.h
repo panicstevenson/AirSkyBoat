@@ -35,6 +35,7 @@ enum SPAWNTYPE
     SPAWNTYPE_NORMAL    = 0x00, // 00:00-24:00
     SPAWNTYPE_ATNIGHT   = 0x01, // 20:00-04:00
     SPAWNTYPE_ATEVENING = 0x02, // 18:00-06:00
+    SPAWNTYPE_ATDUSK    = 0x03, // 17:00-7:00
     SPAWNTYPE_WEATHER   = 0x04,
     SPAWNTYPE_FOG       = 0x08, // 02:00-07:00
     SPAWNTYPE_MOONPHASE = 0x10,
@@ -51,18 +52,18 @@ enum SPECIALFLAG
 
 enum ROAMFLAG : uint16
 {
-    ROAMFLAG_NONE    = 0x00,
-    ROAMFLAG_NONE0   = 0x01,  //
-    ROAMFLAG_NONE1   = 0x02,  //
-    ROAMFLAG_NONE2   = 0x04,  //
-    ROAMFLAG_NONE3   = 0x08,  //
-    ROAMFLAG_NONE4   = 0x10,  //
-    ROAMFLAG_NONE5   = 0x20,  //
-    ROAMFLAG_WORM    = 0x40,  // pop up and down when moving
-    ROAMFLAG_AMBUSH  = 0x80,  // stays hidden until someone comes close (antlion)
-    ROAMFLAG_EVENT   = 0x100, // calls lua method for roaming logic
-    ROAMFLAG_IGNORE  = 0x200, // ignore all hate, except linking hate
-    ROAMFLAG_STEALTH = 0x400  // stays name hidden and untargetable until someone comes close (chigoe)
+    ROAMFLAG_NONE     = 0x00,
+    ROAMFLAG_NONE0    = 0x01,  //
+    ROAMFLAG_NONE1    = 0x02,  //
+    ROAMFLAG_NONE2    = 0x04,  //
+    ROAMFLAG_NONE3    = 0x08,  //
+    ROAMFLAG_NONE4    = 0x10,  //
+    ROAMFLAG_NONE5    = 0x20,  //
+    ROAMFLAG_WORM     = 0x40,  // pop up and down when moving
+    ROAMFLAG_AMBUSH   = 0x80,  // stays hidden until someone comes close (antlion)
+    ROAMFLAG_SCRIPTED = 0x100, // calls lua method for roaming logic
+    ROAMFLAG_IGNORE   = 0x200, // ignore all hate, except linking hate
+    ROAMFLAG_STEALTH  = 0x400  // stays name hidden and untargetable until someone comes close (chigoe)
 };
 
 enum MOBTYPE
@@ -255,6 +256,9 @@ public:
     uint8 m_unk1; // (entity_update 0x25)
     uint8 m_unk2; // (entity_update 0x26)
 
+    uint8 m_setMaxSpawns; // spawnSet Maximum Initial Spawns
+    uint8 m_spawnSet;     // spawnSet Mob Belongs To
+
     bool m_CallForHelpBlocked;
 
     CEnmityContainer* PEnmityContainer; // система ненависти монстров
@@ -269,9 +273,9 @@ public:
     static constexpr float sight_range{ 15.f };
 
 protected:
-    void DistributeRewards();
+    void  DistributeRewards();
     float ApplyTH(int16 m_THLvl, int16 rate);
-    void DropItems(CCharEntity* PChar);
+    void  DropItems(CCharEntity* PChar);
 
 private:
     time_point                     m_DespawnTimer{ time_point::min() }; // Despawn Timer to despawn mob after set duration

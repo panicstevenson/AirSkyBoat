@@ -34,12 +34,12 @@ local battlefields =
     [xi.zone.BONEYARD_GULLY] =
     {
         { 0,  672,    0},   -- Head Wind (PM5-3 U2)
-     -- { 1,  673,    0},   -- Like the Wind (ENM) -- TODO: mob constantly runs during battle
+        { 1,  673,    0},   -- Like the Wind (ENM)
         { 2,  674,    0},   -- Sheep in Antlion's Clothing (ENM)
         { 3,  675,    0},   -- Shell We Dance? (ENM)
-     -- { 4,  676,    0},   -- Totentanz (ENM)
-     -- { 5,  677,    0},   -- Tango with a Tracker (Quest)
-     -- { 6,  678,    0},   -- Requiem of Sin (Quest)
+        { 4,  676,    0},   -- Totentanz (ENM)
+        { 5,  677,    0},   -- Tango with a Tracker (Quest)
+        { 6,  678,    0},   -- Requiem of Sin (Quest)
      -- { 7,  679, 3454},   -- Antagonistic Ambuscade (HKC30)
      -- { 8,    ?,    0},   -- *Head Wind (HTMBF)
     },
@@ -58,7 +58,7 @@ local battlefields =
      -- { 1,  737,    0},   -- Return to the Depths (Quest)
         { 2,  738,    0},   -- Bionic Bug (ENM)
      -- { 3,  739,    0},   -- Pulling the Strings (ENM)
-     -- { 4,  740,    0},   -- Automaton Assault (ENM)
+        { 4,  740,    0},   -- Automaton Assault (ENM)
      -- { 5,  741, 3455},   -- The Mobline Comedy (HKC50)
     },
 
@@ -93,12 +93,12 @@ local battlefields =
     [xi.zone.RIVERNE_SITE_B01] =
     {
         { 0,  896,    0},   -- Storms of Fate (Quest)
-     -- { 1,  897, 2108},   -- The Wyrmking Descends (BCNM)
+        { 1,  897, 2108},   -- The Wyrmking Descends (BCNM)
     },
 
     [xi.zone.RIVERNE_SITE_A01] =
     {
-     -- { 0,  928, 1842},   -- Ouryu Cometh (BCNM)
+        { 0,  928, 1842},   -- Ouryu Cometh (BCNM)
     },
 
     [xi.zone.MONARCH_LINN] =
@@ -249,7 +249,7 @@ local battlefields =
         {11,   11, 1553},   -- Horns of War (KS99)
         {12,   12, 1131},   -- Under Observation (BS40)
         {13,   13, 1177},   -- Eye of the Tiger (BS50)
-     -- {14,   14, 1130},   -- Shots in the Dark (BS60) -- TODO: Warmachine combat behavior
+        {14,   14, 1130},   -- Shots in the Dark (BS60)
         {15,   15, 1175},   -- Double Dragonian (KS30) -- TODO: Chaos Blade strengthens after 2hr
         {16,   16, 1178},   -- Today's Horoscope (KS30)
         {17,   17, 1180},   -- Contaminated Colosseum (KS30)
@@ -295,7 +295,7 @@ local battlefields =
         {15,   79, 1130},   -- Up in Arms (BS60)
         {16,   80, 1175},   -- Copycat (KS30)
         {17,   81, 1178},   -- Operation Desert Swarm (KS30)
-     -- {18,   82, 1180},   -- Prehistoric Pigeons (KS30) -- TODO: Build resistance to sleep quickly. When one dies, remaining ones become more powerful.
+        {18,   82, 1180},   -- Prehistoric Pigeons (KS30)
      -- {19,   83, 3351},   -- The Palborough Project (KC30)
      -- {20,   84, 3352},   -- Shell Shocked (KC50)
         {21,   85,    0},   -- Beyond Infinity (Quest)
@@ -324,9 +324,9 @@ local battlefields =
         {11,  107, 1553},   -- Early Bird Catches the Wyrm (KS99)
         {12,  108, 1131},   -- Royal Succession (BS40)
         {13,  109, 1177},   -- Rapid Raptors (BS50)
-        {14,  110, 1130},   -- Wild Wild Whiskers (BS60) -- TODO: should use petrifactive breath more often than other mobskill. Message before spellcasting.
+        {14,  110, 1130},   -- Wild Wild Whiskers (BS60)
         {15,  111, 1175},   -- Seasons Greetings (KS30)
-     -- {16,  112, 1178},   -- Royale Ramble (KS30)
+        {16,  112, 1178},   -- Royale Ramble (KS30)
         {17,  113, 1180},   -- Moa Constrictors (KS30)
      -- {18,  114, 3351},   -- The V Formation (KC30)
      -- {19,  115, 3352},   -- Avian Apostates (KC50)
@@ -391,7 +391,7 @@ local battlefields =
     {
         { 0,  224,    0},   -- The Moonlit Path (Quest)
         { 1,  225,    0},   -- Moon Reading (Windy 9-2)
-     -- { 2,  226,    0},   -- Waking the Beast (Quest)
+        { 2,  226,    0},   -- Waking the Beast (Quest)
      -- { 3,  227,    0},   -- Battaru Royale (ASA10)
      -- { 4,    ?,    0},   -- *The Moonlit Path (HTMBF)
      -- { 5,    ?,    0},   -- *Waking the Beast (HTMBF)
@@ -446,7 +446,7 @@ local battlefields =
         { 0,  416,    0},   -- Trial by Wind (Quest)
         { 1,  417, 1174},   -- Carbuncle Debacle (Quest)
         { 2,  418, 1546},   -- Trial-size Trial by Wind (Quest)
-     -- { 3,  419,    0},   -- Waking the Beast (Quest)
+        { 3,  419,    0},   -- Waking the Beast (Quest)
         { 4,  420,    0},   -- Sugar-coated Directive (ASA4)
      -- { 5,    ?,    0},   -- *Trial by Wind (HTMBF)
     },
@@ -456,7 +456,7 @@ local battlefields =
         { 0,  448,    0},   -- Trial by Lightning (Quest)
         { 1,  449, 1172},   -- Carbuncle Debacle (Quest)
         { 2,  450, 1548},   -- Trial-size Trial by Lightning (Quest)
-     -- { 3,  451,    0},   -- Waking the Beast (Quest)
+        { 3,  451,    0},   -- Waking the Beast (Quest)
         { 4,  452,    0},   -- Sugar-coated Directive (ASA4)
      -- { 5,    ?,    0},   -- *Trial by Lightning (HTMBF)
     },
@@ -466,7 +466,7 @@ local battlefields =
         { 0,  480,    0},   -- Trial by Ice (Quest)
         { 1,  481, 1171},   -- Class Reunion (Quest)
         { 2,  482, 1545},   -- Trial-size Trial by Ice (Quest)
-     -- { 3,  483,    0},   -- Waking the Beast (Quest)
+        { 3,  483,    0},   -- Waking the Beast (Quest)
         { 4,  484,    0},   -- Sugar-coated Directive (ASA4)
      -- { 5,    ?,    0},   -- *Trial by Ice (HTMBF)
     },
@@ -505,7 +505,7 @@ local battlefields =
     {
         { 0,  544,    0},   -- Trial by Fire (Quest)
         { 1,  545, 1544},   -- Trial-size Trial by Fire (Quest)
-     -- { 2,  546,    0},   -- Waking the Beast (Quest)
+        { 2,  546,    0},   -- Waking the Beast (Quest)
         { 3,  547,    0},   -- Sugar-coated Directive (ASA4)
      -- { 4,    ?,    0},   -- *Trial by Fire (HTMBF)
     },
@@ -515,7 +515,7 @@ local battlefields =
         { 0,  576,    0},   -- Trial by Earth (Quest)
         { 1,  577, 1169},   -- The Puppet Master (Quest)
         { 2,  578, 1547},   -- Trial-size Trial by Earth (Quest)
-     -- { 3,  579,    0},   -- Waking the Beast (Quest)
+        { 3,  579,    0},   -- Waking the Beast (Quest)
         { 4,  580,    0},   -- Sugar-coated Directive (ASA4)
      -- { 5,    ?,    0},   -- *Trial by Earth (HTMBF)
     },
@@ -524,7 +524,7 @@ local battlefields =
     {
         { 0,  608,    0},   -- Trial by Water (Quest)
         { 1,  609, 1549},   -- Trial-size Trial by Water (Quest)
-     -- { 2,  610,    0},   -- Waking the Beast (Quest)
+        { 2,  610,    0},   -- Waking the Beast (Quest)
         { 3,  611,    0},   -- Sugar-coated Directive (ASA4)
      -- { 4,    ?,    0},   -- *Trial by Water (HTMBF)
     },
@@ -547,6 +547,7 @@ local function checkReqs(player, npc, bfid, registrant)
     local cop      = player:getCurrentMission(xi.mission.log_id.COP)
     local toau     = player:getCurrentMission(xi.mission.log_id.TOAU)
     local wotg     = player:getCurrentMission(xi.mission.log_id.WOTG)
+    local acp      = player:getCurrentMission(xi.mission.log_id.ACP)
     local asa      = player:getCurrentMission(xi.mission.log_id.ASA)
     local natStat  = player:getMissionStatus(player:getNation())
     local rozStat  = player:getMissionStatus(xi.mission.log_id.ZILART)
@@ -558,6 +559,15 @@ local function checkReqs(player, npc, bfid, registrant)
 
     local function getEntranceOffset(offset)
         return zones[player:getZoneID()].npc.ENTRANCE_OFFSET + offset
+    end
+
+    local function sameRace()
+        for _, v in pairs(player:getParty()) do
+            if v:getRace() ~= player:getRace() then
+                return false
+            end
+        end
+        return true
     end
 
     -- Requirements to register a battlefield
@@ -594,7 +604,9 @@ local function checkReqs(player, npc, bfid, registrant)
         [ 196] = function() return ( mjob == xi.job.DRG and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (DRG LB5)
         [ 224] = function() return ( player:hasKeyItem(xi.ki.MOON_BAUBLE)                                                                                                  ) end, -- Quest: The Moonlit Path
         [ 225] = function() return ( windy == mi.windurst.MOON_READING and natStat == 2                                                                                    ) end, -- Windy 9-2: Moon Reading
-        [ 256] = function() return ( roz == mi.zilart.RETURN_TO_DELKFUTTS_TOWER and rozStat == 3                                                                           ) end, -- ZM8: Return to Delkfutt's Tower
+        [ 226] = function() return ( player:hasKeyItem(xi.ki.EYE_OF_GALES) and player:hasKeyItem(xi.ki.EYE_OF_FLAMES) and player:hasKeyItem(xi.ki.EYE_OF_FROST) and
+                                     player:hasKeyItem(xi.ki.EYE_OF_STORMS) and player:hasKeyItem(xi.ki.EYE_OF_TIDES) and player:hasKeyItem(xi.ki.EYE_OF_TREMORS)          ) end, -- Quest: Waking the Beast
+        [ 256] = function() return ( roz == mi.zilart.RETURN_TO_DELKFUTTS_TOWER and rozStat == 2                                                                           ) end, -- ZM8: Return to Delkfutt's Tower
         [ 288] = function() return ( roz == mi.zilart.ARK_ANGELS and rozStat == 1 and npcid == getEntranceOffset(0) and not player:hasKeyItem(xi.ki.SHARD_OF_APATHY)       ) end, -- ZM14: Ark Angels (Hume)
         [ 289] = function() return ( roz == mi.zilart.ARK_ANGELS and rozStat == 1 and npcid == getEntranceOffset(1) and not player:hasKeyItem(xi.ki.SHARD_OF_COWARDICE)    ) end, -- ZM14: Ark Angels (Tarutaru)
         [ 290] = function() return ( roz == mi.zilart.ARK_ANGELS and rozStat == 1 and npcid == getEntranceOffset(2) and not player:hasKeyItem(xi.ki.SHARD_OF_ENVY)         ) end, -- ZM14: Ark Angels (Mithra)
@@ -605,32 +617,42 @@ local function checkReqs(player, npc, bfid, registrant)
         [ 416] = function() return ( player:hasKeyItem(xi.ki.TUNING_FORK_OF_WIND)                                                                                          ) end, -- Quest: Trial by Wind
         [ 417] = function() return ( player:getCharVar("CarbuncleDebacleProgress") == 6                                                                                    ) end, -- Quest: Carbuncle Debacle
         [ 418] = function() return ( mjob == xi.job.SMN and mlvl >= 20                                                                                                     ) end, -- Quest: Trial-size Trial by Wind
-        [ 420] = function() return ( asa == mi.asa.SUGAR_COATED_DIRECTIVE and player:hasKeyItem(xi.ki.DOMINAS_EMERALD_SEAL)                                                ) end, -- ASA4: Sugar-coated Directive
+        [ 419] = function() return ( player:hasKeyItem(xi.ki.RAINBOW_RESONATOR) and not player:hasKeyItem(xi.ki.EYE_OF_GALES)                                              ) end, -- Quest: Waking the Beast (Cloister of Gales)
+        [ 420] = function() return ( asa >= mi.asa.SUGAR_COATED_DIRECTIVE and player:hasKeyItem(xi.ki.DOMINAS_EMERALD_SEAL)                                                ) end, -- ASA4: Sugar-coated Directive
         [ 448] = function() return ( player:hasKeyItem(xi.ki.TUNING_FORK_OF_LIGHTNING)                                                                                     ) end, -- Quest: Trial by Lightning
         [ 449] = function() return ( player:getCharVar("CarbuncleDebacleProgress") == 3                                                                                    ) end, -- Quest: Carbuncle Debacle
         [ 450] = function() return ( mjob == xi.job.SMN and mlvl >= 20                                                                                                     ) end, -- Quest: Trial-size Trial by Lightning
-        [ 452] = function() return ( asa == mi.asa.SUGAR_COATED_DIRECTIVE and player:hasKeyItem(xi.ki.DOMINAS_VIOLET_SEAL)                                                 ) end, -- ASA4: Sugar-coated Directive
+        [ 451] = function() return ( player:hasKeyItem(xi.ki.RAINBOW_RESONATOR) and not player:hasKeyItem(xi.ki.EYE_OF_STORMS)                                             ) end, -- Quest: Waking the Beast (Cloister of Storms)
+        [ 452] = function() return ( asa >= mi.asa.SUGAR_COATED_DIRECTIVE and player:hasKeyItem(xi.ki.DOMINAS_VIOLET_SEAL)                                                 ) end, -- ASA4: Sugar-coated Directive
         [ 480] = function() return ( player:hasKeyItem(xi.ki.TUNING_FORK_OF_ICE)                                                                                           ) end, -- Quest: Trial by Ice
         [ 481] = function() return ( player:getCharVar("ClassReunionProgress") == 5                                                                                        ) end, -- Quest: Class Reunion
         [ 482] = function() return ( mjob == xi.job.SMN and mlvl >= 20                                                                                                     ) end, -- Quest: Trial-size Trial by Ice
-        [ 484] = function() return ( asa == mi.asa.SUGAR_COATED_DIRECTIVE and player:hasKeyItem(xi.ki.DOMINAS_AZURE_SEAL)                                                  ) end, -- ASA4: Sugar-coated Directive
+        [ 483] = function() return ( player:hasKeyItem(xi.ki.RAINBOW_RESONATOR) and not player:hasKeyItem(xi.ki.EYE_OF_FROST)                                              ) end, -- Quest: Waking the Beast (Cloister of Frost)
+        [ 484] = function() return ( asa >= mi.asa.SUGAR_COATED_DIRECTIVE and player:hasKeyItem(xi.ki.DOMINAS_AZURE_SEAL)                                                  ) end, -- ASA4: Sugar-coated Directive
         [ 512] = function() return ( nat == mi.nation.ARCHLICH and natStat == 11                                                                                           ) end, -- Mission 5-1
         [ 516] = function() return ( sandy == mi.sandoria.THE_HEIR_TO_THE_LIGHT and natStat == 3                                                                           ) end, -- Sandy 9-2: The Heir to the Light
         [ 517] = function() return ( mjob == xi.job.PLD and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (PLD LB5)
         [ 518] = function() return ( mjob == xi.job.DRK and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (DRK LB5)
         [ 519] = function() return ( mjob == xi.job.BRD and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (BRD LB5)
         [ 530] = function() return ( mjob == xi.job.DNC and mlvl >= 66                                                                                                     ) end, -- Quest: A Furious Finale (DNC LB5)
+
+        -- Temp disabled pending BCNM mob fixes
+        -- [ 532] = function() return (acp >= mi.acp.THOSE_WHO_LURK_IN_SHADOWS_III and player:hasKeyItem(xi.ki.MARK_OF_SEED)                                                  ) end, -- Those Who Lurk in Shadows (ACP7)
+
         [ 533] = function() return ( player:hasKeyItem(xi.ki.SOUL_GEM_CLASP)                                                                                               ) end, -- Quest: Beyond Infinity
         [ 544] = function() return ( player:hasKeyItem(xi.ki.TUNING_FORK_OF_FIRE)                                                                                          ) end, -- Quest: Trial by Fire
         [ 545] = function() return ( mjob == xi.job.SMN and mlvl >= 20                                                                                                     ) end, -- Quest: Trial-size Trial by Fire
-        [ 547] = function() return ( asa == mi.asa.SUGAR_COATED_DIRECTIVE and player:hasKeyItem(xi.ki.DOMINAS_SCARLET_SEAL)                                                ) end, -- ASA4: Sugar-coated Directive
+        [ 546] = function() return ( player:hasKeyItem(xi.ki.RAINBOW_RESONATOR) and not player:hasKeyItem(xi.ki.EYE_OF_FLAMES)                                             ) end, -- Quest: Waking the Beast (Cloister of Flames)
+        [ 547] = function() return ( asa >= mi.asa.SUGAR_COATED_DIRECTIVE and player:hasKeyItem(xi.ki.DOMINAS_SCARLET_SEAL)                                                ) end, -- ASA4: Sugar-coated Directive
         [ 576] = function() return ( player:hasKeyItem(xi.ki.TUNING_FORK_OF_EARTH)                                                                                         ) end, -- Quest: Trial by Earth
         [ 577] = function() return ( player:getCharVar("ThePuppetMasterProgress") == 2                                                                                     ) end, -- Quest: The Puppet Master
         [ 578] = function() return ( mjob == xi.job.SMN and mlvl >= 20                                                                                                     ) end, -- Quest: Trial-size Trial by Earth
-        [ 580] = function() return ( asa == mi.asa.SUGAR_COATED_DIRECTIVE and player:hasKeyItem(xi.ki.DOMINAS_AMBER_SEAL)                                                  ) end, -- ASA4: Sugar-coated Directive
+        [ 579] = function() return ( player:hasKeyItem(xi.ki.RAINBOW_RESONATOR) and not player:hasKeyItem(xi.ki.EYE_OF_TREMORS)                                            ) end, -- Quest: Waking the Beast (Cloister of Tremors)
+        [ 580] = function() return ( asa >= mi.asa.SUGAR_COATED_DIRECTIVE and player:hasKeyItem(xi.ki.DOMINAS_AMBER_SEAL)                                                  ) end, -- ASA4: Sugar-coated Directive
         [ 608] = function() return ( player:hasKeyItem(xi.ki.TUNING_FORK_OF_WATER)                                                                                         ) end, -- Quest: Trial by Water
         [ 609] = function() return ( mjob == xi.job.SMN and mlvl >= 20                                                                                                     ) end, -- Quest: Trial-size Trial by Water
-        [ 611] = function() return ( asa == mi.asa.SUGAR_COATED_DIRECTIVE and player:hasKeyItem(xi.ki.DOMINAS_CERULEAN_SEAL)                                               ) end, -- ASA4: Sugar-coated Directive
+        [ 610] = function() return ( player:hasKeyItem(xi.ki.RAINBOW_RESONATOR) and not player:hasKeyItem(xi.ki.EYE_OF_TIDES)                                              ) end, -- Quest: Waking the Beast (Cloister of Tides)
+        [ 611] = function() return ( asa >= mi.asa.SUGAR_COATED_DIRECTIVE and player:hasKeyItem(xi.ki.DOMINAS_CERULEAN_SEAL)                                               ) end, -- ASA4: Sugar-coated Directive
         [ 640] = function() return ( cop == mi.cop.THREE_PATHS and player:getMissionStatus(xi.mission.log_id.COP, xi.mission.status.COP.ULMIA) == 8 and
                                      npcid == getEntranceOffset(0)                                                                                                         ) end, -- PM5-3 U3: Flames for the Dead
         [ 641] = function() return ( player:hasKeyItem(xi.ki.ZEPHYR_FAN) and npcid == getEntranceOffset(2)                                                                 ) end, -- ENM: Follow the White Rabbit
@@ -650,7 +672,7 @@ local function checkReqs(player, npc, bfid, registrant)
         [ 736] = function() return ( cop == mi.cop.THREE_PATHS and player:getMissionStatus(xi.mission.log_id.COP, xi.mission.status.COP.LOUVERANCE) == 8                   ) end, -- PM5-3 L3: A Century of Hardship
         [ 738] = function() return ( player:hasKeyItem(xi.ki.SHAFT_2716_OPERATING_LEVER)                                                                                   ) end, -- ENM: Bionic Bug
         [ 739] = function() return ( player:hasKeyItem(xi.ki.SHAFT_GATE_OPERATING_DIAL)                                                                                    ) end, -- ENM: Pulling Your Strings
-        [ 740] = function() return ( player:hasKeyItem(xi.ki.SHAFT_GATE_OPERATING_DIAL)                                                                                    ) end, -- ENM: Automaton Assault
+        [ 740] = function() return ( player:hasKeyItem(xi.ki.SHAFT_GATE_OPERATING_DIAL) and sameRace()                                                                     ) end, -- ENM: Automaton Assault
         [ 768] = function() return ( (cop == mi.cop.BELOW_THE_ARKS) or (cop == mi.cop.THE_MOTHERCRYSTALS and not player:hasKeyItem(xi.ki.LIGHT_OF_HOLLA))                  ) end, -- PM1-3: The Mothercrystals
         [ 769] = function() return ( player:hasKeyItem(xi.ki.CENSER_OF_ABANDONMENT)                                                                                        ) end, -- ENM: Simulant
         [ 800] = function() return ( (cop == mi.cop.BELOW_THE_ARKS) or (cop == mi.cop.THE_MOTHERCRYSTALS and not player:hasKeyItem(xi.ki.LIGHT_OF_DEM))                    ) end, -- PM1-3: The Mothercrystals
@@ -660,7 +682,8 @@ local function checkReqs(player, npc, bfid, registrant)
         [ 864] = function() return ( cop == mi.cop.DESIRES_OF_EMPTINESS and player:getCharVar('Mission[6][518]Status') == 2                                                ) end, -- PM5-2: Desires of Emptiness
         [ 865] = function() return ( player:hasKeyItem(xi.ki.CENSER_OF_ACRIMONY)                                                                                           ) end, -- ENM: Pulling the Plug
         [ 896] = function() return ( player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.STORMS_OF_FATE) == QUEST_ACCEPTED and
-                                     player:getCharVar('StormsOfFate') == 2                                                                                                ) end, -- Quest: Storms of Fate
+                                     player:getCharVar("Quest[3][86]Status") >= 2                                                                                          ) end, -- Quest: Storms of Fate
+        [ 897] = function() return ( player:hasKeyItem(xi.ki.WHISPER_OF_THE_WYRMKING)                                                                                      ) end, -- Quest: The Wyrmking Descends
         [ 960] = function() return ( cop == mi.cop.ANCIENT_VOWS and player:getCharVar('Mission[6][248]Status') == 2 and
                                      player:getPreviousZone() == xi.zone.RIVERNE_SITE_A01                                                                                  ) end, -- PM2-5: Ancient Vows
         [ 961] = function() return ( cop == mi.cop.THE_SAVAGE and player:getCharVar('Mission[6][418]Status') == 1 and player:getPreviousZone() == xi.zone.RIVERNE_SITE_B01 ) end, -- PM4-2: The Savage
@@ -851,7 +874,7 @@ local function checkSkip(player, bfid)
         [ 832] = function() return ( player:hasCompletedMission(xi.mission.log_id.COP, mi.cop.THE_MOTHERCRYSTALS) or player:hasKeyItem(xi.ki.LIGHT_OF_MEA)                                        ) end, -- PM1-3: The Mothercrystals
         [ 864] = function() return ( player:hasCompletedMission(xi.mission.log_id.COP, mi.cop.DESIRES_OF_EMPTINESS) or (cop == mi.cop.DESIRES_OF_EMPTINESS and
                                      player:getCharVar('Mission[6][518]Status') > 2)                                                                                                              ) end, -- PM5-2: Desires of Emptiness
-        [ 896] = function() return ( sofStat == QUEST_COMPLETED or (sofStat == QUEST_ACCEPTED and player:getCharVar("StormsOfFate") > 2)                                                          ) end, -- Quest: Storms of Fate
+        [ 896] = function() return ( sofStat == QUEST_COMPLETED or (sofStat == QUEST_ACCEPTED and player:getCharVar("Quest[3][86]Status") > 2)                                                    ) end, -- Quest: Storms of Fate
         [ 960] = function() return ( player:hasCompletedMission(xi.mission.log_id.COP, mi.cop.ANCIENT_VOWS)                                                                                       ) end, -- PM2-5: Ancient Vows
         [ 961] = function() return ( player:hasCompletedMission(xi.mission.log_id.COP, mi.cop.THE_SAVAGE) or (cop == mi.cop.THE_SAVAGE and player:getCharVar('Mission[6][418]Status') > 1)        ) end, -- PM4-2: The Savage
         [ 993] = function() return ( player:hasCompletedMission(xi.mission.log_id.COP, mi.cop.THE_WARRIORS_PATH)                                                                                  ) end, -- PM7-5: The Warrior's Path
@@ -946,11 +969,27 @@ local function getItemById(player, bfid)
     return 0
 end
 
+local function rejectLevelSyncedParty(player, npc)
+    for _, member in pairs(player:getAlliance()) do
+        if member:isLevelSync() then
+            local zoneId = player:getZoneID()
+            local ID = zones[zoneId]
+            -- Your party is unable to participate because certain members' levels are restricted
+            player:messageText(npc, ID.text.MEMBERS_LEVELS_ARE_RESTRICTED, false)
+            return true
+        end
+    end
+    return false
+end
 -----------------------------------
 -- onTrade Action
 -----------------------------------
 
 xi.bcnm.onTrade = function(player, npc, trade, onUpdate)
+    if rejectLevelSyncedParty(player, npc) then -- player's party has level sync, abort.
+        return false
+    end
+
     -- Validate trade
     local itemId
 
@@ -1020,6 +1059,11 @@ end
 -- onTrigger Action
 -----------------------------------
 xi.bcnm.onTrigger = function(player, npc)
+    -- Cannot enter if anyone in party is level/master sync'd
+    if rejectLevelSyncedParty(player, npc) then
+        return false
+    end
+
     -- Player has battlefield status effect. That means a battlefield is open OR the player is inside a battlefield.
     if player:hasStatusEffect(xi.effect.BATTLEFIELD) then
         -- Player is inside battlefield. Attempting to leave.

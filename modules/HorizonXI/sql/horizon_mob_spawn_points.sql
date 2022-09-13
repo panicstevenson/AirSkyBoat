@@ -1,10 +1,24 @@
 -- --------------------------------------------------------
 -- Horizon Mob Spawn Points
 -- --------------------------------------------------------
--- This module is used to move or remove mobs in certain zones.
--- If creating a new EXP camp please zero out the spawn points and create new mobs using the horizon_spawner.lua
--- This is to keep all the group camps in one place and in one lua rather than two.
+-- Overrides all default spawn sets to match current era config
+-- Includes calculated ZoneID and a spawnset controller for internal groupings
 -- --------------------------------------------------------
+
+DROP TABLE IF EXISTS `mob_spawn_points`;
+CREATE TABLE IF NOT EXISTS `mob_spawn_points` (
+  `mobid` int(10) NOT NULL,
+  `spawnset` tinyint(3) DEFAULT 0,
+  `mobname` varchar(24) DEFAULT NULL,
+  `polutils_name` varchar(50) DEFAULT NULL,
+  `groupid` int(10) unsigned NOT NULL DEFAULT 0,
+  `pos_x` float(7,3) NOT NULL DEFAULT 0.000,
+  `pos_y` float(7,3) NOT NULL DEFAULT 0.000,
+  `pos_z` float(7,3) NOT NULL DEFAULT 0.000,
+  `pos_rot` tinyint(3) unsigned NOT NULL DEFAULT 0,
+  `zoneid` int(10) GENERATED ALWAYS AS ((`mobid` - 4096 * 4096) / 4096) VIRTUAL,
+  PRIMARY KEY (`mobid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 AVG_ROW_LENGTH=33;
 
 REPLACE INTO `mob_spawn_points` (`mobid`, `mobname`, `polutils_name`, `groupid`, `pos_x`, `pos_y`, `pos_z`, `pos_rot`) VALUES
 -- Pashhow Marshlands
@@ -1119,4 +1133,4 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `mobname`, `polutils_name`, `groupid`,
 (17563670,'Magicked_Bones','Magicked Bones',5,85.3693,0.5,57.4310,130),
 (17563671,'Magicked_Bones','Magicked Bones',5,179.8066,0.5,60.0227,1),
 (17563811,'Wendigo','Wendigo',27,-295.04,0,184.25,211),
-(17563815,'Wendigo','Wendigo',27,-293.85,0,178.40,83),
+(17563815,'Wendigo','Wendigo',27,-293.85,0,178.40,83);
