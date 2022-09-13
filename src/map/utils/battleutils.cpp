@@ -2266,8 +2266,8 @@ namespace battleutils
                 else
                 {
                     uint16 defenderTp = (tpMultiplier *
-                                        (std::ceil(PAttacker->GetLocalVar("[Attack]Tp_Gain") * 1.25) * sBlowMult *
-                                        (1.0f + 0.01f * (float)PDefender->getMod(Mod::STORETP)))); // subtle blow also reduces the "+30" on mob tp gain
+                                         (std::ceil(PAttacker->GetLocalVar("[Attack]Tp_Gain") * 1.25) * sBlowMult *
+                                          (1.0f + 0.01f * (float)PDefender->getMod(Mod::STORETP)))); // subtle blow also reduces the "+30" on mob tp gain
                     PDefender->addTP(defenderTp);
                 }
             }
@@ -4127,6 +4127,10 @@ namespace battleutils
                 PPlayer->StatusEffectContainer->DelStatusEffect(EFFECT_HEALING);
                 PPlayer->updatemask |= UPDATE_HP;
             }
+            else if (PPlayer->isSitting())
+            {
+                PPlayer->animation = ANIMATION_NONE;
+            }
         }
     }
 
@@ -4601,10 +4605,14 @@ namespace battleutils
             return 0;
         }
 
-        uint8 lvl       = PChar->jobs.job[JOB_RNG]; // Get Ranger level of char
-        uint8 shotCount = 0;                        // the total number of extra hits
+        uint8 shotCount = 0; // the total number of extra hits
 
-        if (PChar->GetSJob() == JOB_RNG)
+        uint8 lvl = 0; // Get Ranger level of char
+        if (PChar->GetMJob() == JOB_RNG)
+        {
+            lvl = PChar->GetMLevel();
+        }
+        else if (PChar->GetSJob() == JOB_RNG)
         { // if rng is sub then use the sub level
             lvl = PChar->GetSLevel();
         }
@@ -7246,7 +7254,7 @@ namespace battleutils
                 PMob->health.hp = PMob->health.maxhp;
                 PMob->setModifier(Mod::CLAIMBOT_REPORT_CHECK, 1);
 
-                if (PMob->id != 17277127) // If I'm Not Shikigami Weapon
+                if (PMob->id != (17277127 | 16912846 | 16912847)) // If I'm Not Shikigami Weapon or Jailer of Prudence
                 {
                     PMob->status = STATUS_TYPE::MOB;
                     PMob->loc.zone->UpdateEntityPacket(PMob, ENTITY_UPDATE, UPDATE_COMBAT);
@@ -7271,24 +7279,14 @@ namespace battleutils
             {
                 if (member.second.PEnmityOwner != nullptr)
                 {
-                    CBattleEntity* PEntry = nullptr;
-                    for (int i = 0; i < lotteryVector.size(); i++) {
-                        if (lotteryVector[i] != nullptr)
-                        {
-                            if (lotteryVector[i]->objtype != TYPE_PC && lotteryVector[i]->PMaster != nullptr &&
-                                lotteryVector[i]->PMaster->objtype == TYPE_PC && lotteryVector[i]->PMaster->id != member.second.PEnmityOwner->id)
-                            {
-                                PEntry = member.second.PEnmityOwner->PMaster;
-                            }
-                            else if (lotteryVector[i]->id != member.second.PEnmityOwner->id)
-                            {
-                                PEntry = member.second.PEnmityOwner;
-                            }
-                        }
-                    }
-
+                    CBattleEntity* PEntry = member.second.PEnmityOwner;
                     if (PEntry != nullptr)
                     {
+                        if (PEntry->objtype != TYPE_PC && PEntry->PMaster != nullptr && PEntry->PMaster->objtype == TYPE_PC)
+                        {
+                            PEntry = PEntry->PMaster;
+                        }
+
                         lotteryVector.push_back(PEntry);
                     }
                 }
@@ -7297,28 +7295,37 @@ namespace battleutils
 
         if (!lotteryVector.empty())
         {
+            std::sort(lotteryVector.begin(), lotteryVector.end());
+            auto last = std::unique(lotteryVector.begin(), lotteryVector.end());
+            lotteryVector.erase(last, lotteryVector.end());
+
             randomEntry = xirand::GetRandomNumber(0, ((uint16)lotteryVector.size() - 1));
             PWinner     = lotteryVector[randomEntry];
         }
 
-        if (PWinner != nullptr)
+        if (PWinner != nullptr && enmityList)
         {
             for (auto member : *enmityList)
             {
-                if ((member.first != PWinner->id) &&
-                    !(member.second.PEnmityOwner->PMaster && member.second.PEnmityOwner->PMaster->objtype == TYPE_PC && member.second.PEnmityOwner->PMaster->id == PWinner->id))
+                if (member.second.PEnmityOwner != nullptr)
                 {
-                    enmityList->erase(member.first);
+                    CBattleEntity* const& PMember = member.second.PEnmityOwner;
+                    if ((PMember->id != PWinner->id) &&
+                        !(PMember->PMaster && PMember->PMaster->objtype == TYPE_PC && PMember->PMaster->id == PWinner->id))
+                    {
+                        if (PMember->objtype == (TYPE_PET | TYPE_MOB) && PMember->PAI->IsEngaged())
+                        {
+                            PMember->PAI->Disengage();
+                        }
+                        else if (PMember->objtype == TYPE_TRUST && PMember->PAI->IsEngaged())
+                        {
+                            PMember->PAI->Internal_Disengage();
+                        }
+
+                        enmityList->erase(member.first);
+                    }
                 }
             }
-
-            PMob->loc.zone->ForEachChar([&](CCharEntity* PChar) {
-                if (PChar->id != PWinner->id && PChar->PPet != nullptr && PChar->PPet->GetBattleTargetID() == PMob->id)
-                {
-                    PChar->PPet->PAI->Disengage();
-                    PChar->PPet->health.hp = 0;
-                }
-            });
         }
 
         PMob->m_IsClaimable = true;

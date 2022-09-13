@@ -1190,12 +1190,7 @@ bool CMobController::CanAggroTarget(CBattleEntity* PTarget)
         return false;
     }
 
-    if (PMob->PAI && PMob->PAI->IsCurrentState<CClaimShieldState>())
-    {
-        return false;
-    }
-
-    if (PMob->PAI && PMob->PAI->IsCurrentState<CMobShieldState>())
+    if (PMob->PAI && (PMob->PAI->IsCurrentState<CClaimShieldState>() || PMob->PAI->IsCurrentState<CMobShieldState>()))
     {
         return false;
     }

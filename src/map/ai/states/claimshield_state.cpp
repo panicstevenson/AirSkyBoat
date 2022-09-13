@@ -29,7 +29,7 @@ CClaimShieldState::CClaimShieldState(CBaseEntity* PEntity)
         PMob->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_STUN, EFFECT_STUN, 1, 0, PMob->getMod(Mod::CLAIMSHIELD) + PMob->getMod(Mod::CLAIMSHIELD_FAKE_SPAWN)), false);
 
         // clang-format off
-        PMob->PAI->QueueAction(queueAction_t(std::chrono::milliseconds(PMob->getMod(Mod::CLAIMSHIELD_FAKE_SPAWN)), false, [&](CBaseEntity* PEntity)
+        PMob->PAI->QueueAction(queueAction_t(std::chrono::milliseconds(PMob->getMod(Mod::CLAIMSHIELD_FAKE_SPAWN)), false, [](CBaseEntity* PEntity)
         {
             auto* PMobEntity = static_cast<CMobEntity*>(PEntity);
             battleutils::DoReportClaimBot(PMobEntity);
