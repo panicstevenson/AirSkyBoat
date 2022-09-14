@@ -239,18 +239,25 @@ struct CharHistory_t
 
 struct CharAnticheat_t
 {
-    float  lastCheckDist = 0;
-    time_t lastTeleport  = 0;
-    time_t gracePeriod   = 0;
-    time_t lastCheckTime = 0;
-    uint8  speedCounter  = 0;
-    time_t prevDigT_1    = 0;
-    float  prevDigX_1    = 0;
-    float  prevDigZ_1    = 0;
-    time_t prevDigT_2    = 0;
-    float  prevDigX_2    = 0;
-    float  prevDigZ_2    = 0;
-    uint8  digDistGrace  = 0;
+    float  lastCheckDist    = 0;
+    time_t lastTeleport     = 0;
+    time_t gracePeriod      = 0;
+    time_t lastCheckTime    = 0;
+    uint8  speedCounter     = 0;
+    time_t prevDigT_1       = 0;
+    float  prevDigX_1       = 0;
+    float  prevDigZ_1       = 0;
+    time_t prevDigT_2       = 0;
+    float  prevDigX_2       = 0;
+    float  prevDigZ_2       = 0;
+    uint8  digDistGrace     = 0;
+    time_t lastSynthStart_1 = 0;
+    time_t lastSynthStart_2 = 0;
+    time_t lastSynthStart_3 = 0;
+    time_t lastSynthStart_4 = 0;
+    time_t lastSynthStart_5 = 0;
+    time_t lastSynthStart_6 = 0;
+    uint16 lastSynthReq     = 0;
 };
 
 struct CharDigging_t
@@ -259,6 +266,12 @@ struct CharDigging_t
     float  lastDigY = 0;
     float  lastDigZ = 0;
     time_t lastDigT = 0;
+};
+
+struct CharCrafting_t
+{
+    time_t lastSynthTime = 0;
+    uint16 lastSynthReq  = 0;
 };
 
 enum CHAR_SUBSTATE
@@ -485,6 +498,7 @@ public:
     CharHistory_t   m_charHistory;
     CharAnticheat_t m_charAnticheat;
     CharDigging_t   m_charDigging;
+    CharCrafting_t  m_charCrafting;
 
     int8 getShieldSize();
 

@@ -34,11 +34,15 @@ namespace anticheat
         // (0x59) packet. If anti cheating is enabled this will cause all cheated
         // crafts to fail.
         // Argument is the time spent on synth animation.
-        CHEAT_ID_FASTSYNTH = 1,
-        CHEAT_ID_CLAIMBOT  = 2,
-        CHEAT_ID_POS_HACK  = 3,
-        CHEAT_ID_FAST_DIG  = 4,
-        CHEAT_ID_DIG_BOT   = 5,
+        CHEAT_ID_FASTSYNTH    = 1,
+        CHEAT_ID_CLAIMBOT     = 2,
+        CHEAT_ID_POS_HACK     = 3,
+        CHEAT_ID_FAST_DIG     = 4,
+        CHEAT_ID_DIG_BOT      = 5,
+        CHEAT_ID_CRAFT_BOT    = 6,
+        CHEAT_ID_AUTO_CRAFT   = 7,
+        CHEAT_ID_FISH_BOT     = 8,
+        CHEAT_ID_SKELETON_KEY = 9,
         // For boundary checks
         CHEAT_ID_LAST
     };
@@ -96,6 +100,12 @@ namespace anticheat
 
     // Sets up variables for the next set of checks.
     void DoDigCheckSetup(CCharEntity* PChar, bool first);
+
+    // Sets up variables for the next set of checks
+    void DoCraftCheckSetup(CCharEntity* PChar, bool first);
+
+    void DoCraftBotCheck(CCharEntity* PChar, time_t currentTime);
+    void DoCraftBotSetup(CCharEntity* PChar, time_t currentTime);
 }; // namespace anticheat
 
 #endif

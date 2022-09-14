@@ -21,11 +21,11 @@
 
 #include "anticheat.h"
 #include "map.h"
-#include "status_effect_container.h"
-#include "zone.h"
 #include "packets/chat_message.h"
+#include "status_effect_container.h"
 #include "utils/charutils.h"
 #include "utils/zoneutils.h"
+#include "zone.h"
 
 namespace anticheat
 {
@@ -218,9 +218,9 @@ namespace anticheat
             {
                 Anticheat.speedCounter = 0;
             }
-
-            return moved;
         }
+
+        return moved;
         // clang-format on
     }
 
@@ -330,23 +330,77 @@ namespace anticheat
             CharDigging_t DigTable    = PChar->m_charDigging;
             CharAnticheat_t Anticheat = PChar->m_charAnticheat;
 
-            if (first)
-            {
-                Anticheat.prevDigT_1 = DigTable.lastDigT;
-                Anticheat.prevDigX_1 = DigTable.lastDigX;
-                Anticheat.prevDigZ_1 = DigTable.lastDigZ;
-            }
-            else
-            {
-                Anticheat.prevDigT_2 = Anticheat.prevDigT_1;
-                Anticheat.prevDigX_2 = Anticheat.prevDigX_1;
-                Anticheat.prevDigZ_2 = Anticheat.prevDigZ_1;
-                Anticheat.prevDigT_1 = DigTable.lastDigT;
-                Anticheat.prevDigX_1 = DigTable.lastDigX;
-                Anticheat.prevDigZ_1 = DigTable.lastDigZ;
-            }
+            Anticheat.prevDigT_2 = Anticheat.prevDigT_1;
+            Anticheat.prevDigX_2 = Anticheat.prevDigX_1;
+            Anticheat.prevDigZ_2 = Anticheat.prevDigZ_1;
+            Anticheat.prevDigT_1 = DigTable.lastDigT;
+            Anticheat.prevDigX_1 = DigTable.lastDigX;
+            Anticheat.prevDigZ_1 = DigTable.lastDigZ;
 
             return;
+        }
+        // clang-format on
+    }
+
+    void DoCraftBotCheck(CCharEntity* PChar, time_t currentTime)
+    {
+        // clang-format off
+        if (PChar != nullptr)
+        {
+            CharCrafting_t  CraftTable = PChar->m_charCrafting;
+            CharAnticheat_t Anticheat  = PChar->m_charAnticheat;
+
+            /*
+                Check for addons like crafty with auto-recipe swapping.
+                Players should not be able to swap recipes in under 10s.
+            */
+            if ((Anticheat.lastSynthReq != CraftTable.lastSynthReq) && ((Anticheat.lastSynthStart_1 - currentTime) < 10))
+            {
+                anticheat::ReportCheatIncident(PChar, anticheat::CheatID::CHEAT_ID_CRAFT_BOT,
+                                                static_cast<uint32>(std::round(Anticheat.lastSynthStart_1 - currentTime)),
+                                                "Player swapped crafts in under 10s and isusing crafty to auto recipe swap. Recipe start time diff has been recorded in seconds.");
+                anticheat::GetCheatPunitiveAction(anticheat::CheatID::CHEAT_ID_CRAFT_BOT, nullptr, 1);
+            }
+
+            /*
+                Check for addons like crafty or synthall where it will
+                auto-craft using packet injection which keeps the synth
+                start times the same. We take the diff between each prev
+                start time and see if it is under what human error could
+                be (1s). By doing this accross 6 crafts, this elimates the
+                chance this is an in-game macro.
+            */
+            if ((((Anticheat.lastSynthStart_1 - currentTime) - (Anticheat.lastSynthStart_2 - Anticheat.lastSynthStart_1)) < 2) &&
+                (((Anticheat.lastSynthStart_3 - Anticheat.lastSynthStart_2) - (Anticheat.lastSynthStart_4 - Anticheat.lastSynthStart_3)) < 2) &&
+                (((Anticheat.lastSynthStart_5 - Anticheat.lastSynthStart_4) - (Anticheat.lastSynthStart_6 - Anticheat.lastSynthStart_5)) < 2))
+            {
+                auto cheatArg = std::min(((Anticheat.lastSynthStart_1 - currentTime) - (Anticheat.lastSynthStart_2 - Anticheat.lastSynthStart_1)), ((Anticheat.lastSynthStart_3 - Anticheat.lastSynthStart_2) - (Anticheat.lastSynthStart_4 - Anticheat.lastSynthStart_3)));
+
+                cheatArg = std::min(cheatArg, ((Anticheat.lastSynthStart_3 - Anticheat.lastSynthStart_2) - (Anticheat.lastSynthStart_4 - Anticheat.lastSynthStart_3)));
+                anticheat::ReportCheatIncident(PChar, anticheat::CheatID::CHEAT_ID_AUTO_CRAFT,
+                                static_cast<uint32>(cheatArg),
+                                "Player did multiple crafts with low variance, likely using an auto craft bot. Lowest start time diff has been recorded in seconds.");
+                anticheat::GetCheatPunitiveAction(anticheat::CheatID::CHEAT_ID_AUTO_CRAFT, nullptr, 1);
+            }
+        }
+        // clang-format on
+    }
+
+    void DoCraftBotSetup(CCharEntity* PChar, time_t currentTime)
+    {
+        // clang-format off
+        if (PChar != nullptr)
+        {
+            CharCrafting_t  CraftTable = PChar->m_charCrafting;
+            CharAnticheat_t Anticheat  = PChar->m_charAnticheat;
+
+            Anticheat.lastSynthReq     = CraftTable.lastSynthReq;
+            Anticheat.lastSynthStart_6 = Anticheat.lastSynthStart_5;
+            Anticheat.lastSynthStart_5 = Anticheat.lastSynthStart_4;
+            Anticheat.lastSynthStart_4 = Anticheat.lastSynthStart_3;
+            Anticheat.lastSynthStart_3 = Anticheat.lastSynthStart_2;
+            Anticheat.lastSynthStart_2 = Anticheat.lastSynthStart_1;
+            Anticheat.lastSynthStart_1 = currentTime;
         }
         // clang-format on
     }

@@ -126,6 +126,8 @@ namespace synthutils
                         return false;
                     }
                 }
+
+                PChar->m_charCrafting.lastSynthReq = (uint16)sql->GetUIntData(0);
                 return true;
             }
         }
@@ -815,6 +817,16 @@ namespace synthutils
 
     int32 startSynth(CCharEntity* PChar)
     {
+        time_t currentTime = time(NULL);
+
+        if ((PChar->m_charAnticheat.lastSynthStart_6 != 0) ||
+            ((PChar->m_charAnticheat.lastSynthReq != PChar->m_charCrafting.lastSynthReq) && PChar->m_charAnticheat.lastSynthReq != 0))
+        {
+            anticheat::DoCraftBotCheck(PChar, currentTime);
+        }
+
+        anticheat::DoCraftBotSetup(PChar, currentTime);
+
         PChar->m_LastSynthTime = server_clock::now();
         uint16 effect          = 0;
         uint8  element         = 0;
