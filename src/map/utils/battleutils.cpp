@@ -31,6 +31,7 @@
 #include "../packets/char.h"
 #include "../packets/char_health.h"
 #include "../packets/char_update.h"
+#include "../packets/chat_message.h"
 #include "../packets/entity_update.h"
 #include "../packets/inventory_finish.h"
 #include "../packets/message_basic.h"
@@ -44,6 +45,7 @@
 #include "../ai/controllers/player_controller.h"
 #include "../ai/states/magic_state.h"
 #include "../alliance.h"
+#include "../anticheat.h"
 #include "../attack.h"
 #include "../enmity_container.h"
 #include "../entities/battleentity.h"
@@ -7223,6 +7225,139 @@ namespace battleutils
             }
         }
         return 1.0;
+    }
+
+    void DoReportClaimBot(CMobEntity* PMob)
+    {
+        // clang-format off
+        if (PMob != nullptr)
+        {
+            if (PMob->getMod(Mod::CLAIMBOT_REPORT_CHECK) == 0)
+            {
+                EnmityList_t* enmityList = PMob->PEnmityContainer->GetEnmityList();
+
+                if (enmityList)
+                {
+                    for (auto member : *enmityList)
+                    {
+                        if ((member.second.PEnmityOwner != nullptr) && ((member.second.PEnmityOwner)->objtype == TYPE_PC))
+                        {
+                            auto* PChar = static_cast<CCharEntity*>(member.second.PEnmityOwner);
+                            anticheat::GetCheatPunitiveAction(anticheat::CheatID::CHEAT_ID_CLAIMBOT, nullptr, 1);
+                            anticheat::ReportCheatIncident(PChar, anticheat::CheatID::CHEAT_ID_CLAIMBOT,
+                                                           PMob->id,
+                                                           "Player attempted to claim while mob was in fake spawn.");
+                        }
+                    }
+                }
+
+                PMob->health.hp = PMob->health.maxhp;
+                PMob->setModifier(Mod::CLAIMBOT_REPORT_CHECK, 1);
+
+                if (PMob->id != (17277127 | 16912846 | 16912847)) // If I'm Not Shikigami Weapon or Jailer of Prudence
+                {
+                    PMob->status = STATUS_TYPE::MOB;
+                    PMob->loc.zone->UpdateEntityPacket(PMob, ENTITY_UPDATE, UPDATE_COMBAT);
+                }
+            }
+        }
+        // clang-format on
+    }
+
+    void DoClaimShieldLottery(CMobEntity* PMob)
+    {
+        // clang-format off
+        EnmityList_t* enmityList = PMob->PEnmityContainer->GetEnmityList();
+        CBattleEntity* PWinner   = nullptr;
+        uint16 randomEntry       = 0;
+
+        std::vector<CBattleEntity*> lotteryVector{};
+
+        if (enmityList)
+        {
+            for (auto member : *enmityList)
+            {
+                if (member.second.PEnmityOwner != nullptr)
+                {
+                    CBattleEntity* PEntry = member.second.PEnmityOwner;
+                    if (PEntry != nullptr)
+                    {
+                        if (PEntry->objtype != TYPE_PC && PEntry->PMaster != nullptr && PEntry->PMaster->objtype == TYPE_PC)
+                        {
+                            PEntry = PEntry->PMaster;
+                        }
+
+                        lotteryVector.push_back(PEntry);
+                    }
+                }
+            }
+        }
+
+        if (!lotteryVector.empty())
+        {
+            std::sort(lotteryVector.begin(), lotteryVector.end());
+            auto last = std::unique(lotteryVector.begin(), lotteryVector.end());
+            lotteryVector.erase(last, lotteryVector.end());
+
+            randomEntry = xirand::GetRandomNumber(0, ((uint16)lotteryVector.size() - 1));
+            PWinner     = lotteryVector[randomEntry];
+        }
+
+        if (PWinner != nullptr && enmityList)
+        {
+            for (auto member : *enmityList)
+            {
+                if (member.second.PEnmityOwner != nullptr)
+                {
+                    CBattleEntity* const& PMember = member.second.PEnmityOwner;
+                    if ((PMember->id != PWinner->id) &&
+                        !(PMember->PMaster && PMember->PMaster->objtype == TYPE_PC && PMember->PMaster->id == PWinner->id))
+                    {
+                        if (PMember->objtype == (TYPE_PET | TYPE_MOB) && PMember->PAI->IsEngaged())
+                        {
+                            PMember->PAI->Disengage();
+                        }
+                        else if (PMember->objtype == TYPE_TRUST && PMember->PAI->IsEngaged())
+                        {
+                            PMember->PAI->Internal_Disengage();
+                        }
+
+                        enmityList->erase(member.first);
+                    }
+                }
+            }
+        }
+
+        PMob->m_IsClaimable = true;
+
+        if (PWinner != nullptr)
+        {
+            CBattleEntity* PBattleEntity = nullptr;
+
+            if (PBattleEntity != nullptr)
+            {
+                PMob->loc.zone->PushPacket(PMob, CHAR_INRANGE, new CChatMessagePacket(static_cast<CCharEntity*>(PBattleEntity), MESSAGE_SYSTEM_3,
+                                            fmt::format("{} won {}'s claim out of {} entries!", PBattleEntity->name, PMob->name, lotteryVector.size()), ""));
+                for (int i = 0; i < lotteryVector.size(); i++) {
+                    if (lotteryVector[i] != nullptr && lotteryVector[i]->id == PBattleEntity->id)
+                    {
+                        PMob->loc.zone->PushPacket(PMob, CHAR_INRANGE, new CChatMessagePacket(static_cast<CCharEntity*>(lotteryVector[i]), MESSAGE_SYSTEM_3,
+                                                    fmt::format("You won {}'s claim out of {} entries!", PMob->name, lotteryVector.size()), ""));
+                    }
+                    else if (lotteryVector[i] != nullptr)
+                    {
+                        PMob->loc.zone->PushPacket(PMob, CHAR_INRANGE, new CChatMessagePacket(static_cast<CCharEntity*>(lotteryVector[i]), MESSAGE_SYSTEM_3,
+                                                    fmt::format("You lost {}'s claim out to {} out of {} entries!", PMob->name, PWinner->name, lotteryVector.size()), ""));
+                    }
+                }
+                ClaimMob(static_cast<CBattleEntity*>(PMob), PWinner);
+            }
+        }
+
+        PMob->StatusEffectContainer->KillAllStatusEffect();
+        PMob->health.hp = PMob->health.maxhp;
+        PMob->m_unkillable = false;
+        // clang-format on
     }
 
 }; // namespace battleutils

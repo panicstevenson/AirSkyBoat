@@ -35,6 +35,7 @@ namespace anticheat
         // crafts to fail.
         // Argument is the time spent on synth animation.
         CHEAT_ID_FASTSYNTH = 1,
+        CHEAT_ID_CLAIMBOT  = 2,
         CHEAT_ID_POS_HACK  = 3,
         CHEAT_ID_FAST_DIG  = 4,
         CHEAT_ID_DIG_BOT   = 5,
