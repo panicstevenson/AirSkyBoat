@@ -7045,9 +7045,6 @@ namespace charutils
             PChar->m_charAnticheat.prevDigT_1   = 0;
             PChar->m_charAnticheat.prevDigX_1   = 0;
             PChar->m_charAnticheat.prevDigZ_1   = 0;
-            PChar->m_charAnticheat.prevDigT_2   = 0;
-            PChar->m_charAnticheat.prevDigX_2   = 0;
-            PChar->m_charAnticheat.prevDigZ_2   = 0;
             PChar->m_charAnticheat.digDistGrace = 0;
         }
     }

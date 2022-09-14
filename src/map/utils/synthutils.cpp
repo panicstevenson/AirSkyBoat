@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -819,8 +819,8 @@ namespace synthutils
     {
         time_t currentTime = time(NULL);
 
-        if ((PChar->m_charAnticheat.lastSynthStart_6 != 0) ||
-            ((PChar->m_charAnticheat.lastSynthReq != PChar->m_charCrafting.lastSynthReq) && PChar->m_charAnticheat.lastSynthReq != 0))
+        if ((PChar->m_charAnticheat.lastSynthStart != 0) ||
+            (PChar->m_charAnticheat.lastSynthReq != 0))
         {
             anticheat::DoCraftBotCheck(PChar, currentTime);
         }

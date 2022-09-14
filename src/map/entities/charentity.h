@@ -239,25 +239,27 @@ struct CharHistory_t
 
 struct CharAnticheat_t
 {
-    float  lastCheckDist    = 0;
-    time_t lastTeleport     = 0;
-    time_t gracePeriod      = 0;
-    time_t lastCheckTime    = 0;
-    uint8  speedCounter     = 0;
-    time_t prevDigT_1       = 0;
-    float  prevDigX_1       = 0;
-    float  prevDigZ_1       = 0;
-    time_t prevDigT_2       = 0;
-    float  prevDigX_2       = 0;
-    float  prevDigZ_2       = 0;
-    uint8  digDistGrace     = 0;
-    time_t lastSynthStart_1 = 0;
-    time_t lastSynthStart_2 = 0;
-    time_t lastSynthStart_3 = 0;
-    time_t lastSynthStart_4 = 0;
-    time_t lastSynthStart_5 = 0;
-    time_t lastSynthStart_6 = 0;
-    uint16 lastSynthReq     = 0;
+    float  lastCheckDist      = 0;
+    time_t lastTeleport       = 0;
+    time_t gracePeriod        = 0;
+    time_t lastCheckTime      = 0;
+    uint8  speedCounter       = 0;
+    time_t prevDigT_1         = 0;
+    float  prevDigX_1         = 0;
+    float  prevDigZ_1         = 0;
+    uint32 digDiffTotal       = 0;
+    uint16 digCount           = 0;
+    uint16 digDiffAvg         = 0;
+    uint32 digDistDiffTotal   = 0;
+    uint16 digDistDiffAvg     = 0;
+    uint8  digDistGrace       = 0;
+    time_t lastSynthStart     = 0;
+    float  synthStartTotal    = 0;
+    uint16 synthCount         = 0;
+    uint32 synthTimeDiffAvg   = 0;
+    uint16 lastSynthReq       = 0;
+    time_t firstFishingStrike = 0;
+    uint16 fishingStikes      = 0;
 };
 
 struct CharDigging_t

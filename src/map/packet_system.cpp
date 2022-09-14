@@ -663,7 +663,7 @@ void SmallPacket0x015(map_session_data_t* const PSession, CCharEntity* const PCh
 
         if (moved) // Anticheat for POS_HACK
         {
-            moved = anticheat::DoPosHackCheck(PChar, newX, newY, newZ, moved);
+            moved = anticheat::DoPosHackCheck(PChar, newX, newY, newZ);
         }
 
         if (PChar->isMounted() && ((PChar->m_charDigging.lastDigT + 3700) > currentTime))

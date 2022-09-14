@@ -233,9 +233,16 @@ xi.settings.map =
     HEALING_TICK_DELAY = 10,
 
     -- Set to 1 to enable server side anti-cheating measurements
-    ANTICHEAT_ENABLED            = true,
-    ANTICHEAT_POS_HACK_THRESHOLD = 60, -- Threshold over speed that anticheat shall act.
-    ANTICHEAT_POS_HACK_GRACE     = 15, -- Grace period in seconds before anticheat kicks in.
+    ANTICHEAT_ENABLED                = true,
+    ANTICHEAT_POS_HACK_THRESHOLD     = 60,  -- Threshold over speed that anticheat shall act.
+    ANTICHEAT_POS_HACK_GRACE         = 15,  -- Grace period in seconds before anticheat kicks in.
+    ANTICHEAT_CRAFT_SWAP_TIME        = 10,  -- Time in seconds expected for a player to switch crafting recipes normally.
+    ANTICHEAT_FISHING_GRACE          = 12,  -- How many strikes/hr a player can have before report.
+    ANTICHEAT_CRAFT_COUNT            = 25,  -- Number of synths before anticheat can report.
+    ANTICHEAT_CRAFT_TIME_AVG         = 1.5, -- Difference in time allowed between synths on average in seconds.
+    ANTICHEAT_DIG_GRACE_COUNT        = 50,  -- Number of digs before anticheat can report.
+    ANTICHEAT_DIG_AVG_THRESHOLD      = 1,   -- Lowest average difference in time between digs before report.
+    ANTICHEAT_DIG_AVG_DIST_THRESHOLD = 1,   -- Lowest average difference in distance between digs before report.
 
     -- Set to 1 to completely disable auto-jailing offenders
     ANTICHEAT_JAIL_DISABLE = false,
