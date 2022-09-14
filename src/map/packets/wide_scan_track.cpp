@@ -24,10 +24,12 @@
 #include <cstring>
 
 #include "../entities/baseentity.h"
+#include "../entities/battleentity.h"
 #include "wide_scan_track.h"
 
 CWideScanTrackPacket::CWideScanTrackPacket(CBaseEntity* PEntity)
 {
+    auto* PBattleEntity = static_cast<CBattleEntity*>(PEntity);
     this->setType(0xF5);
     this->setSize(0x18);
 
@@ -37,5 +39,5 @@ CWideScanTrackPacket::CWideScanTrackPacket(CBaseEntity* PEntity)
 
     ref<uint8>(0x10)  = 1;
     ref<uint16>(0x12) = PEntity->targid;
-    ref<uint8>(0x14)  = PEntity->status == STATUS_TYPE::DISAPPEAR ? 2 : 1;
+    ref<uint8>(0x14)  = (PEntity->status == STATUS_TYPE::DISAPPEAR || ((PBattleEntity->getMod(Mod::CLAIMSHIELD_FAKE_SPAWN) > 0) || (PBattleEntity->getMod(Mod::MOBSHIELD_FAKE_SPAWN) > 0))) ? 2 : 1;
 }

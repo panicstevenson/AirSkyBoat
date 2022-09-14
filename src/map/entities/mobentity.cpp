@@ -26,6 +26,8 @@
 #include "../ai/helpers/pathfind.h"
 #include "../ai/helpers/targetfind.h"
 #include "../ai/states/attack_state.h"
+#include "../ai/states/claimshield_state.h"
+#include "../ai/states/mobshield_state.h"
 #include "../ai/states/mobskill_state.h"
 #include "../ai/states/weaponskill_state.h"
 #include "../conquest_system.h"
@@ -616,6 +618,15 @@ void CMobEntity::Spawn()
 
     m_DespawnTimer = time_point::min();
     luautils::OnMobSpawn(this);
+
+    if (getMod(Mod::CLAIMSHIELD) > 0)
+    {
+        PAI->Internal_ClaimShieldState();
+    }
+    else if (this->m_Type == MOBTYPE_NOTORIOUS)
+    {
+        PAI->Internal_MobShieldState();
+    }
 }
 
 void CMobEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& action)
@@ -1751,6 +1762,7 @@ void CMobEntity::OnDespawn(CDespawnState& /*unused*/)
 void CMobEntity::Die()
 {
     TracyZoneScoped;
+
     m_THLvl = PEnmityContainer->GetHighestTH();
     PEnmityContainer->Clear();
     PAI->ClearStateStack();
