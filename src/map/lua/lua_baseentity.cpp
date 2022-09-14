@@ -10294,10 +10294,16 @@ void CLuaBaseEntity::updateEnmityFromCure(CLuaBaseEntity* PEntity, int32 amount)
 {
     XI_DEBUG_BREAK_IF(amount < 0);
 
+    auto* PBattle = static_cast<CBattleEntity*>(m_PBaseEntity);
+
     // clang-format off
     auto* PCurer = [&]() -> CBattleEntity*
     {
         if (m_PBaseEntity->objtype == TYPE_PC || m_PBaseEntity->objtype == TYPE_TRUST)
+        {
+            return static_cast<CBattleEntity*>(m_PBaseEntity);
+        }
+        else if (m_PBaseEntity->objtype == TYPE_PET || static_cast<CPetEntity*>(PBattle->PPet)->m_PetID == PETID_LIGHTSPIRIT)
         {
             return static_cast<CBattleEntity*>(m_PBaseEntity);
         }
@@ -14753,9 +14759,9 @@ uint32 CLuaBaseEntity::getWorldPassRedeemTime()
 {
     const char* wpQuery = "SELECT UNIX_TIMESTAMP(redeemtime) FROM world_pass WHERE rafid = '%u';";
 
-    uint64 timeStamp    = std::chrono::duration_cast<std::chrono::seconds>(server_clock::now().time_since_epoch()).count();
-    uint64 ret          = sql->Query(wpQuery, m_PBaseEntity->id);
-    uint64 rafTime      = 0;
+    uint64 timeStamp = std::chrono::duration_cast<std::chrono::seconds>(server_clock::now().time_since_epoch()).count();
+    uint64 ret       = sql->Query(wpQuery, m_PBaseEntity->id);
+    uint64 rafTime   = 0;
 
     if (ret != SQL_ERROR && sql->NumRows() != 0)
     {
