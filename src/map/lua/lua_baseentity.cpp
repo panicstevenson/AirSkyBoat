@@ -14831,6 +14831,42 @@ void CLuaBaseEntity::sendNpcEmote(CLuaBaseEntity* PBaseEntity, sol::object const
     }
 }
 
+void CLuaBaseEntity::setDigTable()
+{
+    if (m_PBaseEntity != nullptr && m_PBaseEntity->objtype == TYPE_PC)
+    {
+        auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
+
+        if (PChar != nullptr)
+        {
+            PChar->m_charDigging.lastDigX = PChar->loc.p.x;
+            PChar->m_charDigging.lastDigY = PChar->loc.p.y;
+            PChar->m_charDigging.lastDigZ = PChar->loc.p.z;
+            PChar->m_charDigging.lastDigT = time(NULL);
+        }
+    }
+}
+
+auto CLuaBaseEntity::getDigTable() -> sol::table
+{
+    auto pos = lua.create_table();
+
+    if (m_PBaseEntity != nullptr && m_PBaseEntity->objtype == TYPE_PC)
+    {
+        auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
+
+        if (PChar != nullptr)
+        {
+            pos["x"]       = PChar->m_charDigging.lastDigX;
+            pos["y"]       = PChar->m_charDigging.lastDigY;
+            pos["z"]       = PChar->m_charDigging.lastDigZ;
+            pos["lastDig"] = static_cast<uint64>(PChar->m_charDigging.lastDigT);
+        }
+    }
+
+    return pos;
+}
+
 //==========================================================//
 
 void CLuaBaseEntity::Register()
@@ -15616,6 +15652,8 @@ void CLuaBaseEntity::Register()
 
     SOL_REGISTER("getWorldPassRedeemTime", CLuaBaseEntity::getWorldPassRedeemTime);
     SOL_REGISTER("getWorldpassId", CLuaBaseEntity::getWorldpassId);
+    SOL_REGISTER("setDigTable", CLuaBaseEntity::setDigTable);
+    SOL_REGISTER("getDigTable", CLuaBaseEntity::getDigTable);
 }
 
 std::ostream& operator<<(std::ostream& os, const CLuaBaseEntity& entity)

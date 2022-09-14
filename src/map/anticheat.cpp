@@ -21,10 +21,11 @@
 
 #include "anticheat.h"
 #include "map.h"
+#include "status_effect_container.h"
+#include "zone.h"
 #include "packets/chat_message.h"
 #include "utils/charutils.h"
 #include "utils/zoneutils.h"
-#include "zone.h"
 
 namespace anticheat
 {
@@ -148,6 +149,206 @@ namespace anticheat
             JailChar(PChar);
         }
         return true;
+    }
+
+    bool DoPosHackCheck(CCharEntity* PChar, float newX, float newY, float newZ, bool moved)
+    {
+        // clang-format off
+        float new_distance        = static_cast<float>(sqrt(pow(newX - PChar->loc.p.x, 2) + pow(newZ - PChar->loc.p.z, 2)));
+        CharAnticheat_t Anticheat = PChar->m_charAnticheat;
+        Anticheat.lastCheckDist   += new_distance;
+        time_t timeNow = time(NULL);
+
+        if ((Anticheat.lastTeleport >= (timeNow - 3)) || (Anticheat.gracePeriod > timeNow))
+        {
+            Anticheat.lastCheckDist = 0;
+            Anticheat.lastCheckTime = timeNow;
+        }
+
+        if (timeNow != Anticheat.lastCheckTime)
+        {
+            /*
+                diffTime is clamped to stop cheaters from AFKing for an extensive period of time
+                then coming back to pos hack. The grace period is the time in seconds before the
+                anticheat engages and is configurable in the settings.
+            */
+            uint8 diffTime = std::clamp(static_cast<int32>(timeNow - Anticheat.lastCheckTime), 0, static_cast<int>(settings::get<uint8>("map.ANTICHEAT_POS_HACK_GRACE")));
+            float cheatThreshold = static_cast<float>(settings::get<uint16>("map.ANTICHEAT_POS_HACK_THRESHOLD"));
+            float diffDSec = Anticheat.lastCheckDist / diffTime;
+            bool  hasMovementEffect = (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_FLEE) ||
+                                        PChar->StatusEffectContainer->HasStatusEffect(EFFECT_QUICKENING) ||
+                                        PChar->StatusEffectContainer->HasStatusEffect(EFFECT_BOLTERS_ROLL));
+            bool  isMounted = PChar->isMounted();
+
+            if (PChar->GetSpeed() > PChar->speed)
+            {
+                cheatThreshold *= (PChar->GetSpeed() / PChar->speed);
+            }
+
+            if (isMounted)
+            {
+                cheatThreshold *= 2;
+            }
+
+            if ((diffDSec > cheatThreshold) && (!PChar->isCharmed) && (((PChar->nameflags.flags & FLAG_GM) == 0) || (PChar->m_GMlevel < 2)))
+            {
+                /*
+                    The speedCounter system is meant to give additional leyway during lag spikes.
+                    This is to counteract major lag spikes auto jailing, instead gives the player an
+                    additional few counts before potentially jailing. This also allows for a lower grace
+                    period of 15s vs 30s. So if a player has a movement effect they effectively get 45s of
+                    grace time compared to 15s.
+                */
+                if ((isMounted || hasMovementEffect) && (Anticheat.speedCounter < 3))
+                {
+                    Anticheat.speedCounter += 1;
+                }
+                else
+                {
+                    anticheat::ReportCheatIncident(PChar, anticheat::CheatID::CHEAT_ID_POS_HACK,
+                                                    static_cast<uint32>(diffDSec * 100),
+                                                    "Player is moving too fast or is teleporting. Speed has been recorded.");
+                    if (anticheat::GetCheatPunitiveAction(anticheat::CheatID::CHEAT_ID_POS_HACK, nullptr, 1) & anticheat::CHEAT_ACTION_BLOCK)
+                    {
+                        moved = false;
+                    }
+                }
+            }
+            else
+            {
+                Anticheat.speedCounter = 0;
+            }
+
+            return moved;
+        }
+        // clang-format on
+    }
+
+    void DoFastDigCheck(CCharEntity* PChar, float newX, float newY, float newZ)
+    {
+        // clang-format off
+        if (PChar != nullptr)
+        {
+            CharDigging_t DigTable    = PChar->m_charDigging;
+            CharAnticheat_t Anticheat = PChar->m_charAnticheat;
+            float minDigDistance      = static_cast<float>(settings::get<uint16>("main.DIG_DISTANCE_REQ"));
+            time_t currentTime        = time(NULL);
+
+            /*
+                This detection method allows for 3x of consecutive fast digs until it triggers.
+                This is to allow for players who may be lagging or may have framerate issues to
+                not automatically trigger this system consistently.
+            */
+            if ((DigTable.lastDigT + 3.7 > currentTime) &&
+                ((abs(PChar->loc.p.x - DigTable.lastDigX) * abs(PChar->loc.p.z - DigTable.lastDigZ)) > (minDigDistance * minDigDistance)))
+            {
+                if (Anticheat.digDistGrace < 3)
+                {
+                    Anticheat.digDistGrace += 1;
+                    return;
+                }
+
+                anticheat::ReportCheatIncident(PChar, anticheat::CheatID::CHEAT_ID_FAST_DIG,
+                                                static_cast<uint32>(std::round(abs((DigTable.lastDigT + 3.7) - currentTime) * 1000)),
+                                                "Player is digging before the animation should have completed. Last animation time difference recorded in ms.");
+                anticheat::GetCheatPunitiveAction(anticheat::CheatID::CHEAT_ID_FAST_DIG, nullptr, 1);
+            }
+            else
+            {
+                Anticheat.digDistGrace = 0;
+            }
+
+            return;
+        }
+        // clang-format on
+    }
+
+    void DoDigBotCheck(CCharEntity* PChar, float newX, float newY, float newZ)
+    {
+        // clang-format off
+        if (PChar != nullptr)
+        {
+            CharDigging_t   DigTable  = PChar->m_charDigging;
+            CharAnticheat_t Anticheat = PChar->m_charAnticheat;
+
+            /*
+                This sort will populate out the last 3 digs worth of data to have a valid
+                set of data to make anticheat decisions on. This does require a full 3 digs
+                and each of these besides DigT variables are reset upon zone.
+            */
+            if ((Anticheat.prevDigT_1 == 0) || (Anticheat.prevDigX_1 == 0) || (Anticheat.prevDigZ_1 == 0))
+            {
+                anticheat::DoDigCheckSetup(PChar, true);
+                return;
+            }
+            else if ((Anticheat.prevDigT_2 == 0) || (Anticheat.prevDigX_2 == 0) || (Anticheat.prevDigZ_2 == 0))
+            {
+                anticheat::DoDigCheckSetup(PChar, false);
+                return;
+            }
+
+            /*
+                Start by comparing times as this is one of the best indicators of automation.
+                If the digs are within 2 seconds of each other for the past 3 digs then we
+                should check positions.
+            */
+            if (!((Anticheat.prevDigT_1 - DigTable.lastDigT) < 2) &&
+                !((Anticheat.prevDigT_2 - DigTable.lastDigT) < 2 ) &&
+                !((Anticheat.prevDigT_1 - Anticheat.prevDigT_2) < 2))
+            {
+                anticheat::DoDigCheckSetup(PChar, false);
+                return;
+            }
+
+            /*
+                Continue by comparing all 3 sets of dig positions. If they are all within 0.5'
+                then we are suspecting this player of botting and it should be reported for
+                human inspection. Dozens of reports quickly should indicate an automatic jail,
+                however no automatic jail system is implemented.
+            */
+            if (((abs(Anticheat.prevDigX_1 - Anticheat.prevDigX_2) < 0.5) && (abs(Anticheat.prevDigZ_1 - Anticheat.prevDigZ_2) < 0.5)) &&
+                ((abs(Anticheat.prevDigX_1 - DigTable.lastDigX) < 0.5) && (abs(Anticheat.prevDigZ_1 - DigTable.lastDigZ) < 0.5)) &&
+                ((abs(Anticheat.prevDigX_2 - DigTable.lastDigX) < 0.5) && (abs(Anticheat.prevDigZ_2 - DigTable.lastDigZ) < 0.5)))
+            {
+                anticheat::ReportCheatIncident(PChar, anticheat::CheatID::CHEAT_ID_DIG_BOT,
+                                static_cast<uint32>(std::min(std::round(abs(Anticheat.prevDigX_1 - DigTable.lastDigX) * 100), std::round(abs(Anticheat.prevDigZ_1 - DigTable.lastDigZ) * 100))),
+                                "Player is dig botting, dig times and movement are too close. Last minimum position difference recorded should be divided by 100.");
+                anticheat::GetCheatPunitiveAction(anticheat::CheatID::CHEAT_ID_DIG_BOT, nullptr, 1);
+            }
+
+            anticheat::DoDigCheckSetup(PChar, false);
+            return;
+        }
+        // clang-format on
+    }
+
+    void DoDigCheckSetup(CCharEntity* PChar, bool first)
+    {
+        // clang-format off
+        if (PChar != nullptr)
+        {
+            CharDigging_t DigTable    = PChar->m_charDigging;
+            CharAnticheat_t Anticheat = PChar->m_charAnticheat;
+
+            if (first)
+            {
+                Anticheat.prevDigT_1 = DigTable.lastDigT;
+                Anticheat.prevDigX_1 = DigTable.lastDigX;
+                Anticheat.prevDigZ_1 = DigTable.lastDigZ;
+            }
+            else
+            {
+                Anticheat.prevDigT_2 = Anticheat.prevDigT_1;
+                Anticheat.prevDigX_2 = Anticheat.prevDigX_1;
+                Anticheat.prevDigZ_2 = Anticheat.prevDigZ_1;
+                Anticheat.prevDigT_1 = DigTable.lastDigT;
+                Anticheat.prevDigX_1 = DigTable.lastDigX;
+                Anticheat.prevDigZ_1 = DigTable.lastDigZ;
+            }
+
+            return;
+        }
+        // clang-format on
     }
 
 } // namespace anticheat

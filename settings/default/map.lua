@@ -233,7 +233,9 @@ xi.settings.map =
     HEALING_TICK_DELAY = 10,
 
     -- Set to 1 to enable server side anti-cheating measurements
-    ANTICHEAT_ENABLED = true,
+    ANTICHEAT_ENABLED            = true,
+    ANTICHEAT_POS_HACK_THRESHOLD = 60, -- Threshold over speed that anticheat shall act.
+    ANTICHEAT_POS_HACK_GRACE     = 15, -- Grace period in seconds before anticheat kicks in.
 
     -- Set to 1 to completely disable auto-jailing offenders
     ANTICHEAT_JAIL_DISABLE = false,

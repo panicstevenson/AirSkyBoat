@@ -270,6 +270,7 @@ namespace charutils
     uint8 GetHighestLevel(CCharEntity* PChar);
     bool CanUseYell(CCharEntity* PChar);
     bool IsYellSpamFiltered(CCharEntity* PChar);
+    void ResetCharDigTable(CCharEntity* PChar);
 
 }; // namespace charutils
 

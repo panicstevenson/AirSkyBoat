@@ -35,6 +35,9 @@ namespace anticheat
         // crafts to fail.
         // Argument is the time spent on synth animation.
         CHEAT_ID_FASTSYNTH = 1,
+        CHEAT_ID_POS_HACK  = 3,
+        CHEAT_ID_FAST_DIG  = 4,
+        CHEAT_ID_DIG_BOT   = 5,
         // For boundary checks
         CHEAT_ID_LAST
     };
@@ -79,6 +82,19 @@ namespace anticheat
     // returns true on success, false on failure
     bool ReportCheatIncident(CCharEntity* PChar, CheatID cheatid, uint32 cheatarg = 0, const char* description = NULL);
 
+    // Checks player current position and speed to determine if action is needed.
+    bool DoPosHackCheck(CCharEntity* PChar, float newX, float newY, float newZ, bool moved);
+
+    // Checks if player is speeding up dig animation. Player should not be able to go to
+    // next dig position within dig animation.
+    void DoFastDigCheck(CCharEntity* PChar, float newX, float newY, float newZ);
+
+    // Checks if player's positioning is roughly the same each dig based on dig range
+    // requirement.
+    void DoDigBotCheck(CCharEntity* PChar, float newX, float newY, float newZ);
+
+    // Sets up variables for the next set of checks.
+    void DoDigCheckSetup(CCharEntity* PChar, bool first);
 }; // namespace anticheat
 
 #endif

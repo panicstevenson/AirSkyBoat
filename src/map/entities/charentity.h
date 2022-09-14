@@ -237,6 +237,30 @@ struct CharHistory_t
     uint32 distanceTravelled = 0;
 };
 
+struct CharAnticheat_t
+{
+    float  lastCheckDist = 0;
+    time_t lastTeleport  = 0;
+    time_t gracePeriod   = 0;
+    time_t lastCheckTime = 0;
+    uint8  speedCounter  = 0;
+    time_t prevDigT_1    = 0;
+    float  prevDigX_1    = 0;
+    float  prevDigZ_1    = 0;
+    time_t prevDigT_2    = 0;
+    float  prevDigX_2    = 0;
+    float  prevDigZ_2    = 0;
+    uint8  digDistGrace  = 0;
+};
+
+struct CharDigging_t
+{
+    float  lastDigX = 0;
+    float  lastDigY = 0;
+    float  lastDigZ = 0;
+    time_t lastDigT = 0;
+};
+
 enum CHAR_SUBSTATE
 {
     SUBSTATE_NONE = 0,
@@ -458,7 +482,9 @@ public:
     uint32 m_moghouseID;
     uint16 m_moghancementID;
 
-    CharHistory_t m_charHistory;
+    CharHistory_t   m_charHistory;
+    CharAnticheat_t m_charAnticheat;
+    CharDigging_t   m_charDigging;
 
     int8 getShieldSize();
 

@@ -35,6 +35,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "ai/ai_container.h"
 #include "ai/states/death_state.h"
 #include "alliance.h"
+#include "anticheat.h"
 #include "campaign_system.h"
 #include "conquest_system.h"
 #include "enmity_container.h"
@@ -646,6 +647,7 @@ void SmallPacket0x015(map_session_data_t* const PSession, CCharEntity* const PCh
         float  newZ        = data.ref<float>(0x0C);
         uint16 newTargID   = data.ref<uint16>(0x16);
         uint8  newRotation = data.ref<uint8>(0x14);
+        time_t currentTime = time(NULL);
 
         // clang-format off
         bool moved =
@@ -658,6 +660,17 @@ void SmallPacket0x015(map_session_data_t* const PSession, CCharEntity* const PCh
 
         // Cache previous location
         PChar->m_previousLocation = PChar->loc;
+
+        if (moved) // Anticheat for POS_HACK
+        {
+            moved = anticheat::DoPosHackCheck(PChar, newX, newY, newZ, moved);
+        }
+
+        if (PChar->isMounted() && ((PChar->m_charDigging.lastDigT + 3700) > currentTime))
+        {
+            anticheat::DoDigBotCheck(PChar, newX, newY, newZ);  // Anticheat for DIG_BOT
+            anticheat::DoFastDigCheck(PChar, newX, newY, newZ); // Anticheat for FAST_DIG
+        }
 
         if (!PChar->isCharmed)
         {
