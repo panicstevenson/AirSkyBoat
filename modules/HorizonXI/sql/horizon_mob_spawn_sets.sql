@@ -635,6 +635,11 @@ INSERT INTO `mob_spawn_sets` VALUES (173, 4, 1);
 INSERT INTO `mob_spawn_sets` VALUES (173, 5, 8);
 INSERT INTO `mob_spawn_sets` VALUES (173, 6, 10);
 
+-- Kuftal Tunnel
+INSERT INTO `mob_spawn_sets` VALUES (174, 1, 2);
+INSERT INTO `mob_spawn_sets` VALUES (174, 2, 3);
+INSERT INTO `mob_spawn_sets` VALUES (174, 3, 1);
+
 -- La Theine Plateau
 INSERT INTO `mob_spawn_sets` VALUES (102, 1, 6);
 INSERT INTO `mob_spawn_sets` VALUES (102, 2, 3);
@@ -929,6 +934,16 @@ INSERT INTO `mob_spawn_sets` VALUES (193, 11, 4);
 INSERT INTO `mob_spawn_sets` VALUES (193, 12, 4);
 INSERT INTO `mob_spawn_sets` VALUES (193, 13, 4);
 INSERT INTO `mob_spawn_sets` VALUES (193, 14, 1);
+
+-- Outer Horutoto Ruins
+INSERT INTO `mob_spawn_sets` VALUES (27, 1, 5);
+INSERT INTO `mob_spawn_sets` VALUES (27, 2, 1);
+INSERT INTO `mob_spawn_sets` VALUES (27, 3, 6);
+INSERT INTO `mob_spawn_sets` VALUES (27, 4, 3);
+INSERT INTO `mob_spawn_sets` VALUES (27, 5, 6);
+INSERT INTO `mob_spawn_sets` VALUES (27, 6, 6);
+INSERT INTO `mob_spawn_sets` VALUES (27, 7, 6);
+INSERT INTO `mob_spawn_sets` VALUES (27, 8, 6);
 
 -- Palborough Mines
 INSERT INTO `mob_spawn_sets` VALUES (143, 1, 2);
