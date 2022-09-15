@@ -5743,6 +5743,36 @@ void CLuaBaseEntity::addJobTraits(uint8 jobID, uint8 level)
 }
 
 /************************************************************************
+ *  Function: getTraits
+ *  Purpose : Return list of active traits
+ *  Example : player:getTraits()
+ ************************************************************************/
+
+sol::table CLuaBaseEntity::getTraits()
+{
+    XI_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
+    CBattleEntity* PEntity = static_cast<CBattleEntity*>(m_PBaseEntity);
+
+    if (PEntity != nullptr)
+    {
+        auto table = lua.create_table();
+        for (std::size_t i = 0; i < PEntity->TraitList.size(); ++i)
+        {
+            auto subTable = lua.create_table();
+
+            subTable["id"]    = PEntity->TraitList.at(i)->getID();
+            subTable["value"] = PEntity->TraitList.at(i)->getValue();
+
+            table.add(subTable);
+        }
+
+        return table;
+    }
+
+    return {};
+}
+
+/************************************************************************
  *  Function: getTitle()
  *  Purpose : Returns the integer value of the player's current title
  *  Example : if player:getTitle()) == xi.title.FAKE_MOUSTACHED_INVESTIGATOR then
@@ -10294,10 +10324,16 @@ void CLuaBaseEntity::updateEnmityFromCure(CLuaBaseEntity* PEntity, int32 amount)
 {
     XI_DEBUG_BREAK_IF(amount < 0);
 
+    auto* PBattle = static_cast<CBattleEntity*>(m_PBaseEntity);
+
     // clang-format off
     auto* PCurer = [&]() -> CBattleEntity*
     {
         if (m_PBaseEntity->objtype == TYPE_PC || m_PBaseEntity->objtype == TYPE_TRUST)
+        {
+            return static_cast<CBattleEntity*>(m_PBaseEntity);
+        }
+        else if (m_PBaseEntity->objtype == TYPE_PET || static_cast<CPetEntity*>(PBattle->PPet)->m_PetID == PETID_LIGHTSPIRIT)
         {
             return static_cast<CBattleEntity*>(m_PBaseEntity);
         }
@@ -14753,9 +14789,9 @@ uint32 CLuaBaseEntity::getWorldPassRedeemTime()
 {
     const char* wpQuery = "SELECT UNIX_TIMESTAMP(redeemtime) FROM world_pass WHERE rafid = '%u';";
 
-    uint64 timeStamp    = std::chrono::duration_cast<std::chrono::seconds>(server_clock::now().time_since_epoch()).count();
-    uint64 ret          = sql->Query(wpQuery, m_PBaseEntity->id);
-    uint64 rafTime      = 0;
+    uint64 timeStamp = std::chrono::duration_cast<std::chrono::seconds>(server_clock::now().time_since_epoch()).count();
+    uint64 ret       = sql->Query(wpQuery, m_PBaseEntity->id);
+    uint64 rafTime   = 0;
 
     if (ret != SQL_ERROR && sql->NumRows() != 0)
     {
@@ -15613,6 +15649,7 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("setSpawnType", CLuaBaseEntity::setSpawnType);
     SOL_REGISTER("sendNpcEmote", CLuaBaseEntity::sendNpcEmote);
     SOL_REGISTER("restoreNpcLook", CLuaBaseEntity::restoreNpcLook);
+    SOL_REGISTER("getTraits", CLuaBaseEntity::getTraits);
 
     SOL_REGISTER("getWorldPassRedeemTime", CLuaBaseEntity::getWorldPassRedeemTime);
     SOL_REGISTER("getWorldpassId", CLuaBaseEntity::getWorldpassId);

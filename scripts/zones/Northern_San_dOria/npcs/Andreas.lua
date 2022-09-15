@@ -40,12 +40,13 @@ local keyitems =
         cost = 10000
     },
 
-    [4] =
-    {
-        id = xi.ki.WAY_OF_THE_CARPENTER,
-        rank = 9,
-        cost = 20000
-    }
+    -- OOE KIs
+    -- [4] =
+    -- {
+    --     id = xi.ki.WAY_OF_THE_CARPENTER,
+    --     rank = 9,
+    --     cost = 20000
+    -- }
 }
 
 local items =
@@ -78,33 +79,34 @@ local items =
         cost = 150000
     },
 
-    [4] =
-    {
-        id = 341, -- Carpenter's Signboard
-        rank = 9,
-        cost = 200000
-    },
+    -- OOE GP Items
+    -- [4] =
+    -- {
+    --     id = 341, -- Carpenter's Signboard
+    --     rank = 9,
+    --     cost = 200000
+    -- },
 
-    [5] =
-    {
-        id = 15819, -- Carpenter's Ring
-        rank = 6,
-        cost = 80000
-    },
+    -- [5] =
+    -- {
+    --     id = 15819, -- Carpenter's Ring
+    --     rank = 6,
+    --     cost = 80000
+    -- },
 
-    [6] =
-    {
-        id = 3672, -- Carpenter's Kit
-        rank = 8,
-        cost = 50000
-    },
+    -- [6] =
+    -- {
+    --     id = 3672, -- Carpenter's Kit
+    --     rank = 8,
+    --     cost = 50000
+    -- },
 
-    [7] =
-    {
-        id = 3331, -- Carpenter's Emblem
-        rank = 9,
-        cost = 15000
-    }
+    -- [7] =
+    -- {
+    --     id = 3331, -- Carpenter's Emblem
+    --     rank = 9,
+    --     cost = 15000
+    -- }
 }
 
 entity.onTrade = function(player, npc, trade)

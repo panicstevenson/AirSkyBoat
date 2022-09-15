@@ -1774,6 +1774,10 @@ xi.mod =
     DRAGON_MITIGATION_MULT        = 1407, -- Adds bonus mitigation to status effects and elemental attacks from Dragons (Out of 100) (Used in Circle Abilities)
     ARCANA_MITIGATION_MULT        = 1408, -- Adds bonus mitigation to status effects and elemental attacks from Arcana (Out of 100) (Used in Circle Abilities)
     SOUL_EATER_NULLIFICATION      = 1409, -- Nullifies Soul Eater Damage (1 = on, 0 = off)
+    CLAIMSHIELD                   = 1410, -- Time in ms a mob should be popped before Claimshield lottery takes effect.
+    CLAIMSHIELD_FAKE_SPAWN        = 1411, -- Enables popping the mob early as an invisible entity without targeting with Claimshield enabled. Time in ms.
+    MOBSHIELD_FAKE_SPAWN          = 1412, -- Time in ms a mob should be spawned before claim. Used to catch nasty claimbots.
+    CLAIMBOT_REPORT_CHECK         = 1413, -- Indicates whether claimbot report has gone through.
 
     -- IF YOU ADD ANY NEW MODIFIER HERE, ADD IT IN src/map/modifier.h ASWELL!
 
@@ -2558,6 +2562,7 @@ xi.mobMod =
     DRAW_IN_MAXIMUM_REACH     = 103, -- Players further than this range (yalms) will be unaffected by the draw-in. default (0) is whole zone
     DRAW_IN_IGNORE_STATIONARY = 104, -- Stationary mobs draw-in the moment they cannot attack you anymore (out of range). put this mobmod on stationary mobs that have draw-in but use ranged attacks instead of melee attacks so that they will ignore this behavior (i.e. KSNM99 Wyrm or ToAU Mission Alexander)
     ATTRACT_FAMILY_NM         = 105, -- NMs within the same family will link onto this mob (used on Sabotenders for Cactrot Rapido)
+    LEDGE_AGGRO               = 106, -- Used to increase vertical aggro range
 }
 
 -----------------------------------

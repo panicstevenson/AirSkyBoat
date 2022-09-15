@@ -30,12 +30,14 @@ local keyitems =
         rank = 3,
         cost = 10000
     },
-    [3] =
-    {
-        id = xi.ki.WAY_OF_THE_BONEWORKER,
-        rank = 9,
-        cost = 20000
-    }
+
+    -- OOE KIs
+    -- [3] =
+    -- {
+    --     id = xi.ki.WAY_OF_THE_BONEWORKER,
+    --     rank = 9,
+    --     cost = 20000
+    -- }
 }
 
 local items =
@@ -49,7 +51,7 @@ local items =
     [1] =
     {
         id = 13947,
-        rank = 6,
+        rank = 5,
         cost = 70000
     },
     [2] =
@@ -64,30 +66,32 @@ local items =
         rank = 9,
         cost = 150000
     },
-    [4] =
-    {
-        id = 336, -- Boneworker's Signboard
-        rank = 9,
-        cost = 200000
-    },
-    [5] =
-    {
-        id = 15824, -- Bonecrafter's Ring
-        rank = 6,
-        cost = 80000
-    },
-    [6] =
-    {
-        id = 3663, -- Bonecraft Tools
-        rank = 7,
-        cost = 50000
-    },
-    [7] =
-    {
-        id = 3326, -- Boneworker's Emblem
-        rank = 9,
-        cost = 15000
-    }
+
+    -- OOE GP Items
+    -- [4] =
+    -- {
+    --     id = 336, -- Boneworker's Signboard
+    --     rank = 9,
+    --     cost = 200000
+    -- },
+    -- [5] =
+    -- {
+    --     id = 15824, -- Bonecrafter's Ring
+    --     rank = 6,
+    --     cost = 80000
+    -- },
+    -- [6] =
+    -- {
+    --     id = 3663, -- Bonecraft Tools
+    --     rank = 7,
+    --     cost = 50000
+    -- },
+    -- [7] =
+    -- {
+    --     id = 3326, -- Boneworker's Emblem
+    --     rank = 9,
+    --     cost = 15000
+    -- }
 }
 
 entity.onTrade = function(player, npc, trade)

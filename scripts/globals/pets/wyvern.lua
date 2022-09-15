@@ -46,7 +46,7 @@ local function doHealingBreath(player, threshold, breath)
         return player:getPet():getZoneID() == target:getZoneID() and player:getPet():checkDistance(target) <= breath_heal_range
     end
 
-    if player:getHPP() < threshold and inBreathRange(player) then
+    if player:getHPP() <= threshold and inBreathRange(player) then
         player:getPet():useJobAbility(breath, player)
     else
         local party = player:getParty()
@@ -65,11 +65,11 @@ local function doStatusBreath(target, player)
 
     if target:hasStatusEffect(xi.effect.POISON) then
         wyvern:useJobAbility(xi.jobAbility.REMOVE_POISON, target)
-    elseif target:hasStatusEffect(xi.effect.BLINDNESS) and wyvern:getMainLvl() > 20 then
+    elseif target:hasStatusEffect(xi.effect.BLINDNESS) and wyvern:getMainLvl() >= 20 then
         wyvern:useJobAbility(xi.jobAbility.REMOVE_BLINDNESS, target)
-    elseif target:hasStatusEffect(xi.effect.PARALYSIS) and wyvern:getMainLvl() > 40 then
+    elseif target:hasStatusEffect(xi.effect.PARALYSIS) and wyvern:getMainLvl() >= 40 then
         wyvern:useJobAbility(xi.jobAbility.REMOVE_PARALYSIS, target)
-    elseif (target:hasStatusEffect(xi.effect.CURSE_I) or target:hasStatusEffect(xi.effect.DOOM)) and wyvern:getMainLvl() > 60 then
+    elseif (target:hasStatusEffect(xi.effect.CURSE_I) or target:hasStatusEffect(xi.effect.DOOM)) and wyvern:getMainLvl() >= 60 then
         wyvern:useJobAbility(xi.jobAbility.REMOVE_CURSE, target)
     elseif (target:hasStatusEffect(xi.effect.DISEASE) or target:hasStatusEffect(xi.effect.PLAGUE)) and wyvern:getMainLvl() > 80 then
         wyvern:useJobAbility(xi.jobAbility.REMOVE_DISEASE, target)

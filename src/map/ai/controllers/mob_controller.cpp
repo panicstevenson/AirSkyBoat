@@ -34,8 +34,10 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../ai_container.h"
 #include "../helpers/targetfind.h"
 #include "../states/ability_state.h"
+#include "../states/claimshield_state.h"
 #include "../states/inactive_state.h"
 #include "../states/magic_state.h"
+#include "../states/mobshield_state.h"
 #include "../states/weaponskill_state.h"
 
 CMobController::CMobController(CMobEntity* PEntity)
@@ -249,7 +251,7 @@ bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight)
 
     float verticalDistance = abs(PMob->loc.p.y - PTarget->loc.p.y);
 
-    if (PMob->m_Family != 6 && verticalDistance > 8.0f)
+    if ((PMob->m_Family != 6 || PMob->getMobMod(LEDGE_AGGRO) != 0) && verticalDistance > 8.0f)
     {
         return false;
     }
@@ -274,6 +276,10 @@ bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight)
 
     if (detectSight && !hasInvisible && currentDistance < PMob->getMobMod(MOBMOD_SIGHT_RANGE) && facing(PMob->loc.p, PTarget->loc.p, 64))
     {
+        if (PMob->getMobMod(LEDGE_AGGRO) != 0)
+        {
+            return true;
+        }
         return CanSeePoint(PTarget->loc.p);
     }
 
@@ -1184,6 +1190,11 @@ bool CMobController::CanAggroTarget(CBattleEntity* PTarget)
     }
 
     if (PTarget->isDead() || PTarget->isMounted())
+    {
+        return false;
+    }
+
+    if (PMob->PAI && (PMob->PAI->IsCurrentState<CClaimShieldState>() || PMob->PAI->IsCurrentState<CMobShieldState>()))
     {
         return false;
     }

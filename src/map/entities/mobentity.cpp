@@ -26,6 +26,8 @@
 #include "../ai/helpers/pathfind.h"
 #include "../ai/helpers/targetfind.h"
 #include "../ai/states/attack_state.h"
+#include "../ai/states/claimshield_state.h"
+#include "../ai/states/mobshield_state.h"
 #include "../ai/states/mobskill_state.h"
 #include "../ai/states/weaponskill_state.h"
 #include "../conquest_system.h"
@@ -616,6 +618,15 @@ void CMobEntity::Spawn()
 
     m_DespawnTimer = time_point::min();
     luautils::OnMobSpawn(this);
+
+    if (getMod(Mod::CLAIMSHIELD) > 0)
+    {
+        PAI->Internal_ClaimShieldState();
+    }
+    else if (this->m_Type == MOBTYPE_NOTORIOUS)
+    {
+        PAI->Internal_MobShieldState();
+    }
 }
 
 void CMobEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& action)
@@ -1684,7 +1695,7 @@ void CMobEntity::OnDespawn(CDespawnState& /*unused*/)
             int    vectorSize   = static_cast<int>(this->loc.zone->m_MultiSpawnVector[this->m_spawnSet].size() - 1); // Get size of the vector for random purposes minus 1 to account for 0 position
             uint8  randomChoice = xirand::GetRandomNumber(0, vectorSize);                                            // Find a random iterator between 0 and max vector size
             uint32 mobId        = this->loc.zone->m_MultiSpawnVector[this->m_spawnSet][randomChoice];
-            auto*  PMob         = static_cast<CMobEntity*>(zoneutils::GetEntity(mobId, TYPE_MOB | TYPE_PET));
+            auto*  PMob         = dynamic_cast<CMobEntity*>(zoneutils::GetEntity(mobId, TYPE_MOB | TYPE_PET));
 
             if (PMob != nullptr) // Failure results in ID removal and vector cleaning to reduce nullptr issues and improve runtime
             {
@@ -1751,6 +1762,7 @@ void CMobEntity::OnDespawn(CDespawnState& /*unused*/)
 void CMobEntity::Die()
 {
     TracyZoneScoped;
+
     m_THLvl = PEnmityContainer->GetHighestTH();
     PEnmityContainer->Clear();
     PAI->ClearStateStack();
