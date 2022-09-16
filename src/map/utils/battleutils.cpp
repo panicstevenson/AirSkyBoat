@@ -798,7 +798,7 @@ namespace battleutils
             Action->reaction     = REACTION::HIT;
             Action->spikesEffect = SUBEFFECT_COUNTER;
 
-            if (battleutils::IsAbsorbByShadow(PAttacker)) // Struck a shadow
+            if (battleutils::IsAbsorbByShadow(PAttacker, PDefender)) // Struck a shadow
             {
                 Action->spikesMessage = 535;
             }
@@ -3057,7 +3057,7 @@ namespace battleutils
             pDIF = xirand::GetRandomNumber(lowerLimit, upperLimit);
         }
 
-        pDIF = std::clamp<float>(pDIF, 0, 3.0);
+        // pDIF = std::clamp<float>(pDIF, 0, 3.0);
         pDIF = pDIF * xirand::GetRandomNumber(1.0f, 1.05f);
 
         if (isCritical)
@@ -3070,6 +3070,7 @@ namespace battleutils
             pDIF *= ((100 + criticaldamage) / 100.0f);
         }
 
+        pDIF = std::clamp<float>(pDIF, 0, maxRatio);
         return pDIF;
     }
 
@@ -3474,7 +3475,7 @@ namespace battleutils
      *                                                                       *
      ************************************************************************/
 
-    bool IsAbsorbByShadow(CBattleEntity* PDefender)
+    bool IsAbsorbByShadow(CBattleEntity* PDefender, CBattleEntity* PAttacker)
     {
         // utsus always overwrites blink, so if utsus>0 then we know theres no blink.
         uint16 Shadow    = PDefender->getMod(Mod::UTSUSEMI);
@@ -3526,6 +3527,13 @@ namespace battleutils
                                 icon = EFFECT_COPY_IMAGE_2;
                                 break;
                         }
+
+                        if (PAttacker != nullptr && PAttacker->objtype == TYPE_MOB)
+                        {
+                            auto* PMob = static_cast<CMobEntity*>(PAttacker);
+                            PMob->PEnmityContainer->UpdateEnmity(PDefender, -25, 0);
+                        }
+
                         PStatusEffect->SetIcon(icon);
                         PDefender->StatusEffectContainer->UpdateStatusIcons();
                     }
@@ -4723,7 +4731,7 @@ namespace battleutils
             if (xirand::GetRandomNumber(100) < hitrate)
             {
                 // attack hit, try to be absorbed by shadow
-                if (!battleutils::IsAbsorbByShadow(PVictim))
+                if (!battleutils::IsAbsorbByShadow(PVictim, PAttacker))
                 {
                     // successful hit, add damage
                     float AttMultiplerPercent = 0.f;
@@ -6541,6 +6549,7 @@ namespace battleutils
         }
         return std::clamp<int16>(cost, 0, 9999);
     }
+
     uint32 CalculateSpellRecastTime(CBattleEntity* PEntity, CSpell* PSpell)
     {
         if (PSpell == nullptr)
@@ -6548,22 +6557,26 @@ namespace battleutils
             return 0;
         }
 
-        bool   applyArts = true;
-        uint32 base      = PSpell->getRecastTime();
-        int32  recast    = base;
+        uint32 base   = PSpell->getRecastTime();
+        int32  recast = base;
 
-        // Apply Fast Cast
-        recast = (int32)(recast * ((100.0f - std::clamp((float)PEntity->getMod(Mod::FASTCAST) / 2.0f, 0.0f, 25.0f)) / 100.0f));
+        // get Fast Cast reduction, caps at 80%/2 = 40% reduction in recast -- https://www.bg-wiki.com/ffxi/Fast_Cast
+        float fastCastReduction = std::clamp(static_cast<float>(PEntity->getMod(Mod::FASTCAST)) / 2.0f, 0.0f, 40.0f);
+        // no known cap (limited by Inspiration merits + Futhark Trousers augment for a total retail cap value of 60%/2 = 30%)
+        float inspirationRecastReduction = static_cast<float>(PEntity->getMod(Mod::INSPIRATION_FAST_CAST)) / 2.0f;
+
+        // Apply Fast Cast & Inspiration
+        recast = static_cast<int32>(recast * ((100.0f - (fastCastReduction + inspirationRecastReduction)) / 100.0f));
 
         // Apply Haste (Magic and Gear)
-        int16 haste = PEntity->getMod(Mod::HASTE_MAGIC) + PEntity->getMod(Mod::HASTE_GEAR);
-        recast -= (int32)(recast * haste / 10000.f);
+        int32 haste = PEntity->getMod(Mod::HASTE_MAGIC) + PEntity->getMod(Mod::HASTE_GEAR);
+        recast      = static_cast<int32>(recast * ((10000.0f - haste) / 10000.0f));
 
         if (PSpell->getSpellGroup() == SPELLGROUP_SONG)
         {
             if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_NIGHTINGALE))
             {
-                recast = (int32)(recast * 0.5f);
+                recast = static_cast<int32>(recast * 0.5f);
             }
             // The following modifiers are not multiplicative - as such they must be applied last.
             // ShowDebug("Recast before reduction: %u", recast);
@@ -6585,17 +6598,17 @@ namespace battleutils
 
         if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_COMPOSURE))
         {
-            recast = (int32)(recast * 1.25f);
+            recast = static_cast<int32>(recast * 1.25f);
         }
 
         if (PEntity->StatusEffectContainer->HasStatusEffect({ EFFECT_HASSO, EFFECT_SEIGAN }))
         {
-            recast = (int32)(recast * 1.5f);
+            recast = static_cast<int32>(recast * 1.5f);
         }
 
-        recast = std::max<int32>(recast, (int32)(base * 0.2f));
+        recast = std::max<int32>(recast, static_cast<int32>(base * 0.2f));
 
-        // Light/Dark arts recast bonus/penalties applies after the 80% cap
+        // Light/Dark arts recast bonus/penalties applies after other bonuses
         if (PSpell->getSpellGroup() == SPELLGROUP_BLACK)
         {
             if (PSpell->getAOE() == SPELLAOE_RADIAL_MANI && PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_MANIFESTATION))
@@ -6608,30 +6621,32 @@ namespace battleutils
                 {
                     recast *= 3;
                 }
-                applyArts = false;
             }
+            else if (PEntity->StatusEffectContainer->HasStatusEffect({ EFFECT_DARK_ARTS, EFFECT_ADDENDUM_BLACK }))
+            {
+                // Add any "Grimoire: Reduces spellcasting time" bonuses + Dark Arts bonus
+                recast = static_cast<int32>(recast * ((100.0f + PEntity->getMod(Mod::BLACK_MAGIC_RECAST) + PEntity->getMod(Mod::GRIMOIRE_SPELLCASTING)) / 100.0f));
+            }
+            else
+            {
+                recast = static_cast<int32>(recast * ((100.0f + PEntity->getMod(Mod::BLACK_MAGIC_RECAST)) / 100.0f));
+            }
+
+            recast = std::max<int32>(recast, static_cast<int32>(base * 0.2f)); // recap to 80%
+
+            // https://www.bg-wiki.com/ffxi/Alacrity
             if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_ALACRITY))
             {
-                uint16 bonus = 0;
-                // Only apply Alacrity/celerity mod if the spell element matches the weather.
-                if (battleutils::WeatherMatchesElement(battleutils::GetWeather(PEntity, false), (uint8)PSpell->getElement()))
-                {
-                    bonus = PEntity->getMod(Mod::ALACRITY_CELERITY_EFFECT);
-                }
-                recast = (int32)(recast * ((50 - bonus) / 100.0f));
+                recast = static_cast<int32>(recast * 0.60);                        // 40% reduction from Alacrity alone
+                recast = std::max<int32>(recast, static_cast<int32>(base * 0.2f)); // recap to 80%
 
-                applyArts = false;
-            }
-            if (applyArts)
-            {
-                if (PEntity->StatusEffectContainer->HasStatusEffect({ EFFECT_DARK_ARTS, EFFECT_ADDENDUM_BLACK }))
+                // Only apply bonus mod if the spell element matches the weather, this is allowed to go over the 80% cap to a 90% cap.
+                if (battleutils::WeatherMatchesElement(battleutils::GetWeather(PEntity, false), static_cast<uint8>(PSpell->getElement())))
                 {
-                    // Add any "Grimoire: Reduces spellcasting time" bonuses
-                    recast = (int32)(recast * (1.0f + (PEntity->getMod(Mod::BLACK_MAGIC_RECAST) + PEntity->getMod(Mod::GRIMOIRE_SPELLCASTING)) / 100.0f));
-                }
-                else
-                {
-                    recast = (int32)(recast * (1.0f + PEntity->getMod(Mod::BLACK_MAGIC_RECAST) / 100.0f));
+                    uint16 bonus = PEntity->getMod(Mod::ALACRITY_CELERITY_EFFECT);
+
+                    recast = static_cast<int32>(recast * ((100 - bonus) / 100.0f));
+                    recast = std::max<int32>(recast, static_cast<int32>(base * 0.1f)); // cap to 90% reduction
                 }
             }
         }
@@ -6647,35 +6662,38 @@ namespace battleutils
                 {
                     recast *= 3;
                 }
-                applyArts = false;
             }
+
+            if (PEntity->StatusEffectContainer->HasStatusEffect({ EFFECT_LIGHT_ARTS, EFFECT_ADDENDUM_WHITE }))
+            {
+                // Add any "Grimoire: Reduces spellcasting time" bonuses + Light Arts bonus
+                recast = static_cast<int32>(recast * ((100.f + PEntity->getMod(Mod::WHITE_MAGIC_RECAST) + PEntity->getMod(Mod::GRIMOIRE_SPELLCASTING)) / 100.0f));
+            }
+            else
+            {
+                recast = static_cast<int32>(recast * ((100.0f + PEntity->getMod(Mod::WHITE_MAGIC_RECAST)) / 100.0f));
+            }
+
+            recast = std::max<int32>(recast, static_cast<int32>(base * 0.2f)); // recap to 80%
+
+            // https://www.bg-wiki.com/ffxi/Celerity
             if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_CELERITY))
             {
-                uint16 bonus = 0;
-                // Only apply Alacrity/celerity mod if the spell element matches the weather.
-                if (battleutils::WeatherMatchesElement(battleutils::GetWeather(PEntity, true), (uint8)PSpell->getElement()))
-                {
-                    bonus = PEntity->getMod(Mod::ALACRITY_CELERITY_EFFECT);
-                }
-                recast = (int32)(recast * ((50 - bonus) / 100.0f));
+                recast = static_cast<int32>(recast * 0.60);                        // 40% reduction from Celerity alone
+                recast = std::max<int32>(recast, static_cast<int32>(base * 0.2f)); // recap to 80%
 
-                applyArts = false;
-            }
-            if (applyArts)
-            {
-                if (PEntity->StatusEffectContainer->HasStatusEffect({ EFFECT_LIGHT_ARTS, EFFECT_ADDENDUM_WHITE }))
+                // Only apply bonus mod if the spell element matches the weather, this is allowed to go over the 80% cap to a 90% cap.
+                if (battleutils::WeatherMatchesElement(battleutils::GetWeather(PEntity, false), static_cast<uint8>(PSpell->getElement())))
                 {
-                    // Add any "Grimoire: Reduces spellcasting time" bonuses
-                    recast = (int32)(recast * (1.0f + (PEntity->getMod(Mod::WHITE_MAGIC_RECAST) + PEntity->getMod(Mod::GRIMOIRE_SPELLCASTING)) / 100.0f));
-                }
-                else
-                {
-                    recast = (int32)(recast * (1.0f + PEntity->getMod(Mod::WHITE_MAGIC_RECAST) / 100.0f));
+                    uint16 bonus = PEntity->getMod(Mod::ALACRITY_CELERITY_EFFECT);
+
+                    recast = static_cast<int32>(recast * ((100 - bonus) / 100.0f));
+                    recast = std::max<int32>(recast, static_cast<int32>(base * 0.1f)); // cap to 90% reduction
                 }
             }
         }
 
-        recast = std::max(recast, 0);
+        recast = std::max<int32>(recast, 0);
 
         return recast / 1000;
     }

@@ -12,14 +12,14 @@ local entity = {}
 entity.onTrigger = function(player,npc)
     local qItem =
     {
-        [xi.assaultUtil.mission.IMPERIAL_AGENT_RESCUE] =
+        [xi.assault.mission.IMPERIAL_AGENT_RESCUE] =
         {
             {
                 {itemid = xi.items.UNAPPRAISED_BOX,  droprate = 300},
                 {itemid = xi.items.UNAPPRAISED_RING, droprate = 700},
             },
         },
-        [xi.assaultUtil.mission.PREEMPTIVE_STRIKE] =
+        [xi.assault.mission.PREEMPTIVE_STRIKE] =
         {
             {
                 {itemid = xi.items.UNAPPRAISED_BOX,      droprate = 300},
@@ -29,10 +29,10 @@ entity.onTrigger = function(player,npc)
     }
     local regItem =
     {
-        [xi.assaultUtil.mission.IMPERIAL_AGENT_RESCUE] =
+        [xi.assault.mission.IMPERIAL_AGENT_RESCUE] =
         {
             {
-                {itemid = xi.items.HI_POTION_II, droprate = 900},
+                {itemid = xi.items.HI_POTION_P2, droprate = 900},
                 {itemid =    0, droprate = 100},
             },
             {
@@ -44,7 +44,7 @@ entity.onTrigger = function(player,npc)
                 {itemid =    0, droprate = 470},
             },
         },
-        [xi.assaultUtil.mission.PREEMPTIVE_STRIKE] =
+        [xi.assault.mission.PREEMPTIVE_STRIKE] =
         {
             {
                 {itemid = xi.items.HI_POTION_TANK, droprate = 100},

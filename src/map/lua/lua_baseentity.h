@@ -326,6 +326,8 @@ public:
     uint8 levelRestriction(sol::object const& level); // Establish/return current level restriction
     void  addJobTraits(uint8 jobID, uint8 level);     // Add job traits
 
+    auto getTraits() -> sol::table;
+
     // Player Titles and Fame
     uint16 getTitle();
     bool   hasTitle(uint16 titleID);
@@ -390,9 +392,10 @@ public:
     uint8 getMeritCount();
     void  setMerits(uint8 numPoints); // set merits (testing only!)
 
-    uint8 getJobPointLevel(uint16 jpType); // Returns Value of Job Point Type
-    void  setJobPoints(uint16 amount);     // Set Job Points for current job
-    void  setCapacityPoints(uint16 amount);
+    uint16 getSpentJobPoints();
+    uint8  getJobPointLevel(uint16 jpType); // Returns Value of Job Point Type
+    void   setJobPoints(uint16 amount);     // Set Job Points for current job
+    void   setCapacityPoints(uint16 amount);
 
     uint32 getGil();
     void   addGil(int32 gil);
@@ -584,6 +587,7 @@ public:
     void  updateClaim(sol::object const& entity); // Adds Enmity to player for specified mob and claims
     bool  hasEnmity();                            // Does the player have any enmity at all from any source
     auto  getNotorietyList() -> sol::table;       // Returns a table with all of the entities on a chars notoriety list
+    void  clearEnmity(CLuaBaseEntity* PEntity);   // clears player enmity from notoriety list
     void  setClaimable(bool claimable);
     bool  getClaimable();
 

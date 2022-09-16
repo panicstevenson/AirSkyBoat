@@ -1613,19 +1613,47 @@ bool CLuaBaseEntity::pathThrough(sol::table const& pointsTable, sol::object cons
 {
     XI_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
 
-    std::vector<position_t> points;
-
-    // Grab points from array and store in points array
-    for (std::size_t i = 1; i < pointsTable.size(); i += 3)
-    {
-        points.push_back({ (float)pointsTable[i], (float)pointsTable[i + 1], (float)pointsTable[i + 2], 0, 0 });
-    }
-
     uint8 flags = 0;
 
     if (flagsObj.is<uint8>())
     {
         flags = flagsObj.as<uint8>();
+    }
+
+    std::vector<pathpoint_t> points;
+
+    if (flags & PATHFLAG_PATROL)
+    {
+        // Grab points from array and store in points array
+        float x, y, z = -1;
+        for (std::size_t i = 1; i <= pointsTable.size(); ++i)
+        {
+            sol::table  pointData = pointsTable[i];
+            pathpoint_t point;
+            x              = pointData.get_or("x", x);
+            y              = pointData.get_or("y", y);
+            z              = pointData.get_or("z", z);
+            point.position = { x, y, z, 0, 0 };
+
+            auto rotation     = pointData["rotation"];
+            point.setRotation = rotation.valid();
+            if (point.setRotation)
+            {
+                point.position.rotation = rotation.get<uint8>();
+            }
+
+            auto wait  = pointData["wait"];
+            point.wait = wait.valid() ? wait.get<uint32>() : 0;
+            points.push_back(std::move(point));
+        }
+    }
+    else
+    {
+        // Grab points from array and store in points array
+        for (std::size_t i = 1; i < pointsTable.size(); i += 3)
+        {
+            points.push_back({ { (float)pointsTable[i], (float)pointsTable[i + 1], (float)pointsTable[i + 2], 0, 0 }, 0 });
+        }
     }
 
     CBattleEntity* PBattle = (CBattleEntity*)m_PBaseEntity;
@@ -1664,8 +1692,7 @@ void CLuaBaseEntity::clearPath(sol::object const& pauseObj)
     {
         m_PBaseEntity->SetLocalVar("pauseNPCPathing", 1);
     }
-
-    if (PBattle->PAI->PathFind != nullptr)
+    else if (PBattle->PAI->PathFind != nullptr)
     {
         PBattle->PAI->PathFind->Clear();
     }
@@ -5743,6 +5770,36 @@ void CLuaBaseEntity::addJobTraits(uint8 jobID, uint8 level)
 }
 
 /************************************************************************
+ *  Function: getTraits
+ *  Purpose : Return list of active traits
+ *  Example : player:getTraits()
+ ************************************************************************/
+
+sol::table CLuaBaseEntity::getTraits()
+{
+    XI_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
+    CBattleEntity* PEntity = static_cast<CBattleEntity*>(m_PBaseEntity);
+
+    if (PEntity != nullptr)
+    {
+        auto table = lua.create_table();
+        for (std::size_t i = 0; i < PEntity->TraitList.size(); ++i)
+        {
+            auto subTable = lua.create_table();
+
+            subTable["id"]    = PEntity->TraitList.at(i)->getID();
+            subTable["value"] = PEntity->TraitList.at(i)->getValue();
+
+            table.add(subTable);
+        }
+
+        return table;
+    }
+
+    return {};
+}
+
+/************************************************************************
  *  Function: getTitle()
  *  Purpose : Returns the integer value of the player's current title
  *  Example : if player:getTitle()) == xi.title.FAKE_MOUSTACHED_INVESTIGATOR then
@@ -7115,6 +7172,28 @@ void CLuaBaseEntity::setMerits(uint8 numPoints)
     PChar->pushPacket(new CMonipulatorPacket2(PChar));
 
     charutils::SaveCharExp(PChar, PChar->GetMJob());
+}
+
+/************************************************************************
+ *  Function: getSpentJobPoints()
+ *  Purpose : Returns the total value of all job points spent
+ *  Example : player:getSpentJobPoints()
+ *  Notes   :
+ ************************************************************************/
+uint16 CLuaBaseEntity::getSpentJobPoints()
+{
+    if (m_PBaseEntity->objtype == TYPE_PC)
+    {
+        CCharEntity* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
+
+        if (PChar->GetMLevel() < 99) // account for Level Sync
+        {
+            return 0;
+        }
+        return PChar->PJobPoints->GetJobPointsSpent();
+    }
+
+    return 0;
 }
 
 /************************************************************************
@@ -8833,10 +8912,14 @@ void CLuaBaseEntity::addPartyEffect(sol::variadic_args va)
     CBattleEntity* PEntity = ((CBattleEntity*)m_PBaseEntity);
 
     // clang-format off
-    PEntity->ForParty([PEffect](CBattleEntity* PMember)
+    PEntity->ForParty([&](CBattleEntity* PMember)
     {
-        PMember->StatusEffectContainer->AddStatusEffect(PEffect);
+        if (PMember != nullptr && PEntity->loc.zone->GetID() == PMember->loc.zone->GetID() && distanceSquared(PEntity->loc.p, PMember->loc.p) < 50.0 * 50.0 && !PMember->isDead())
+        {
+            PMember->StatusEffectContainer->AddStatusEffect(PEffect);
+        }
     });
+
     // clang-format on
 }
 
@@ -8855,23 +8938,23 @@ bool CLuaBaseEntity::hasPartyEffect(uint16 effectid)
         return false;
     }
 
-    CCharEntity* PChar = ((CCharEntity*)m_PBaseEntity);
+    CCharEntity* PEntity   = ((CCharEntity*)m_PBaseEntity);
+    bool         hasEffect = true;
 
-    if (PChar->PParty != nullptr)
+    // clang-format off
+    PEntity->ForParty([&](CBattleEntity* PMember)
     {
-        for (const auto& member : PChar->PParty->members)
+        if (PMember != nullptr && PEntity->loc.zone->GetID() == PMember->loc.zone->GetID())
         {
-            if (member->loc.zone == PChar->loc.zone)
+            if (!PMember->StatusEffectContainer->HasStatusEffect(static_cast<EFFECT>(effectid)))
             {
-                // Bail out if someone DOESN'T have the desired effect
-                if (!member->StatusEffectContainer->HasStatusEffect(static_cast<EFFECT>(effectid)))
-                {
-                    return false;
-                }
+                hasEffect = false;
             }
         }
-    }
-    return true;
+    });
+
+    // clang-format on
+    return hasEffect;
 }
 
 /************************************************************************
@@ -8889,15 +8972,18 @@ void CLuaBaseEntity::removePartyEffect(uint16 effectid)
         return;
     }
 
-    CCharEntity* PChar = ((CCharEntity*)m_PBaseEntity);
+    CBattleEntity* PEntity = ((CBattleEntity*)m_PBaseEntity);
 
-    for (const auto& member : PChar->PParty->members)
+    // clang-format off
+    PEntity->ForParty([&](CBattleEntity* PMember)
     {
-        if (member->loc.zone == PChar->loc.zone)
+        if (PMember != nullptr && PEntity->loc.zone->GetID() == PMember->loc.zone->GetID())
         {
-            member->StatusEffectContainer->DelStatusEffect(static_cast<EFFECT>(effectid));
+            PMember->StatusEffectContainer->DelStatusEffect(static_cast<EFFECT>(effectid));
         }
-    }
+    });
+
+    // clang-format on
 }
 
 /************************************************************************
@@ -10370,6 +10456,27 @@ sol::table CLuaBaseEntity::getNotorietyList()
     }
 
     return table;
+}
+
+/************************************************************************
+ *  Function: clearEnmity()
+ *  Purpose : Clears all enmity towards target
+ *  Example : mob:clearEnmity(target)
+ *  Notes   :
+ ************************************************************************/
+void CLuaBaseEntity::clearEnmity(CLuaBaseEntity* PEntity)
+{
+    XI_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB);
+
+    auto* PMob = static_cast<CMobEntity*>(m_PBaseEntity);
+
+    if (PEntity != nullptr && PEntity->GetBaseEntity()->objtype != TYPE_NPC)
+    {
+        auto* PBattleEntity = static_cast<CBattleEntity*>(PEntity->m_PBaseEntity);
+        PMob->PEnmityContainer->Clear(PBattleEntity->id);
+        auto* PTarget = PMob->PEnmityContainer->GetHighestEnmity();
+        PMob->SetBattleTargetID(PTarget ? PTarget->targid : 0);
+    }
 }
 
 /************************************************************************
@@ -15112,6 +15219,7 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("getMeritCount", CLuaBaseEntity::getMeritCount);
     SOL_REGISTER("setMerits", CLuaBaseEntity::setMerits);
 
+    SOL_REGISTER("getSpentJobPoints", CLuaBaseEntity::getSpentJobPoints);
     SOL_REGISTER("getJobPointLevel", CLuaBaseEntity::getJobPointLevel);
     SOL_REGISTER("addCapacityPoints", CLuaBaseEntity::addCapacityPoints);
     SOL_REGISTER("setCapacityPoints", CLuaBaseEntity::setCapacityPoints);
@@ -15302,6 +15410,7 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("updateClaim", CLuaBaseEntity::updateClaim);
     SOL_REGISTER("hasEnmity", CLuaBaseEntity::hasEnmity);
     SOL_REGISTER("getNotorietyList", CLuaBaseEntity::getNotorietyList);
+    SOL_REGISTER("clearEnmity", CLuaBaseEntity::clearEnmity);
     SOL_REGISTER("setClaimable", CLuaBaseEntity::setClaimable);
     SOL_REGISTER("getClaimable", CLuaBaseEntity::getClaimable);
 
@@ -15561,6 +15670,7 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("setSpawnType", CLuaBaseEntity::setSpawnType);
     SOL_REGISTER("sendNpcEmote", CLuaBaseEntity::sendNpcEmote);
     SOL_REGISTER("restoreNpcLook", CLuaBaseEntity::restoreNpcLook);
+    SOL_REGISTER("getTraits", CLuaBaseEntity::getTraits);
 
     SOL_REGISTER("getWorldPassRedeemTime", CLuaBaseEntity::getWorldPassRedeemTime);
     SOL_REGISTER("getWorldpassId", CLuaBaseEntity::getWorldpassId);

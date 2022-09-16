@@ -34,9 +34,11 @@
 #include "../ai/states/weaponskill_state.h"
 #include "../attack.h"
 #include "../attackround.h"
+#include "../enmity_container.h"
 #include "../items/item_weapon.h"
 #include "../job_points.h"
 #include "../lua/luautils.h"
+#include "../mob_modifier.h"
 #include "../notoriety_container.h"
 #include "../packets/action.h"
 #include "../recast_container.h"
@@ -318,8 +320,17 @@ int16 CBattleEntity::GetWeaponDelay(bool tp)
             int16 hasteAbility = std::clamp<int16>(getMod(Mod::HASTE_ABILITY), -2500, 2500); // 25% cap
             int16 hasteGear    = std::clamp<int16>(getMod(Mod::HASTE_GEAR), -2500, 2500);    // 25%
 
+            bool specialAttackList = false;
+
+            // Check if we are using a special attack list that should not be affected by attack speed debuffs
+            // Example: Wyrm's flying auto attack speed should not be modified by debuffs.
+            if (this->objtype == TYPE_MOB)
+                if (((CMobEntity*)this)->getMobMod(MOBMODIFIER::MOBMOD_ATTACK_SKILL_LIST) != 0)
+                    specialAttackList = true;
+
             // Divide by float to get a more accurate reduction, then use int16 cast to truncate
-            WeaponDelay -= (int16)(WeaponDelay * (hasteMagic + hasteAbility + hasteGear) / 10000.f);
+            if (!specialAttackList)
+                WeaponDelay -= (int16)(WeaponDelay * (hasteMagic + hasteAbility + hasteGear) / 10000.f);
         }
         WeaponDelay = (uint16)(WeaponDelay * ((100.0f + getMod(Mod::DELAYP)) / 100.0f));
 
@@ -1605,20 +1616,22 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
     {
         flags |= FINDFLAGS_HIT_ALL;
     }
-    uint8 aoeType = battleutils::GetSpellAoEType(this, PSpell);
+    uint8      aoeType    = battleutils::GetSpellAoEType(this, PSpell);
+    AOE_RADIUS radiusType = (PSpell->getFlag() & SPELLFLAG_ATTACKER_RADIUS) != 0 ? AOE_RADIUS::ATTACKER : AOE_RADIUS::TARGET;
 
     if (aoeType == SPELLAOE_RADIAL)
     {
         float distance = spell::GetSpellRadius(PSpell, this);
 
-        PAI->TargetFind->findWithinArea(PActionTarget, AOE_RADIUS::TARGET, distance, flags);
+        PAI->TargetFind->findWithinArea(PActionTarget, radiusType, distance, flags);
     }
     else if (aoeType == SPELLAOE_CONAL)
     {
         // TODO: actual radius calculation
         float radius = spell::GetSpellRadius(PSpell, this);
+        float angle  = spell::GetSpellConeAngle(PSpell, this);
 
-        PAI->TargetFind->findWithinCone(PActionTarget, radius, 45, flags);
+        PAI->TargetFind->findWithinCone(PActionTarget, radiusType, radius, angle, flags);
     }
     else
     {
@@ -1674,7 +1687,7 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
         }
 
         // TODO: this is really hacky and should eventually be moved into lua, and spellFlags should probably be in the spells table..
-        if (PSpell->canHitShadow() && aoeType == SPELLAOE_NONE && battleutils::IsAbsorbByShadow(PTarget) && !(PSpell->getFlag() & SPELLFLAG_IGNORE_SHADOWS))
+        if (PSpell->canHitShadow() && aoeType == SPELLAOE_NONE && battleutils::IsAbsorbByShadow(PTarget, this) && !(PSpell->getFlag() & SPELLFLAG_IGNORE_SHADOWS))
         {
             // take shadow
             msg                = MSGBASIC_SHADOW_ABSORB;
@@ -1806,6 +1819,7 @@ void CBattleEntity::OnCastInterrupted(CMagicState& state, action_t& action, MSGB
         actionTarget.messageID       = 0;
         actionTarget.animation       = PSpell->getAnimationID();
 
+        this->PAI->EventHandler.triggerListener("MAGIC_INTERRUPTED", CLuaBaseEntity(this));
         loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(this, state.GetTarget() ? state.GetTarget() : this, 0, 0, msg));
     }
 }
@@ -1927,7 +1941,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                  !PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_ALL_MISS))
         {
             // attack hit, try to be absorbed by shadow unless it is a SATA attack round
-            if (!(attackRound.GetSATAOccured()) && battleutils::IsAbsorbByShadow(PTarget))
+            if (!(attackRound.GetSATAOccured()) && battleutils::IsAbsorbByShadow(PTarget, this))
             {
                 actionTarget.messageID = MSGBASIC_SHADOW_ABSORB;
                 actionTarget.param     = 1;
@@ -1957,7 +1971,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                     actionTarget.param        = 0;
                     actionTarget.messageID    = 0;
                     actionTarget.spikesEffect = SUBEFFECT_COUNTER;
-                    if (battleutils::IsAbsorbByShadow(this))
+                    if (battleutils::IsAbsorbByShadow(this, PTarget))
                     {
                         actionTarget.spikesParam   = 1;
                         actionTarget.spikesMessage = MSGBASIC_COUNTER_ABS_BY_SHADOW;
@@ -2095,9 +2109,16 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                         charutils::TrySkillUP((CCharEntity*)PTarget, SKILL_PARRY, GetMLevel());
                     }
                 }
+
                 if (!attack.IsCountered() && !attack.IsParried())
                 {
                     charutils::TrySkillUP((CCharEntity*)PTarget, SKILL_EVASION, GetMLevel());
+                }
+
+                if (PTarget->objtype == TYPE_MOB && this->objtype == TYPE_PC)
+                {
+                    // 1 ce for a missed attack for TH application
+                    ((CMobEntity*)PTarget)->PEnmityContainer->UpdateEnmity(this, 1, 0);
                 }
             }
         }

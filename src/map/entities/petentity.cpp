@@ -51,6 +51,8 @@ CPetEntity::CPetEntity(PET_TYPE petType)
     m_PetID        = 0;
     m_IsClaimable  = false;
 
+    memset(&m_TraitList, 0, sizeof(m_TraitList));
+
     PAI = std::make_unique<CAIContainer>(this, std::make_unique<CPathFind>(this), std::make_unique<CPetController>(this), std::make_unique<CTargetFind>(this));
 }
 
@@ -189,6 +191,18 @@ void CPetEntity::Spawn()
     luautils::OnMobSpawn(this);
 }
 
+void CPetEntity::addTrait(CTrait* PTrait)
+{
+    TraitList.push_back(PTrait);
+    addModifier(PTrait->getMod(), PTrait->getValue());
+}
+
+void CPetEntity::delTrait(CTrait* PTrait)
+{
+    TraitList.erase(std::remove(TraitList.begin(), TraitList.end(), PTrait), TraitList.end());
+    delModifier(PTrait->getMod(), PTrait->getValue());
+}
+
 void CPetEntity::OnAbility(CAbilityState& state, action_t& action)
 {
     auto* PAbility = state.GetAbility();
@@ -291,7 +305,7 @@ void CPetEntity::OnPetSkillFinished(CPetSkillState& state, action_t& action)
         else if (PSkill->isConal())
         {
             float angle = 45.0f;
-            PAI->TargetFind->findWithinCone(PTarget, distance, angle, findFlags);
+            PAI->TargetFind->findWithinCone(PTarget, AOE_RADIUS::ATTACKER, distance, angle, findFlags);
         }
         else
         {
