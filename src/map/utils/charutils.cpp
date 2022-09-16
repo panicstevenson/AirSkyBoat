@@ -7035,4 +7035,18 @@ namespace charutils
         return false;
     }
 
+    void ResetCharDigTable(CCharEntity* PChar)
+    {
+        if (PChar != nullptr)
+        {
+            PChar->m_charDigging.lastDigX       = 0;
+            PChar->m_charDigging.lastDigY       = 0;
+            PChar->m_charDigging.lastDigZ       = 0;
+            PChar->m_charAnticheat.prevDigT_1   = 0;
+            PChar->m_charAnticheat.prevDigX_1   = 0;
+            PChar->m_charAnticheat.prevDigZ_1   = 0;
+            PChar->m_charAnticheat.digDistGrace = 0;
+        }
+    }
+
 }; // namespace charutils

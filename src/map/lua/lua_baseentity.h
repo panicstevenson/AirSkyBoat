@@ -848,6 +848,8 @@ public:
     uint32 getWorldPassRedeemTime();
     uint32 getWorldpassId(uint32 targid);
     void   sendNpcEmote(CLuaBaseEntity* PBaseEntity, sol::object const& p0, sol::object const& p1, sol::object const& p2);
+    void   setDigTable();               // Sets PChar Last Dig Table
+    auto   getDigTable() -> sol::table; // Gets PChar Last Dig Table
 
     static void Register();
 };
