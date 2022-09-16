@@ -84,7 +84,7 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (17457230, 0 , 'Hecteyes',                 'Hecteyes',                 18,  144,       3,         -57,       127),
     (17457231, 0 , 'Hecteyes',                 'Hecteyes',                 18,  167.03,    3.665,     -57.378,   127),
     (17457232, 0 , 'Hecteyes',                 'Hecteyes',                 18,  135.251,   2.518,     -57.706,   127),
-    (17457233, 0 , 'Hecteyes',                 'Hecteyes',                 18,  166.758,   3.504,     -56.162,   146),
+    (17457233, 0 , 'Hecteyes',                 'Hecteyes',                 18,  0,         0,         0,         0  ),
     (17457234, 0 , 'Stirge',                   'Stirge',                   12,  242.41,    -66,       220.12,    127),
     (17457235, 0 , 'Stirge',                   'Stirge',                   12,  259.323,   -66,       237.038,   89 ),
     (17457236, 0 , 'Hyakume',                  'Hyakume',                  31,  158.616,   5.309,     -60.164,   127),

@@ -9,6 +9,7 @@ require('scripts/globals/status')
 local zone_object = {}
 
 zone_object.onInitialize = function(zone)
+    xi.horizon.spawnInitialMobs(zone)
     xi.promyvion.initZone(zone)
 end
 

@@ -10351,10 +10351,16 @@ void CLuaBaseEntity::updateEnmityFromCure(CLuaBaseEntity* PEntity, int32 amount)
 {
     XI_DEBUG_BREAK_IF(amount < 0);
 
+    auto* PBattle = static_cast<CBattleEntity*>(m_PBaseEntity);
+
     // clang-format off
     auto* PCurer = [&]() -> CBattleEntity*
     {
         if (m_PBaseEntity->objtype == TYPE_PC || m_PBaseEntity->objtype == TYPE_TRUST)
+        {
+            return static_cast<CBattleEntity*>(m_PBaseEntity);
+        }
+        else if (m_PBaseEntity->objtype == TYPE_PET || static_cast<CPetEntity*>(PBattle->PPet)->m_PetID == PETID_LIGHTSPIRIT)
         {
             return static_cast<CBattleEntity*>(m_PBaseEntity);
         }
@@ -14810,9 +14816,9 @@ uint32 CLuaBaseEntity::getWorldPassRedeemTime()
 {
     const char* wpQuery = "SELECT UNIX_TIMESTAMP(redeemtime) FROM world_pass WHERE rafid = '%u';";
 
-    uint64 timeStamp    = std::chrono::duration_cast<std::chrono::seconds>(server_clock::now().time_since_epoch()).count();
-    uint64 ret          = sql->Query(wpQuery, m_PBaseEntity->id);
-    uint64 rafTime      = 0;
+    uint64 timeStamp = std::chrono::duration_cast<std::chrono::seconds>(server_clock::now().time_since_epoch()).count();
+    uint64 ret       = sql->Query(wpQuery, m_PBaseEntity->id);
+    uint64 rafTime   = 0;
 
     if (ret != SQL_ERROR && sql->NumRows() != 0)
     {
@@ -14886,6 +14892,42 @@ void CLuaBaseEntity::sendNpcEmote(CLuaBaseEntity* PBaseEntity, sol::object const
         PNpc->loc.zone->PushPacket(PNpc, CHAR_INRANGE,
                                    new CCharEmotionPacket(PNpc, EntityId, EntityIndex, emoteID, emoteMode, extra));
     }
+}
+
+void CLuaBaseEntity::setDigTable()
+{
+    if (m_PBaseEntity != nullptr && m_PBaseEntity->objtype == TYPE_PC)
+    {
+        auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
+
+        if (PChar != nullptr)
+        {
+            PChar->m_charDigging.lastDigX = PChar->loc.p.x;
+            PChar->m_charDigging.lastDigY = PChar->loc.p.y;
+            PChar->m_charDigging.lastDigZ = PChar->loc.p.z;
+            PChar->m_charDigging.lastDigT = time(NULL);
+        }
+    }
+}
+
+auto CLuaBaseEntity::getDigTable() -> sol::table
+{
+    auto pos = lua.create_table();
+
+    if (m_PBaseEntity != nullptr && m_PBaseEntity->objtype == TYPE_PC)
+    {
+        auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
+
+        if (PChar != nullptr)
+        {
+            pos["x"]       = PChar->m_charDigging.lastDigX;
+            pos["y"]       = PChar->m_charDigging.lastDigY;
+            pos["z"]       = PChar->m_charDigging.lastDigZ;
+            pos["lastDig"] = static_cast<uint64>(PChar->m_charDigging.lastDigT);
+        }
+    }
+
+    return pos;
 }
 
 //==========================================================//
@@ -15674,6 +15716,8 @@ void CLuaBaseEntity::Register()
 
     SOL_REGISTER("getWorldPassRedeemTime", CLuaBaseEntity::getWorldPassRedeemTime);
     SOL_REGISTER("getWorldpassId", CLuaBaseEntity::getWorldpassId);
+    SOL_REGISTER("setDigTable", CLuaBaseEntity::setDigTable);
+    SOL_REGISTER("getDigTable", CLuaBaseEntity::getDigTable);
 }
 
 std::ostream& operator<<(std::ostream& os, const CLuaBaseEntity& entity)

@@ -267,9 +267,10 @@ namespace charutils
     bool hasEntitySpawned(CCharEntity* PChar, CBaseEntity* entity);
 
     uint32 getCharIdFromName(std::string const& name);
-    uint8 GetHighestLevel(CCharEntity* PChar);
-    bool CanUseYell(CCharEntity* PChar);
-    bool IsYellSpamFiltered(CCharEntity* PChar);
+    uint8  GetHighestLevel(CCharEntity* PChar);
+    bool   CanUseYell(CCharEntity* PChar);
+    bool   IsYellSpamFiltered(CCharEntity* PChar);
+    void   ResetCharDigTable(CCharEntity* PChar);
 
 }; // namespace charutils
 

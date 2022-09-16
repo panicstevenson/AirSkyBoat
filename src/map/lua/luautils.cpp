@@ -1767,6 +1767,8 @@ namespace luautils
             return;
         }
 
+        charutils::ResetCharDigTable(PChar);
+
         if (result.get_type() == sol::type::table)
         {
             auto resultTable = result.get<sol::table>();
@@ -1809,6 +1811,7 @@ namespace luautils
         auto onZoneOut          = GetCacheEntryFromFilename(filename)["onZoneOut"];
 
         auto result = onZoneOutFramework(CLuaBaseEntity(PChar), onZoneOut);
+
         if (!result.valid())
         {
             sol::error err = result;

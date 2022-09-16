@@ -31,11 +31,13 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "controllers/player_controller.h"
 #include "states/ability_state.h"
 #include "states/attack_state.h"
+#include "states/claimshield_state.h"
 #include "states/death_state.h"
 #include "states/despawn_state.h"
 #include "states/inactive_state.h"
 #include "states/item_state.h"
 #include "states/magic_state.h"
+#include "states/mobshield_state.h"
 #include "states/mobskill_state.h"
 #include "states/petskill_state.h"
 #include "states/raise_state.h"
@@ -173,6 +175,16 @@ bool CAIContainer::UseItem(uint16 targid, uint8 loc, uint8 slotid)
 
 bool CAIContainer::Inactive(duration _duration, bool canChangeState)
 {
+    if (IsCurrentState<CClaimShieldState>())
+    {
+        return false;
+    }
+
+    if (IsCurrentState<CMobShieldState>())
+    {
+        return false;
+    }
+
     return ForceChangeState<CInactiveState>(PEntity, _duration, canChangeState);
 }
 
@@ -322,6 +334,30 @@ bool CAIContainer::Internal_UseItem(uint16 targetid, uint8 loc, uint8 slotid)
     {
         return ChangeState<CItemState>(entity, targetid, loc, slotid);
     }
+    return false;
+}
+
+bool CAIContainer::Internal_ClaimShieldState()
+{
+    auto entity{ dynamic_cast<CBattleEntity*>(PEntity) };
+
+    if (entity)
+    {
+        return ForceChangeState<CClaimShieldState>(entity);
+    }
+
+    return false;
+}
+
+bool CAIContainer::Internal_MobShieldState()
+{
+    auto entity{ dynamic_cast<CBattleEntity*>(PEntity) };
+
+    if (entity)
+    {
+        return ForceChangeState<CMobShieldState>(entity);
+    }
+
     return false;
 }
 

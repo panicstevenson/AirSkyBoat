@@ -613,7 +613,7 @@ enum class Mod
     SAVETP      = 880, // SAVETP Effect for Miser's Roll / ATMA / Hagakure.
     CONSERVE_TP = 944, // Conserve TP trait, random chance between 10 and 200 TP
 
-    WYRMAL_ABJ_KILLER_EFFECT = 53,  // Wyrmal Abjuration(Crimson / Blood) which makes players susceptible to Dragon Killer effects
+    WYRMAL_ABJ_KILLER_EFFECT = 53, // Wyrmal Abjuration(Crimson / Blood) which makes players susceptible to Dragon Killer effects
 
     // Rune Fencer
     INQUARTATA                  = 963,  // Increases parry rate by a flat %.
@@ -946,6 +946,10 @@ enum class Mod
     DRAGON_MITIGATION_MULT   = 1407, // Adds bonus mitigation to status effects and elemental attacks from Dragons (Out of 100) (Used in Circle Abilities)
     ARCANA_MITIGATION_MULT   = 1408, // Adds bonus mitigation to status effects and elemental attacks from Arcana (Out of 100) (Used in Circle Abilities)
     SOUL_EATER_NULLIFICATION = 1409, // Nullifies Soul Eater Damage (1 = on, 0 = off)
+    CLAIMSHIELD              = 1410, // Time in ms a mob should be popped before Claimshield lottery takes effect.
+    CLAIMSHIELD_FAKE_SPAWN   = 1411, // Enables popping the mob early as an invisible entity without targeting with Claimshield enabled. Time in ms.
+    MOBSHIELD_FAKE_SPAWN     = 1412, // Time in ms a mob should be spawned before claim. Used to catch nasty claimbots.
+    CLAIMBOT_REPORT_CHECK    = 1413, // Indicates whether claimbot report has gone through.
 
     // IF YOU ADD ANY NEW MODIFIER HERE, ADD IT IN scripts/globals/status.lua ASWELL!
 

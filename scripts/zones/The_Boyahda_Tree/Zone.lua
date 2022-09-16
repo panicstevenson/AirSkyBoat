@@ -8,6 +8,7 @@ require('scripts/globals/treasure')
 local zone_object = {}
 
 zone_object.onInitialize = function(zone)
+    xi.horizon.spawnInitialMobs(zone)
     xi.treasure.initZone(zone)
 end
 

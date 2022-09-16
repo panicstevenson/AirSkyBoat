@@ -9,6 +9,7 @@ require('scripts/globals/helm')
 local zone_object = {}
 
 zone_object.onInitialize = function(zone)
+    xi.horizon.spawnInitialMobs(zone)
     xi.treasure.initZone(zone)
     xi.helm.initZone(zone, xi.helm.type.MINING)
 end

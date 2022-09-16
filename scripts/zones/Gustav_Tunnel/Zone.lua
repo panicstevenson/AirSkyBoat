@@ -7,6 +7,7 @@ require('scripts/globals/conquest')
 local zone_object = {}
 
 zone_object.onInitialize = function(zone)
+    xi.horizon.spawnInitialMobs(zone)
     UpdateNMSpawnPoint(ID.mob.BUNE)
     GetMobByID(ID.mob.BUNE):setRespawnTime(math.random(900, 10800))
 end

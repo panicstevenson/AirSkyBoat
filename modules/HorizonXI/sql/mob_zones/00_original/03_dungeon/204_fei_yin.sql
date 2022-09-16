@@ -297,11 +297,11 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (17613091, 0 , 'Specter',                  'Specter',                  24,  0,         0,         0,         0  ),
     (17613092, 0 , 'Specter',                  'Specter',                  25,  0,         0,         0,         0  ),
     (17613093, 0 , 'Specter',                  'Specter',                  27,  -198.32,   -16.028,   131.668,   61 ),
-    (17613094, 0 , 'Specter',                  'Specter',                  26,  -202.671,  -15.782,   111.251,   201),
+    (17613094, 0 , 'Specter',                  'Specter',                  26,  -202.671,  -15.782,   111.251,   201), -- Western Shadow PH
     (17613095, 0 , 'Western_Shadow',           'Western Shadow',           34,  -206.6,    -16.19,    111.26,    202),
     (17613096, 0 , 'Underworld_Bats',          'Underworld Bats',          19,  0,         0,         0,         0  ),
     (17613097, 0 , 'Underworld_Bats',          'Underworld Bats',          19,  -179.1,    -16.5,     94.674,    221),
-    (17613098, 0 , 'Specter',                  'Specter',                  24,  -162.311,  -16.012,   173.987,   40 ),
+    (17613098, 0 , 'Specter',                  'Specter',                  24,  -162.311,  -16.012,   173.987,   40 ), -- Norther Shadow NM
     (17613099, 0 , 'Specter',                  'Specter',                  25,  -153.459,  -15.913,   151.568,   168),
     (17613100, 0 , 'Specter',                  'Specter',                  27,  0,         0,         0,         0  ),
     (17613101, 0 , 'Specter',                  'Specter',                  26,  0,         0,         0,         0  ),
@@ -310,7 +310,7 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (17613104, 0 , 'Underworld_Bats',          'Underworld Bats',          19,  -137,      -16.12,    178.927,   242),
     (17613105, 0 , 'Specter',                  'Specter',                  24,  0,         0,         0,         0  ),
     (17613106, 0 , 'Specter',                  'Specter',                  25,  0,         0,         0,         0  ),
-    (17613107, 0 , 'Specter',                  'Specter',                  27,  -67.205,   -16.02,    160.485,   138),
+    (17613107, 0 , 'Specter',                  'Specter',                  27,  -67.205,   -16.02,    160.485,   138), -- Eastern Shadow PH
     (17613108, 0 , 'Specter',                  'Specter',                  26,  -92.665,   -16.022,   159.865,   252),
     (17613109, 0 , 'Eastern_Shadow',           'Eastern Shadow',           36,  -92.12,    -16.52,    160.277,   37 ),
     (17613110, 0 , 'Underworld_Bats',          'Underworld Bats',          19,  -3.723,    -16.11,    220.251,   194),
@@ -320,7 +320,7 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (17613114, 0 , 'Utukku',                   'Utukku',                   23,  -133.6,    -16.12,    98.412,    245),
     (17613115, 0 , 'Utukku',                   'Utukku',                   23,  -101.451,  -16,       105.587,   89 ),
     (17613116, 0 , 'Specter',                  'Specter',                  24,  -161.096,  -16.008,   94.195,    41 ),
-    (17613117, 0 , 'Specter',                  'Specter',                  25,  -147.27,   -16.021,   80.275,    111),
+    (17613117, 0 , 'Specter',                  'Specter',                  25,  -147.27,   -16.021,   80.275,    111), -- Southern Shadow PH
     (17613118, 0 , 'Specter',                  'Specter',                  27,  0,         0,         0,         0  ),
     (17613119, 0 , 'Specter',                  'Specter',                  26,  0,         0,         0,         0  ),
     (17613120, 0 , 'Southern_Shadow',          'Southern Shadow',          37,  -164.6,    -16.01,    77.191,    169),

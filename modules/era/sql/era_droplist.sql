@@ -18175,7 +18175,7 @@ INSERT INTO `mob_droplist` VALUES (2282,0,0,1000,4400,@RARE);   -- Slice Of Land
 INSERT INTO `mob_droplist` VALUES (2282,0,0,1000,881,@VRARE);   -- Crab Shell (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (2282,2,0,1000,936,0);        -- Chunk Of Rock Salt (Steal)
 
--- ZoneID: Unknown - Unknown
+-- ZoneID: 191 - Snipper
 INSERT INTO `mob_droplist` VALUES (2283,0,0,1000,936,@UNCOMMON); -- Chunk Of Rock Salt (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (2283,0,0,1000,1028,@RARE);    -- Dangruf Chest Key (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (2283,2,0,1000,936,0);         -- Chunk Of Rock Salt (Steal)
@@ -24773,6 +24773,7 @@ INSERT INTO `mob_droplist` VALUES (3102,0,0,1000,4518,@RARE); -- Strip Of Sheep 
 INSERT INTO `mob_droplist` VALUES (3103,0,0,1000,4435,@VCOMMON); -- Slice Of Cockatrice Meat (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (3103,0,0,1000,842,@UNCOMMON); -- Giant Bird Feather (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (3103,0,0,1000,854,@VRARE);    -- Cockatrice Skin (Very Rare, 1%)
+INSERT INTO `mob_droplist` VALUES (3103,2,0,1000,842,@UNCOMMON); -- Giant Bird Feather (Uncommon, 10%)
 
 -- ZoneID: 102 - Goblin Archaeologist
 -- ZoneID: 108 - Goblin Archaeologist

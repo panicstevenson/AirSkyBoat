@@ -269,6 +269,9 @@ namespace battleutils
     bool           IsMagicCovered(CCharEntity* PCoverAbilityUser);
     void           ConvertDmgToMP(CBattleEntity* PDefender, int32 damage, bool IsCovered);
     float          CheckLiementAbsorb(CBattleEntity* PBattleEntity, DAMAGE_TYPE DamageType);
+
+    void DoReportClaimBot(CMobEntity* PMob);
+    void DoClaimShieldLottery(CMobEntity* PMob);
 }; // namespace battleutils
 
 #endif
