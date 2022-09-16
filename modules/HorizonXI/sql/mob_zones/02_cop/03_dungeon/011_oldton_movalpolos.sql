@@ -187,7 +187,7 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
 (16822453, 0,  'Dark_Bats',                'Dark Bats',                6,   179.506,   7.424,     -94.91,    192 ),
 (16822454, 0,  'Thunder_Elemental',        'Thunder Elemental',        21,  179.456,   7.524,     -100.622,  199 ),
 (16822455, 0,  'Earth_Elemental',          'Earth Elemental',          17,  179.735,   7.524,     -100.241,  199 ),
-(16822456, 0,  'Bugallug',                 'Bugallug',                 35,  163.1,     13.5,      -42.295,   115 ),
+(16822456, 0,  'Bugallug',                 'Bugallug',                 35,  167,       14,        -42,         8 ),
 (16822457, 0,  'Moblin_Gurneyman',         'Moblin Gurneyman',         36,  -16.246,   7.4,       98.546,    124 ),
 (16822458, 0,  'Moblin_Gurneyman',         'Moblin Gurneyman',         36,  50.208,    11.406,    -46.427,   193 ),
 (16822459, 0,  'Goblin_Wolfman',           'Goblin Wolfman',           37,  -150.91,   7.499,     -251.817,  57  ),
