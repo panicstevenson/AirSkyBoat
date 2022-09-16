@@ -9,6 +9,7 @@ require('scripts/globals/zone')
 local zone_object = {}
 
 zone_object.onInitialize = function(zone)
+    xi.horizon.spawnInitialMobs(zone)
     UpdateNMSpawnPoint(ID.mob.MORBOLGER)
     GetMobByID(ID.mob.MORBOLGER):setRespawnTime(math.random(900, 10800))
 
