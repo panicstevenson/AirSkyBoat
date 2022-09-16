@@ -838,16 +838,14 @@ local function updatePlayerDigCount(player, increment)
     else
         player:setCharVar('[DIG]DigCount', player:getCharVar('[DIG]DigCount') + increment)
     end
-
-    player:setCharVar('[DIG]LastDigTime', os.time())
 end
 
-local function canDig(player)
+local function canDig(player, lastDigTable)
+    local lastDigTime              = lastDigTable.lastDig
+    local lastDigX                 = lastDigTable.x
+    local lastDigY                 = lastDigTable.y
+    local lastDigZ                 = lastDigTable.z
     local digCount                 = player:getCharVar('[DIG]DigCount')
-    local lastDigTime              = player:getCharVar('[DIG]LastDigTime')
-    local lastDigX                 = player:getCharVar('[DIG]LastDigX')
-    local lastDigY                 = player:getCharVar('[DIG]LastDigY')
-    local lastDigZ                 = player:getCharVar('[DIG]LastDigZ')
     local posTable                 = player:getPos()
     local currX           = math.floor(posTable.x)
     local currY           = math.floor(posTable.y)
@@ -882,11 +880,9 @@ local function canDig(player)
             if
                 (zoneInTime + areaDigDelay) <= currentTime and
                 (lastDigTime + digDelay) <= currentTime and
-                distanceSquared > DIG_DISTANCE_REQ
+                distanceSquared >= DIG_DISTANCE_REQ
             then
-                player:setCharVar('[DIG]LastDigX', currX)
-                player:setCharVar('[DIG]LastDigY', currY)
-                player:setCharVar('[DIG]LastDigZ', currZ)
+                player:setDigTable()
 
                 return true
             end
@@ -1091,14 +1087,15 @@ end
 
 -- Main function.
 xi.chocoboDig.start = function(player, precheck)
-    local zoneId      = player:getZoneID()
-    local text        = zones[zoneId].text
-    local skillRank   = player:getSkillRank(xi.skill.DIG)
-    local lastDigTime = player:getCharVar('[DIG]LastDigTime')
+    local zoneId       = player:getZoneID()
+    local text         = zones[zoneId].text
+    local skillRank    = player:getSkillRank(xi.skill.DIG)
+    local lastDigTable = player:getDigTable()
+    local lastDigTime  = lastDigTable.lastDigTime
 
     -- make sure the player can dig before going any further
     -- (and also cause i need a return before core can go any further with this)
-    if canDig(player) == true then
+    if canDig(player, lastDigTable) == true then
     local roll         = math.random(0, 100)
     local moon                  = VanadielMoonPhase()
     local moonmodifier          = 1
@@ -1122,7 +1119,6 @@ xi.chocoboDig.start = function(player, precheck)
             end
 
             player:messageText(player, text.FIND_NOTHING, false)
-            player:setCharVar('[DIG]LastDigTime', os.time())
 
             return true
         end
@@ -1130,7 +1126,6 @@ xi.chocoboDig.start = function(player, precheck)
         -- dig chance failure
         if roll > (DIG_RATE * moonmodifier * skillmodifier) then -- base digging rate is 85% and it is multiplied by the moon and skill modifiers
             player:messageText(player, text.FIND_NOTHING)
-            player:setCharVar('[DIG]LastDigTime', os.time())
         -- dig chance success
         else
             local itemId = getChocoboDiggingItem(player)
@@ -1151,7 +1146,6 @@ xi.chocoboDig.start = function(player, precheck)
             -- got a crystal ore, but lacked weather or skill to dig it up
             else
                 player:messageText(player, text.FIND_NOTHING, false)
-                player:setCharVar('[DIG]LastDigTime', os.time())
             end
         end
 
