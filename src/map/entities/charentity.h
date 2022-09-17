@@ -75,6 +75,7 @@ struct profile_t
     uint8      rank[3];    // RAGN in three states
     uint16     rankpoints; // rank glasses in three states
     location_t home_point; // Renaissance point character
+    location_t jail_cell;  // Jail Cell Coordinates For Character
     uint8      campaign_allegiance;
     uint8      unity_leader;
     uint16     raf[15]; // Recruit a Friend

@@ -102,7 +102,7 @@ namespace anticheat
         {
             cellid = 1;
         }
-        const char* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = 'inJail', value = %i ON DUPLICATE KEY UPDATE value = %i;";
+        const char* fmtQuery = "INSERT INTO char_vars SET charid = %u, varname = '[JAIL]inJail', value = %i ON DUPLICATE KEY UPDATE value = %i;";
         sql->Query(fmtQuery, PChar->id, cellid, cellid);
         PChar->loc.p.x         = (float)g_jailCells[cellid - 1][0];
         PChar->loc.p.y         = (float)g_jailCells[cellid - 1][1];

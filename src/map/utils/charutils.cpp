@@ -100,6 +100,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "blueutils.h"
 #include "charutils.h"
 #include "itemutils.h"
+#include "jailutils.h"
 #include "petutils.h"
 #include "puppetutils.h"
 #include "zoneutils.h"
@@ -367,7 +368,12 @@ namespace charutils
                                "moghancement,"                 // 28
                                "UNIX_TIMESTAMP(`lastupdate`)," // 29
                                "languages,"                    // 30
-                               "chatfilters "                  // 31
+                               "chatfilters,"                  // 31
+                               "jail_zone,"                    // 32
+                               "jail_rot,"                     // 33
+                               "jail_x,"                       // 34
+                               "jail_y,"                       // 35
+                               "jail_z "                       // 36
                                "FROM chars "
                                "WHERE charid = %u";
 
@@ -396,6 +402,12 @@ namespace charutils
             PChar->profile.home_point.p.x         = sql->GetFloatData(11);
             PChar->profile.home_point.p.y         = sql->GetFloatData(12);
             PChar->profile.home_point.p.z         = sql->GetFloatData(13);
+
+            PChar->profile.jail_cell.destination = (uint16)sql->GetIntData(32);
+            PChar->profile.jail_cell.p.rotation  = (uint8)sql->GetIntData(33);
+            PChar->profile.jail_cell.p.x         = sql->GetFloatData(34);
+            PChar->profile.jail_cell.p.y         = sql->GetFloatData(35);
+            PChar->profile.jail_cell.p.z         = sql->GetFloatData(36);
 
             PChar->profile.nation = (uint8)sql->GetIntData(14);
 
@@ -6402,9 +6414,18 @@ namespace charutils
         PChar->health.hp = PChar->GetMaxHP();
         PChar->health.mp = PChar->GetMaxMP();
 
-        PChar->loc.boundary    = 0;
-        PChar->loc.p           = PChar->profile.home_point.p;
-        PChar->loc.destination = PChar->profile.home_point.destination;
+        if (jailutils::InPrison(PChar))
+        {
+            PChar->loc.boundary    = 0;
+            PChar->loc.p           = PChar->profile.jail_cell.p;
+            PChar->loc.destination = PChar->profile.jail_cell.destination;
+        }
+        else
+        {
+            PChar->loc.boundary    = 0;
+            PChar->loc.p           = PChar->profile.home_point.p;
+            PChar->loc.destination = PChar->profile.home_point.destination;
+        }
 
         PChar->status    = STATUS_TYPE::DISAPPEAR;
         PChar->animation = ANIMATION_NONE;
