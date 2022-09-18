@@ -93,6 +93,17 @@ local spawnerMobs =
         {name = "Midnight Wings",       groupId =   7, groupZone = 120, funcLookup = "Default",  min = 35, max = 37, xPos = 570.9258, yPos = -0.7598, zPos = -236.1827, rot =  55,  respawn = 330, drops =  1668, skills = 47, spells = 0, spawnType = xi.spawnType.SPAWNTYPE_ATNIGHT},
         {name = "Yagudo Votary",        groupId =   10, groupZone = 120, funcLookup = "Default", min = 36, max = 38, xPos = 541.4835, yPos = -0.0323, zPos = -221.0322, rot =  43,  respawn = 330, drops =  2775, skills = 270, spells = 0},
         {name = "Yagudo Interrogator",  groupId =   17, groupZone = 120, funcLookup = "Default", min = 36, max = 38, xPos = 547.334,  yPos =  7.5221, zPos = -129.7686, rot =  127, respawn = 330, drops =  2772, skills = 270, spells = 0},
+        -- MB Camp 1, Urganites
+        {name = "Young Uragnite",       groupId = 8, groupZone = 4, funcLookup = "Manaburn_Low", min = 36, max = 42, xPos = 402.7, yPos = 40, zPos = 444.8, rot = 133, respawn = 330},
+        {name = "Young Uragnite",       groupId = 8, groupZone = 4, funcLookup = "Manaburn_Low", min = 36, max = 42, xPos = 405.9, yPos = 40, zPos = 423.3, rot = 233, respawn = 330},
+        {name = "Young Uragnite",       groupId = 8, groupZone = 4, funcLookup = "Manaburn_Low", min = 36, max = 42, xPos = 408.75, yPos = 40, zPos = 416.4, rot = 333, respawn = 330},
+        {name = "Young Uragnite",       groupId = 8, groupZone = 4, funcLookup = "Manaburn_Low", min = 36, max = 42, xPos = 391.9, yPos = 40, zPos = 421.29, rot = 33, respawn = 330},
+        {name = "Young Uragnite",       groupId = 8, groupZone = 4, funcLookup = "Manaburn_Low", min = 36, max = 42, xPos = 389.25, yPos = 40.5, zPos = 410.27, rot = 87, respawn = 330},
+        {name = "Young Uragnite",       groupId = 8, groupZone = 4, funcLookup = "Manaburn_Low", min = 36, max = 42, xPos = 376.66, yPos = 40.5, zPos = 426.04, rot = 93, respawn = 330},
+        {name = "Young Uragnite",       groupId = 8, groupZone = 4, funcLookup = "Manaburn_Low", min = 36, max = 42, xPos = 380.02, yPos = 40, zPos = 440.17, rot = 120, respawn = 330},
+        {name = "Young Uragnite",       groupId = 8, groupZone = 4, funcLookup = "Manaburn_Low", min = 36, max = 42, xPos = 378.97, yPos = 40, zPos = 419.51, rot = 100, respawn = 330},
+        {name = "Young Uragnite",       groupId = 8, groupZone = 4, funcLookup = "Manaburn_Low", min = 36, max = 42, xPos = 358.59, yPos = 40, zPos = 439.57, rot = 110, respawn = 330},
+        {name = "Young Uragnite",       groupId = 8, groupZone = 4, funcLookup = "Manaburn_Low", min = 36, max = 42, xPos = 361.89, yPos = 40, zPos = 419.58, rot = 109, respawn = 330},
     },
     [xi.zone.VALKURM_DUNES] =
     {
@@ -105,6 +116,17 @@ local spawnerMobs =
         {name = "Beach Pugil",          groupId =   28, groupZone = 103, funcLookup = "Default", min = 23, max = 26, xPos = -156.5827, yPos =  4.0, zPos = -125.7460, rot =  4, respawn = 330, drops =  248, skills = 197, spells = 0},
         -- Additional mobs to (E-9) Pugil camp
         {name = "Beach Pugil",          groupId =   28, groupZone = 103, funcLookup = "Default", min = 23, max = 26, xPos = -232.1026, yPos =  4.3, zPos = -49.2252, rot =  4, respawn = 330, drops =  248, skills = 197, spells = 0},
+    },
+    [xi.zone.LA_THEINE_PLATEAU] =
+    {
+        -- Manaburn Camp 1, Worms
+        {name = "Eikon Worm", groupId =   8, groupZone = 107, funcLookup = "Manaburn_Low", min = 19, max = 23, xPos = -189.53, yPos =  7.09, zPos = 267.21, rot =  51, respawn = 330},
+        {name = "Eikon Worm", groupId =   8, groupZone = 107, funcLookup = "Manaburn_Low", min = 19, max = 23, xPos = -170.55, yPos =  7.35, zPos = 264.01, rot =  51, respawn = 330},
+        {name = "Eikon Worm", groupId =   8, groupZone = 107, funcLookup = "Manaburn_Low", min = 19, max = 23, xPos = -160.24, yPos =  8.00, zPos = 277.61, rot =  51, respawn = 330},
+        {name = "Eikon Worm", groupId =   8, groupZone = 107, funcLookup = "Manaburn_Low", min = 19, max = 23, xPos = -150.67, yPos =  5.78, zPos = 233.19, rot =  51, respawn = 330},
+        {name = "Eikon Worm", groupId =   8, groupZone = 107, funcLookup = "Manaburn_Low", min = 19, max = 23, xPos = -177.37, yPos =  4.78, zPos = 223.24, rot =  51, respawn = 330},
+        {name = "Eikon Worm", groupId =   8, groupZone = 107, funcLookup = "Manaburn_Low", min = 19, max = 23, xPos = -199.03, yPos =  8.00, zPos = 237.35, rot =  51, respawn = 330},
+        {name = "Eikon Worm", groupId =   8, groupZone = 107, funcLookup = "Manaburn_Low", min = 19, max = 23, xPos = -189.93, yPos =  8.30, zPos = 281.38, rot =  51, respawn = 330},
     },
     [xi.zone.CRAWLERS_NEST] =
     {
@@ -1427,6 +1449,20 @@ local spawnerFunctions =
                 mob:setSpellList(table.spells)
             end
         end,
+        onEngaged           = function(mob, target) end,
+        onFight             = function(mob, target) end,
+        onDisengage         = function(mob, target) end,
+        onWeaponskilPrepare = function(mob, target, skill) end,
+        onWeaponskill       = function(mob, target, skill) end,
+        onMagicPrepare      = function(mob, target, spell) end,
+        onRoam              = function(mob) end,
+        onDeath             = function(mob, playerArg, isKiller) end,
+        onDespawn           = function(mob) end,
+        mixins = {},
+    },
+    ["Manaburn_Low"] =
+    {
+        onSpawn             = function(mob) mob:addMod(xi.mod.DMGPHYS, -9000) mob:addMod(xi.mod.DMGMAGIC, 500) mob:addMod(xi.mod.MEVA, -10) mob:setMobMod(xi.mobMod.NO_AGGRO, 0) end,
         onEngaged           = function(mob, target) end,
         onFight             = function(mob, target) end,
         onDisengage         = function(mob, target) end,

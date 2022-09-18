@@ -21,6 +21,7 @@ zone_object.onChocoboDig = function(player, precheck)
 end
 
 zone_object.onInitialize = function(zone)
+    xi.horizon.spawnInitialMobs(zone)
     laTheineGlobal.moveFallenEgg()
     xi.chocobo.initZone(zone)
     xi.voidwalker.zoneOnInit(zone)

@@ -54,6 +54,9 @@ UPDATE mob_groups SET respawntime = '960' WHERE zoneid = 11     -- Oldton_Movalp
                                              OR zoneid = 184    -- Lower_Delkfutts_Tower
                                              OR zoneid = 208;   -- Quicksand_Caves
 
+-- Adjusting Ghost Levels for Manaburn Camp #1 Latheine
+UPDATE mob_groups SET minLevel = 18, maxLevel = 21 WHERE groupid = "33" AND zoneid = "102";
+
 -- NM Adjustments
 UPDATE mob_groups SET spawntype = 32, respawntime = 0 WHERE name = "Bat_Eye" and zoneid = 166;
 UPDATE mob_groups SET dropid = 256 WHERE name = "King_Crawler" and zoneid = 197; -- Sets King Crawler drop to match Soldier Crawler (KC is OOE) This NEEDS dynaamic renamer
