@@ -64,32 +64,35 @@ xi.dynamis.spawnWave = function(zone, zoneID, waveNumber)
 end
 
 xi.dynamis.parentOnEngaged = function(mob, target)
-    local zoneID = mob:getZoneID()
-    local oMobIndex = mob:getZone():getLocalVar(string.format("MobIndex_%s", mob:getID()))
-    local oMob = mob
-    local eyes = mob:getLocalVar("eyeColor")
-    if eyes ~= nil then
-        mob:setAnimationSub(eyes)
-    end
-    if xi.dynamis.mobList[zoneID][oMobIndex].nmchildren then
-        for index, MobIndex in pairs(xi.dynamis.mobList[zoneID][oMobIndex].nmchildren) do
-            if MobIndex == true or MobIndex == false then
-                index = index + 1
-            else
-                local forceLink = xi.dynamis.mobList[zoneID][oMobIndex].nmchildren[1]
-                local mobType = xi.dynamis.mobList[zoneID][MobIndex].info[1]
-                if mobType == "NM" then -- NMs
-                    xi.dynamis.nmDynamicSpawn(MobIndex, oMobIndex, forceLink, zoneID, target, oMob)
+    if mob:getLocalVar("SpawnedChildren") == 0 then
+        local zoneID = mob:getZoneID()
+        local oMobIndex = mob:getZone():getLocalVar(string.format("MobIndex_%s", mob:getID()))
+        local oMob = mob
+        local eyes = mob:getLocalVar("eyeColor")
+        if eyes ~= nil then
+            mob:setAnimationSub(eyes)
+        end
+        if xi.dynamis.mobList[zoneID][oMobIndex].nmchildren then
+            for index, MobIndex in pairs(xi.dynamis.mobList[zoneID][oMobIndex].nmchildren) do
+                if MobIndex == true or MobIndex == false then
                     index = index + 1
-                else -- Nightmare Mobs and Statues
-                    xi.dynamis.nonStandardDynamicSpawn(MobIndex, oMob, forceLink, zoneID, target, oMobIndex)
-                    index = index + 1
+                else
+                    local forceLink = xi.dynamis.mobList[zoneID][oMobIndex].nmchildren[1]
+                    local mobType = xi.dynamis.mobList[zoneID][MobIndex].info[1]
+                    if mobType == "NM" then -- NMs
+                        xi.dynamis.nmDynamicSpawn(MobIndex, oMobIndex, forceLink, zoneID, target, oMob)
+                        index = index + 1
+                    else -- Nightmare Mobs and Statues
+                        xi.dynamis.nonStandardDynamicSpawn(MobIndex, oMob, forceLink, zoneID, target, oMobIndex)
+                        index = index + 1
+                    end
                 end
             end
         end
-    end
-    if xi.dynamis.mobList[zoneID][oMobIndex].mobchildren then
-        xi.dynamis.normalDynamicSpawn(mob, oMobIndex, target) -- Normies have their own loop, so they don't need one here.
+        if xi.dynamis.mobList[zoneID][oMobIndex].mobchildren then
+            xi.dynamis.normalDynamicSpawn(mob, oMobIndex, target) -- Normies have their own loop, so they don't need one here.
+        end
+        mob:setLocalVar("SpawnedChildren", 1)
     end
 end
 
@@ -213,7 +216,7 @@ xi.dynamis.normalDynamicSpawn = function(oMob, oMobIndex, target)
         },
         [93] = -- Orc Statue
         {
-            [1]  = {"V. Footsoldier", 57, 134, 0, 334}, -- OWAR
+            [1]  = {"V. Footsoldier", 59, 134, 0, 334}, -- OWAR
             [2]  = {"V. Grappler", 64, 134, 0, 334}, -- OMNK
             [3]  = {"V. Amputator", 67, 134, 1, 334}, -- OWHM
             [4]  = {"V. Mesmerizer", 75, 134, 5000, 334}, -- OBLM
@@ -499,7 +502,7 @@ xi.dynamis.nonStandardDynamicSpawn = function(mobIndex, oMob, forceLink, zoneID,
         {
             ["onMobSpawn"] = {function(mob) xi.dynamis.setStatueStats(mob, mobIndex) end},
             ["onMobEngaged"] = {function(mob, target) xi.dynamis.parentOnEngaged(mob, target) end},
-            ["onMobFight"] = {function(mob) xi.dynamis.statueOnFight(mob) end},
+            ["onMobFight"] = {function(mob, target) xi.dynamis.statueOnFight(mob, target) end},
             ["onMobRoam"] = {function(mob) xi.dynamis.mobOnRoam(mob) end},
             ["mixins"] = { }
         },
@@ -1007,15 +1010,15 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
         },
         ["Nant'ina"] =
         {
-          ["onMobSpawn"] = {function(mob) xi.dynamis.onSpawnNoAuto(mob) end},
-          ["onMobEngaged"] = {function(mob, target) end},
-          ["onMobFight"] = {function(mob, target) end},
-          ["onMobRoam"] = {function(mob) end},
-          ["onMobMagicPrepare"] = {function(mob, target, spellId) end},
-          ["onMobWeaponSkillPrepare"] = {function(mob) xi.dynamis.onWeaponskillPrepNantina(mob) end},
-          ["onMobWeaponSkill"] = {function(mob) end},
-          ["onMobDeath"] = {function(mob, player, isKiller) xi.dynamis.mobOnDeath(mob, player, isKiller) end},
-          ["mixins"] = { },
+            ["onMobSpawn"] = {function(mob) xi.dynamis.onSpawnNoAuto(mob) end},
+            ["onMobEngaged"] = {function(mob, target) end},
+            ["onMobFight"] = {function(mob, target) end},
+            ["onMobRoam"] = {function(mob) end},
+            ["onMobMagicPrepare"] = {function(mob, target, spellId) end},
+            ["onMobWeaponSkillPrepare"] = {function(mob) xi.dynamis.onWeaponskillPrepNantina(mob) end},
+            ["onMobWeaponSkill"] = {function(mob) end},
+            ["onMobDeath"] = {function(mob, player, isKiller) xi.dynamis.mobOnDeath(mob, player, isKiller) end},
+            ["mixins"] = { },
         },
         ["Nightmare Morbol"] =
         {
@@ -1409,7 +1412,7 @@ xi.dynamis.spawnDynamicPet =function(target, oMob, mobJob)
             },
         },
     }
-    local petFunctions = 
+    local petFunctions =
     {
         [xi.job.SMN] =
         {
@@ -1508,7 +1511,7 @@ end
 --------------------------------------------
 
 xi.dynamis.mobOnRoam = function(mob) -- Handle pathing.
-    if mob:getRoamFlags() == xi.roamFlag.EVENT then
+    if mob:getRoamFlags() == xi.roamFlag.SCRIPTED then
         local zoneID = mob:getZoneID()
         local mobIndex = mob:getLocalVar(string.format("MobIndex_%s", mob:getID()))
         for _, index in pairs(xi.dynamis.mobList[zoneID].patrolPaths) do
@@ -1560,6 +1563,41 @@ xi.dynamis.setSpecialSkill = function(mob)
     end
 end
 
+local familyEES =
+{
+    [  3] = xi.jsa.EES_AERN,    -- Aern
+    [ 25] = xi.jsa.EES_ANTICA,  -- Antica
+    [115] = xi.jsa.EES_SHADE,   -- Fomor
+    [126] = xi.jsa.EES_GIGA,    -- Gigas
+    [127] = xi.jsa.EES_GIGA,    -- Gigas
+    [128] = xi.jsa.EES_GIGA,    -- Gigas
+    [129] = xi.jsa.EES_GIGA,    -- Gigas
+    [130] = xi.jsa.EES_GIGA,    -- Gigas
+    [133] = xi.jsa.EES_GOBLIN,  -- Goblin
+    [169] = xi.jsa.EES_KINDRED, -- Kindred
+    [171] = xi.jsa.EES_LAMIA,   -- Lamiae
+    [182] = xi.jsa.EES_MERROW,  -- Merrow
+    [184] = xi.jsa.EES_GOBLIN,  -- Moblin
+    [189] = xi.jsa.EES_ORC,     -- Orc
+    [200] = xi.jsa.EES_QUADAV,  -- Quadav
+    [201] = xi.jsa.EES_QUADAV,  -- Quadav
+    [202] = xi.jsa.EES_QUADAV,  -- Quadav
+    [221] = xi.jsa.EES_SHADE,   -- Shadow
+    [222] = xi.jsa.EES_SHADE,   -- Shadow
+    [223] = xi.jsa.EES_SHADE,   -- Shadow
+    [246] = xi.jsa.EES_TROLL,   -- Troll
+    [270] = xi.jsa.EES_YAGUDO,  -- Yagudo
+    [327] = xi.jsa.EES_GOBLIN,  -- Goblin
+    [328] = xi.jsa.EES_GIGA,    -- Gigas
+    [334] = xi.jsa.EES_ORC,     -- OrcNM
+    [335] = xi.jsa.EES_MAAT,    -- Maat
+    [337] = xi.jsa.EES_QUADAV,  -- QuadavNM
+    [358] = xi.jsa.EES_KINDRED, -- Kindred
+    [359] = xi.jsa.EES_SHADE,   -- Fomor
+    [360] = xi.jsa.EES_YAGUDO,  -- YagudoNM
+    [373] = xi.jsa.EES_GOBLIN,  -- Goblin_Armored
+}
+
 xi.dynamis.setMobStats = function(mob)
     if mob ~= nil then
         mob:setMobType(xi.mobskills.mobType.BATTLEFIELD)
@@ -1573,52 +1611,60 @@ xi.dynamis.setMobStats = function(mob)
         mob:setMobLevel(math.random(78,80))
         mob:setTrueDetection(true)
 
-        if job == xi.job.WAR then
+        if     job == xi.job.WAR then
             local params = { }
             params.specials = { }
             params.specials.skill = { }
+            params.specials.skill.id = xi.jsa.MIGHTY_STRIKES
             params.specials.skill.hpp = math.random(55,80)
             xi.mix.jobSpecial.config(mob, params)
         elseif job == xi.job.MNK then
             local params = { }
             params.specials = { }
             params.specials.skill = { }
+            params.specials.skill.id = xi.jsa.HUNDRED_FISTS
             params.specials.skill.hpp = math.random(55,70)
             xi.mix.jobSpecial.config(mob, params)
         elseif job == xi.job.WHM then
             local params = { }
             params.specials = { }
             params.specials.skill = { }
+            params.specials.skill.id = xi.jsa.BENEDICTION
             params.specials.skill.hpp = math.random(40,60)
             xi.mix.jobSpecial.config(mob, params)
         elseif job == xi.job.BLM then
             local params = { }
             params.specials = { }
             params.specials.skill = { }
+            params.specials.skill.id = xi.jsa.MANAFONT
             params.specials.skill.hpp = math.random(55,80)
             xi.mix.jobSpecial.config(mob, params)
         elseif job == xi.job.RDM then
             local params = { }
             params.specials = { }
             params.specials.skill = { }
+            params.specials.skill.id = xi.jsa.CHAINSPELL
             params.specials.skill.hpp = math.random(55,80)
             xi.mix.jobSpecial.config(mob, params)
         elseif job == xi.job.THF then
             local params = { }
             params.specials = { }
             params.specials.skill = { }
+            params.specials.skill.id = xi.jsa.PERFECT_DODGE
             params.specials.skill.hpp = math.random(55,75)
             xi.mix.jobSpecial.config(mob, params)
         elseif job == xi.job.PLD then
             local params = { }
             params.specials = { }
             params.specials.skill = { }
+            params.specials.skill.id = xi.jsa.INVINCIBLE
             params.specials.skill.hpp = math.random(55,75)
             xi.mix.jobSpecial.config(mob, params)
         elseif job == xi.job.DRK then
             local params = { }
             params.specials = { }
             params.specials.skill = { }
+            params.specials.skill.id = xi.jsa.BLOOD_WEAPON
             params.specials.skill.hpp = math.random(55,75)
             xi.mix.jobSpecial.config(mob, params)
         elseif job == xi.job.BST then
@@ -1626,24 +1672,28 @@ xi.dynamis.setMobStats = function(mob)
             local params = { }
             params.specials = { }
             params.specials.skill = { }
+            params.specials.skill.id = xi.jsa.SOUL_VOICE
             params.specials.skill.hpp = math.random(55,80)
             xi.mix.jobSpecial.config(mob, params)
         elseif job == xi.job.RNG then
             local params = { }
             params.specials = { }
             params.specials.skill = { }
+            params.specials.skill.id = familyEES[mob:getFamily()]
             params.specials.skill.hpp = math.random(55,75)
             xi.mix.jobSpecial.config(mob, params)
         elseif job == xi.job.SAM then
             local params = { }
             params.specials = { }
             params.specials.skill = { }
+            params.specials.skill.id = xi.jsa.MEIKYO_SHISUI
             params.specials.skill.hpp = math.random(55,80)
             xi.mix.jobSpecial.config(mob, params)
         elseif job == xi.job.NIN then
             local params = { }
             params.specials = { }
             params.specials.skill = { }
+            params.specials.skill.id = xi.jsa.MIJIN_GAKURE
             params.specials.skill.hpp = math.random(25,35)
             xi.mix.jobSpecial.config(mob, params)
         elseif job == xi.job.DRG then
@@ -1652,6 +1702,22 @@ xi.dynamis.setMobStats = function(mob)
 
         -- Add Check After Calcs
         mob:setMobMod(xi.mobMod.CHECK_AS_NM, 2)
+    end
+end
+
+local mdbValues =
+{
+    [93] = 162, -- Orc Statue
+    [193] = 100, -- Wyvern
+    [229] = 100, -- Hecteyes
+    [334] = 100, -- Orc
+}
+
+xi.dynamis.setMDB = function(mob)
+    for family, mdb in ipairs(mdbValues) do
+        if mob:getFamily() == family then
+            mob:setMod(xi.mod.MDEF, mdb)
+        end
     end
 end
 
@@ -1665,12 +1731,13 @@ xi.dynamis.setNMStats = function(mob)
     mob:setHP(mob:getMaxHP())
     mob:setMobLevel(math.random(80,82))
     mob:setTrueDetection(true)
-    mob:setMobMod(xi.mobMod.CHECK_AS_NM, 2)
+    xi.dynamis.setMDB(mob)
 
     if job == xi.job.NIN then
         local params = { }
         params.specials = { }
         params.specials.skill = { }
+        params.specials.skill.id = xi.jsa.MIJIN_GAKURE
         params.specials.skill.hpp = math.random(15,25)
         xi.mix.jobSpecial.config(mob, params)
     end
@@ -1679,20 +1746,20 @@ end
 xi.dynamis.setStatueStats = function(mob, mobIndex)
     local zoneID = mob:getZoneID()
     local eyes = xi.dynamis.mobList[zoneID][mobIndex].eyes
-    mob:setRoamFlags(xi.roamFlag.EVENT)
+    mob:setRoamFlags(xi.roamFlag.SCRIPTED)
     mob:setMobType(xi.mobskills.mobType.BATTLEFIELD)
     mob:addStatusEffect(xi.effect.BATTLEFIELD, 1, 0, 0, true)
     mob:setMobMod(xi.mobMod.CHECK_AS_NM, 2)
     mob:setMobLevel(math.random(82,84))
-    mob:setMod(xi.mod.DMGMAGIC, -50)
-    mob:setMod(xi.mod.DMGPHYS, -50)
+    mob:setMod(xi.mod.DMG, -5000)
     mob:setTrueDetection(true)
     -- Disabling WHM job trait mods because their job is set to WHM in the DB.
-    mob:setMod(xi.mod.MDEF, 0)
     mob:setMod(xi.mod.REGEN, 0)
     mob:setMod(xi.mod.MPHEAL, 0)
     mob:setMobMod(xi.mobMod.CHECK_AS_NM, 2)
     mob:setSpeed(20)
+
+    xi.dynamis.setMDB(mob)
     if mob:getFamily() >= 92 and mob:getFamily() <= 95 then -- If statue
         if eyes ~= nil then
             mob:setLocalVar("eyeColor", eyes) -- Set Eyes if need be
@@ -1714,6 +1781,7 @@ xi.dynamis.setMegaBossStats = function(mob)
     mob:setMobLevel(88)
     mob:setMod(xi.mod.STR, -10)
     mob:setTrueDetection(true)
+    xi.dynamis.setMDB(mob)
 end
 
 xi.dynamis.setPetStats = function(mob)
@@ -1725,6 +1793,7 @@ xi.dynamis.setPetStats = function(mob)
     mob:setMobMod(xi.mobMod.CHECK_AS_NM, 1)
     mob:setMobLevel(78)
     mob:setTrueDetection(true)
+    xi.dynamis.setMDB(mob)
 end
 
 xi.dynamis.setAnimatedWeaponStats = function(mob)
@@ -1836,25 +1905,25 @@ xi.dynamis.statueOnFight = function(mob, target)
                 mob:delStatusEffect(xi.effect.REGEN)
                 mob:setHP(1)
             end
-            mob:setUntargetable(true)
-            mob:SetMagicCastingEnabled(false)
-            mob:SetAutoAttackEnabled(false)
-            mob:SetMobAbilityEnabled(false)
-            mob:addStatusEffect(xi.effect.STUN, 1, 0, 5)
-            mob:timer(1000, function(mob) -- Allows stun to tick
-                if mob:hasStatusEffect(xi.effect.STUN) then
+            if mob:getLocalVar("reset") ~= 1 then
+                mob:setLocalVar("reset", 1)
+                mob:addStatusEffect(xi.effect.STUN, 1, 0, 5)
+                mob:setUntargetable(true)
+                mob:SetMagicCastingEnabled(false)
+                mob:SetAutoAttackEnabled(false)
+                mob:SetMobAbilityEnabled(false)
+
+                mob:timer(1000, function(mob) -- Allows stun to tick
+                    mob:setTP(0)
+                    mob:SetMobAbilityEnabled(true)
                     mob:delStatusEffectSilent(xi.effect.STUN) -- Remove stun so we can do skill.
-                end
-                if mob:getAnimationSub() == 2 then
-                    mob:setTP(0)
-                    mob:SetMobAbilityEnabled(true)
-                    mob:useMobAbility(1124) -- Use Recover HP
-                elseif mob:getAnimationSub() == 3 then
-                    mob:setTP(0)
-                    mob:SetMobAbilityEnabled(true)
-                    mob:useMobAbility(1125) -- Use Recover MP
-                end
-            end)
+                    if mob:getAnimationSub() == 2 then
+                        mob:useMobAbility(1124) -- Use Recover HP
+                    elseif mob:getAnimationSub() == 3 then
+                        mob:useMobAbility(1125) -- Use Recover MP
+                    end
+                end)
+            end
         end
     end
 end
@@ -1863,23 +1932,25 @@ end
 --          Dynamis Pet Spawning          --
 --------------------------------------------
 xi.dynamis.mobOnEngaged = function(mob, target)
-    if  mob:getMainJob() == xi.job.BST or mob:getMainJob() == xi.job.SMN then
-        mob:entityAnimationPacket("casm")
-        mob:SetAutoAttackEnabled(false)
-        mob:SetMagicCastingEnabled(false)
-        mob:SetMobAbilityEnabled(false)
-
-        mob:timer(3000, function(mob)
-            if mob:isAlive() then
-                xi.dynamis.spawnDynamicPet(target, mob, mob:getMainJob())
-                mob:entityAnimationPacket("shsm")
-                mob:SetAutoAttackEnabled(true)
-                mob:SetMagicCastingEnabled(true)
-                mob:SetMobAbilityEnabled(true)
-            end
-        end)
+    if  mob:getLocalVar("SpawnedPets") == 0 then
+        if  mob:getMainJob() == xi.job.BST or mob:getMainJob() == xi.job.SMN then
+            mob:entityAnimationPacket("casm")
+            mob:SetAutoAttackEnabled(false)
+            mob:SetMagicCastingEnabled(false)
+            mob:SetMobAbilityEnabled(false)
+            mob:timer(3000, function(mob)
+                if mob:isAlive() then
+                    xi.dynamis.spawnDynamicPet(target, mob, mob:getMainJob())
+                    mob:entityAnimationPacket("shsm")
+                    mob:SetAutoAttackEnabled(true)
+                    mob:SetMagicCastingEnabled(true)
+                    mob:SetMobAbilityEnabled(true)
+                end
+            end)
+        end
     elseif mob:getMainJob() == xi.job.DRG then
         mob:useMobAbility(xi.jsa.CALL_WYVERN)
+        xi.dynamis.spawnDynamicPet(target, mob, mob:getMainJob())
     end
 end
 

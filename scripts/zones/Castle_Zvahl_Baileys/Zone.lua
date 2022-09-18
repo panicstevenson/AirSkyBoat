@@ -1,16 +1,15 @@
 -----------------------------------
---
 -- Zone: Castle_Zvahl_Baileys (161)
---
 -----------------------------------
-local ID = require("scripts/zones/Castle_Zvahl_Baileys/IDs")
-require("scripts/globals/conquest")
-require("scripts/globals/treasure")
-require("scripts/globals/zone")
+local ID = require('scripts/zones/Castle_Zvahl_Baileys/IDs')
+require('scripts/globals/conquest')
+require('scripts/globals/treasure')
+require('scripts/globals/zone')
 -----------------------------------
 local zone_object = {}
 
 zone_object.onInitialize = function(zone)
+    xi.horizon.spawnInitialMobs(zone)
     zone:registerRegion(1, -90, 17, 45, -84, 19, 51)  -- map 4 NW porter
     zone:registerRegion(1, 17, -90, 45, -85, 18, 51)  -- map 4 NW porter
     zone:registerRegion(2, -90, 17, -10, -85, 18, -5)  -- map 4 SW porter
@@ -43,44 +42,33 @@ end
 
 zone_object.onZoneIn = function(player, prevZone)
     local cs = -1
+
     if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
         player:setPos(-181.969, -35.542, 19.995, 254)
     end
+
     return cs
 end
 
 zone_object.onRegionEnter = function(player, region)
-
     switch (region:GetRegionID()): caseof
     {
-        -----------------------------------
-        [1] = function (x)  --
-        -----------------------------------
+        [1] = function (x)
             player:startEvent(3) -- ports player to NW room of map 3
         end,
 
-        -----------------------------------
-        [2] = function (x)  --
-        -----------------------------------
+        [2] = function (x)
             player:startEvent(2) -- ports player to SW room of map 3
         end,
 
-        -----------------------------------
-        [3] = function (x)  --
-        -----------------------------------
+        [3] = function (x)
             player:startEvent(1) -- ports player to SE room of map 3
         end,
 
-        -----------------------------------
-        [4] = function (x)  --
-        -----------------------------------
+        [4] = function (x)
             player:startEvent(0) -- ports player to NE room of map 3
         end,
-
-        default = function (x)
-        end,
     }
-
 end
 
 zone_object.onRegionLeave = function(player, region)

@@ -47,19 +47,20 @@ local keyitems =
         cost = 20000
     },
 
-    [5] =
-    {
-        id = xi.ki.IATROCHEMISTRY,
-        rank = 3,
-        cost = 10000
-    },
+    -- OOE KIs
+    -- [5] =
+    -- {
+    --     id = xi.ki.IATROCHEMISTRY,
+    --     rank = 3,
+    --     cost = 10000
+    -- },
 
-    [6] =
-    {
-        id = xi.ki.WAY_OF_THE_ALCHEMIST,
-        rank = 9,
-        cost = 20000
-    }
+    -- [6] =
+    -- {
+    --     id = xi.ki.WAY_OF_THE_ALCHEMIST,
+    --     rank = 9,
+    --     cost = 20000
+    -- }
 }
 
 local items =
@@ -92,33 +93,34 @@ local items =
         cost = 150000
     },
 
-    [4] =
-    {
-        id = 342, -- Alchemist's Signboard
-        rank = 9,
-        cost = 200000
-    },
+    -- OOE GP items
+    -- [4] =
+    -- {
+    --     id = 342, -- Alchemist's Signboard
+    --     rank = 9,
+    --     cost = 200000
+    -- },
 
-    [5] =
-    {
-        id = 15825, -- Alchemist's Ring
-        rank = 6,
-        cost = 80000
-    },
+    -- [5] =
+    -- {
+    --     id = 15825, -- Alchemist's Ring
+    --     rank = 6,
+    --     cost = 80000
+    -- },
 
-    [6] =
-    {
-        id = 3674, -- Alembic
-        rank = 7,
-        cost = 50000
-    },
+    -- [6] =
+    -- {
+    --     id = 3674, -- Alembic
+    --     rank = 7,
+    --     cost = 50000
+    -- },
 
-    [7] =
-    {
-        id = 3332, -- Alchemist's Emblem
-        rank = 9,
-        cost = 15000
-    }
+    -- [7] =
+    -- {
+    --     id = 3332, -- Alchemist's Emblem
+    --     rank = 9,
+    --     cost = 15000
+    -- }
 }
 
 entity.onTrade = function(player, npc, trade)

@@ -59,6 +59,7 @@ extern sol::state lua;
 #include "lua_instance.h"
 #include "lua_item.h"
 #include "lua_mobskill.h"
+#include "lua_petskill.h"
 #include "lua_region.h"
 #include "lua_spell.h"
 #include "lua_statuseffect.h"
@@ -76,10 +77,12 @@ class CSpell;
 class CBaseEntity;
 class CBattleEntity;
 class CAutomatonEntity;
+class CPetEntity;
 class CCharEntity;
 class CBattlefield;
 class CItem;
 class CMobSkill;
+class CPetSkill;
 class CRegion;
 class CStatusEffect;
 class CTradeContainer;
@@ -98,6 +101,7 @@ class CLuaBattlefield;
 class CLuaInstance;
 class CLuaItem;
 class CLuaMobSkill;
+class CLuaPetSkill;
 class CLuaRegion;
 class CLuaSpell;
 class CLuaStatusEffect;
@@ -128,6 +132,8 @@ namespace luautils
     void CacheLuaObjectFromFile(std::string filename, bool printOutput = false);
     auto GetCacheEntryFromFilename(std::string filename) -> sol::table;
     void OnEntityLoad(CBaseEntity* PEntity);
+
+    void PopulateIDLookups(std::optional<uint16> maybeZoneId = std::nullopt);
 
     void  SendEntityVisualPacket(uint32 npcid, const char* command);
     void  InitInteractionGlobal();
@@ -236,6 +242,7 @@ namespace luautils
     auto  OnMobMagicPrepare(CBattleEntity* PCaster, CBattleEntity* PTarget, std::optional<SpellID> startingSpellId) -> std::optional<SpellID>; // triggered when monster wants to use a spell on target
     int32 OnMagicHit(CBattleEntity* PCaster, CBattleEntity* PTarget, CSpell* PSpell);                                                          // triggered when spell cast on monster
     int32 OnWeaponskillHit(CBattleEntity* PMob, CBaseEntity* PAttacker, uint16 PWeaponskill);                                                  // Triggered when Weaponskill strikes monster
+    bool  OnTrustSpellCastCheckBattlefieldTrusts(CBattleEntity* PCaster);                                                                      // Triggered if spell is a trust spell during onCast to determine to interrupt spell or not
 
     int32 OnMobInitialize(CBaseEntity* PMob); // Used for passive trait
     int32 ApplyMixins(CBaseEntity* PMob);
@@ -272,9 +279,13 @@ namespace luautils
     int32  OnAutomatonAbility(CBaseEntity* PTarget, CBaseEntity* PMob, CMobSkill* PMobSkill, CBaseEntity* PMobMaster, action_t* action);
 
     int32 OnAbilityCheck(CBaseEntity* PChar, CBaseEntity* PTarget, CAbility* PAbility, CBaseEntity** PMsgTarget);                                                                               // triggers when a player attempts to use a job ability or roll
-    int32 OnPetAbility(CBaseEntity* PPet, CBaseEntity* PMob, CMobSkill* PMobSkill, CBaseEntity* PPetMaster, action_t* action);                                                                  // triggers when pet uses an ability
+    int32 OnPetAbility(CBaseEntity* PTarget, CBaseEntity* PMob, CMobSkill* PMobSkill, CBaseEntity* PPetMaster, action_t* action);                                                               // triggers when pet uses an ability
+    int32 OnPetAbility(CBaseEntity* PTarget, CPetEntity* PPet, CPetSkill* PMobSkill, CBaseEntity* PPetMaster, action_t* action);                                                                // triggers when pet uses an ability, specialized for pets
     auto  OnUseWeaponSkill(CBattleEntity* PUser, CBaseEntity* PMob, CWeaponSkill* wskill, uint16 tp, bool primary, action_t& action, CBattleEntity* taChar) -> std::tuple<int32, uint8, uint8>; // returns: damage, tphits landed, extra hits landed
     int32 OnUseAbility(CBattleEntity* PUser, CBattleEntity* PTarget, CAbility* PAbility, action_t* action);                                                                                     // triggers when job ability is used
+    int32 OnSteal(CBattleEntity* PChar, CBattleEntity* PTarget, CAbility* PAbility, action_t* action);
+
+    bool OnCanUseSpell(CBattleEntity* PChar, CSpell* Spell); // triggers when CanUseSpell is invoked on spell.cpp for PCs only
 
     auto GetCachedInstanceScript(uint16 instanceId) -> sol::table;
 

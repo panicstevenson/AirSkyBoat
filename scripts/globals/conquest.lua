@@ -1,7 +1,5 @@
 -----------------------------------
---
---     Functions for Conquest system
---
+-- Functions for Conquest system
 -----------------------------------
 require("scripts/globals/teleports")
 require("scripts/globals/keyitems")
@@ -11,8 +9,10 @@ require("scripts/globals/settings")
 require("scripts/globals/garrison")
 require("scripts/globals/status")
 require("scripts/globals/zone")
+require("scripts/globals/items")
+require("scripts/globals/extravaganza")
+require("scripts/globals/garrison")
 -----------------------------------
-
 xi = xi or {}
 xi.conquest = xi.conquest or {}
 
@@ -629,6 +629,7 @@ local function getArg1(player, guardNation, guardType)
     local pNation = player:getNation()
     local output = 0
     local signet = 0
+    local cipher = xi.extravaganza.campaignActive() * 20 * 65536
 
     if guardNation == xi.nation.WINDURST then
         output = 33
@@ -661,7 +662,7 @@ local function getArg1(player, guardNation, guardType)
         output = 1808
     end
 
-    return output
+    return output + cipher
 end
 
 -- arg6 encodes a player's rank and nationality:
@@ -686,7 +687,11 @@ local overseerInvCommon =
     [32934] = {cp =  1000, lvl =  1, item = 15762},             -- empress_band
     [32935] = {cp =  2000, lvl =  1, item = 15763},             -- emperor_band
     [32936] = {cp =  5000, lvl =  1, item = 28540},             -- warp_ring
-    [32941] = {cp = 20000, lvl =  1, item =  6380, rank = 10},  -- refined_chair_set
+    [32937] = {cp =  1000, lvl =  1, item = xi.items.CIPHER_OF_TENZENS_ALTER_EGO},
+    [32938] = {cp =  1000, lvl =  1, item = xi.items.CIPHER_OF_RAHALS_ALTER_EGO},
+    [32939] = {cp =  1000, lvl =  1, item = xi.items.CIPHER_OF_KUKKIS_ALTER_EGO},
+    [32941] = {cp = 20000, lvl =  1, item = xi.items.REFINED_CHAIR_SET, rank = 10},
+    [32942] = {cp =  1000, lvl =  1, item = xi.items.CIPHER_OF_MAKKIS_ALTER_EGO},
 }
 
 local overseerInvNation =
@@ -988,14 +993,10 @@ end
 -----------------------------------
 
 xi.conquest.overseerOnTrade = function(player, npc, trade, guardNation, guardType)
-    -- Garrison Trade
-	if 
-		guardType == xi.conq.guard.OUTPOST and 
-		(trade:getItemId() >= 1528 and trade:getItemId() <= 1543) 
-	then
-		xi.garrison.onTrade(player, npc, trade, guardNation)
-	end
-	
+    if xi.garrison.onTrade(player, npc, trade, guardNation) then
+        return
+    end
+
     if player:getNation() == guardNation or guardNation == xi.nation.OTHER then
         local item = trade:getItemId()
         local tradeConfirmed = false
@@ -1052,7 +1053,7 @@ xi.conquest.overseerOnTrade = function(player, npc, trade, guardNation, guardTyp
                 else
                     player:showText(npc, mOffset + 55, item, ring.cp) -- "You do not have the required conquest points to recharge."
                 end
-             else
+            else
                 -- TODO: Verify that message is retail correct.
                 -- This gives feedback on a failure at least, and is grouped with the recharge messages.  Confident enough for a commit.
                 player:showText(npc, mOffset + 56, item) -- "Please be aware that you can only purchase or recharge <item> once during the period between each conquest results tally.
@@ -1063,13 +1064,13 @@ end
 
 xi.conquest.overseerOnTrigger = function(player, npc, guardNation, guardType, guardEvent, guardRegion)
     local pNation = player:getNation()
-    local zoneId = npc:getZoneID()
-    local status = player:getCharVar(string.format("[GARRISON]Status_%s", zoneId))
-	-- GARRISON
-	if status > 0 then
-		xi.garrison.onTrigger(player, npc)
+
+    if xi.garrison.onTrigger(player, npc) then
+        return
+    end
+
     -- SUPPLY RUNS
-    elseif pNation == guardNation and areSuppliesRotten(player, npc, guardType) then
+    if pNation == guardNation and areSuppliesRotten(player, npc, guardType) then
         -- do nothing else
     elseif pNation == guardNation and guardType >= xi.conquest.guard.OUTPOST and canDeliverSupplies(player, guardNation, guardEvent, guardRegion) then
         -- do nothing else
@@ -1192,6 +1193,10 @@ xi.conquest.overseerOnEventFinish = function(player, csid, option, guardNation, 
     local sRegion  = player:getCharVar("supplyQuest_region")
     local sOutpost = outposts[sRegion]
     local mOffset  = zones[player:getZoneID()].text.CONQUEST
+
+    if xi.garrison.onEventFinish(player, csid, option, guardNation, guardType, guardRegion) then
+        return
+    end
 
     -- SIGNET
     if option == 1 then

@@ -1,17 +1,16 @@
 -----------------------------------
---
 -- Zone: Zeruhn_Mines (172)
---
 -----------------------------------
-local ID = require("scripts/zones/Zeruhn_Mines/IDs")
-require("scripts/globals/conquest")
-require("scripts/globals/quests")
-require("scripts/globals/helm")
-require("scripts/globals/zone")
+local ID = require('scripts/zones/Zeruhn_Mines/IDs')
+require('scripts/globals/conquest')
+require('scripts/globals/quests')
+require('scripts/globals/helm')
+require('scripts/globals/zone')
 -----------------------------------
 local zone_object = {}
 
 zone_object.onInitialize = function(zone)
+    xi.horizon.spawnInitialMobs(zone)
     xi.helm.initZone(zone, xi.helm.type.MINING)
 end
 

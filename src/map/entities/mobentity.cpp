@@ -26,6 +26,8 @@
 #include "../ai/helpers/pathfind.h"
 #include "../ai/helpers/targetfind.h"
 #include "../ai/states/attack_state.h"
+#include "../ai/states/claimshield_state.h"
+#include "../ai/states/mobshield_state.h"
 #include "../ai/states/mobskill_state.h"
 #include "../ai/states/weaponskill_state.h"
 #include "../conquest_system.h"
@@ -47,6 +49,7 @@
 #include "../utils/itemutils.h"
 #include "../utils/mobutils.h"
 #include "../utils/petutils.h"
+#include "../utils/zoneutils.h"
 #include "../weapon_skill.h"
 #include "common/timer.h"
 #include "common/utils.h"
@@ -108,6 +111,9 @@ CMobEntity::CMobEntity()
     defRank = 3;
     accRank = 3;
     evaRank = 3;
+
+    m_spawnSet     = 0;
+    m_setMaxSpawns = 0;
 
     m_dmgMult = 100;
 
@@ -284,7 +290,7 @@ bool CMobEntity::CanRoamHome()
 
 bool CMobEntity::CanRoam()
 {
-    return !(m_roamFlags & ROAMFLAG_EVENT) && PMaster == nullptr && (speed > 0 || (m_roamFlags & ROAMFLAG_WORM)) && getMobMod(MOBMOD_NO_MOVE) == 0;
+    return !(m_roamFlags & ROAMFLAG_SCRIPTED) && PMaster == nullptr && (speed > 0 || (m_roamFlags & ROAMFLAG_WORM)) && getMobMod(MOBMOD_NO_MOVE) == 0;
 }
 
 void CMobEntity::TapDeaggroTime()
@@ -300,6 +306,16 @@ void CMobEntity::TapDeaggroTime()
 bool CMobEntity::CanLink(position_t* pos, int16 superLink)
 {
     TracyZoneScoped;
+
+    if (loc.zone->HasReducedVerticalAggro())
+    {
+        float verticalDistance = abs(loc.p.y - (*pos).y);
+        if (verticalDistance > 3.5f)
+        {
+            return false;
+        }
+    }
+
     // handle super linking
     if (superLink && getMobMod(MOBMOD_SUPERLINK) == superLink)
     {
@@ -380,7 +396,7 @@ uint16 CMobEntity::TPUseChance()
         return 0;
     }
 
-    if (health.tp == 3000 || (GetHPP() <= 25 && health.tp >= 1000))
+    if (health.tp == 3000 || (GetHPP() <= 50 && health.tp >= 2000) || (GetHPP() <= 25 && health.tp >= 1000))
     {
         return 10000;
     }
@@ -602,6 +618,15 @@ void CMobEntity::Spawn()
 
     m_DespawnTimer = time_point::min();
     luautils::OnMobSpawn(this);
+
+    if (getMod(Mod::CLAIMSHIELD) > 0)
+    {
+        PAI->Internal_ClaimShieldState();
+    }
+    else if (this->m_Type == MOBTYPE_NOTORIOUS)
+    {
+        PAI->Internal_MobShieldState();
+    }
 }
 
 void CMobEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& action)
@@ -667,8 +692,36 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
         }
         else if (PSkill->isConal())
         {
-            float angle = 45.0f;
-            PAI->TargetFind->findWithinCone(PTarget, distance, angle, findFlags);
+            float angle = 0.0f;
+            if (this->m_Family == 62 || this->m_Family == 164) // Cerb and Hydra families have wide Conals
+            {
+                angle = 90.0f;
+            }
+            else if (this->m_Family >= 259 && (this->m_Family <= 264 || (this->m_Family >= 391 && this->m_Family <= 393))) // Wyrms have slightly wider than normal
+            {
+                angle = 60.0f;
+            }
+            else if (PSkill->getID() == 2335) // Ixion's Lightning Spear is the only 120º Conal that we know of
+            {
+                angle = 120.0f;
+            }
+            else
+            {
+                angle = 45.0f;
+            }
+            if (PSkill->m_Aoe == 6) // Conal from center of mob
+            {
+                PAI->TargetFind->findWithinCone(PTarget, AOE_RADIUS::ATTACKER, distance, angle, findFlags, 0);
+            }
+            else if (PSkill->m_Aoe == 7) // Conal from center of mob in front and behind
+            {
+                PAI->TargetFind->findWithinCone(PTarget, AOE_RADIUS::ATTACKER, distance, angle, findFlags, 128);
+                PAI->TargetFind->findWithinCone(PTarget, AOE_RADIUS::ATTACKER, distance, angle, findFlags, 0);
+            }
+            else // Conal in front centered on target, m_AoE 5 sets conal to rear
+            {
+                PAI->TargetFind->findWithinCone(PTarget, AOE_RADIUS::TARGET, distance, angle, findFlags, (PSkill->m_Aoe == 5) * 128);
+            }
         }
         else
         {
@@ -891,14 +944,14 @@ float CMobEntity::ApplyTH(int16 m_THLvl, int16 rate)
 {
     TracyZoneScoped;
 
-    float multi = 1.00f;
-    bool ultra_rare = (rate == 1);
-    bool super_rare = (rate == 5);
-    bool very_rare = (rate == 10);
-    bool rare = (rate == 50);
-    bool uncommon = (rate == 100);
-    bool common = (rate == 150);
-    bool very_common = (rate == 240);
+    float multi       = 1.00f;
+    bool  ultra_rare  = (rate == 1);
+    bool  super_rare  = (rate == 5);
+    bool  very_rare   = (rate == 10);
+    bool  rare        = (rate == 50);
+    bool  uncommon    = (rate == 100);
+    bool  common      = (rate == 150);
+    bool  very_common = (rate == 240);
 
     if (ultra_rare)
     {
@@ -992,30 +1045,30 @@ float CMobEntity::ApplyTH(int16 m_THLvl, int16 rate)
     else if (rare)
     {
         if (m_THLvl < 3)
-         {
-             multi = 1.00f + (0.20f * m_THLvl);
-             return multi;
-         }
-         else if (m_THLvl < 8)
-         {
-             multi = 1.40f + (0.10f * (m_THLvl - 2));
-             return multi;
-         }
-         else if (m_THLvl < 12)
-         {
-             multi = 1.90f + (0.20f * (m_THLvl - 7));
-             return multi;
-         }
-         else if (m_THLvl < 14)
-         {
-             multi = 2.70f + (0.40f * (m_THLvl - 11));
-             return multi;
-         }
-         else
-         {
-             multi = 3.50f + (0.50f * (m_THLvl - 13));
-             return multi;
-         }
+        {
+            multi = 1.00f + (0.20f * m_THLvl);
+            return multi;
+        }
+        else if (m_THLvl < 8)
+        {
+            multi = 1.40f + (0.10f * (m_THLvl - 2));
+            return multi;
+        }
+        else if (m_THLvl < 12)
+        {
+            multi = 1.90f + (0.20f * (m_THLvl - 7));
+            return multi;
+        }
+        else if (m_THLvl < 14)
+        {
+            multi = 2.70f + (0.40f * (m_THLvl - 11));
+            return multi;
+        }
+        else
+        {
+            multi = 3.50f + (0.50f * (m_THLvl - 13));
+            return multi;
+        }
     }
     else if (uncommon)
     {
@@ -1130,11 +1183,13 @@ float CMobEntity::ApplyTH(int16 m_THLvl, int16 rate)
 void CMobEntity::DropItems(CCharEntity* PChar)
 {
     TracyZoneScoped;
-    // Adds an item to the treasure pool and returns true if the pool has been filled
+    // Adds an item to the treasure pool
     auto AddItemToPool = [this, PChar](uint16 ItemID, uint8 dropCount)
     {
         PChar->PTreasurePool->AddItem(ItemID, this);
-        return dropCount >= TREASUREPOOL_SIZE;
+        // This used to cap the number of drops a mob can produce at 10, but
+        // that's not the correct behavior.
+        return false; // dropCount >= TREASUREPOOL_SIZE;
     };
 
     auto UpdateDroprateOrAddToList = [&](std::vector<DropItem_t>& list, uint8 dropType, uint16 itemID, uint16 dropRate)
@@ -1198,6 +1253,12 @@ void CMobEntity::DropItems(CCharEntity* PChar)
 
         for (const DropGroup_t& group : DropList.Groups)
         {
+            uint16 total = 0;
+            for (const DropItem_t& item : group.Items)
+            {
+                total += item.DropRate;
+            }
+
             for (int16 roll = 0; roll < maxRolls; ++roll)
             {
                 // Determine if this group should drop an item and determine bonus
@@ -1207,7 +1268,7 @@ void CMobEntity::DropItems(CCharEntity* PChar)
                     // Each item in the group is given its own weight range which is the previous value to the previous value + item.DropRate
                     // Such as 2 items with drop rates of 200 and 800 would be 0-199 and 200-999 respectively
                     uint16 previousRateValue = 0;
-                    uint16 itemRoll          = xirand::GetRandomNumber(1000);
+                    uint16 itemRoll          = xirand::GetRandomNumber(total);
                     for (const DropItem_t& item : group.Items)
                     {
                         if (previousRateValue + item.DropRate > itemRoll)
@@ -1622,8 +1683,78 @@ void CMobEntity::OnDespawn(CDespawnState& /*unused*/)
 {
     TracyZoneScoped;
     FadeOut();
-    PAI->Internal_Respawn(std::chrono::milliseconds(m_RespawnTime));
+
+    if (this->m_spawnSet > 0)
+    {
+        bool  success  = false;
+        uint8 maxTries = 50;
+        uint8 i        = 1;
+
+        while (success == false && i <= maxTries) // While no success, try until maxTries then use failback of respawning same mob.
+        {
+            int    vectorSize   = static_cast<int>(this->loc.zone->m_MultiSpawnVector[this->m_spawnSet].size() - 1); // Get size of the vector for random purposes minus 1 to account for 0 position
+            uint8  randomChoice = xirand::GetRandomNumber(0, vectorSize);                                            // Find a random iterator between 0 and max vector size
+            uint32 mobId        = this->loc.zone->m_MultiSpawnVector[this->m_spawnSet][randomChoice];
+            auto*  PMob         = dynamic_cast<CMobEntity*>(zoneutils::GetEntity(mobId, TYPE_MOB | TYPE_PET));
+
+            if (PMob != nullptr) // Failure results in ID removal and vector cleaning to reduce nullptr issues and improve runtime
+            {
+                if (PMob->status == STATUS_TYPE::DISAPPEAR)
+                {
+                    uint32 hourAdj = std::round(CVanaTime::getInstance()->getHour() + ((PMob->m_RespawnTime / 1000) / 144)); // 2m 24s per Vana Hour
+
+                    if (hourAdj > 24)
+                    {
+                        hourAdj -= 24;
+                    }
+
+                    if (PMob->m_SpawnType == SPAWNTYPE_NORMAL) // If I am a normal spawn
+                    {
+                        this->m_AllowRespawn = false;                                                // Stop me from respawning
+                        PMob->m_AllowRespawn = true;                                                 // Let my friend respawn
+                        PMob->PAI->Internal_Respawn(std::chrono::milliseconds(PMob->m_RespawnTime)); // Set my friend's internal respawn time.
+                        success = true;                                                              // Mark this as a success
+                    }
+                    else if (PMob->m_SpawnType == SPAWNTYPE_ATNIGHT && (hourAdj >= 20 || hourAdj < 4)) // If I only spawn during night
+                    {
+                        this->m_AllowRespawn = false;                                                // Stop me from respawning
+                        PMob->m_AllowRespawn = true;                                                 // Let my friend respawn
+                        PMob->PAI->Internal_Respawn(std::chrono::milliseconds(PMob->m_RespawnTime)); // Set my friend's internal respawn time.
+                        success = true;                                                              // Mark this as a success
+                    }
+                    else if (PMob->m_SpawnType == SPAWNTYPE_ATEVENING && (hourAdj >= 18 || hourAdj < 6)) // If I only spawn in the evening
+                    {
+                        this->m_AllowRespawn = false;                                                // Stop me from respawning
+                        PMob->m_AllowRespawn = true;                                                 // Let my friend respawn
+                        PMob->PAI->Internal_Respawn(std::chrono::milliseconds(PMob->m_RespawnTime)); // Set my friend's internal respawn time.
+                        success = true;                                                              // Mark this as a success
+                    }
+                    else if (PMob->m_SpawnType == SPAWNTYPE_ATDUSK && (hourAdj >= 17 || hourAdj < 7)) // If I only spawn at dusk
+                    {
+                        this->m_AllowRespawn = false;                                                // Stop me from respawning
+                        PMob->m_AllowRespawn = true;                                                 // Let my friend respawn
+                        PMob->PAI->Internal_Respawn(std::chrono::milliseconds(PMob->m_RespawnTime)); // Set my friend's internal respawn time.
+                        success = true;                                                              // Mark this as a success
+                    }
+                    else
+                    {
+                        i += 1; // It up as we failed.
+                    }
+                }
+                else
+                {
+                    i += 1; // It up as the mob was alive and we can't respawn it.
+                }
+            }
+        }
+    }
+    else
+    {
+        PAI->Internal_Respawn(std::chrono::milliseconds(m_RespawnTime));
+    }
+
     luautils::OnMobDespawn(this);
+    PAI->ClearActionQueue();
     //#event despawn
     PAI->EventHandler.triggerListener("DESPAWN", CLuaBaseEntity(this));
 }
@@ -1631,6 +1762,7 @@ void CMobEntity::OnDespawn(CDespawnState& /*unused*/)
 void CMobEntity::Die()
 {
     TracyZoneScoped;
+
     m_THLvl = PEnmityContainer->GetHighestTH();
     PEnmityContainer->Clear();
     PAI->ClearStateStack();

@@ -1,13 +1,13 @@
 -----------------------------------
 -- Zone: Pashhow_Marshlands (109)
 -----------------------------------
-local ID = require("scripts/zones/Pashhow_Marshlands/IDs")
-require("scripts/quests/i_can_hear_a_rainbow")
-require("scripts/globals/chocobo_digging")
-require("scripts/globals/conquest")
-require("scripts/globals/missions")
-require("scripts/globals/zone")
-require("scripts/missions/amk/helpers")
+local ID = require('scripts/zones/Pashhow_Marshlands/IDs')
+require('scripts/quests/i_can_hear_a_rainbow')
+require('scripts/globals/chocobo_digging')
+require('scripts/globals/conquest')
+require('scripts/globals/missions')
+require('scripts/globals/zone')
+require('scripts/missions/amk/helpers')
 -----------------------------------
 local zone_object = {}
 
@@ -69,6 +69,17 @@ zone_object.onEventUpdate = function(player, csid, option)
 end
 
 zone_object.onEventFinish = function( player, csid, option)
+end
+
+zone_object.onZoneWeatherChange = function(weather)
+    if weather == xi.weather.RAIN or weather == xi.weather.SQUALL then
+        DisallowRespawn(ID.mob.TOXIC_TAMLYN, false)
+        if os.time() > GetServerVariable("TamlynRespawn") then
+            SpawnMob(ID.mob.TOXIC_TAMLYN)
+        end
+    elseif weather ~= xi.weather.RAIN or weather ~= xi.weather.SQUALL then
+        DisallowRespawn(ID.mob.TOXIC_TAMLYN, true)
+    end
 end
 
 return zone_object

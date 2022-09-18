@@ -1,14 +1,12 @@
 -----------------------------------
 -- Zone: RuLude_Gardens (243)
 -----------------------------------
-local ID = require("scripts/zones/RuLude_Gardens/IDs")
-require("scripts/globals/conquest")
-require("scripts/globals/keyitems")
-require("scripts/globals/missions")
-require("scripts/globals/npc_util")
-require("scripts/globals/quests")
-require("scripts/globals/rhapsodies")
-require("scripts/globals/items")
+local ID = require('scripts/zones/RuLude_Gardens/IDs')
+require('scripts/globals/conquest')
+require('scripts/globals/keyitems')
+require('scripts/globals/missions')
+require('scripts/globals/npc_util')
+require('scripts/globals/quests')
 -----------------------------------
 local zone_object = {}
 
@@ -38,14 +36,7 @@ zone_object.onRegionEnter = function(player, region)
     if regionID == 1 then
         if player:getCurrentMission(xi.mission.log_id.COP) == xi.mission.id.cop.DAWN then
             if player:getCharVar("Mission[6][840]Status") == 8 then
-                if player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.STORMS_OF_FATE) == QUEST_AVAILABLE then
-                    player:startEvent(142)
-                elseif
-                    player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.STORMS_OF_FATE) == QUEST_ACCEPTED and
-                    player:getCharVar('StormsOfFate') == 3
-                then
-                    player:startEvent(143)
-                elseif
+                if
                     player:hasCompletedQuest(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.STORMS_OF_FATE) and
                     player:getCurrentMission(xi.mission.log_id.ZILART) == xi.mission.id.zilart.AWAKENING and
                     player:getMissionStatus(xi.mission.log_id.ZILART) == 3 and
@@ -59,13 +50,6 @@ zone_object.onRegionEnter = function(player, region)
                     player:hasKeyItem(xi.ki.PROMYVION_DEM_SLIVER)
                 then
                     player:startEvent(162)
-                elseif
-                    player:hasCompletedQuest(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.SHADOWS_OF_THE_DEPARTED) and
-                    player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.APOCALYPSE_NIGH) == QUEST_AVAILABLE and
-                    player:getLocalVar('ANZONE') == 0 and
-                    player:getCharVar("ApocNighWait") <= os.time()
-                then
-                    player:startEvent(123)
                 end
             end
         end
@@ -79,13 +63,7 @@ zone_object.onEventUpdate = function(player, csid, option)
 end
 
 zone_object.onEventFinish = function(player, csid, option)
-    if csid == 142 then
-        player:addQuest(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.STORMS_OF_FATE)
-    elseif csid == 143 then
-        player:completeQuest(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.STORMS_OF_FATE)
-        player:setCharVar('StormsOfFate', 0)
-        player:setCharVar("StormsOfFateWait", getVanaMidnight())
-    elseif csid == 161 then
+    if csid == 161 then
         npcUtil.giveKeyItem(player, xi.ki.NOTE_WRITTEN_BY_ESHANTARL)
         player:addQuest(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.SHADOWS_OF_THE_DEPARTED)
         player:setCharVar("StormsOfFateWait", 0)
@@ -95,12 +73,8 @@ zone_object.onEventFinish = function(player, csid, option)
         player:delKeyItem(xi.ki.PROMYVION_DEM_SLIVER)
         player:delKeyItem(xi.ki.PROMYVION_MEA_SLIVER)
         player:messageSpecial(ID.text.YOU_HAND_THE_THREE_SLIVERS)
-        player:setLocalVar('ANZONE', 1)
-        player:setCharVar("ApocNighWait", getVanaMidnight())
-    elseif csid == 123 then
-        player:addQuest(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.APOCALYPSE_NIGH)
-        player:setCharVar('ApocalypseNigh', 1)
-        player:setCharVar("ApocNighWait", 0)
+        player:setLocalVar("Quest[3][89]mustZone", 1)
+        player:setCharVar("Quest[3][89]Wait", getVanaMidnight())
     end
 end
 

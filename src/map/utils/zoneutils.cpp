@@ -32,6 +32,7 @@
 #include "../entities/mobentity.h"
 #include "../entities/npcentity.h"
 #include "../items/item_weapon.h"
+#include "../lua/lua_baseentity.h"
 #include "../lua/luautils.h"
 #include "../map.h"
 #include "../mob_modifier.h"
@@ -281,8 +282,8 @@ namespace zoneutils
                     PNpc->targid     = NpcID & 0xFFF;
                     PNpc->id         = NpcID;
 
-                    PNpc->name.insert(0, (const char*)sql->GetData(2));       // Internal name
-                    PNpc->packetName.insert(0, (const char*)sql->GetData(3)); // Name sent to the client (when applicable)
+                    PNpc->name       = sql->GetStringData(2); // Internal name
+                    PNpc->packetName = sql->GetStringData(3); // Name sent to the client (when applicable)
 
                     PNpc->loc.p.rotation = (uint8)sql->GetIntData(4);
                     PNpc->loc.p.x        = sql->GetFloatData(5);
@@ -340,8 +341,9 @@ namespace zoneutils
         uint8 normalLevelRangeMin = settings::get<uint8>("main.NORMAL_MOB_MAX_LEVEL_RANGE_MIN");
         uint8 normalLevelRangeMax = settings::get<uint8>("main.NORMAL_MOB_MAX_LEVEL_RANGE_MAX");
 
-        const char* Query = "SELECT    mob_groups.zoneid, mob_spawn_points.mobname, mob_spawn_points.mobid, mob_spawn_points.pos_rot, mob_spawn_points.pos_x, \
-        mob_spawn_points.pos_y, mob_spawn_points.pos_z, mob_groups.respawntime, mob_groups.spawntype, mob_groups.dropid, mob_groups.HP, \
+        const char* Query = "SELECT    mob_groups.zoneid, mob_spawn_points.mobname, mob_spawn_points.mobid, \
+        mob_spawn_points.pos_rot, mob_spawn_points.pos_x, mob_spawn_points.pos_y, mob_spawn_points.pos_z, \
+        mob_groups.respawntime, mob_groups.spawntype, mob_groups.dropid, mob_groups.HP, \
         mob_groups.MP, mob_groups.minLevel, mob_groups.maxLevel, mob_pools.modelid, mob_pools.mJob, mob_pools.sJob, \
         mob_pools.cmbSkill, mob_pools.cmbDmgMult, mob_pools.cmbDelay, mob_pools.behavior, mob_pools.links, mob_pools.mobType, \
         mob_pools.immunity, mob_family_system.ecosystemID, mob_family_system.mobradius, mob_family_system.speed, mob_family_system.STR, \
@@ -356,10 +358,12 @@ namespace zoneutils
         mob_pools.hasSpellScript, mob_pools.spellList, mob_groups.poolid, mob_groups.allegiance, mob_pools.namevis, mob_pools.aggro, \
         mob_pools.roamflag, mob_pools.skill_list_id, mob_pools.true_detection, mob_family_system.detects, mob_family_system.charmable, \
         mob_groups.content_tag, \
-        mob_resistances.fire_eem, mob_resistances.ice_eem, mob_resistances.wind_eem, mob_resistances.earth_eem, mob_resistances.lightning_eem, mob_resistances.water_eem, \
-        mob_resistances.light_eem, mob_resistances.dark_eem \
+        mob_ele_evasion.fire_eem, mob_ele_evasion.ice_eem, mob_ele_evasion.wind_eem, mob_ele_evasion.earth_eem, \
+        mob_ele_evasion.lightning_eem, mob_ele_evasion.water_eem, mob_ele_evasion.light_eem, mob_ele_evasion.dark_eem, \
+        mob_groups.subratio, mob_spawn_points.spawnset \
         FROM mob_groups INNER JOIN mob_pools ON mob_groups.poolid = mob_pools.poolid \
         INNER JOIN mob_resistances ON mob_resistances.resist_id = mob_pools.resist_id \
+        INNER JOIN mob_ele_evasion ON mob_ele_evasion.ele_eva_id = mob_pools.ele_eva_id \
         INNER JOIN mob_spawn_points ON mob_groups.groupid = mob_spawn_points.groupid \
         INNER JOIN mob_family_system ON mob_pools.familyid = mob_family_system.familyID \
         INNER JOIN zone_settings ON mob_groups.zoneid = zone_settings.zoneid \
@@ -407,6 +411,7 @@ namespace zoneutils
 
                     PMob->m_minLevel = (uint8)sql->GetIntData(12);
                     PMob->m_maxLevel = (uint8)sql->GetIntData(13);
+                    PMob->m_subRatio = (uint8)sql->GetIntData(86);
 
                     uint16 sqlModelID[10];
                     memcpy(&sqlModelID, sql->GetData(14), 20);
@@ -572,6 +577,9 @@ namespace zoneutils
 
                     PMob->setMobMod(MOBMOD_CHARMABLE, sql->GetUIntData(76));
 
+                    PMob->m_spawnSet     = (uint8)sql->GetUIntData(87); // Which spawnSet a specific mob belongs to.
+                    PMob->m_setMaxSpawns = 0;
+
                     // Overwrite base family charmables depending on mob type. Disallowed mobs which should be charmable
                     // can be set in mob_spawn_mods or in their onInitialize
                     if (PMob->m_Type & MOBTYPE_EVENT || PMob->m_Type & MOBTYPE_FISHED || PMob->m_Type & MOBTYPE_BATTLEFIELD ||
@@ -604,15 +612,50 @@ namespace zoneutils
                 PMob->saveMobModifiers();
                 PMob->m_AllowRespawn = PMob->m_SpawnType == SPAWNTYPE_NORMAL;
 
-                if (PMob->m_AllowRespawn)
+                // Setup Vectors and Max Spawn Vars for Multispawn Mobs
+                if (PMob->m_spawnSet > 0) // If I am a multispawn mob
+                {
+                    
+                    if (PMob->loc.zone->m_MultiSpawnVector.empty()) // If the vector doesn't exist I should make a new one.
+                    {
+                        PMob->loc.zone->m_MultiSpawnVector.insert(std::make_pair(PMob->m_spawnSet, std::vector<uint32>{})); // Create spawnSet Row, Initialize Empty Vector
+                    }
+
+                    const char* SpawnSetQuery = "SELECT maxspawns FROM mob_spawn_sets WHERE zoneid = %u AND spawnsetid = %u;";
+                    if (sql->Query(SpawnSetQuery, PMob->loc.zone->GetID(), PMob->m_spawnSet) != SQL_ERROR && sql->NumRows() != 0 && sql->NextRow() == SQL_SUCCESS)
+                    {
+                        PMob->m_setMaxSpawns = (uint8)sql->GetUIntData(0); // Set the number of spawns allowed for this spawnSet
+                    }
+
+                    PMob->loc.zone->m_MultiSpawnVector[PMob->m_spawnSet].push_back(PMob->id); // Push Back the ID Into the Correct Vector
+                    PMob->m_AllowRespawn = false; // Turn off my respawn since I may not be spawned immediately.
+                }
+
+                if (PMob->m_AllowRespawn) // If I can respawn then spawn me.
                 {
                     PMob->Spawn();
                 }
-                else
+                else // Otherwise, set my respawn timer to be ready when needed.
                 {
                     PMob->PAI->Internal_Respawn(std::chrono::milliseconds(PMob->m_RespawnTime));
                 }
             });
+
+            // Spawn Initial Amount For Each Multispawn Group
+            for (auto const& [key, val] : PZone->m_MultiSpawnVector) { // Iterates through each key to pull the vector associated.
+                auto* PMobOrg = static_cast<CMobEntity*>(zoneutils::GetEntity(val[0], TYPE_MOB | TYPE_PET)); // Use val (vector) index 0 to pull PMob data.
+                if (PMobOrg != nullptr)
+                {
+                   for (int i = 0; i < PMobOrg->m_setMaxSpawns; i++) { // Start at index 0 and go as long as we are under the max spawns. This will get us the exact amount.
+                       auto* PMob = static_cast<CMobEntity*>(zoneutils::GetEntity(val[i], TYPE_MOB | TYPE_PET)); // Use val (vector) at index i to pull PMob.
+                        if (PMob != nullptr)
+                        {
+                          PMob->m_AllowRespawn = true; // Allow respawn just in case something fails.
+                          PMob->Spawn(); // Spawn PMob for initial set.
+                        }
+                    }
+                }
+            }
         });
         // clang-format on
 
@@ -647,9 +690,10 @@ namespace zoneutils
 
                 if (PMaster == nullptr)
                 {
-                    ShowError("zoneutils::loadMOBList PMaster is NULL. masterid: %d. Make sure x,y,z are not zeros, and that all entities are entered in the "
-                              "database!",
-                              masterid);
+                    // ShowError("zoneutils::loadMOBList PMaster is NULL. masterid: %d. Make sure x,y,z are not zeros, and that all entities are entered in the "
+                    //   "database!",
+                    //   masterid);
+                    continue;
                 }
                 else if (PPet == nullptr)
                 {

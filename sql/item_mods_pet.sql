@@ -362,6 +362,9 @@ INSERT INTO `item_mods_pet` VALUES (17961,1,10,0); -- All Pets - DEF: 10
 -- Ravanas Axe
 INSERT INTO `item_mods_pet` VALUES (18547,370,3,0); -- All Pets - REGEN: 3
 
+-- Astral Staff
+INSERT INTO `item_mods_pet` VALUES (18584,1,10,1); -- Avatar - DEF: 10
+
 -- Adaman Sainti
 INSERT INTO `item_mods_pet` VALUES (18745,3,1,3); -- Automaton - HPP: 1
 
@@ -638,6 +641,12 @@ INSERT INTO `item_mods_pet` VALUES (21528,30,40,0); -- All Pets - MACC: 40
 INSERT INTO `item_mods_pet` VALUES (21529,25,40,0); -- All Pets - ACC: 40
 INSERT INTO `item_mods_pet` VALUES (21529,26,40,0); -- All Pets - RACC: 40
 INSERT INTO `item_mods_pet` VALUES (21529,30,40,0); -- All Pets - MACC: 40
+
+-- Arasy Tabar
+INSERT INTO `item_mods_pet` VALUES (21704,25,10,0); -- All Pets - ACC: 10
+
+-- Arasy Tabar +1
+INSERT INTO `item_mods_pet` VALUES (21705,25,15,0); -- All Pets - ACC: 15
 
 -- Monster Axe
 INSERT INTO `item_mods_pet` VALUES (21715,25,30,0); -- All Pets - ACC: 30

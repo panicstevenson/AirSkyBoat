@@ -704,6 +704,22 @@ xi.specEffect =
     CRITICAL_HIT   = 0x22,
 }
 
+-- addType, used in ability:getAddType(). the addType of an ability is defined in sql.
+xi.addType =
+{
+    ADDTYPE_NORMAL      = 0,
+    ADDTYPE_MERIT       = 1,
+    ADDTYPE_ASTRAL_FLOW = 2,
+    ADDTYPE_MAIN_ONLY   = 4,
+    ADDTYPE_LEARNED     = 8,
+    ADDTYPE_LIGHT_ARTS  = 16,
+    ADDTYPE_DARK_ARTS   = 32,
+    ADDTYPE_JUGPET      = 64,
+    ADDTYPE_CHARMPET    = 128,
+    ADDTYPE_AVATAR      = 256,
+    ADDTYPE_AUTOMATON   = 512,
+}
+
 function AbilityFinalAdjustments(dmg,mob,skill,target,skilltype,skillparam,shadowbehav) -- seems to only be used for Wyvern breaths
     -- physical attack missed, skip rest
     local msg = skill:getMsg()
@@ -731,7 +747,7 @@ function AbilityFinalAdjustments(dmg,mob,skill,target,skilltype,skillparam,shado
     --Handle shadows depending on shadow behaviour / skilltype
     if (shadowbehav ~= xi.mobskills.shadowBehavior.WIPE_SHADOWS and shadowbehav ~= xi.mobskills.shadowBehavior.IGNORE_SHADOWS) then --remove 'shadowbehav' shadows.
 
-        dmg = utils.takeShadows(target, dmg, shadowbehav)
+        dmg = utils.takeShadows(target, mob, dmg, shadowbehav)
 
         -- dealt zero damage, so shadows took hit
         if (dmg == 0) then

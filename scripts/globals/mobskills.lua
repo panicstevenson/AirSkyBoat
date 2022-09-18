@@ -10,6 +10,7 @@ require("scripts/globals/magic")
 require("scripts/globals/utils")
 require("scripts/globals/msg")
 require("scripts/globals/weaponskills")
+require("scripts/globals/damage")
 -----------------------------------
 xi = xi or {}
 xi.mobskills = xi.mobskills or {}
@@ -106,7 +107,7 @@ local function calculateMobMagicBurst(caster, ele, target)
         elseif skillchainCount == 2 then
             burst = 1.35
         elseif skillchainCount == 3 then
-             burst = 1.40
+            burst = 1.40
         elseif skillchainCount == 4 then
             burst = 1.45
         elseif skillchainCount == 5 then
@@ -160,21 +161,23 @@ end
 -- if xi.mobskills.physicalTpBonus.ATK_VARIES -> three values are attack multiplier (1.5x 0.5x etc)
 -- if xi.mobskills.physicalTpBonus.DMG_VARIES -> three values are
 
-xi.mobskills.mobPhysicalMove = function(mob, target, skill, numberofhits, accmod, dmgmod, tpeffect, mtp000, mtp150, mtp300, offcratiomod)
+xi.mobskills.mobPhysicalMove = function(mob, target, skill, numberofhits, accmod, dmgmod, tpeffect, mtp000, mtp150, mtp300, offcratiomod, wSC)
     local returninfo = {}
+    local fStr = 0
+
+    if wSC == nil then
+        wSC = 0
+    end
 
     --get dstr (bias to monsters, so no fSTR)
-    local dstr = mob:getStat(xi.mod.STR) - target:getStat(xi.mod.VIT)
-
-    local acc = mob:getACC()
-    local eva = target:getEVA() + target:getMod(xi.mod.SPECIAL_ATTACK_EVASION)
-
-    if target:hasStatusEffect(xi.effect.YONIN) and mob:isFacing(target, 23) then -- Yonin evasion boost if mob is facing target
-        eva = eva + target:getStatusEffect(xi.effect.YONIN):getPower()
+    if tpeffect == xi.mobskills.magicalTpBonus.RANGED then
+        fStr = fSTR2(mob:getStat(xi.mod.STR), target:getStat(xi.mod.VIT), mob:getWeaponDmgRank())
+    else
+        fStr = fSTR(mob:getStat(xi.mod.STR), target:getStat(xi.mod.VIT), mob:getWeaponDmgRank())
     end
 
     --apply WSC
-    local base = mob:getWeaponDmg() + dstr --todo: change to include WSC
+    local base = mob:getWeaponDmg() + fStr + wSC
     if base < 1 then
         base = 1
     end
@@ -182,9 +185,9 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numberofhits, accmod
     local lvldiff = mob:getMainLvl() - target:getMainLvl()
 
     --work out hit rate for mobs
-    local hitrate = ( (acc * accmod) - eva) / 2 + (lvldiff * 2) + 75
+    local hitrate = getHitRate(mob, target, 0, 0)
 
-    hitrate = utils.clamp(hitrate, 20, 95)
+    hitrate = utils.clamp(hitrate, 0.2, 0.95)
 
     --work out the base damage for a single hit
     local hitdamage = base + lvldiff
@@ -210,7 +213,7 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numberofhits, accmod
     end
 
     local params = {atk000 = mtp000, atk150 = mtp150, atk300 = mtp300,}
-    local pdifTable = cMeleeRatio(mob, target, params, 0, mob:getTP())
+    local pdifTable = cMeleeRatio(mob, target, params, 0, mob:getTP(), xi.slot.main)
     local pdif = pdifTable[1]
     local pdifcrit = pdifTable[2]
 
@@ -224,13 +227,14 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numberofhits, accmod
     critRate = utils.clamp(critRate, 0, 1)
 
     local chance = math.random()
+    chance = handleParry(mob, target, chance)
 
     -- first hit has a higher chance to land
-    local firstHitChance = hitrate * 1.2
+    local firstHitChance = hitrate + 0.5
 
-    firstHitChance = utils.clamp(firstHitChance, 25, 95)
+    firstHitChance = utils.clamp(firstHitChance, 0.25, 0.95)
 
-    if (chance * 100) <= firstHitChance then -- it hit
+    if chance <= firstHitChance then -- it hit
         local isCrit = math.random() < critRate
 
         if isCrit then
@@ -238,13 +242,17 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numberofhits, accmod
         end
 
         finaldmg = finaldmg + hitdamage * pdif
+        finaldmg = handleBlock(mob, target, finaldmg)
         hitslanded = hitslanded + 1
     end
 
     while hitsdone < numberofhits do
         chance = math.random()
+        pdifTable = cMeleeRatio(mob, target, params, 0, mob:getTP(), xi.slot.main)
+        pdif = pdifTable[1]
+        pdifcrit = pdifTable[2]
 
-        if (chance * 100) <= hitrate then --it hit
+        if chance <= hitrate then --it hit
             local isCrit = math.random() < critRate
 
             if isCrit then
@@ -252,7 +260,7 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numberofhits, accmod
             end
 
             finaldmg = finaldmg + hitdamage * pdif
-            finaldmg = finaldmg + hitdamage * pdif
+            finaldmg = handleBlock(mob, target, finaldmg)
             hitslanded = hitslanded + 1
         end
 
@@ -271,8 +279,14 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numberofhits, accmod
         skill:setMsg(xi.msg.basic.SKILL_MISS)
     end
 
-    if target:getMod(xi.mod.PET_DMG_TAKEN_PHYSICAL) ~= 0 then
-        finaldmg = finaldmg * (target:getMod(xi.mod.PET_DMG_TAKEN_PHYSICAL) / 100)
+    if tpeffect == xi.mobskills.magicalTpBonus.RANGED then
+        finaldmg = xi.damage.applyDamageTaken(target, finaldmg, xi.attackType.RANGED)
+    else
+        if target:getMod(xi.mod.PET_DMG_TAKEN_PHYSICAL) ~= 0 then
+            finaldmg = finaldmg * (target:getMod(xi.mod.PET_DMG_TAKEN_PHYSICAL) / 100)
+        end
+
+        finaldmg = xi.damage.applyDamageTaken(target, finaldmg, xi.attackType.PHYSICAL)
     end
 
     returninfo.dmg = finaldmg
@@ -303,11 +317,14 @@ end
 -- xi.mobskills.magicalTpBonus.DMG_BONUS and TP=100, tpvalue = 2, assume V=150  --> damage is now 150*(TP*2)/100 = 300
 -- xi.mobskills.magicalTpBonus.DMG_BONUS and TP=200, tpvalue = 2, assume V=150  --> damage is now 150*(TP*2)/100 = 600
 
-xi.mobskills.mobMagicalMove = function(mob, target, skill, damage, element, dmgmod, tpeffect, tpvalue)
+xi.mobskills.mobMagicalMove = function(mob, target, skill, damage, element, dmgmod, tpeffect, tpvalue, ignoreresist)
     local returninfo = {}
+    local ignoreres = ignoreresist or false
+
     --get all the stuff we need
     local resist = 1
     local barspellDef = 0
+    local magicDefense = 1
 
     if
         element >= xi.magic.element.FIRE and
@@ -328,7 +345,7 @@ xi.mobskills.mobMagicalMove = function(mob, target, skill, damage, element, dmgm
     -- resistence is added last
     local finaldmg = damage * mab * dmgmod
 
-    local magicDefense = getElementalDamageReduction(target, element)
+    magicDefense = getElementalDamageReduction(target, element)
 
     finaldmg = finaldmg * magicDefense
 
@@ -339,17 +356,21 @@ xi.mobskills.mobMagicalMove = function(mob, target, skill, damage, element, dmgm
         end
     end
 
-    if skill:getID() ~= 1910 then -- Nether Blast Should Ignore Resist
-        -- get resistence
-        local params = {diff = (mob:getStat(xi.mod.INT)-target:getStat(xi.mod.INT)), skillType = nil, bonus = bonusMacc, element = element, effect = nil}
-        resist = applyResistanceEffect(mob, target, nil, params) -- Uses magic.lua resistance calcs as this moves to a global use case.
+    -- get resistence
+    local params = {diff = (mob:getStat(xi.mod.INT)-target:getStat(xi.mod.INT)), skillType = nil, bonus = bonusMacc, element = element, effect = nil}
+    resist = applyResistanceEffect(mob, target, nil, params) -- Uses magic.lua resistance calcs as this moves to a global use case.
 
+    if not ignoreres then
         finaldmg = finaldmg * resist
     end
 
     if target:getMod(xi.mod.PET_DMG_TAKEN_MAGICAL) ~= 0 then
         finaldmg = finaldmg * (target:getMod(xi.mod.PET_DMG_TAKEN_MAGICAL) / 100)
     end
+
+    local targetMDTA = xi.spells.damage.calculateTMDA(mob, target, element)
+
+    finaldmg = finaldmg * targetMDTA
 
     returninfo.dmg = finaldmg
 
@@ -375,7 +396,7 @@ xi.mobskills.applyPlayerResistance = function(mob, effect, target, diff, bonus, 
     end
 
     if effect ~= nil then
-        percentBonus = percentBonus - getEffectResistance(target, effect)
+        percentBonus = percentBonus - getEffectResistance(target, effect, nil, mob)
     end
 
     local p = getMagicHitRate(mob, target, 0, element, percentBonus, magicaccbonus)
@@ -383,10 +404,12 @@ xi.mobskills.applyPlayerResistance = function(mob, effect, target, diff, bonus, 
     return getMagicResist(p)
 end
 
-xi.mobskills.mobAddBonuses = function(caster, target, dmg, ele) -- used for SMN magical bloodpacts, despite the name.
+xi.mobskills.mobAddBonuses = function(caster, target, dmg, ele, ignoreres) -- used for SMN magical bloodpacts, despite the name.
 
+    local ignore = ignoreres or false
     local magicDefense = getElementalDamageReduction(target, ele)
-    dmg = math.floor(dmg * magicDefense)
+
+    if not ignore then dmg = math.floor(dmg * magicDefense) end
 
     dayWeatherBonus = 1.00
 
@@ -439,10 +462,6 @@ xi.mobskills.mobAddBonuses = function(caster, target, dmg, ele) -- used for SMN 
 
     dmg = math.floor(dmg * mab)
 
-    local magicDmgMod = (10000 + target:getMod(xi.mod.DMGMAGIC)) / 10000
-
-    dmg = math.floor(dmg * magicDmgMod)
-
     return dmg
 end
 
@@ -493,11 +512,7 @@ xi.mobskills.mobBreathMove = function(mob, target, percent, base, element, cap)
     -- 2500 would mean 25% ADDITIONAL damage taken.
     -- The effects of the "Shell" spells are also included in this step. The effect also aplies a negative value.
 
-    local globalDamageTaken   = target:getMod(xi.mod.DMG) / 10000          -- Mod is base 10000
-    local breathDamageTaken   = target:getMod(xi.mod.DMGBREATH) / 10000    -- Mod is base 10000
-    local combinedDamageTaken = 1.0 +  utils.clamp(breathDamageTaken + globalDamageTaken, -0.5, 0.5) -- The combination of regular "Damage Taken" and "Breath Damage Taken" caps at 50%. There is no BDTII known as of yet.
-
-    damage = math.floor(damage * combinedDamageTaken)
+    damage = xi.damage.applyDamageTaken(target, damage, xi.attackType.BREATH)
 
     if target:hasStatusEffect(xi.effect.ALL_MISS) and target:getStatusEffect(xi.effect.ALL_MISS):getPower() > 1 then
         return 0
@@ -556,7 +571,7 @@ xi.mobskills.mobFinalAdjustments = function(dmg, mob, skill, target, attackType,
             shadowbehav = MobTakeAoEShadow(mob, target, shadowbehav)
         end
 
-        dmg = utils.takeShadows(target, dmg, shadowbehav)
+        dmg = utils.takeShadows(target, mob, dmg, shadowbehav)
 
         -- dealt zero damage, so shadows took hit
         if dmg == 0 then
@@ -593,16 +608,6 @@ xi.mobskills.mobFinalAdjustments = function(dmg, mob, skill, target, attackType,
             analyzerHits = 0
         end
         target:setLocalVar("analyzer_hits", analyzerHits)
-    end
-
-    if attackType == xi.attackType.PHYSICAL then
-        dmg = target:physicalDmgTaken(dmg, damageType)
-    elseif attackType == xi.attackType.MAGICAL then
-        dmg = target:magicDmgTaken(dmg, damageType - xi.damageType.ELEMENTAL)
-    elseif attackType == xi.attackType.BREATH then
-        dmg = target:breathDmgTaken(dmg)
-    elseif attackType == xi.attackType.RANGED then
-        dmg = target:rangedDmgTaken(dmg)
     end
 
     if dmg < 0 then
@@ -765,7 +770,10 @@ xi.mobskills.mobDrainStatusEffectMove = function(mob, target)
 end
 
 -- Adds a status effect to a target
-xi.mobskills.mobStatusEffectMove = function(mob, target, typeEffect, power, tick, duration)
+xi.mobskills.mobStatusEffectMove = function(mob, target, typeEffect, power, tick, duration, subEffect, subPower)
+
+    subEffect = subEffect or 0
+    subPower = subPower or 0
 
     if (target:canGainStatusEffect(typeEffect, power)) then
         local statmod = xi.mod.INT
@@ -776,7 +784,7 @@ xi.mobskills.mobStatusEffectMove = function(mob, target, typeEffect, power, tick
         if (resist >= 0.25) then
 
             local totalDuration = utils.clamp(duration * resist, 1)
-            target:addStatusEffect(typeEffect, power, tick, totalDuration)
+            target:addStatusEffect(typeEffect, power, tick, totalDuration, subEffect, subPower)
 
             return xi.msg.basic.SKILL_ENFEEB_IS
         end

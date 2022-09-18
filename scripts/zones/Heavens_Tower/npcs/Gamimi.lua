@@ -10,7 +10,7 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    player:startEvent(10000) -- , 0, 0, 0, 0, 0, -1, 2)
+    xi.horizon.rafOnTrigger(player, npc)
 end
 
 entity.onEventUpdate = function(player, csid, option)

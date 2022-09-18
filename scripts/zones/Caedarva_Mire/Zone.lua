@@ -1,18 +1,20 @@
 -----------------------------------
 -- Zone: Caedarva_Mire (79)
 -----------------------------------
-local ID = require("scripts/zones/Caedarva_Mire/IDs")
-require("scripts/globals/missions")
-require("scripts/globals/titles")
-require("scripts/globals/helm")
-require("scripts/globals/zone")
+local ID = require('scripts/zones/Caedarva_Mire/IDs')
+require('scripts/globals/missions')
+require('scripts/globals/titles')
+require('scripts/globals/helm')
+require('scripts/globals/zone')
 -----------------------------------
 local zone_object = {}
 
 zone_object.onInitialize = function(zone)
-    UpdateNMSpawnPoint(ID.mob.AYNU_KAYSEY)
-    GetMobByID(ID.mob.AYNU_KAYSEY):setRespawnTime(math.random(900, 10800))
-    GetMobByID(ID.mob.KHIMAIRA):setRespawnTime(math.random(12, 36)*3600) -- 12 to 36 hours after maintenance, in 1-hour increments
+    if xi.settings.main.ENABLE_TOAU == 1 then
+        UpdateNMSpawnPoint(ID.mob.AYNU_KAYSEY)
+        GetMobByID(ID.mob.AYNU_KAYSEY):setRespawnTime(math.random(900, 10800))
+        GetMobByID(ID.mob.KHIMAIRA):setRespawnTime(math.random(12, 36)*3600) -- 12 to 36 hours after maintenance, in 1-hour increments
+    end
 
     xi.helm.initZone(zone, xi.helm.type.LOGGING)
 end
@@ -20,7 +22,7 @@ end
 zone_object.onZoneIn = function(player, prevZone)
     local cs = -1
 
-    if (player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0) then
+    if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
         player:setPos(339.996, 2.5, -721.286, 200)
     end
 

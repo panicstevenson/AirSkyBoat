@@ -36,6 +36,54 @@ end
 -----------------------------------
 -- placeholder / lottery NMs
 -----------------------------------
+local respawnTable = -- Table to reset PH respawns to OG era respawn timers.
+{
+    -- [zoneId] = respawnTime (seconds),
+    [xi.zone.CASTLE_OZTROJA]         = 960,
+    [xi.zone.GARLAIGE_CITADEL]       = 960,
+    [xi.zone.BEADEAUX]               = 960,
+    [xi.zone.CRAWLERS_NEST]          = 960,
+    [xi.zone.QULUN_DOME]             = 960,
+    [xi.zone.SEA_SERPENT_GROTTO]     = 960,
+    [xi.zone.DEN_OF_RANCOR]          = 960,
+    [xi.zone.TEMPLE_OF_UGGALEPIH]    = 960,
+    [xi.zone.FEIYIN]                 = 960,
+    [xi.zone.PSOXJA]                 = 960,
+    [xi.zone.DANGRUF_WADI]           = 960,
+    [xi.zone.KORROLOKA_TUNNEL]       = 960,
+    [xi.zone.PALBOROUGH_MINES]       = 960,
+    [xi.zone.ZERUHN_MINES]           = 960,
+    [xi.zone.LABYRINTH_OF_ONZOZO]    = 960,
+    [xi.zone.MAZE_OF_SHAKHRAMI]      = 960,
+    [xi.zone.QUICKSAND_CAVES]        = 960,
+    [xi.zone.THE_BOYAHDA_TREE]       = 960,
+    [xi.zone.DRAGONS_AERY]           = 960,
+    [xi.zone.THE_GARDEN_OF_RUHMET]   = 960,
+    [xi.zone.GRAND_PALACE_OF_HUXZOI] = 960,
+    [xi.zone.NEWTON_MOVALPOLOS]      = 960,
+    [xi.zone.OLDTON_MOVALPOLOS]      = 960,
+    [xi.zone.DAVOI]                  = 960,
+    [xi.zone.MONASTIC_CAVERN]        = 960,
+    [xi.zone.THE_ELDIEME_NECROPOLIS] = 960,
+    [xi.zone.LOWER_DELKFUTTS_TOWER]  = 960,
+    [xi.zone.MIDDLE_DELKFUTTS_TOWER] = 960,
+    [xi.zone.UPPER_DELKFUTTS_TOWER]  = 960,
+    [xi.zone.BOSTAUNIEUX_OUBLIETTE]  = 960,
+    [xi.zone.YUGHOTT_GROTTO]         = 960,
+    [xi.zone.INNER_HORUTOTO_RUINS]   = 960,
+    [xi.zone.OUTER_HORUTOTO_RUINS]   = 960,
+    [xi.zone.TORAIMARAI_CANAL]       = 960,
+    [xi.zone.PHOMIUNA_AQUEDUCTS]     = 960,
+    [xi.zone.SACRARIUM]              = 960,
+    [xi.zone.THE_SHRINE_OF_RUAVITAU] = 960,
+    [xi.zone.VELUGANNON_PALACE]      = 960,
+    [xi.zone.CASTLE_ZVAHL_BAILEYS]   = 960,
+    [xi.zone.CASTLE_ZVAHL_KEEP]      = 960,
+    [xi.zone.GUSTAV_TUNNEL]          = 960,
+    [xi.zone.KUFTAL_TUNNEL]          = 960,
+    [xi.zone.GUSGEN_MINES]           = 960,
+    [xi.zone.ORDELLES_CAVES]         = 960,
+}
 
 -- is a lottery NM already spawned or primed to pop?
 local function lotteryPrimed(phList)
@@ -95,6 +143,10 @@ xi.mob.phOnDespawn = function(ph, phList, chance, cooldown, immediate)
                 break
             end
         end
+    end
+
+    if respawnTable[ph:getZoneID()] ~= nil then
+        ph:setRespawnTime(respawnTable[ph:getZoneID()])
     end
 
     if type(immediate) ~= "boolean" then immediate = false end
@@ -179,6 +231,7 @@ xi.mob.additionalEffect =
     TERROR     = 20,
     TP_DRAIN   = 21,
     WEIGHT     = 22,
+    DISPEL     = 23,
 }
 xi.mob.ae = xi.mob.additionalEffect
 
@@ -436,6 +489,16 @@ local additionalEffects =
         duration = 30,
         minDuration = 1,
         maxDuration = 45,
+    },
+    [xi.mob.ae.DISPEL] =
+    {
+        chance = 20,
+        ele = xi.magic.ele.DARK,
+        sub = xi.subEffect.DISPEL,
+        msg = xi.msg.basic.ADD_EFFECT_DISPEL,
+        mod = xi.mod.INT,
+        bonusAbilityParams = {bonusmab = 0, includemab = false},
+        code = function(mob, target) target:dispelStatusEffect() end,
     },
 }
 

@@ -77,6 +77,7 @@ struct profile_t
     location_t home_point; // Renaissance point character
     uint8      campaign_allegiance;
     uint8      unity_leader;
+    uint16     raf[15]; // Recruit a Friend
 
     profile_t()
     {
@@ -236,6 +237,45 @@ struct CharHistory_t
     uint32 distanceTravelled = 0;
 };
 
+struct CharAnticheat_t
+{
+    float  lastCheckDist      = 0;
+    time_t lastTeleport       = 0;
+    time_t gracePeriod        = 0;
+    time_t lastCheckTime      = 0;
+    uint8  speedCounter       = 0;
+    time_t prevDigT_1         = 0;
+    float  prevDigX_1         = 0;
+    float  prevDigZ_1         = 0;
+    uint32 digDiffTotal       = 0;
+    uint16 digCount           = 0;
+    uint16 digDiffAvg         = 0;
+    uint32 digDistDiffTotal   = 0;
+    uint16 digDistDiffAvg     = 0;
+    uint8  digDistGrace       = 0;
+    time_t lastSynthStart     = 0;
+    float  synthStartTotal    = 0;
+    uint16 synthCount         = 0;
+    uint32 synthTimeDiffAvg   = 0;
+    uint16 lastSynthReq       = 0;
+    time_t firstFishingStrike = 0;
+    uint16 fishingStikes      = 0;
+};
+
+struct CharDigging_t
+{
+    float  lastDigX = 0;
+    float  lastDigY = 0;
+    float  lastDigZ = 0;
+    time_t lastDigT = 0;
+};
+
+struct CharCrafting_t
+{
+    time_t lastSynthTime = 0;
+    uint16 lastSynthReq  = 0;
+};
+
 enum CHAR_SUBSTATE
 {
     SUBSTATE_NONE = 0,
@@ -306,14 +346,14 @@ public:
     uint8           equipLoc[18];        // ContainerID where equipment is
     uint16          styleItems[16];      // Item IDs for items that are style locked.
 
-    uint8             m_ZonesList[36];        // List of visited zone character
+    uint8             m_ZonesList[38];        // List of visited zone character
     std::bitset<1024> m_SpellList;            // List of studied spells
     uint8             m_TitleList[143];       // List of obtained titles
-    uint8             m_Abilities[62];        // List of current abilities
+    uint8             m_Abilities[64];        // List of current abilities
     uint8             m_LearnedAbilities[49]; // LearnableAbilities (corsairRolls)
     std::bitset<50>   m_LearnedWeaponskills;  // LearnableWeaponskills
     uint8             m_TraitList[16];        // List of advance active abilities in the form of a bit mask
-    uint8             m_PetCommands[32];      // List of available pet commands
+    uint8             m_PetCommands[64];      // List of available pet commands
     uint8             m_WeaponSkills[32];
     questlog_t        m_questLog[MAX_QUESTAREA];     // список всех квестов
     missionlog_t      m_missionLog[MAX_MISSIONAREA]; // список миссий
@@ -334,7 +374,7 @@ public:
     std::vector<CTrustEntity*> PTrusts; // Active trusts
 
     template <typename F, typename... Args>
-    void ForPartyWithTrusts(F func, Args&&... args)
+    void ForPartyWithTrusts(F const& func, Args&&... args)
     {
         if (PParty)
         {
@@ -438,6 +478,7 @@ public:
     uint8      m_hasAutoTarget;   // возможность использования AutoTarget функции
     position_t m_StartActionPos;  // action start position (item use, shooting start, tractor position)
     position_t m_ActionOffsetPos; // action offset position from the action packet(currently only used for repositioning of luopans)
+    uint8      m_raiseLevel;      // Used to dictate whether we need to level up on raise in battlefield and to determine excess XP.
 
     location_t m_previousLocation;
 
@@ -456,7 +497,10 @@ public:
     uint32 m_moghouseID;
     uint16 m_moghancementID;
 
-    CharHistory_t m_charHistory;
+    CharHistory_t   m_charHistory;
+    CharAnticheat_t m_charAnticheat;
+    CharDigging_t   m_charDigging;
+    CharCrafting_t  m_charCrafting;
 
     int8 getShieldSize();
 
@@ -567,7 +611,8 @@ public:
 
     void clearCharVarsWithPrefix(std::string const& prefix);
 
-    bool m_Locked; // Is the player locked in a cutscene
+    bool  m_Locked; // Is the player locked in a cutscene
+    uint8 m_orgLevel;
 
     CCharEntity();
     ~CCharEntity();

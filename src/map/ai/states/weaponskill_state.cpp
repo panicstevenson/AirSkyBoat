@@ -93,13 +93,19 @@ void CWeaponSkillState::SpendCost()
 
         if (m_PEntity->getMod(Mod::WS_NO_DEPLETE) <= xirand::GetRandomNumber(100))
         {
-            m_PEntity->health.tp = 0;
+            m_PEntity->addTP(-tp);
         }
     }
 
     if (xirand::GetRandomNumber(100) < m_PEntity->getMod(Mod::CONSERVE_TP))
     {
-        m_PEntity->addTP(xirand::GetRandomNumber(10, 200));
+        uint16 tpGain = xirand::GetRandomNumber(10, 200);
+        m_PEntity->addTP(tpGain);
+
+        if (m_PEntity->GetBattleTarget() != nullptr)
+        {
+            m_PEntity->GetBattleTarget()->addTP(tpGain * 1.25);
+        }
     }
 
     m_spent = tp;
@@ -115,6 +121,15 @@ bool CWeaponSkillState::Update(time_point tick)
         m_PEntity->loc.zone->PushPacket(m_PEntity, CHAR_INRANGE_SELF, new CActionPacket(action));
 
         auto* PTarget{ GetTarget() };
+
+        // Reset Restraint bonus and trackers on weaponskill use
+        if (m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_RESTRAINT))
+        {
+            uint16 WSBonus = m_PEntity->StatusEffectContainer->GetStatusEffect(EFFECT_RESTRAINT)->GetPower();
+            m_PEntity->StatusEffectContainer->GetStatusEffect(EFFECT_RESTRAINT)->SetPower(0);
+            m_PEntity->StatusEffectContainer->GetStatusEffect(EFFECT_RESTRAINT)->SetSubPower(0);
+            m_PEntity->delModifier(Mod::ALL_WSDMG_FIRST_HIT, WSBonus);
+        }
 
         if (action.actiontype == ACTION_WEAPONSKILL_FINISH) // category changes upon being out of range. This does not count for RoE and delay is not increased beyond the normal delay.
         {

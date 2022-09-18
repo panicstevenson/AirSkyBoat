@@ -1,14 +1,14 @@
 -----------------------------------
 -- Zone: Lufaise_Meadows (24)
 -----------------------------------
-local ID = require("scripts/zones/Lufaise_Meadows/IDs")
-require("scripts/globals/conquest")
-require("scripts/globals/items")
-require("scripts/globals/keyitems")
-require("scripts/globals/missions")
-require("scripts/globals/npc_util")
-require("scripts/globals/titles")
-require("scripts/globals/helm")
+local ID = require('scripts/zones/Lufaise_Meadows/IDs')
+require('scripts/globals/conquest')
+require('scripts/globals/items')
+require('scripts/globals/keyitems')
+require('scripts/globals/missions')
+require('scripts/globals/npc_util')
+require('scripts/globals/titles')
+require('scripts/globals/helm')
 -----------------------------------
 local zone_object = {}
 
@@ -19,8 +19,9 @@ zone_object.onInitialize = function(zone)
     for _, v in pairs(ID.mob.PADFOOT) do
         SpawnMob(v)
     end
-
-    GetMobByID(ID.mob.YALUN_EKE):setLocalVar("chooseYalun", math.random(1,2))
+    if xi.settings.main.ENABLE_WOTG == 1 then
+        GetMobByID(ID.mob.YALUN_EKE):setLocalVar("chooseYalun", math.random(1,2))
+    end
 
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
 

@@ -176,7 +176,7 @@ enum ZONEID : uint16
     ZONE_RUAUN_GARDENS                  = 130,
     ZONE_MORDION_GAOL                   = 131,
     ZONE_ABYSSEA_LA_THEINE              = 132,
-    ZONE_133                            = 133, // The zone background of char select. AKA "Lilliput" because of tiny villages.
+    ZONE_OUTER_RAKAZNAR_U2              = 133,
     ZONE_DYNAMIS_BEAUCEDINE             = 134,
     ZONE_DYNAMIS_XARCABARD              = 135,
     ZONE_BEAUCEDINE_GLACIER_S           = 136,
@@ -272,7 +272,7 @@ enum ZONEID : uint16
     ZONE_KAZHAM_JEUNO_AIRSHIP           = 226,
     ZONE_SHIP_BOUND_FOR_SELBINA_PIRATES = 227,
     ZONE_SHIP_BOUND_FOR_MHAURA_PIRATES  = 228,
-    ZONE_229                            = 229,
+    ZONE_THRONE_ROOM_V                  = 229,
     ZONE_SOUTHERN_SANDORIA              = 230,
     ZONE_NORTHERN_SANDORIA              = 231,
     ZONE_PORT_SANDORIA                  = 232,
@@ -318,7 +318,7 @@ enum ZONEID : uint16
     ZONE_DHO_GATES                      = 272,
     ZONE_WOH_GATES                      = 273,
     ZONE_OUTER_RAKAZNAR                 = 274,
-    ZONE_OUTER_RAKAZNAR_U               = 275,
+    ZONE_OUTER_RAKAZNAR_U1              = 275,
     ZONE_RAKAZNAR_INNER_COURT           = 276,
     ZONE_RAKAZNAR_TURRIS                = 277,
     ZONE_278                            = 278,
@@ -511,6 +511,8 @@ typedef std::map<uint16, zoneWeather_t> weatherVector_t;
 
 typedef std::map<uint16, CBaseEntity*> EntityList_t;
 
+typedef std::map<uint8, std::vector<uint32>> multispawnVector_t;
+
 int32 zone_update_weather(uint32 tick, CTaskMgr::CTask* PTask);
 
 class CZone
@@ -592,6 +594,8 @@ public:
     time_point      m_RegionCheckTime; // время последней проверки регионов
     weatherVector_t m_WeatherVector;   // вероятность появления каждого типа погоды
 
+    multispawnVector_t m_MultiSpawnVector; // Initialize Map With a Vector Component
+
     virtual void ZoneServer(time_point tick, bool check_regions);
     void         CheckRegions(CCharEntity* PChar);
 
@@ -602,6 +606,8 @@ public:
     virtual void ForEachTrust(std::function<void(CTrustEntity*)> func);
     virtual void ForEachTrustInstance(CBaseEntity* PEntity, std::function<void(CTrustEntity*)> func);
     virtual void ForEachNpc(std::function<void(CNpcEntity*)> func);
+
+    bool HasReducedVerticalAggro();
 
     CZone(ZONEID ZoneID, REGION_TYPE RegionID, CONTINENT_TYPE ContinentID);
     virtual ~CZone();
@@ -654,6 +660,8 @@ private:
     void LoadNavMesh();      // Load the zones navmesh. Must exist in scripts/zones/:zone/NavMesh.nav
 
     CTreasurePool* m_TreasurePool; // глобальный TreasuerPool
+
+    static const uint16 ReducedVerticalAggroZones[];
 
     time_point m_timeZoneEmpty; // The time_point when the last player left the zone
 

@@ -18,6 +18,14 @@ xi.settings.map =
     MAX_TIME_LASTUPDATE = 60,
 
     -- --------------------------------
+    -- SQL settings
+    -- --------------------------------
+
+    -- Used by serverutils::PersistServerVar() for the maximum attempts to retry verification
+    -- of a written Server Variable.
+    SETVAR_RETRY_MAX = 3,
+
+    -- --------------------------------
     -- Game settings
     -- --------------------------------
 
@@ -121,9 +129,13 @@ xi.settings.map =
     -- Enable/disable skill-ups from bloodpacts
     SKILLUP_BLOODPACT = true,
 
-    -- Adjust rate of TP gain for mobs, and players. Acts as a multiplier, so default is 1.
+    -- Adjust rate of TP gain for mobs, pets (includes charmed pets), fellows, trusts and players.
+    -- Acts as a multiplier, so default is 1.
     MOB_TP_MULTIPLIER    = 1.0,
+    PET_TP_MULTIPLIER    = 1.0,
     PLAYER_TP_MULTIPLIER = 1.0,
+    TRUST_TP_MULTIPLIER  = 1.0,
+    FELLOW_TP_MULTIPLIER = 1.0,
 
     -- Adjust max HP pool for NMs, regular mobs, players, and trusts/fellows. Acts as a multiplier, so default is 1.
     NM_HP_MULTIPLIER        = 1.0,
@@ -199,6 +211,7 @@ xi.settings.map =
 
     -- Minimum time between uses of yell command (in seconds).
     YELL_COOLDOWN = 30,
+    YELL_MIN_LEVEL = 10,
 
     -- Command Audit [logging] commands with lower permission than this will not be logged.
     -- Zero for no logging at all. Commands given to non GMs are not logged.
@@ -220,7 +233,16 @@ xi.settings.map =
     HEALING_TICK_DELAY = 10,
 
     -- Set to 1 to enable server side anti-cheating measurements
-    ANTICHEAT_ENABLED = true,
+    ANTICHEAT_ENABLED                = true,
+    ANTICHEAT_POS_HACK_THRESHOLD     = 60,  -- Threshold over speed that anticheat shall act.
+    ANTICHEAT_POS_HACK_GRACE         = 15,  -- Grace period in seconds before anticheat kicks in.
+    ANTICHEAT_CRAFT_SWAP_TIME        = 10,  -- Time in seconds expected for a player to switch crafting recipes normally.
+    ANTICHEAT_FISHING_GRACE          = 12,  -- How many strikes/hr a player can have before report.
+    ANTICHEAT_CRAFT_COUNT            = 25,  -- Number of synths before anticheat can report.
+    ANTICHEAT_CRAFT_TIME_AVG         = 1.5, -- Difference in time allowed between synths on average in seconds.
+    ANTICHEAT_DIG_GRACE_COUNT        = 50,  -- Number of digs before anticheat can report.
+    ANTICHEAT_DIG_AVG_THRESHOLD      = 1,   -- Lowest average difference in time between digs before report.
+    ANTICHEAT_DIG_AVG_DIST_THRESHOLD = 1,   -- Lowest average difference in distance between digs before report.
 
     -- Set to 1 to completely disable auto-jailing offenders
     ANTICHEAT_JAIL_DISABLE = false,
@@ -228,4 +250,20 @@ xi.settings.map =
     --  Gobbie Mystery Box settings
     DAILY_TALLY_AMOUNT = 10,
     DAILY_TALLY_LIMIT  = 50000,
+
+    -- Horizon Dynamic Level Sync
+    LEVEL_SYNC_DYNAMIC_PENALTY   = true, -- Enabling Dynamic Level Sync EXP Penalty (bool) (Default: true (Enabled))
+    LEVEL_SYNC_PENALTY_CAP       = 20, -- Maximum % Of EXP Loss (uint8) (Default: 20% EXP Lost At Max Penalty)
+    LEVEL_SYNC_PENALTY_GRACE_MAX = 10, -- Number of Levels Before EXP Penalty Kicks In (uint8) (Default: 10 Levels Grace)
+    LEVEL_SYNC_PENALTY_RANGE_MAX = 20, -- Number of Levels Before The Player Receives Maximum Penalty (uint8) (Default: 20 Levels To Reach Max (Makes Total Above Sync 30 Levels))
+
+    -- Horizon Ability Changes
+    HASSO_SEIGAN_SHARED_TIMER    = true, -- Force Hasso and Seigan to share a timer.
+
+    -- Paralysis Settings
+    ITEM_PARALYSIS_LOSS              = true, -- Allow items to be put on recast or deleted when used during a paralysis tick.
+    ITEM_PARALYSIS_SCROLL_PROTECTION = false, -- Stops scrolls from being deleted if a paralysis tick occurs.
+
+    -- Enable/disable keeping jug pets through zoning
+    KEEP_JUGPET_THROUGH_ZONING = false,
 }

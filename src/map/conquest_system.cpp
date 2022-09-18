@@ -83,7 +83,7 @@ namespace conquest
             sql->GetIntData(3),
         };
 
-        if (influences[nation] == 5000)
+        if (influences[nation] == 15000)
         {
             return;
         }
@@ -96,7 +96,7 @@ namespace conquest
                 continue;
             }
 
-            auto loss = std::min<int>(points * influences[i] / (5000 - influences[nation]), influences[i]);
+            auto loss = std::min<int>(points * influences[i] / (15000 - influences[nation]), influences[i]);
             influences[i] -= loss;
             lost += loss;
         }

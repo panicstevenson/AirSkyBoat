@@ -34,7 +34,14 @@ namespace anticheat
         // (0x59) packet. If anti cheating is enabled this will cause all cheated
         // crafts to fail.
         // Argument is the time spent on synth animation.
-        CHEAT_ID_FASTSYNTH = 1,
+        CHEAT_ID_FASTSYNTH  = 1,
+        CHEAT_ID_CLAIMBOT   = 2,
+        CHEAT_ID_POS_HACK   = 3,
+        CHEAT_ID_FAST_DIG   = 4,
+        CHEAT_ID_DIG_BOT    = 5,
+        CHEAT_ID_CRAFT_BOT  = 6,
+        CHEAT_ID_AUTO_CRAFT = 7,
+        CHEAT_ID_FISH_BOT   = 8,
         // For boundary checks
         CHEAT_ID_LAST
     };
@@ -79,6 +86,27 @@ namespace anticheat
     // returns true on success, false on failure
     bool ReportCheatIncident(CCharEntity* PChar, CheatID cheatid, uint32 cheatarg = 0, const char* description = NULL);
 
+    // Checks player current position and speed to determine if action is needed.
+    bool DoPosHackCheck(CCharEntity* PChar, float newX, float newY, float newZ);
+
+    // Checks if player is speeding up dig animation. Player should not be able to go to
+    // next dig position within dig animation.
+    void DoFastDigCheck(CCharEntity* PChar, float newX, float newY, float newZ);
+
+    // Checks if player's positioning is roughly the same each dig based on dig range
+    // requirement.
+    void DoDigBotCheck(CCharEntity* PChar, float newX, float newY, float newZ);
+
+    // Sets up variables for the next set of checks.
+    void DoDigCheckSetup(CCharEntity* PChar, bool first);
+
+    // Sets up variables for the next set of checks
+    void DoCraftCheckSetup(CCharEntity* PChar, bool first);
+
+    void DoCraftBotCheck(CCharEntity* PChar, time_t currentTime);
+    void DoCraftBotSetup(CCharEntity* PChar, time_t currentTime);
+
+    bool DoFishBotCheck(CCharEntity* PChar);
 }; // namespace anticheat
 
 #endif

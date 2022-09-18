@@ -36,6 +36,7 @@
 #include "lua_instance.h"
 #include "lua_item.h"
 #include "lua_mobskill.h"
+#include "lua_petskill.h"
 #include "lua_region.h"
 #include "lua_spell.h"
 #include "lua_statuseffect.h"
@@ -77,6 +78,7 @@
 #include "../packets/entity_visual.h"
 #include "../packets/menu_raisetractor.h"
 #include "../party.h"
+#include "../petskill.h"
 #include "../roe.h"
 #include "../spell.h"
 #include "../status_effect_container.h"
@@ -204,6 +206,7 @@ namespace luautils
         CLuaBattlefield::Register();
         CLuaInstance::Register();
         CLuaMobSkill::Register();
+        CLuaPetSkill::Register();
         CLuaRegion::Register();
         CLuaSpell::Register();
         CLuaStatusEffect::Register();
@@ -213,7 +216,7 @@ namespace luautils
 
         // Load globals
         // Truly global files first
-        lua.safe_script_file("./scripts/globals/common.lua", &sol::script_pass_on_error);
+        lua.safe_script_file("./scripts/globals/common.lua");
         roeutils::init(); // TODO: Get rid of the need to do this
 
         // Then the rest...
@@ -225,7 +228,7 @@ namespace luautils
                 auto relative_path_string = entry.path().relative_path().generic_string();
                 // auto lua_path = std::filesystem::relative(entry.path(), "./").replace_extension("").generic_string();
                 // ShowInfo("Loading global script %s", lua_path);
-                auto result = lua.safe_script_file(relative_path_string, &sol::script_pass_on_error);
+                auto result = lua.safe_script_file(relative_path_string);
                 if (!result.valid())
                 {
                     sol::error err = result;
@@ -245,7 +248,7 @@ namespace luautils
             {
                 if (entry.path().extension() == ".lua")
                 {
-                    auto result = lua.safe_script_file(entry.path().relative_path().generic_string(), &sol::script_pass_on_error);
+                    auto result = lua.safe_script_file(entry.path().relative_path().generic_string());
                     if (!result.valid())
                     {
                         sol::error err = result;
@@ -505,7 +508,7 @@ namespace luautils
         // Handle Lua module files, then return
         if (!parts.empty() && parts[0] == "modules")
         {
-            auto result = lua.safe_script_file(filename, &sol::script_pass_on_error);
+            auto result = lua.safe_script_file(filename);
             if (!result.valid())
             {
                 sol::error err = result;
@@ -548,7 +551,7 @@ namespace luautils
         // Handle Commands then return
         if (parts.size() == 2 && parts[0] == "commands")
         {
-            auto result = lua.safe_script_file(filename, &sol::script_pass_on_error);
+            auto result = lua.safe_script_file(filename);
             if (!result.valid())
             {
                 sol::error err = result;
@@ -557,6 +560,22 @@ namespace luautils
             }
 
             ShowInfo("[FileWatcher] COMMAND %s", filename);
+            return;
+        }
+
+        // Handle IDs then return
+        if (parts.size() == 3 && parts[2] == "IDs")
+        {
+            auto result = lua.safe_script_file(filename, &sol::script_pass_on_error);
+            if (!result.valid())
+            {
+                sol::error err = result;
+                ShowError("luautils::CacheLuaObjectFromFile: Load command error: %s: %s", filename, err.what());
+                return;
+            }
+
+            PopulateIDLookups();
+            ShowInfo("[FileWatcher] IDs %s", filename);
             return;
         }
 
@@ -621,7 +640,7 @@ namespace luautils
         }
 
         // Try and load script
-        auto file_result = lua.safe_script_file(filename, &sol::script_pass_on_error);
+        auto file_result = lua.safe_script_file(filename);
         if (!file_result.valid())
         {
             sol::error err = file_result;
@@ -730,6 +749,92 @@ namespace luautils
         }
 
         CacheLuaObjectFromFile(filename);
+    }
+
+    void PopulateIDLookups(std::optional<uint16> maybeZoneId)
+    {
+        // clang-format off
+        auto handleZone = [&](CZone* PZone)
+        {
+            auto zoneName = std::string((const char*)PZone->GetName());
+            auto result   = lua.safe_script_file(fmt::format("scripts/zones/{}/IDs.lua", zoneName));
+            if (result.valid() && zoneName != "Residential_Area")
+            {
+                auto table = lua["zones"][PZone->GetID()].get<sol::table>();
+                for (auto [outerKey, outerValue] : table)
+                {
+                    auto outerName = outerKey.as<std::string>();
+                    if (outerName == "mob" || outerName == "npc")
+                    {
+                        for (auto [innerKey, innerValue] : outerValue.as<sol::table>())
+                        {
+                            if (innerKey.get_type() == sol::type::string && innerValue.get_type() == sol::type::number)
+                            {
+                                auto name = innerKey.as<std::string>();
+                                auto num  = innerValue.as<int32>();
+
+                                if (num == -1)
+                                {
+                                    bool found = false;
+                                    if (outerName == "mob")
+                                    {
+                                        PZone->ForEachMob([&](CMobEntity* PMob)
+                                        {
+                                            if (!found)
+                                            {
+                                                auto keyName = to_upper(std::string((const char*)PMob->GetName()));
+                                                if (keyName == name)
+                                                {
+                                                    lua["zones"][PZone->GetID()][outerName][keyName] = PMob->id;
+                                                    found = true;
+                                                    DebugIDLookup(fmt::format("New value for {}.ID.{}.{} = {}",
+                                                        zoneName, outerName, name, lua["zones"][PZone->GetID()][outerName][keyName].get<uint32>()));
+                                                }
+                                            }
+                                        });
+                                    }
+                                    else if (outerName == "npc")
+                                    {
+                                        PZone->ForEachNpc([&](CNpcEntity* PNpc)
+                                        {
+                                            if (!found)
+                                            {
+                                                auto keyName = to_upper(std::string((const char*)PNpc->GetName()));
+                                                if (keyName == name)
+                                                {
+                                                    lua["zones"][PZone->GetID()][outerName][keyName] = PNpc->id;
+                                                    found = true;
+                                                    DebugIDLookup(fmt::format("New value for {}.ID.{}.{} = {}",
+                                                        zoneName, outerName, name, lua["zones"][PZone->GetID()][outerName][keyName].get<uint32>()));
+                                                }
+                                            }
+                                        });
+                                    }
+
+                                    if (!found)
+                                    {
+                                        ShowError(fmt::format("Could not complete id lookup for {}.ID.{}.{}", zoneName, outerName, name))
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        if (!maybeZoneId.has_value())
+        {
+            zoneutils::ForEachZone([&](CZone* PZone)
+            {
+                handleZone(PZone);
+            });
+        }
+        else
+        {
+            handleZone(zoneutils::GetZone(maybeZoneId.value()));
+        }
+        // clang-format on
     }
 
     // temporary solution for geysers in Dangruf_Wadi
@@ -1662,6 +1767,8 @@ namespace luautils
             return;
         }
 
+        charutils::ResetCharDigTable(PChar);
+
         if (result.get_type() == sol::type::table)
         {
             auto resultTable = result.get<sol::table>();
@@ -1704,6 +1811,7 @@ namespace luautils
         auto onZoneOut          = GetCacheEntryFromFilename(filename)["onZoneOut"];
 
         auto result = onZoneOutFramework(CLuaBaseEntity(PChar), onZoneOut);
+
         if (!result.valid())
         {
             sol::error err = result;
@@ -1827,6 +1935,12 @@ namespace luautils
     int32 OnTrigger(CCharEntity* PChar, CBaseEntity* PNpc)
     {
         TracyZoneScoped;
+
+        // Clicking objects does nothing if the player is mid synthesis
+        if (PChar->animation == ANIMATION_SYNTH)
+        {
+            return 0;
+        }
 
         auto zone     = (const char*)PChar->loc.zone->GetName();
         auto name     = (const char*)PNpc->GetName();
@@ -2558,8 +2672,6 @@ namespace luautils
             return -1;
         }
 
-        PTarget->PAI->EventHandler.triggerListener("MAGIC_TAKE", CLuaBaseEntity(PTarget), CLuaBaseEntity(PCaster), CLuaSpell(PSpell));
-
         sol::function onMagicHit = getEntityCachedFunction(PTarget, "onMagicHit");
         if (!onMagicHit.valid())
         {
@@ -2597,6 +2709,28 @@ namespace luautils
         }
 
         return result.get_type(0) == sol::type::number ? result.get<int32>(0) : 0;
+    }
+
+    bool OnTrustSpellCastCheckBattlefieldTrusts(CBattleEntity* PCaster) // Check if trust count would go over the limit when cast finishes (for simultaneous multi-party casts
+    {
+        TracyZoneScoped;
+
+        sol::function checkBattlefieldTrustCount = lua["xi"]["trust"]["checkBattlefieldTrustCount"];
+
+        if (!checkBattlefieldTrustCount.valid())
+        {
+            return false;
+        }
+
+        auto result = checkBattlefieldTrustCount(CLuaBaseEntity(PCaster));
+        if (!result.valid())
+        {
+            sol::error err = result;
+            ShowError("luautils::OnTrustSpellCastCheckBattlefieldTrusts: %s", err.what());
+            return 0;
+        }
+
+        return result.get_type(0) == sol::type::boolean ? result.get<bool>(0) : true;
     }
 
     int32 OnMobInitialize(CBaseEntity* PMob)
@@ -2639,7 +2773,7 @@ namespace luautils
 
         auto filename = fmt::format("./scripts/zones/{}/mobs/{}.lua", zone_name, name);
 
-        auto script_result = lua.safe_script_file(filename, &sol::script_pass_on_error);
+        auto script_result = lua.safe_script_file(filename);
         if (!script_result.valid())
         {
             return -1;
@@ -2688,7 +2822,7 @@ namespace luautils
 
         auto filename = fmt::format("./scripts/mixins/zones/{}.lua", PMob->loc.zone->GetName());
 
-        auto script_result = lua.safe_script_file(filename, &sol::script_pass_on_error);
+        auto script_result = lua.safe_script_file(filename);
         if (!script_result.valid())
         {
             return -1;
@@ -3580,7 +3714,7 @@ namespace luautils
         auto onMagicCastingCheck = getSpellCachedFunction(PSpell, "onMagicCastingCheck");
         if (!onMagicCastingCheck.valid())
         {
-            ShowWarning("luautils::onMagicCastingCheck");
+            ShowWarning("luautils::onMagicCastingCheck, spell (%s) has no lua file, it cannot be cast.", PSpell->getName());
             return 47;
         }
 
@@ -3691,6 +3825,38 @@ namespace luautils
         return result.get_type(0) == sol::type::number ? result.get<int32>(0) : 0;
     }
 
+    int32 OnPetAbility(CBaseEntity* PTarget, CPetEntity* PPet, CPetSkill* PPetSkill, CBaseEntity* PMobMaster, action_t* action)
+    {
+        TracyZoneScoped;
+
+        std::string filename = fmt::format("./scripts/globals/abilities/pets/{}.lua", PPetSkill->getName());
+
+        sol::function onPetAbility = GetCacheEntryFromFilename(filename)["onPetAbility"];
+        if (!onPetAbility.valid())
+        {
+            return 0;
+        }
+
+        auto result = onPetAbility(CLuaBaseEntity(PTarget), CLuaBaseEntity(PPet), CLuaPetSkill(PPetSkill), CLuaBaseEntity(PMobMaster), CLuaAction(action));
+        if (!result.valid())
+        {
+            sol::error err = result;
+            ShowError("luautils::onPetAbility: %s", err.what());
+            return 0;
+        }
+
+        if (PPet->getPetType() == PET_TYPE::AVATAR && PPet->PMaster->objtype == TYPE_PC)
+        {
+            CCharEntity* PMaster = (CCharEntity*)PPet->PMaster;
+            if (PMaster->GetMJob() == JOB_SMN)
+            {
+                charutils::TrySkillUP(PMaster, SKILL_SUMMONING_MAGIC, PMaster->GetMLevel());
+            }
+        }
+
+        return result.get_type(0) == sol::type::number ? result.get<int32>(0) : 0;
+    }
+
     int32 OnUseAbility(CBattleEntity* PUser, CBattleEntity* PTarget, CAbility* PAbility, action_t* action)
     {
         TracyZoneScoped;
@@ -3721,6 +3887,60 @@ namespace luautils
         }
 
         return result.get_type(0) == sol::type::number ? result.get<int32>(0) : 0;
+    }
+
+    int32 OnSteal(CBattleEntity* PChar, CBattleEntity* PMob, CAbility* PAbility, action_t* action)
+    {
+        TracyZoneScoped;
+
+        if (PChar == nullptr || PMob == nullptr)
+        {
+            return 0;
+        }
+
+        sol::function onSteal = getEntityCachedFunction(PMob, "onSteal");
+        if (!onSteal.valid())
+        {
+            return 0;
+        }
+
+        auto result = onSteal(CLuaBaseEntity(PChar), CLuaBaseEntity(PMob), CLuaAbility(PAbility), CLuaAction(action));
+        if (!result.valid())
+        {
+            sol::error err = result;
+            ShowError("luautils::onSteal %s", err.what());
+            return 0;
+        }
+
+        uint16 retVal = result.get_type(0) == sol::type::number ? result.get<uint16>(0) : 0;
+        if (retVal > 0)
+        {
+            return retVal;
+        }
+
+        return 0;
+    }
+
+    bool OnCanUseSpell(CBattleEntity* PChar, CSpell* Spell) // triggers when CanUseSpell is invoked on spell.cpp for PCs only
+    {
+        TracyZoneScoped;
+
+        sol::function canUseSpellOverride = lua["xi"]["spells"]["canUseSpellOverride"];
+
+        if (!canUseSpellOverride.valid())
+        {
+            return false;
+        }
+
+        auto result = canUseSpellOverride(CLuaBaseEntity(PChar), CLuaSpell(Spell));
+        if (!result.valid())
+        {
+            sol::error err = result;
+            ShowError("luautils::OnCanUseSpell: %s", err.what());
+            return 0;
+        }
+
+        return result.get_type(0) == sol::type::boolean ? result.get<bool>(0) : true;
     }
 
     void Terminate()

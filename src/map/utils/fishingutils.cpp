@@ -46,6 +46,7 @@
 
 #include "../ai/ai_container.h"
 
+#include "../anticheat.h"
 #include "../enmity_container.h"
 #include "../item_container.h"
 #include "../mob_modifier.h"
@@ -1994,6 +1995,7 @@ namespace fishingutils
                 PChar->hookDelay = GetHookTime(PChar);
                 PChar->animation = ANIMATION_FISHING_START;
                 PChar->updatemask |= UPDATE_HP;
+                PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_INVISIBLE);
             }
             else
             {
@@ -2683,7 +2685,16 @@ namespace fishingutils
                     }
                 }
 
-                if (response == nullptr || fishingArea == nullptr || response->fishingToken != PChar->fishingToken)
+                if (response && (response->fishingToken == 0 || response->fishingToken != PChar->fishingToken || fishingArea == nullptr))
+                {
+                    if (anticheat::DoFishBotCheck(PChar))
+                    {
+                        CatchNothing(PChar, FISHINGFAILTYPE_NONE);
+                        PChar->pushPacket(new CCharUpdatePacket(PChar));
+                        PChar->pushPacket(new CCharSyncPacket(PChar));
+                    }
+                }
+                else if (response == nullptr || fishingArea == nullptr || response->fishingToken != PChar->fishingToken)
                 {
                     CatchNothing(PChar, FISHINGFAILTYPE_NONE);
                     PChar->pushPacket(new CCharUpdatePacket(PChar));
@@ -2731,7 +2742,15 @@ namespace fishingutils
                         rod_t*           FishingRod = FishingRods[Rod->getID()];
                         catchresponse_t* response   = ReelCheck(PChar, PChar->hookedFish, FishingRod);
 
-                        if (response->fishingToken != PChar->fishingToken || PChar->hookedFish->special != special)
+                        if (response->fishingToken == 0 || response->fishingToken != PChar->fishingToken)
+                        {
+                            if (anticheat::DoFishBotCheck(PChar))
+                            {
+                                LoseCatch(PChar, FISHINGFAILTYPE_NONE);
+                                BaitLoss(PChar, false, true);
+                            }
+                        }
+                        else if (response->fishingToken != PChar->fishingToken || PChar->hookedFish->special != special)
                         {
                             LoseCatch(PChar, FISHINGFAILTYPE_NONE);
                             UnhookMob(PChar, true);

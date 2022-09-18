@@ -51,9 +51,9 @@ local loot =
         },
         {
             {itemid = 4896, droprate = 174}, -- firespirit
-            {itemid = 4751, droprate =  16}, -- vile elixir
+            {itemid = 4174, droprate =  16}, -- vile elixir
             {itemid = 4714, droprate = 114}, -- icespikes
-            {itemid = 4874, droprate = 174}, -- refresh
+            {itemid = 4717, droprate = 174}, -- refresh
             {itemid = 4947, droprate = 138}, -- utsusemi ni
             {itemid = 772,  droprate =  18}, -- green rock
             {itemid = 775,  droprate =  18}, -- black rock
@@ -79,7 +79,7 @@ local loot =
         },
         {
             {itemid = 4714, droprate = 87}, -- icespikes
-            {itemid = 4874, droprate = 75}, -- refresh
+            {itemid = 4717, droprate = 75}, -- refresh
             {itemid = 4947, droprate = 75}, -- utsusemi ni
             {itemid =  699, droprate = 80}, -- oak log
             {itemid =  701, droprate = 97}, -- rosewood log
@@ -619,18 +619,14 @@ local loot =
             {itemid =   791, droprate =  500}, -- aquamarine
         },
         {
-            {itemid =     0, droprate =  500}, -- nothing
+            {itemid =     0, droprate =  200}, -- nothing
+            {itemid = 14661, droprate =  400}, -- teleport_ring_holla
+            {itemid = 14664, droprate =  400}, -- teleport_ring_vahzl
+        },
+        {
+            {itemid = 13687, droprate =  250}, -- sapient_cape
+            {itemid = 14870, droprate =  250}, -- trainers_wristbands
             {itemid =  4224, droprate =  500}, -- demon_quiver
-        },
-        {
-            {itemid =     0, droprate =  600}, -- nothing
-            {itemid = 14661, droprate =  200}, -- teleport_ring_holla
-            {itemid = 14664, droprate =  200}, -- teleport_ring_vahzl
-        },
-        {
-            {itemid =     0, droprate =  600}, -- nothing
-            {itemid = 13687, droprate =  200}, -- sapient_cape
-            {itemid = 14870, droprate =  200}, -- trainers_wristbands
         },
     },
 
@@ -698,6 +694,67 @@ local loot =
             {itemid = 844, droprate = 260},   -- Phoenix Feather
             {itemid = 837, droprate = 96},    -- Spool Of Malboro Fiber
             {itemid = 1132, droprate = 288},  -- Square Of Raxa
+            {itemid = 1110, droprate = 41},   -- Vial Of Black Beetle Blood
+        },
+    },
+
+    -- KSNM Today's Horoscope
+    [16] =
+    {
+        {
+            {itemid = 65535, droprate = 1000, amount = 24000}, -- Gil
+        },
+        {
+            {itemid = 18053, droprate = 222}, -- Gravedigger
+            {itemid = 18097, droprate = 302}, -- Gondo-Shizunori
+            {itemid = 18217, droprate = 245}, -- Rampager
+            {itemid = 17944, droprate = 231}, -- Retributor
+        },
+        {
+            {itemid = 15295, droprate = 250}, -- Hierarch Belt
+            {itemid = 15294, droprate = 338}, -- Warwolf Belt
+            {itemid = 12407, droprate = 206}, -- Palmerin's Shield
+            {itemid = 14871, droprate = 206}, -- Trainer's Gloves
+        },
+        {
+            {itemid = 0, droprate = 342},     -- Nothing
+            {itemid = 13693, droprate = 250}, -- Aries Mantle
+            {itemid = 655, droprate = 230},   -- Adaman Ingot
+            {itemid = 747, droprate = 178},   -- Orichalcum Ingot
+        },
+        {
+            {itemid = 911, droprate = 292},   -- Rampaging Horn
+            {itemid = 910, droprate = 265},   -- Lumbering Horn
+            {itemid = 19024, droprate = 354}, -- Sword Strap
+            {itemid = 19027, droprate = 89},  -- Claymore Grip
+        },
+        {
+            {itemid = 737, droprate = 109},   -- Chunk Of Gold Ore
+            {itemid = 4172, droprate = 34},   -- Reraiser
+            {itemid = 644, droprate = 41},    -- Chunk Of Mythril Ore
+            {itemid = 902, droprate = 61},    -- Demon Horn
+            {itemid = 702, droprate = 121},   -- Ebony Log
+            {itemid = 866, droprate = 44},    -- Handful Of Wyvern Scales
+            {itemid = 4175, droprate = 27},   -- Vile Elixir +1
+            {itemid = 700, droprate = 41},    -- Mahogany Log
+            {itemid = 887, droprate = 80},    -- Coral Fragment
+            {itemid = 703, droprate = 72},    -- Petrified Log
+            {itemid = 844, droprate = 111},   -- Phoenix Feather
+            {itemid = 738, droprate = 44},    -- Chunk Of Platinum Ore
+            {itemid = 895, droprate = 14},    -- Ram Horn
+            {itemid = 830, droprate = 14},    -- Square Of Rainbow Cloth
+            {itemid = 645, droprate = 68},    -- Chunk Of Darksteel Ore
+            {itemid = 4173, droprate = 14},   -- Hi-reraiser
+            {itemid = 1132, droprate = 105},  -- Square Of Raxa
+        },
+        {
+            {itemid = 0, droprate = 150},     -- Nothing
+            {itemid = 836, droprate = 90},    -- Square Of Damascene Cloth
+            {itemid = 658, droprate = 29},    -- Damascus Ingot
+            {itemid = 942, droprate = 148},   -- Philosophers Stone
+            {itemid = 844, droprate = 234},   -- Phoenix Feather
+            {itemid = 837, droprate = 76},    -- Spool Of Malboro Fiber
+            {itemid = 1132, droprate = 232},  -- Square Of Raxa
             {itemid = 1110, droprate = 41},   -- Vial Of Black Beetle Blood
         },
     },

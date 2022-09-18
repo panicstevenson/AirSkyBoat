@@ -34,7 +34,10 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../ai_container.h"
 #include "../helpers/targetfind.h"
 #include "../states/ability_state.h"
+#include "../states/claimshield_state.h"
+#include "../states/inactive_state.h"
 #include "../states/magic_state.h"
+#include "../states/mobshield_state.h"
 #include "../states/weaponskill_state.h"
 
 CMobController::CMobController(CMobEntity* PEntity)
@@ -94,7 +97,7 @@ bool CMobController::CanPursueTarget(CBattleEntity* PTarget)
     if (PMob->m_Detects & DETECT_SCENT)
     {
         // if mob is in water it will instant deaggro if target cannot be detected
-        if (!PMob->PAI->PathFind->InWater() && !PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_DEODORIZE))
+        if (!PMob->PAI->PathFind->InWater() && !PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_DEODORIZE) && !PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_HOLY_CIRCLE))
         {
             // certain weather / deodorize will turn on time deaggro
             return PMob->m_disableScent;
@@ -246,6 +249,18 @@ bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight)
         return false;
     }
 
+    float verticalDistance = abs(PMob->loc.p.y - PTarget->loc.p.y);
+
+    if ((PMob->m_Family != 6 || PMob->getMobMod(LEDGE_AGGRO) != 0) && verticalDistance > 8.0f)
+    {
+        return false;
+    }
+
+    if (PTarget->loc.zone->HasReducedVerticalAggro() && verticalDistance > 3.5f)
+    {
+        return false;
+    }
+
     auto detects         = PMob->m_Detects;
     auto currentDistance = distance(PTarget->loc.p, PMob->loc.p) + PTarget->getMod(Mod::STEALTH);
 
@@ -261,6 +276,10 @@ bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight)
 
     if (detectSight && !hasInvisible && currentDistance < PMob->getMobMod(MOBMOD_SIGHT_RANGE) && facing(PMob->loc.p, PTarget->loc.p, 64))
     {
+        if (PMob->getMobMod(LEDGE_AGGRO) != 0)
+        {
+            return true;
+        }
         return CanSeePoint(PTarget->loc.p);
     }
 
@@ -366,7 +385,7 @@ bool CMobController::MobSkill(int wsList)
 
         PActionTarget = luautils::OnMobSkillTarget(PActionTarget, PMob, PMobSkill);
 
-        if (PActionTarget && !PMobSkill->isTwoHour() && luautils::OnMobSkillCheck(PActionTarget, PMob, PMobSkill) == 0) // A script says that the move in question is valid
+        if (PActionTarget && !PMobSkill->isAstralFlow() && luautils::OnMobSkillCheck(PActionTarget, PMob, PMobSkill) == 0) // A script says that the move in question is valid
         {
             float currentDistance = distance(PMob->loc.p, PActionTarget->loc.p);
 
@@ -480,6 +499,7 @@ bool CMobController::TryCastSpell()
         return true;
     }
 
+    TapDeaggroTime();
     return false;
 }
 
@@ -502,6 +522,7 @@ bool CMobController::CanCastSpells()
     // check for spell blockers e.g. silence
     if (PMob->StatusEffectContainer->HasStatusEffect({ EFFECT_SILENCE, EFFECT_MUTE }))
     {
+        TapDeaggroTime();
         return false;
     }
 
@@ -597,10 +618,27 @@ void CMobController::DoCombatTick(time_point tick)
 
     TryLink();
 
+    if (PMob == nullptr || PTarget == nullptr)
+    {
+        return;
+    }
+
     float currentDistance = distance(PMob->loc.p, PTarget->loc.p);
 
     PMob->PAI->EventHandler.triggerListener("COMBAT_TICK", CLuaBaseEntity(PMob));
     luautils::OnMobFight(PMob, PTarget);
+
+    // handle pet behaviour on the targets behalf (faster than in ai_pet_dummy)
+    // Avatars defend masters by attacking mobs if the avatar isn't attacking anything currently (bodyguard behaviour)
+    //
+    // This change allows pets to auto-engage mobs to allow summoner kiting without the mob having to swing at the player.
+    if (PTarget->PPet != nullptr && PTarget->PPet->GetBattleTargetID() == 0)
+    {
+        if (PTarget->PPet->objtype == TYPE_PET && ((CPetEntity*)PTarget->PPet)->getPetType() == PET_TYPE::AVATAR)
+        {
+            petutils::AttackTarget(PTarget, PMob);
+        }
+    }
 
     // Try to spellcast (this is done first so things like Chainspell spam is prioritised over TP moves etc.
     if (IsSpecialSkillReady(currentDistance) && TrySpecialSkill())
@@ -622,6 +660,11 @@ void CMobController::DoCombatTick(time_point tick)
 void CMobController::FaceTarget(uint16 targid)
 {
     TracyZoneScoped;
+    if (PMob->PAI->IsCurrentState<CInactiveState>())
+    {
+        return;
+    }
+
     CBaseEntity* targ = PTarget;
     if (targid != 0 && ((targ && targid != targ->targid) || !targ))
     {
@@ -642,7 +685,7 @@ void CMobController::Move()
     }
     if (PMob->PAI->PathFind->IsFollowingScriptedPath() && PMob->PAI->CanFollowPath())
     {
-        PMob->PAI->PathFind->FollowPath();
+        PMob->PAI->PathFind->FollowPath(m_Tick);
         return;
     }
 
@@ -728,7 +771,7 @@ void CMobController::Move()
                     // path to the target if we don't have a path already
                     PMob->PAI->PathFind->PathInRange(PTarget->loc.p, attack_range - 0.2f, PATHFLAG_WALLHACK | PATHFLAG_RUN);
                 }
-                PMob->PAI->PathFind->FollowPath();
+                PMob->PAI->PathFind->FollowPath(m_Tick);
                 if (!PMob->PAI->PathFind->IsFollowingPath())
                 {
                     bool needToMove = false;
@@ -850,6 +893,11 @@ void CMobController::DoRoamTick(time_point tick)
         {
             FollowRoamPath();
         }
+        else if (PMob->PAI->PathFind->IsPatrolling())
+        {
+            PMob->PAI->PathFind->ResumePatrol();
+            FollowRoamPath();
+        }
         else if (m_Tick >= m_LastActionTime + std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_ROAM_COOL)))
         {
             // lets buff up or move around
@@ -879,7 +927,7 @@ void CMobController::DoRoamTick(time_point tick)
             }
 
             // if I just disengaged check if I should despawn
-            if (PMob->IsFarFromHome())
+            if (!PMob->getMobMod(MOBMOD_DONT_ROAM_HOME) && PMob->IsFarFromHome())
             {
                 if (PMob->CanRoamHome() && PMob->PAI->PathFind->PathTo(PMob->m_SpawnPoint))
                 {
@@ -927,9 +975,10 @@ void CMobController::DoRoamTick(time_point tick)
                         CastSpell(spellID.value());
                     }
                 }
-                else if (PMob->m_roamFlags & ROAMFLAG_EVENT)
+                else if (PMob->m_roamFlags & ROAMFLAG_SCRIPTED)
                 {
                     // allow custom event action
+                    PMob->PAI->EventHandler.triggerListener("ROAM_ACTION", CLuaBaseEntity(PMob));
                     luautils::OnMobRoamAction(PMob);
                     m_LastActionTime = m_Tick;
                 }
@@ -992,7 +1041,7 @@ void CMobController::FollowRoamPath()
     TracyZoneScoped;
     if (PMob->PAI->CanFollowPath())
     {
-        PMob->PAI->PathFind->FollowPath();
+        PMob->PAI->PathFind->FollowPath(m_Tick);
 
         CBattleEntity* PPet = PMob->PPet;
         if (PPet != nullptr && PPet->PAI->IsSpawned() && !PPet->PAI->IsEngaged())
@@ -1019,7 +1068,7 @@ void CMobController::FollowRoamPath()
 
             // face spawn rotation if I just moved back to spawn
             // used by dynamis mobs, bcnm mobs etc
-            if ((PMob->m_roamFlags & ROAMFLAG_EVENT) && distance(PMob->loc.p, PMob->m_SpawnPoint) <= PMob->m_maxRoamDistance)
+            if (PMob->getMobMod(MOBMOD_ROAM_RESET_FACING) && distance(PMob->loc.p, PMob->m_SpawnPoint) <= PMob->m_maxRoamDistance)
             {
                 PMob->loc.p.rotation = PMob->m_SpawnPoint.rotation;
             }
@@ -1027,6 +1076,7 @@ void CMobController::FollowRoamPath()
 
         if (PMob->PAI->PathFind->OnPoint())
         {
+            PMob->PAI->EventHandler.triggerListener("PATH", CLuaBaseEntity(PMob));
             luautils::OnPath(PMob);
         }
     }
@@ -1105,6 +1155,11 @@ bool CMobController::Engage(uint16 targid)
             m_LastMagicTime =
                 m_Tick - std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_MAGIC_COOL) + xirand::GetRandomNumber(PMob->getBigMobMod(MOBMOD_MAGIC_DELAY)));
         }
+        else if (PMob->getBigMobMod(MOBMOD_MAGIC_COOL) != 0)
+        {
+            m_LastMagicTime =
+                m_Tick - std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_MAGIC_COOL));
+        }
 
         if (PMob->getBigMobMod(MOBMOD_SPECIAL_DELAY) != 0)
         {
@@ -1140,6 +1195,11 @@ bool CMobController::CanAggroTarget(CBattleEntity* PTarget)
     }
 
     if (PTarget->isDead() || PTarget->isMounted())
+    {
+        return false;
+    }
+
+    if (PMob->PAI && (PMob->PAI->IsCurrentState<CClaimShieldState>() || PMob->PAI->IsCurrentState<CMobShieldState>()))
     {
         return false;
     }

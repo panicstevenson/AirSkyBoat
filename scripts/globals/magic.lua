@@ -122,8 +122,12 @@ local function getSpellBonusAcc(caster, target, spell, params)
     if casterJob == xi.job.DRK then
         -- Add MACC for Dark Seal
         if skill == xi.skill.DARK_MAGIC and caster:hasStatusEffect(xi.effect.DARK_SEAL) then
-            magicAccBonus = magicAccBonus + 256
+            magicAccBonus = magicAccBonus + 75
         end
+    end
+
+    if caster:hasStatusEffect(xi.effect.ELEMENTAL_SEAL) then
+        magicAccBonus = magicAccBonus + 75
     end
 
     if casterJob == xi.job.RDM then
@@ -170,7 +174,7 @@ local function getSpellBonusAcc(caster, target, spell, params)
     return magicAccBonus
 end
 
-local function calculateMagicHitRate(magicacc, magiceva, dLvl, element, target)
+local function calculateMagicHitRate(magicacc, magiceva)
     local p = 0
     local magicAccDiff = magicacc - magiceva
 
@@ -180,7 +184,7 @@ local function calculateMagicHitRate(magicacc, magiceva, dLvl, element, target)
         p = utils.clamp(((50 + magicAccDiff)), 5, 95)
     end
 
-    return {p, element, target}
+    return p
 end
 
 local function isHelixSpell(spell)
@@ -314,14 +318,49 @@ function calculateMagicDamage(caster, target, spell, params)
 end
 
 function doEnspell(caster, target, spell, effect)
-    local duration = calculateDuration(180, spell:getSkillType(), spell:getSpellGroup(), caster, target)
+    -- Calculate Bonus duration
+    local baseDuration = 0
+    if caster:getEquipID(xi.slot.MAIN) == xi.items.BUZZARD_TUCK then
+        baseDuration = 210
+    else
+        baseDuration = 180
+    end
+
+    local duration = calculateDuration(baseDuration, spell:getSkillType(), spell:getSpellGroup(), caster, target)
 
     --calculate potency
     local magicskill = caster:getSkillLevel(xi.skill.ENHANCING_MAGIC)
 
-    local potency = 3 + math.floor(6 * magicskill / 100)
-    if magicskill > 200 then
-        potency = 5 + math.floor(5 * magicskill / 100)
+    -- Add effect bonuses from equipment
+    local potencybonus = 0
+    if caster:getEquipID(xi.slot.MAIN) == xi.items.BUZZARD_TUCK then
+        potencybonus = 2 + potencybonus
+    elseif caster:getEquipID(xi.slot.EAR1) == xi.items.LYCOPODIUM_EARRING or caster:getEquipID(xi.slot.EAR2) == xi.items.LYCOPODIUM_EARRING then
+        potencybonus = 2 + potencybonus
+    elseif caster:getEquipID(xi.slot.EAR1) == xi.items.HOLLOW_EARRING or caster:getEquipID(xi.slot.EAR2) == xi.items.HOLLOW_EARRING then
+        potencybonus = 3 + potencybonus
+    elseif(caster:getHPP() <= 75 and caster:getTP() <= 100) and
+    (caster:getEquipID(xi.slot.RING1) == xi.items.FENCERS_RING or caster:getEquipID(xi.slot.RING2) == xi.items.FENCERS_RING) then
+        potencybonus = 5 + potencybonus
+    elseif caster:getEquipID(xi.slot.MAIN) == xi.items.ENHANCING_SWORD then
+        potencybonus = 5 + potencybonus
+    end
+
+    -- Potency with Effect Bonus
+    local potency = 0
+    if (caster:getWeaponSkillType(xi.slot.MAIN) == xi.skill.SWORD or caster:getWeaponSkillType(xi.slot.SUB) == xi.skill.SWORD) then
+        if magicskill <= 200 then
+            potency = 3 + potencybonus + math.floor(6 * magicskill / 100)
+        elseif magicskill > 200 then
+            potency = 5 + potencybonus + math.floor(5 * magicskill / 100)
+        end
+    -- Potency without Effect Bonus
+    else
+        if magicskill <= 200 then
+            potency = 3 + math.floor(6 * magicskill / 100)
+        elseif magicskill > 200 then
+            potency = 5 + math.floor(5 * magicskill / 100)
+        end
     end
 
     if target:addStatusEffect(effect, potency, 0, duration) then
@@ -504,12 +543,12 @@ function applyResistanceEffect(caster, target, spell, params)
     end
 
     if effect ~= nil then
-        effectRes = effectRes - getEffectResistance(target, effect)
+        effectRes = effectRes - getEffectResistance(target, effect, false, caster)
     end
 
     local p = getMagicHitRate(caster, target, skill, element, effectRes, magicaccbonus, diff)
 
-    return getMagicResist(p)
+    return getMagicResist(p, target,params.element)
 end
 
 -- Applies resistance for things that may not be spells - ie. Quick Draw
@@ -522,7 +561,7 @@ function applyResistanceAddEffect(player, target, element, bonus)
 
     local p = getMagicHitRate(player, target, 0, element, 0, bonus)
 
-    return getMagicResist(p)
+    return getMagicResist(p, target, element)
 end
 
 function getMagicHitRate(caster, target, skillType, element, effectRes, bonusAcc, dStat)
@@ -531,6 +570,7 @@ function getMagicHitRate(caster, target, skillType, element, effectRes, bonusAcc
     local resMod = 0
     local dLvl = target:getMainLvl() - caster:getMainLvl()
     local dStatAcc = 0
+    effectRes = 1 - (effectRes / 100)
 
     -- resist everything if real magic shield is active (see effects/magic_shield)
     if target:hasStatusEffect(xi.effect.MAGIC_SHIELD) then
@@ -608,11 +648,9 @@ function getMagicHitRate(caster, target, skillType, element, effectRes, bonusAcc
     end
 
     if element ~= xi.magic.ele.NONE then
-        if target:isMob() then
-            tryBuildResistance(target, xi.magic.resistMod[element], nil)
+        if target:isMob() and target:isNM() then
+            tryBuildResistance(target, xi.magic.resistMod[element], nil, caster)
         end
-
-        resMod = target:getMod(xi.magic.resistMod[element])
 
         -- Add acc for elemental affinity accuracy and element specific accuracy
         local affinityBonus = AffinityBonusAcc(caster, element)
@@ -621,10 +659,10 @@ function getMagicHitRate(caster, target, skillType, element, effectRes, bonusAcc
     end
 
     if target:isPC() then
-        magiceva = target:getMod(xi.mod.MEVA) + resMod + effectRes
+        magiceva = target:getMod(xi.mod.MEVA) * ((100 + effectRes + resMod) / 100)
     else
-        dLvl = utils.clamp(dLvl, 0, 99) -- Mobs should not have a disadvantage when targeted
-        magiceva = target:getMod(xi.mod.MEVA) + (4 * dLvl) + resMod + effectRes
+        dLvl = utils.clamp(dLvl, 0, 200) -- Mobs should not have a disadvantage when targeted
+        magiceva = (target:getMod(xi.mod.MEVA) + (4 * dLvl)) * ((100 + effectRes + resMod) / 100)
     end
 
     bonusAcc = bonusAcc + caster:getMerit(xi.merit.MAGIC_ACCURACY) + caster:getMerit(xi.merit.NIN_MAGIC_ACCURACY)
@@ -635,16 +673,14 @@ function getMagicHitRate(caster, target, skillType, element, effectRes, bonusAcc
     local maccFood = magicacc * (caster:getMod(xi.mod.FOOD_MACCP)/100)
     magicacc = magicacc + utils.clamp(maccFood, 0, caster:getMod(xi.mod.FOOD_MACC_CAP))
 
-    return calculateMagicHitRate(magicacc, magiceva, dLvl, element, target)
+    return calculateMagicHitRate(magicacc, magiceva)
 end
 
 -- Returns resistance value from given magic hit rate (p)
-function getMagicResist(magicHitRate)
+function getMagicResist(magicHitRate, target, element)
     local evaMult = 1
-    local element = magicHitRate[2]
-    local target = magicHitRate[3]
 
-    if target:getObjType() == xi.objType.MOB then
+    if target ~= nil and element ~= nil and target:getObjType() == xi.objType.MOB then
         evaMult = target:getMod(xi.magic.eleEvaMult[element]) / 100
         local sortEvaMult = {1.50, 1.30, 1.15, 1.00, 0.85, 0.70, 0.60, 0.50, 0.40, 0.30, 0.25, 0.20, 0.15, 0.10, 0.05}
 
@@ -656,7 +692,7 @@ function getMagicResist(magicHitRate)
         end
     end
 
-    local p = utils.clamp(((magicHitRate[1] * evaMult) / 100), 0.05, 3.00)
+    local p = utils.clamp(((magicHitRate * evaMult) / 100), 0.05, 0.95)
     local resist = 1
 
     -- Resistance thresholds based on p.  A higher p leads to lower resist rates, and a lower p leads to higher resist rates.
@@ -682,22 +718,15 @@ function getMagicResist(magicHitRate)
     return resist
 end
 
-function tryBuildResistance(target, resistance, isEnfeeb)
-    local isNM = target:isNM()
+function tryBuildResistance(target, resistance, isEnfeeb, caster)
     local baseRes = target:getLocalVar(string.format("[RES]Base_%s", resistance))
     local castCool = target:getLocalVar(string.format("[RES]CastCool_%s", resistance))
     local builtPercent = target:getLocalVar(string.format("[RES]BuiltPercent_%s", resistance))
     local coolTime = 20
-    local buildPercent = 0
+    local buildPercent = 40
 
     if baseRes == 0 then
         target:setLocalVar(string.format("[RES]Base_%s", resistance), target:getMod(resistance))
-    end
-
-    if isNM == true then
-        buildPercent = 40 -- Equivalent to 4% Resistance Build (40/1000)
-    else
-        buildPercent = 20 -- Equivalent to 2% Resistance Build (20/1000)
     end
 
     if not isEnfeeb then
@@ -722,10 +751,11 @@ end
 
 -- Returns the amount of resistance the
 -- target has to the given effect (stun, sleep, etc..)
-function getEffectResistance(target, effect, returnBuild)
+function getEffectResistance(target, effect, returnBuild, caster)
     local effectres = 0
     local buildres = 0
     local statusres = target:getMod(xi.mod.STATUSRES)
+    local ecoBonus = 0
     local resTable =
     {
         [xi.effect.SLEEP_I] = { effectres = xi.mod.SLEEPRES, buildres = xi.mod.SLEEPRESBUILD },
@@ -749,6 +779,16 @@ function getEffectResistance(target, effect, returnBuild)
         [xi.effect.CHARM_II] = { effectres = xi.mod.CHARMRES, buildres = xi.mod.CHARMRESBUILD },
         [xi.effect.AMNESIA] = { effectres = xi.mod.AMNESIARES, buildres = xi.mod.AMNESIARESBUILD },
     }
+    local circleTable =
+    {
+        [xi.effect.BLINDNESS] = {xi.eco.UNDEAD, xi.effect.HOLY_CIRCLE,    xi.mod.UNDEAD_MITIGATION_MULT },
+        [xi.effect.PLAGUE]    = {xi.eco.UNDEAD, xi.effect.HOLY_CIRCLE,    xi.mod.UNDEAD_MITIGATION_MULT },
+        [xi.effect.SLOW]      = {xi.eco.DEMON,  xi.effect.WARDING_CIRCLE, xi.mod.DEMON_MITIGATION_MULT  },
+        [xi.effect.WEIGHT]    = {xi.eco.DEMON,  xi.effect.WARDING_CIRCLE, xi.mod.DEMON_MITIGATION_MULT  },
+        [xi.effect.AMNESIA]   = {xi.eco.DEMON,  xi.effect.WARDING_CIRCLE, xi.mod.DEMON_MITIGATION_MULT  },
+        [xi.effect.PARALYSIS] = {xi.eco.DRAGON, xi.effect.ANCIENT_CIRCLE, xi.mod.DRAGON_MITIGATION_MULT },
+        [xi.effect.STUN]      = {xi.eco.ARCANA, xi.effect.HOLY_CIRCLE,    xi.mod.ARCANA_MITIGATION_MULT },
+    }
 
     for effectIndex, effectTable in pairs(resTable) do
         if effectIndex == effect then
@@ -758,19 +798,26 @@ function getEffectResistance(target, effect, returnBuild)
         end
     end
 
-    if returnBuild ~= nil then
+    if circleTable[effect] ~= nil then
+        if caster:getSystem() == circleTable[effect][1] and target:hasStatusEffect(circleTable[effect][2]) then
+            ecoBonus = (circleTable[effect][3] / 100)
+        end
+    end
+
+    if returnBuild ~= nil and returnBuild ~= false then
         return buildres
     end
 
-    if target:isMob() and effectres ~= 0 then
-        tryBuildResistance(target, effectres, true)
+    if target:isMob() and target:isNM() and effectres ~= 0 then
+        tryBuildResistance(target, effectres, true, caster)
     end
 
     if effectres ~= 0 then
-        return target:getMod(effectres) + statusres
+        return target:getMod(effectres) + statusres + ecoBonus
     end
 
     return statusres
+
 end
 
 function handleAfflatusMisery(caster, spell, dmg)
@@ -797,7 +844,7 @@ function handleAfflatusMisery(caster, spell, dmg)
     return dmg
 end
 
- function finalMagicAdjustments(caster, target, spell, dmg)
+function finalMagicAdjustments(caster, target, spell, dmg)
     --Handles target's HP adjustment and returns UNSIGNED dmg (absorb message is set in this function)
 
     -- handle multiple targets
@@ -817,7 +864,7 @@ end
         -- target:delStatusEffect(xi.effect.BLINK)
     else
         -- this logic will eventually be moved here
-        -- dmg = utils.takeShadows(target, dmg, 1)
+        -- dmg = utils.takeShadows(target, mob, dmg, 1)
 
         -- if (dmg == 0) then
             -- spell:setMsg(xi.msg.basic.SHADOW_ABSORB)
@@ -864,7 +911,7 @@ end
     end
 
     return dmg
- end
+end
 
 function finalMagicNonSpellAdjustments(caster, target, ele, dmg)
     -- Handles target's HP adjustment and returns SIGNED dmg (negative values on absorb)
@@ -1431,10 +1478,10 @@ function calculateDuration(duration, magicSkill, spellGroup, caster, target, use
     return math.floor(duration)
 end
 
-function calculateBuildDuration(target, duration, effect)
+function calculateBuildDuration(target, duration, effect, caster)
 
     if target:isMob() then
-        local buildRes = getEffectResistance(target, effect, true)
+        local buildRes = getEffectResistance(target, effect, true, caster)
 
         if target:getMod(buildRes) ~= 0 then
             local builtRes = target:getLocalVar(string.format("[RESBUILD]Base_%s", buildRes))

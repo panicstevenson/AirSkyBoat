@@ -3,7 +3,21 @@
 --  NPC: Pakeke
 -- Working 100%
 -----------------------------------
+require("scripts/globals/pathfind")
+-----------------------------------
 local entity = {}
+
+local path =
+{
+    {x = -118.747, y = -5.000, z = 145.220, rotation = 128, wait = 20000},
+    {rotation = 0, wait = 20000},
+}
+
+entity.onSpawn = function(npc)
+    npc:initNpcAi()
+    npc:setPos(xi.path.first(path))
+    npc:pathThrough(path, xi.path.flag.PATROL)
+end
 
 entity.onTrade = function(player, npc, trade)
 end

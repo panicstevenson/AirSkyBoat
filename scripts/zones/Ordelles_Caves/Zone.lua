@@ -1,16 +1,15 @@
 -----------------------------------
---
 -- Zone: Ordelles Caves (193)
---
 -----------------------------------
-local ID = require("scripts/zones/Ordelles_Caves/IDs")
-require("scripts/globals/conquest")
-require("scripts/globals/treasure")
-require("scripts/globals/zone")
+local ID = require('scripts/zones/Ordelles_Caves/IDs')
+require('scripts/globals/conquest')
+require('scripts/globals/treasure')
+require('scripts/globals/zone')
 -----------------------------------
 local zone_object = {}
 
 zone_object.onInitialize = function(zone)
+    xi.horizon.spawnInitialMobs(zone)
     UpdateNMSpawnPoint(ID.mob.MORBOLGER)
     GetMobByID(ID.mob.MORBOLGER):setRespawnTime(math.random(900, 10800))
 
@@ -19,12 +18,15 @@ end
 
 zone_object.onZoneIn = function(player, prevZone)
     local cs = -1
+
     if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
         player:setPos(-76.839, -1.696, 659.969, 122)
     end
+
     if prevZone == xi.zone.LA_THEINE_PLATEAU and player:getCharVar("darkPuppetCS") == 1 then
         cs = 10
     end
+
     return cs
 end
 

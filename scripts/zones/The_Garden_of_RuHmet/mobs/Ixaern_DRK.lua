@@ -29,6 +29,7 @@ entity.onMobInitialize = function(IxAernDrkMob)
             mob:setMobMod(xi.mobMod.NO_DROPS, 1)
             mob:timer(9000, function(mobArg)
                 mobArg:setHP(mob:getMaxHP())
+                mobArg:setMP(mob:getMaxMP())
                 mobArg:setAnimationSub(3)
                 mobArg:resetAI()
                 mobArg:stun(3000)
@@ -61,8 +62,10 @@ entity.onMobInitialize = function(IxAernDrkMob)
         else
             -- death
             mob:setMobMod(xi.mobMod.NO_DROPS, 0)
-            -- DespawnMob(QnAernA)
-            -- DespawnMob(QnAernB)
+            for i = mob:getID() + 1, mob:getID() + 2 do
+                local aernPet = GetMobByID(i)
+                DespawnMob(aernPet)
+            end
         end
     end)
 
@@ -100,6 +103,17 @@ end
 
 entity.onMobDespawn = function(mob)
     mob:setLocalVar("AERN_RERAISES", 0)
+
+    local mobId = mob:getID()
+    for i = mobId + 1, mobId + 2 do
+        if GetMobByID(i):isSpawned() then
+            DespawnMob(i)
+        end
+    end
+
+    local qmDrk = GetNPCByID(ID.npc.QM_IXAERN_DRK)
+    qmDrk:setLocalVar("nextMove", os.time() + 1800 + xi.settings.main.FORCE_SPAWN_QM_RESET_TIME) -- 30 minutes from now, once the QM respawns
+    -- the QM's position and hate were already reset when the mob popped, we just need this here in the despawn function for the correct respawn timing
 end
 
 return entity

@@ -1,5 +1,5 @@
 -----------------------------------
--- Camisado M=3.5
+-- Camisado M=3.5 (Pet version)
 -----------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/status")
@@ -13,13 +13,14 @@ ability_object.onAbilityCheck = function(player, target, ability)
 end
 
 ability_object.onPetAbility = function(target, pet, skill)
-    local damage = pet:getMainLvl() + 2
+    local numhits = 1
+    local accmod = 1
+    local dmgmod = 3.5
 
-    damage = xi.mobskills.mobMagicalMove(pet, target, skill, damage, xi.magic.ele.DARK, 2, xi.mobskills.magicalTpBonus.NO_EFFECT, 0)
-    damage = xi.mobskills.mobAddBonuses(pet, target, damage.dmg, xi.magic.ele.DARK)
-    damage = xi.summon.avatarFinalAdjustments(damage, pet, skill, target, xi.attackType.MAGICAL, xi.damageType.DARK, 1)
-    target:takeDamage(damage, pet, xi.attackType.MAGICAL, xi.damageType.DARK)
-    target:updateEnmityFromDamage(pet, damage)
+    local damage = xi.summon.avatarPhysicalMove(pet, target, skill, numhits, accmod, dmgmod, 1, xi.mobskills.magicalTpBonus.NO_EFFECT)
+    damage = xi.summon.avatarFinalAdjustments(damage.dmg, pet, skill, target, xi.attackType.PHYSICAL, xi.damageType.BLUNT, xi.mobskills.magicalTpBonus.NO_EFFECT)
+
+    target:takeDamage(damage, pet, xi.attackType.PHYSICAL, xi.damageType.BLUNT)
 
     return damage
 end

@@ -1,14 +1,12 @@
 -----------------------------------
---
 -- Zone: The_Garden_of_RuHmet (35)
---
 -----------------------------------
-local ID = require("scripts/zones/The_Garden_of_RuHmet/IDs")
-require("scripts/globals/conquest")
-require("scripts/globals/settings")
-require("scripts/globals/status")
-require("scripts/globals/missions")
-require("scripts/globals/keyitems")
+local ID = require('scripts/zones/The_Garden_of_RuHmet/IDs')
+require('scripts/globals/conquest')
+require('scripts/globals/settings')
+require('scripts/globals/status')
+require('scripts/globals/missions')
+require('scripts/globals/keyitems')
 -----------------------------------
 local zone_object = {}
 
@@ -62,6 +60,7 @@ zone_object.onInitialize = function(zone)
     qmDrk:setLocalVar("position", qmDrkPos)
     qmDrk:setPos(unpack(ID.npc.QM_IXAERN_DRK_POS[qmDrkPos]))
     qmDrk:setLocalVar("hatedPlayer", 0)
+    qmDrk:setLocalVar("nextMove", os.time() + 1800) -- 30 minutes from now
 
     -- Give the Faith ??? a random spawn
     local qmFaith = GetNPCByID(ID.npc.QM_JAILER_OF_FAITH)
@@ -93,17 +92,18 @@ zone_object.onGameHour = function(zone)
     local s = math.random(6, 12) -- wait time till change to next spawn pos, random 15~30 mins.
 
     -- Jailer of Faith spawn randomiser
-    if (vanadielHour % s == 0) then
+    if vanadielHour % s == 0 then
         local qmFaith = GetNPCByID(ID.npc.QM_JAILER_OF_FAITH) -- Jailer of Faith
         qmFaith:hideNPC(60) -- Hide it for 60 seconds
         qmFaith:setPos(unpack(ID.npc.QM_JAILER_OF_FAITH_POS[math.random(1, 5)])) -- Set the new position
     end
 
     -- Ix'DRK spawn randomiser
-    if (vanadielHour % 12 == 0 and qmDrk:getStatus() ~= xi.status.DISAPPEAR) then -- Change ??? position every 12 hours Vana'diel time (30 mins)
+    if qmDrk:getStatus() ~= xi.status.DISAPPEAR and qmDrk:getLocalVar("nextMove") < os.time() then -- Change ??? position every 30 mins
         qmDrk:hideNPC(30)
         local qmDrkPos = math.random(1, 4)
         qmDrk:setLocalVar("position", qmDrkPos)
+        qmDrk:setLocalVar("nextMove", os.time() + 1800) -- 30 minutes later
         qmDrk:setPos(unpack(ID.npc.QM_IXAERN_DRK_POS[qmDrkPos]))
     end
 end
@@ -116,11 +116,11 @@ zone_object.onZoneIn = function(player, prevZone)
     if (player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0) then
         player:setPos(-351.136, -2.25, -380, 253)
     end
-   player:setCharVar("Ru-Hmet-TP", 0)
+    player:setCharVar("Ru-Hmet-TP", 0)
 end
 
 zone_object.onRegionEnter = function(player, region)
-    if (player:getCharVar("Ru-Hmet-TP") == 0 and player:getAnimation() == 0) then
+    if player:getCharVar("Ru-Hmet-TP") == 0 and player:getAnimation() == 0 then
         switch (region:GetRegionID()): caseof
         {
             [1] = function (x)
@@ -185,18 +185,21 @@ zone_object.onRegionLeave = function(player, region)
 end
 
 zone_object.onEventUpdate = function(player, csid, option)
-
-    if ((csid >149 and csid < 184) or csid == 102 or csid == 103 or csid == 101) then
+    if
+        (csid >149 and csid < 184) or
+        csid == 102 or
+        csid == 103 or
+        csid == 101
+    then
         player:setCharVar("Ru-Hmet-TP", 1)
     end
 end
 
 zone_object.onEventFinish = function(player, csid, option)
-
-    if (csid == 101 and option == 1) then
+    if csid == 101 and option == 1 then
         player:setPos(540, -1, -499.900, 62, 36)
         player:setCharVar("Ru-Hmet-TP", 0)
-    elseif ((csid > 149 and csid < 184) or csid == 102 or csid == 103 or csid == 101) then
+    elseif (csid > 149 and csid < 184) or csid == 102 or csid == 103 or csid == 101 then
         player:setCharVar("Ru-Hmet-TP", 0)
     elseif (csid == 32000 and option==1) then
         player:setPos(420, 0, 398, 68)

@@ -22,6 +22,7 @@
 #ifndef _BATTLEENTITY_H
 #define _BATTLEENTITY_H
 
+#include <mutex>
 #include <set>
 #include <unordered_map>
 #include <vector>
@@ -563,6 +564,8 @@ public:
 
     DAMAGE_TYPE m_dmgType;
 
+    std::mutex scMutex;
+
     bool isDead(); // проверяем, мертва ли сущность
     bool isAlive();
     bool isInAssault();
@@ -750,6 +753,8 @@ public:
     bool            m_dualWield;   // True/false depending on if the entity is using two weapons
     DEATH_TYPE      m_DeathType;
 
+    uint8 m_subRatio; // 0: None, 1: Halved, 2: Two/thirds, 3: Equal
+
     TraitList_t TraitList; // список постянно активных способностей в виде указателей
 
     EntityID_t m_OwnerID; // ID атакующей сущности (после смерти будет хранить ID сущности, нанесщей последний удар)
@@ -768,11 +773,16 @@ public:
     std::unique_ptr<CRecastContainer>       PRecastContainer;
     std::unique_ptr<CNotorietyContainer>    PNotorietyContainer;
 
+    int16              CalculateMSFromSources(); // Used to calculate movement speed when adding or removing items with movement speed modifiers
+    std::vector<int16> m_MSItemValues;           // Tracking movement speed items to prevent stacking values
+    std::vector<int16> m_MSNonItemValues;        // Tracking movement speed from non-item sources
+
 private:
     JOBTYPE    m_mjob; // главная профессия
     JOBTYPE    m_sjob; // дополнительная профессия
     uint8      m_mlvl; // ТЕКУЩИЙ уровень главной профессии
     uint8      m_slvl; // ТЕКУЩИЙ уровень дополнительной профессии
+
     uint16     m_battleTarget{ 0 };
     time_point m_battleStartTime;
 

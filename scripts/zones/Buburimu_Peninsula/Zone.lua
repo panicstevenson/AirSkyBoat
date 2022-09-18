@@ -1,13 +1,13 @@
 -----------------------------------
 -- Zone: Buburimu_Peninsula (118)
 -----------------------------------
-local ID = require("scripts/zones/Buburimu_Peninsula/IDs")
-require("scripts/quests/i_can_hear_a_rainbow")
-require("scripts/globals/chocobo_digging")
-require("scripts/globals/conquest")
-require("scripts/globals/helm")
-require("scripts/globals/zone")
-require("scripts/missions/amk/helpers")
+local ID = require('scripts/zones/Buburimu_Peninsula/IDs')
+require('scripts/quests/i_can_hear_a_rainbow')
+require('scripts/globals/chocobo_digging')
+require('scripts/globals/conquest')
+require('scripts/globals/helm')
+require('scripts/globals/zone')
+require('scripts/missions/amk/helpers')
 -----------------------------------
 local zone_object = {}
 
@@ -19,8 +19,10 @@ zone_object.onInitialize = function(zone)
     xi.horizon.spawnInitialMobs(zone)
     local hour = VanadielHour()
 
-    if hour >= 6 and hour < 16 then
-        GetMobByID(ID.mob.BACKOO):setRespawnTime(1)
+    if xi.settings.main.ENABLE_WOTG == 1 then
+        if hour >= 6 and hour < 16 then
+            --GetMobByID(ID.mob.BACKOO):setRespawnTime(1) Commenting out on horizon for now
+        end
     end
 
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
@@ -68,15 +70,17 @@ zone_object.onGameHour = function(zone)
     local hour = VanadielHour()
     local nmBackoo = GetMobByID(ID.mob.BACKOO)
 
-    if hour == 6 then -- backoo time-of-day pop condition open
-        DisallowRespawn(ID.mob.BACKOO, false)
-        if nmBackoo:getRespawnTime() == 0 then
-            nmBackoo:setRespawnTime(1)
-        end
-    elseif hour == 16 then -- backoo despawns
-        DisallowRespawn(ID.mob.BACKOO, true)
-        if nmBackoo:isSpawned() then
-            nmBackoo:spawn(1)
+    if nmBackoo ~= nil then
+        if hour == 6 then -- backoo time-of-day pop condition open
+            DisallowRespawn(ID.mob.BACKOO, false)
+            if nmBackoo:getRespawnTime() == 0 then
+                nmBackoo:setRespawnTime(1)
+            end
+        elseif hour == 16 then -- backoo despawns
+            DisallowRespawn(ID.mob.BACKOO, true)
+            if nmBackoo:isSpawned() then
+                nmBackoo:spawn(1)
+            end
         end
     end
 end

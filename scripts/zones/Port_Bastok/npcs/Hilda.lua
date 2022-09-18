@@ -10,8 +10,38 @@ require("scripts/globals/keyitems")
 require("scripts/globals/missions")
 require("scripts/globals/quests")
 require("scripts/globals/utils")
+require("scripts/globals/pathfind")
 -----------------------------------
 local entity = {}
+
+local path =
+{
+    {x = -155.438, y = -11.380, z = 18.663, wait = 10000},
+    {x = -155.438, z = 18.663},
+    {x = -155.574, z = 18.439},
+    {x = -157.387, z = 15.589},
+    {x = -158.694, y = -11.047, z = 15.911},
+    {x = -160.021, y = -10.313, z = 16.424},
+    {x = -160.902, y = -10.188, z = 16.373},
+    {x = -162.387, y = -9.683, z = 15.364},
+    {x = -166.233, y = -8.705, z = 13.941},
+    {x = -162.568, y = -8.081, z = 12.267},
+    {x = -162.469, z = 12.366, wait = 10000},
+    {x = -166.233, y = -8.705, z = 13.941},
+    {x = -162.387, y = -9.683, z = 15.364},
+    {x = -160.902, y = -10.188, z = 16.373},
+    {x = -160.021, y = -10.313, z = 16.424},
+    {x = -158.694, y = -11.047, z = 15.911},
+    {x = -157.387, y = -11.380, z = 15.589},
+    {x = -155.574, y = -11.380, z = 18.439},
+    {x = -155.302, y = -11.381, z = 18.639},
+}
+
+entity.onSpawn = function(npc)
+    npc:initNpcAi()
+    npc:setPos(xi.path.first(path))
+    npc:pathThrough(path, xi.path.flag.PATROL)
+end
 
 entity.onTrade = function(player, npc, trade)
     if trade:getGil() == 0 and trade:getItemCount() == 1 then
@@ -24,11 +54,7 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    local wildcatBastok = player:getCharVar("WildcatBastok")
-
-    if player:getQuestStatus(xi.quest.log_id.BASTOK, xi.quest.id.bastok.LURE_OF_THE_WILDCAT) == QUEST_ACCEPTED and not utils.mask.getBit(wildcatBastok, 3) then
-        player:startEvent(356)
-    elseif player:getQuestStatus(xi.quest.log_id.BASTOK, xi.quest.id.bastok.THE_USUAL) ~= QUEST_COMPLETED then
+    if player:getQuestStatus(xi.quest.log_id.BASTOK, xi.quest.id.bastok.THE_USUAL) ~= QUEST_COMPLETED then
         if player:getQuestStatus(xi.quest.log_id.BASTOK, xi.quest.id.bastok.CID_S_SECRET) == QUEST_ACCEPTED then
             player:startEvent(132)
             if player:getCharVar("CidsSecret_Event") ~= 1 then
@@ -80,8 +106,6 @@ entity.onEventFinish = function(player, csid, option)
             player:addFame(xi.quest.fame_area.BASTOK, 30)
             player:completeQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.THE_USUAL)
         end
-    elseif csid == 356 then
-        player:setCharVar("WildcatBastok", utils.mask.setBit(player:getCharVar("WildcatBastok"), 3, true))
     end
 end
 

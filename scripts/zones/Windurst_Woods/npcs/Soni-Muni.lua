@@ -5,11 +5,33 @@
 -- !pos -17.073 1.749 -59.327 241
 -----------------------------------
 require("scripts/globals/npc_util")
+require("scripts/globals/pathfind")
 require("scripts/globals/quests")
 require("scripts/globals/titles")
 require("scripts/globals/utils")
+require("scripts/globals/pathfind")
 -----------------------------------
 local entity = {}
+
+local path =
+{
+    {x = -18.366, y = 1.750, z = -59.804, wait = 8000},
+    {x = -18.303, y = 1.750, z = -59.925},
+    {x = -18.176, y = 1.750, z = -59.733},
+    {x = -17.620, y = 1.750, z = -59.529},
+    {x = -16.961, y = 1.750, z = -59.286},
+    {x = -16.590, y = 1.750, z = -59.149, wait = 8000},
+    {x = -16.961, y = 1.750, z = -59.286},
+    {x = -17.620, y = 1.750, z = -59.529},
+    {x = -18.176, y = 1.750, z = -59.733},
+    {x = -18.303, y = 1.750, z = -59.925},
+}
+
+entity.onSpawn = function(npc)
+    npc:initNpcAi()
+    npc:setPos(xi.path.first(path))
+    npc:pathThrough(path, xi.path.flag.PATROL)
+end
 
 entity.onTrade = function(player, npc, trade)
     if player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.THE_AMAZIN_SCORPIO) == QUEST_ACCEPTED and npcUtil.tradeHas(trade, 1017) then

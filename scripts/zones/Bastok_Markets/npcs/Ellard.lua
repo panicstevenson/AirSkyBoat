@@ -47,12 +47,13 @@ local keyitems =
         cost = 10000
     },
 
-    [5] =
-    {
-        id = xi.ki.WAY_OF_THE_GOLDSMITH,
-        rank = 9,
-        cost = 20000
-    }
+    -- OOE KIs
+    -- [5] =
+    -- {
+    --     id = xi.ki.WAY_OF_THE_GOLDSMITH,
+    --     rank = 9,
+    --     cost = 20000
+    -- }
 }
 
 local items =
@@ -70,11 +71,10 @@ local items =
         rank = 5,
         cost = 70000
     },
-
     [2] =
     {
-        id = 14394,
-        rank = 5,
+        id = 14394, -- Goldsmith's Apron
+        rank = 7,
         cost = 100000
     },
 
@@ -85,33 +85,34 @@ local items =
         cost = 150000
     },
 
-    [4] =
-    {
-        id = 335,
-        rank = 9,
-        cost = 200000
-    },
+    -- OOE GP Items
+    -- [4] =
+    -- {
+    --     id = 335,
+    --     rank = 9,
+    --     cost = 200000
+    -- },
 
-    [5] =
-    {
-        id = 15821,
-        rank = 6,
-        cost = 80000
-    },
+    -- [5] =
+    -- {
+    --     id = 15821,
+    --     rank = 6,
+    --     cost = 80000
+    -- },
 
-    [6] =
-    {
-        id = 3595,
-        rank = 7,
-        cost = 50000
-    },
+    -- [6] =
+    -- {
+    --     id = 3595,
+    --     rank = 7,
+    --     cost = 50000
+    -- },
 
-    [7] =
-    {
-        id = 3325,
-        rank = 9,
-        cost = 15000
-    }
+    -- [7] =
+    -- {
+    --     id = 3325,
+    --     rank = 9,
+    --     cost = 15000
+    -- }
 }
 
 entity.onTrade = function(player, npc, trade)
@@ -123,15 +124,15 @@ entity.onTrigger = function(player, npc)
 end
 
 entity.onEventUpdate = function(player, csid, option, target)
-    if (csid == 340) then
+    if csid == 340 then
         xi.crafting.unionRepresentativeTriggerFinish(player, option, target, 3, "guild_goldsmithing", keyitems, items)
     end
 end
 
 entity.onEventFinish = function(player, csid, option, target)
-    if (csid == 340) then
+    if csid == 340 then
         xi.crafting.unionRepresentativeTriggerFinish(player, option, target, 3, "guild_goldsmithing", keyitems, items)
-    elseif (csid == 341) then
+    elseif csid == 341 then
         player:messageSpecial(ID.text.GP_OBTAINED, option)
     end
 end

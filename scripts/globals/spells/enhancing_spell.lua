@@ -491,6 +491,14 @@ xi.spells.enhancing.useEnhancingSpell = function(caster, target, spell)
     end
 
     ------------------------------------------------------------
+    -- Horizon Specific Customizations
+    ------------------------------------------------------------
+    if caster:hasStatusEffect(xi.effect.DIVINE_SEAL) and caster:hasTrait(69) and spellEffect == xi.effect.REGEN then -- If Divine Seal and Divine Veil and Regen
+        duration = duration * 2
+        finalPower = finalPower * 2
+    end
+
+    ------------------------------------------------------------
     -- Change message when higher effect or "Always overwrite".
     ------------------------------------------------------------
     if alwaysOverwrite then
