@@ -10349,9 +10349,10 @@ void CLuaBaseEntity::updateEnmityFromDamage(CLuaBaseEntity* PEntity, int32 damag
 
 void CLuaBaseEntity::updateEnmityFromCure(CLuaBaseEntity* PEntity, int32 amount)
 {
-    XI_DEBUG_BREAK_IF(amount < 0);
-
-    auto* PBattle = static_cast<CBattleEntity*>(m_PBaseEntity);
+    if (m_PBaseEntity == nullptr || amount < 0)
+    {
+        return;
+    }
 
     // clang-format off
     auto* PCurer = [&]() -> CBattleEntity*
@@ -10360,7 +10361,7 @@ void CLuaBaseEntity::updateEnmityFromCure(CLuaBaseEntity* PEntity, int32 amount)
         {
             return static_cast<CBattleEntity*>(m_PBaseEntity);
         }
-        else if (m_PBaseEntity->objtype == TYPE_PET || static_cast<CPetEntity*>(PBattle->PPet)->m_PetID == PETID_LIGHTSPIRIT)
+        else if (m_PBaseEntity->objtype == TYPE_PET && static_cast<CPetEntity*>(m_PBaseEntity)->m_PetID == PETID_LIGHTSPIRIT)
         {
             return static_cast<CBattleEntity*>(m_PBaseEntity);
         }
@@ -10372,6 +10373,7 @@ void CLuaBaseEntity::updateEnmityFromCure(CLuaBaseEntity* PEntity, int32 amount)
                 return static_cast<CCharEntity*>(PMaster);
             }
         }
+
         return nullptr;
     }();
     // clang-format on
