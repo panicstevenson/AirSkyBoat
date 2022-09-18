@@ -1028,7 +1028,7 @@ xi.conquest.overseerOnTrade = function(player, npc, trade, guardNation, guardTyp
             if addPoints > 0 and pRank ~= 1 and pRankPoints < 4000 then
                 if pRankPoints + addPoints >= 4000 then
                     player:setRankPoints(4000)
-                    player:addCP(pRankPoints + addPoints - 4000)
+                    player:addCP((pRankPoints + (addPoints) - 4000)/14) -- Nerfing overflow crystal CP gain
                     player:showText(npc, mOffset + 44) -- "Your rank points are full. We've added the excess to your conquest points."
                 else
                     player:addRankPoints(addPoints)
