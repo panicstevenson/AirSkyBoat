@@ -27,7 +27,7 @@ CMobShieldState::CMobShieldState(CBaseEntity* PEntity)
 
         PMob->setModifier(Mod::MOBSHIELD_FAKE_SPAWN, xirand::GetRandomNumber(4000, 8000));
         PMob->setModifier(Mod::CLAIMBOT_REPORT_CHECK, 0);
-        PMob->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_STUN, EFFECT_STUN, 1, 0, PMob->getMod(Mod::MOBSHIELD_FAKE_SPAWN)), false);
+        PMob->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_STUN, EFFECT_STUN, 1, 0, PMob->getMod(Mod::MOBSHIELD_FAKE_SPAWN) / 1000), false);
 
         // clang-format off
         PMob->PAI->QueueAction(queueAction_t(std::chrono::milliseconds(PMob->getMod(Mod::MOBSHIELD_FAKE_SPAWN)), false, [&](CBaseEntity* PEntity)
