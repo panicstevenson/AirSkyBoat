@@ -159,7 +159,7 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
 (17293465, 0,  'Greater_Pugil',            'Greater Pugil',            20,  7.864,     -20.074,   254.871,   111 ),
 (17293466, 0,  'Greater_Pugil',            'Greater Pugil',            20,  13.943,    -19.983,   284.812,   34  ),
 (17293467, 0,  'Greater_Pugil',            'Greater Pugil',            20,  -1.199,    -20.264,   310.455,   184 ),
-(17293468, 0,  'Banshee',                  'Banshee',                  21,  -38.638,   -20.473,   255.874,   122 ),
+(17293468, 0,  'Banshee',                  'Banshee',                  21,  16.743,    -20.985,   291.036,   122 ),
 (17293469, 0,  'Thunder_Elemental',        'Thunder Elemental',        22,  27.123,    -20.734,   263.613,   205 ),
 (17293470, 0,  'Clipper',                  'Clipper',                  9,   -317.06,   -20.554,   61.837,    59  ),
 (17293471, 0,  'Clipper',                  'Clipper',                  9,   -253.738,  -20.839,   50.184,    249 ),

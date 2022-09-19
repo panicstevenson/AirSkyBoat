@@ -319,6 +319,6 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
 (16785721, 0,  'Bullheaded_Grosvez',       'Bullheaded Grosvez',       49,  37.861,    -8.684,    -568.912,  198 ),
 (16785722, 0,  'Mycophile',                'Mycophile',                50,  145.5,     -9.483,    -699,      74  ),
 (16785723, 0,  'Hercules_Beetle',          'Hercules Beetle',          51,  -238,      -5.95,     -93.5,     180 ),
-(16785724, 0,  'Orcfeltrap',               'Orcfeltrap',               52,  118.94,    -6.433,    -437.238,  14  ),
-(16785725, 0,  'Orcfeltrap',               'Orcfeltrap',               52,  157.141,   -6.5,      -518.813,  43  ),
-(16785726, 0,  'Orcfeltrap',               'Orcfeltrap',               52,  77.7,      -5.888,    -585.887,  77  );
+(16785724, 0,  'Orcfeltrap',               'Orcfeltrap',               52,  0,         0,         0,         0   ),
+(16785725, 0,  'Orcfeltrap',               'Orcfeltrap',               52,  0,         0,         0,         0   ),
+(16785726, 0,  'Orcfeltrap',               'Orcfeltrap',               52,  0,         0,         0,         0   );
