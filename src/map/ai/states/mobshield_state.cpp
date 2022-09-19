@@ -19,7 +19,7 @@ CMobShieldState::CMobShieldState(CBaseEntity* PEntity)
 
     auto* PMob = static_cast<CMobEntity*>(PEntity);
 
-    if (PMob != nullptr)
+    if (PMob != nullptr && (PMob->m_Type & MOBTYPE_NOTORIOUS))
     {
         PMob->status        = STATUS_TYPE::INVISIBLE;
         PMob->m_unkillable  = true;
