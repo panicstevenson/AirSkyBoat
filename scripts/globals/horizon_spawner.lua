@@ -1429,26 +1429,7 @@ local spawnerFunctions =
 {
     ["Default"] =
     {
-        onSpawn = function(mob)
-            local index = mob:getZone():getLocalVar(string.format("[SPAWNER]Index_", mob:getID()))
-            local table = spawnerMobs[mob:getZone():getID()][index]
-
-            if table.min ~= nil and table.max ~= nil then
-                mob:setMobLevel(math.random(table.min, table.max))
-            end
-
-            if table.drops ~= nil then
-                mob:setDropID(table.drops)
-            end
-
-            if table.skills ~= nil then
-                mob:setMobMod(xi.mobMod.SKILL_LIST, table.skills)
-            end
-
-            if table.spells ~= nil then
-                mob:setSpellList(table.spells)
-            end
-        end,
+        onSpawn             = function(mob) end,
         onEngaged           = function(mob, target) end,
         onFight             = function(mob, target) end,
         onDisengage         = function(mob, target) end,
@@ -1499,6 +1480,42 @@ xi.horizon.spawnMob = function(zone, index)
             table.spawnAnimation = false
         end
 
+        if table.min == nil then
+            table.min = 0
+        end
+
+        if table.max == nil then
+            table.max = 0
+        end
+
+        if table.skills == nil then
+            table.skills = 0
+        end
+
+        if table.drops == nil then
+            table.drops = 0
+        end
+
+        if table.skills == nil then
+            table.skills = 0
+        end
+
+        if table.spells == nil then
+            table.spells = 0
+        end
+
+        if table.respawn == nil then
+            table.respawn = 0
+        end
+
+        if table.spawnType == nil then
+            table.spawnType = 0
+        end
+
+        if table.subRatio == nil then
+            table.subRatio = 3
+        end
+
         local functionTable = spawnerFunctions[table.funcLookup]
         local mob = zone:insertDynamicEntity({
             objtype = xi.objType.MOB,
@@ -1522,18 +1539,20 @@ xi.horizon.spawnMob = function(zone, index)
             releaseIdOnDeath = table.releaseId,
             specialSpawnAnimation = table.spawnAnimation,
             mixins = functionTable.mixins,
+            minLevel = table.min,
+            maxLevel = table.max,
+            dropId = table.drops,
+            skillList = table.skills,
+            spellList = table.spells,
+            respawn = table.respawn,
+            spawnType = table.spawnType,
+            subRatio = table.subRatio,
         })
 
         mob:setSpawn(table.xPos, table.yPos, table.zPos, table.rot)
-        zone:setLocalVar(string.format("[SPAWNER]Index_", mob:getID()), index)
         mob:spawn()
 
-        if table.respawn ~= nil then
-            mob:setRespawnTime(table.respawn)
-        end
-
-        if table.spawnType ~= nil then
-            mob:setSpawnType(table.spawnType)
+        if table.spawnType ~= xi.spawnType.SPAWNTYPE_NORMAL then
             DespawnMob(mob:getID())
         end
     end
