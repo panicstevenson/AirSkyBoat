@@ -19,10 +19,10 @@ require("scripts/globals/damage")
 
 local circleEffects =
 {
-    {xi.eco.UNDEAD, xi.mod.DMG_AGAINST_UNDEAD_MULT},
-    {xi.eco.DEMON,  xi.mod.DMG_AGAINST_DEMON_MULT},
-    {xi.eco.DRAGON, xi.mod.DMG_AGAINST_DRAGON_MULT},
-    {xi.eco.ARCANA, xi.mod.DMG_AGAINST_ARCANA_MULT},
+    { xi.eco.UNDEAD, xi.mod.DMG_AGAINST_UNDEAD_MULT },
+    { xi.eco.DEMON,  xi.mod.DMG_AGAINST_DEMON_MULT },
+    { xi.eco.DRAGON, xi.mod.DMG_AGAINST_DRAGON_MULT },
+    { xi.eco.ARCANA, xi.mod.DMG_AGAINST_ARCANA_MULT },
 }
 
 local function getCircleEffect(attacker, target)
@@ -246,7 +246,7 @@ local function cRangedRatio(attacker, defender, params, ignoredDef, tp)
     local pdif = attacker:getRangedPDIF(defender, false, atkmulti, ignoredDef)
     local pdifcrit = attacker:getRangedPDIF(defender, true, atkmulti, ignoredDef)
 
-    return {pdif, pdifcrit}
+    return { pdif, pdifcrit }
 end
 
 local function getRangedHitRate(attacker, target, capHitRate, bonus)
@@ -315,7 +315,8 @@ local function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams, f
             -- Duplicate the first hit with an added magical component for hybrid WSes
             if calcParams.hybridHit then
                 -- Calculate magical bonuses and reductions
-                local magicdmg = addBonusesAbility(attacker, wsParams.ele, target, finaldmg, wsParams)
+                local ftpHybrid = fTP(calcParams.tp, wsParams.ftp100, wsParams.ftp200, wsParams.ftp300) + calcParams.bonusfTP
+                local magicdmg = math.floor(finaldmg * ftpHybrid)
 
                 wsParams.bonus = calcParams.bonusAcc
                 magicdmg = magicdmg * applyResistanceAbility(attacker, target, wsParams.ele, wsParams)
@@ -426,6 +427,10 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
 
     local wsMods = calcParams.fSTR + (math.floor(str + dex + vit + agi + int + mnd + chr) * calcParams.alpha)
     local ftp = fTP(tp, wsParams.ftp100, wsParams.ftp200, wsParams.ftp300) + calcParams.bonusfTP
+
+    if wsParams.hybridWS then
+        ftp = 1
+    end
 
     if not isRanged then
         base = (calcParams.weaponDamage[1] + calcParams.fSTR + wsMods) * ftp
@@ -666,7 +671,7 @@ function doRangedWeaponskill(attacker, target, wsID, wsParams, tp, action, prima
     local calcParams =
     {
         wsID = wsID,
-        weaponDamage = {attacker:getRangedDamage()},
+        weaponDamage = { attacker:getRangedDmg() },
         skillType = attacker:getWeaponSkillType(xi.slot.RANGED),
         fSTR = fSTR2(attacker:getStat(xi.mod.STR), target:getStat(xi.mod.VIT), attacker:getRangedDmgRank()),
         pdif = pdif,
@@ -868,7 +873,7 @@ function takeWeaponskillDamage(defender, attacker, wsParams, primaryMsg, attack,
         defender:updateEnmityFromDamage(enmityEntity, finaldmg * enmityMult)
     end
 
-    xi.magian.checkMagianTrial(attacker, {['mob'] = defender, ['triggerWs'] = true,  ['wSkillId'] = wsResults.wsID})
+    xi.magian.checkMagianTrial(attacker, { ['mob'] = defender, ['triggerWs'] = true,  ['wSkillId'] = wsResults.wsID })
 
     if finaldmg > 0 then
         defender:setLocalVar("weaponskillHit", 1)
@@ -893,11 +898,11 @@ function getMeleeDmg(attacker, weaponType, kick)
         offhandDamage = mainhandDamage
     end
 
-    return {mainhandDamage, offhandDamage}
+    return { mainhandDamage, offhandDamage }
 end
 
 function getRangedDamage(attacker)
-    return {attacker:getRangedDmg(), attacker:getAmmoDmg()}
+    return { attacker:getRangedDmg(), attacker:getAmmoDmg() }
 end
 
 function getHitRate(attacker, target, capHitRate, bonus)
@@ -1003,7 +1008,7 @@ function cMeleeRatio(attacker, defender, params, ignoredDef, tp, slot)
         attacker:delMod(xi.mod.ATTP, 25 + flourisheffect:getSubPower() / 2)
     end
 
-    return {pdif, pdifcrit}
+    return { pdif, pdifcrit }
 end
 
 function handleBlock(attacker, target, finaldmg)

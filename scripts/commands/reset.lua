@@ -12,7 +12,7 @@ cmdprops =
 
 function error(player, msg)
     player:PrintToPlayer(msg)
-    player:PrintToPlayer("!reset {player}")
+    player:PrintToPlayer("!reset (player)")
 end
 
 function onTrigger(player, target)
@@ -53,6 +53,7 @@ function onTrigger(player, target)
         xi.effect.CHARM_I,
         xi.effect.CHARM_II,
         xi.effect.POISON,
+        xi.effect.PETRIFICATION,
     }
 
     for _, v in pairs(effects) do

@@ -32,6 +32,7 @@ class CLuaInstance;
 class CLuaItem;
 class CLuaSpell;
 class CLuaStatusEffect;
+class CLuaTradeContainer;
 class CLuaZone;
 
 class CLuaBaseEntity
@@ -232,6 +233,7 @@ public:
     uint8 getFreeSlotsCount(sol::object const& locID);         // Gets value of free slots in Entity inventory
     void  confirmTrade();                                      // Complete trade with an npc, only removing confirmed items
     void  tradeComplete();                                     // Complete trade with an npc
+    auto  getTrade() -> std::optional<CLuaTradeContainer>;
 
     // Equipping
     bool canEquipItem(uint16 itemID, sol::object const& chkLevel); // returns true if the player is able to equip the item
@@ -423,14 +425,15 @@ public:
     auto addGuildPoints(uint8 guildID, uint8 slotID) -> std::tuple<uint8, int16>;
 
     // Health and Status
-    int32 getHP();                     // Returns Entity Health
-    uint8 getHPP();                    // Returns Entity Health %
-    int32 getMaxHP();                  // Get max hp of entity
-    int32 getBaseHP();                 // Returns Entity base Health before modifiers
-    int32 addHP(int32 hpAdd);          // Modify hp of Entity +/-
-    void  setHP(int32 value);          // Set hp of Entity to value
-    int32 restoreHP(int32 restoreAmt); // Modify hp of Entity, but check if alive first
-    void  delHP(int32 delAmt);         // Subtract hp of Entity
+    int32 getHP();                         // Returns Entity Health
+    uint8 getHPP();                        // Returns Entity Health %
+    int32 getMaxHP();                      // Get max hp of entity
+    int32 getBaseHP();                     // Returns Entity base Health before modifiers
+    int32 addHP(int32 hpAdd);              // Modify hp of Entity +/-
+    int32 addHPLeaveSleeping(int32 hpAdd); // Modify hp of Entity +/- but do not awaken the Entity
+    void  setHP(int32 value);              // Set hp of Entity to value
+    int32 restoreHP(int32 restoreAmt);     // Modify hp of Entity, but check if alive first
+    void  delHP(int32 delAmt);             // Subtract hp of Entity
     void  takeDamage(int32 damage, sol::object const& attacker, sol::object const& atkType,
                      sol::object const& dmgType, sol::object const& flags); // Takes damage from the provided attacker
     void  hideHP(bool value);
@@ -777,14 +780,17 @@ public:
     void setUntargetable(bool untargetable);
     bool getUntargetable();
 
-    void setDelay(uint16 delay);   // sets a mobs weapon delay
-    void setDamage(uint16 damage); // sets a mobs weapon damage
-    bool hasSpellList();
-    void setSpellList(uint16 spellList);
-    void SetAutoAttackEnabled(bool state);   // halts/resumes auto attack of entity
-    void SetMagicCastingEnabled(bool state); // halt/resumes casting magic
-    void SetMobAbilityEnabled(bool state);   // halt/resumes mob skills
-    void SetMobSkillAttack(int16 listId);    // enable/disable using mobskills as regular attacks
+    void  setDelay(uint16 delay);             // sets a mobs weapon delay
+    int16 getDelay();                         // return the delay value
+    void  setDamage(uint16 damage);           // sets a mobs weapon damage
+    bool  hasSpellList();                     // true if a spell list is assigned to the mob
+    void  setSpellList(uint16 spellList);     // sets the spell list value
+    void  SetAutoAttackEnabled(bool state);   // halts/resumes auto attack of entity
+    void  SetMagicCastingEnabled(bool state); // halt/resumes casting magic
+    void  SetMobAbilityEnabled(bool state);   // halt/resumes mob skills
+    void  SetMobSkillAttack(int16 listId);    // enable/disable using mobskills as regular attacks
+    bool  isMagicCastingEnabled();            // return a true/false value if mob is able to auto-cast
+    bool  isAutoAttackEnabled();              // returns true if the mob can auto-attack
 
     int16 getMobMod(uint16 mobModID);
     void  setMobMod(uint16 mobModID, int16 value);
@@ -849,6 +855,7 @@ public:
     uint32 getWorldPassRedeemTime();
     uint32 getWorldpassId(uint32 targid);
     void   sendNpcEmote(CLuaBaseEntity* PBaseEntity, sol::object const& p0, sol::object const& p1, sol::object const& p2);
+    void   clearActionQueue();
     void   setDigTable();               // Sets PChar Last Dig Table
     auto   getDigTable() -> sol::table; // Gets PChar Last Dig Table
 
