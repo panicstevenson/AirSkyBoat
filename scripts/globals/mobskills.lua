@@ -121,19 +121,6 @@ local function calculateMobMagicBurst(caster, ele, target)
     return burst
 end
 
-local function MobTakeAoEShadow(mob, target, max)
-    -- this should be using actual nin skill
-    -- TODO fix this
-    if target:getMainJob() == xi.job.NIN and math.random() < 0.6 then
-        max = max - 1
-        if max < 1 then
-            max = 1
-        end
-    end
-
-    return math.random(1, max)
-end
-
 local function getBarSpellDefBonus(mob, target, spellElement)
     if spellElement >= xi.magic.element.FIRE and spellElement <= xi.magic.element.WATER then
         if target:hasStatusEffect(xi.magic.barSpell[spellElement]) then -- bar- spell magic defense bonus
@@ -212,7 +199,7 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numberofhits, accmod
         mtp300 = 1.0
     end
 
-    local params = {atk000 = mtp000, atk150 = mtp150, atk300 = mtp300,}
+    local params = { atk000 = mtp000, atk150 = mtp150, atk300 = mtp300, }
     local pdifTable = cMeleeRatio(mob, target, params, 0, mob:getTP(), xi.slot.main)
     local pdif = pdifTable[1]
     local pdifcrit = pdifTable[2]
@@ -357,7 +344,7 @@ xi.mobskills.mobMagicalMove = function(mob, target, skill, damage, element, dmgm
     end
 
     -- get resistence
-    local params = {diff = (mob:getStat(xi.mod.INT)-target:getStat(xi.mod.INT)), skillType = nil, bonus = bonusMacc, element = element, effect = nil}
+    local params = { diff = (mob:getStat(xi.mod.INT)-target:getStat(xi.mod.INT)), skillType = nil, bonus = bonusMacc, element = element, effect = nil }
     resist = applyResistanceEffect(mob, target, nil, params) -- Uses magic.lua resistance calcs as this moves to a global use case.
 
     if not ignoreres then
@@ -487,7 +474,7 @@ xi.mobskills.mobBreathMove = function(mob, target, percent, base, element, cap)
     if element ~= nil and element > 0 then
         -- no skill available, pass nil
         -- get resistence
-        local params = {diff = (mob:getStat(xi.mod.INT)-target:getStat(xi.mod.INT)), skillType = nil, bonus = 0, element = element, effect = nil}
+        local params = { diff = (mob:getStat(xi.mod.INT)-target:getStat(xi.mod.INT)), skillType = nil, bonus = 0, element = element, effect = nil }
         local resist = applyResistanceEffect(mob, target, nil, params) -- Uses magic.lua resistance calcs as this moves to a global use case.
 
         -- get elemental damage reduction
@@ -566,10 +553,6 @@ xi.mobskills.mobFinalAdjustments = function(dmg, mob, skill, target, attackType,
 
     --Handle shadows depending on shadow behaviour / attackType
     if shadowbehav ~= xi.mobskills.shadowBehavior.WIPE_SHADOWS and shadowbehav ~= xi.mobskills.shadowBehavior.IGNORE_SHADOWS then --remove 'shadowbehav' shadows.
-
-        if skill:isAoE() or skill:isConal() then
-            shadowbehav = MobTakeAoEShadow(mob, target, shadowbehav)
-        end
 
         dmg = utils.takeShadows(target, mob, dmg, shadowbehav)
 
@@ -772,6 +755,10 @@ end
 -- Adds a status effect to a target
 xi.mobskills.mobStatusEffectMove = function(mob, target, typeEffect, power, tick, duration, subEffect, subPower)
 
+    if mob:hasStatusEffect(xi.effect.HYSTERIA) then
+        return xi.msg.basic.NONE
+    end
+
     subEffect = subEffect or 0
     subPower = subPower or 0
 
@@ -813,10 +800,14 @@ xi.mobskills.mobGazeMove = function(mob, target, typeEffect, power, tick, durati
 end
 
 xi.mobskills.mobBuffMove = function(mob, typeEffect, power, tick, duration)
+    if mob:hasStatusEffect(xi.effect.HYSTERIA) then
+        return xi.msg.basic.NONE
+    end
 
-    if (mob:addStatusEffect(typeEffect, power, tick, duration)) then
+    if mob:addStatusEffect(typeEffect, power, tick, duration) then
         return xi.msg.basic.SKILL_GAIN_EFFECT
     end
+
     return xi.msg.basic.SKILL_NO_EFFECT
 end
 
