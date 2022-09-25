@@ -1109,7 +1109,7 @@ xi.chocoboDig.start = function(player, precheck)
 
         moonmodifier = 1 - (100 - moon) / 100 -- the more the moon phase is from 50, the closer we get to 100% on this modifier.
 
-        if lastDigTime < (getMidnight() - 86400) then
+        if lastDigTime and lastDigTime < (getMidnight() - 86400) then
             player:setCharVar('[DIG]DigCount', 0) -- Reset player dig count/fatigue.
         end
 

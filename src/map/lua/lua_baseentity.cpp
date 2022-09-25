@@ -2671,9 +2671,18 @@ void CLuaBaseEntity::warp()
 
     auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
 
-    PChar->loc.boundary    = 0;
-    PChar->loc.p           = PChar->profile.home_point.p;
-    PChar->loc.destination = PChar->profile.home_point.destination;
+    if (jailutils::InPrison(PChar))
+    {
+        PChar->loc.boundary    = 0;
+        PChar->loc.p           = PChar->profile.jail_cell.p;
+        PChar->loc.destination = PChar->profile.jail_cell.destination;
+    }
+    else
+    {
+        PChar->loc.boundary    = 0;
+        PChar->loc.p           = PChar->profile.home_point.p;
+        PChar->loc.destination = PChar->profile.home_point.destination;
+    }
 
     PChar->status    = STATUS_TYPE::DISAPPEAR;
     PChar->animation = ANIMATION_NONE;
@@ -3112,6 +3121,34 @@ void CLuaBaseEntity::setHomePoint()
 
     sql->Query(fmtQuery, PChar->profile.home_point.destination, PChar->profile.home_point.p.rotation, PChar->profile.home_point.p.x,
                PChar->profile.home_point.p.y, PChar->profile.home_point.p.z, PChar->id);
+}
+
+/************************************************************************
+ *  Function: setJailCell()
+ *  Purpose : Sets a PC's jail cell coordinates.
+ *  Example : player:setJailCell(cellId)
+ *  Notes   :
+ ************************************************************************/
+
+void CLuaBaseEntity::setJailCell()
+{
+    if (m_PBaseEntity == nullptr || m_PBaseEntity->objtype != TYPE_PC)
+    {
+        return;
+    }
+
+    auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
+
+    PChar->profile.jail_cell.p           = PChar->loc.p;
+    PChar->profile.jail_cell.destination = PChar->getZone();
+    PChar->setCharVar("[JAIL]cellSet", 1);
+
+    const char* fmtQuery = "UPDATE chars \
+                            SET jail_zone = %u, jail_rot = %u, jail_x = %.3f, jail_y = %.3f, jail_z = %.3f \
+                            WHERE charid = %u;";
+
+    sql->Query(fmtQuery, PChar->profile.jail_cell.destination, PChar->profile.jail_cell.p.rotation, PChar->profile.jail_cell.p.x,
+               PChar->profile.jail_cell.p.y, PChar->profile.jail_cell.p.z, PChar->id);
 }
 
 /************************************************************************
@@ -5225,9 +5262,15 @@ bool CLuaBaseEntity::isJailed()
 
 void CLuaBaseEntity::jail()
 {
-    XI_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+    if (m_PBaseEntity == nullptr || m_PBaseEntity->objtype != TYPE_PC)
+    {
+        return;
+    }
 
-    jailutils::Add(static_cast<CCharEntity*>(m_PBaseEntity));
+    auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
+
+    jailutils::Add(PChar);
+    PChar->StatusEffectContainer->KillAllStatusEffect();
 }
 
 /************************************************************************
@@ -15077,6 +15120,7 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("setTeleportMenu", CLuaBaseEntity::setTeleportMenu);
     SOL_REGISTER("getTeleportMenu", CLuaBaseEntity::getTeleportMenu);
     SOL_REGISTER("setHomePoint", CLuaBaseEntity::setHomePoint);
+    SOL_REGISTER("setJailCell", CLuaBaseEntity::setJailCell);
     SOL_REGISTER("resetPlayer", CLuaBaseEntity::resetPlayer);
 
     SOL_REGISTER("goToEntity", CLuaBaseEntity::goToEntity);
