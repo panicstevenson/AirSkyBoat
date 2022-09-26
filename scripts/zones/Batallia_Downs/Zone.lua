@@ -13,23 +13,24 @@ zone_object.onChocoboDig = function(player, precheck)
     return xi.chocoboDig.start(player, precheck)
 end
 
-local function registerRegionAroundNPC(zone, NPCID, zoneID)
-    local npc = GetNPCByID(NPCID)
-    local x = npc:getXPos()
-    local y = npc:getYPos()
-    local z = npc:getZPos()
-    local distance = 7
+-- Used for OOE Chocobo Quest
+-- local function registerRegionAroundNPC(zone, NPCID, zoneID)
+--     local npc = GetNPCByID(NPCID)
+--     local x = npc:getXPos()
+--     local y = npc:getYPos()
+--     local z = npc:getZPos()
+--     local distance = 7
 
-    zone:registerRegion(zoneID,
-        x - distance, y - distance, z - distance,
-        x + distance, y + distance, z + distance)
-end
+--     zone:registerRegion(zoneID,
+--         x - distance, y - distance, z - distance,
+--         x + distance, y + distance, z + distance)
+-- end
 
 zone_object.onInitialize = function(zone)
     UpdateNMSpawnPoint(ID.mob.AHTU);
     GetMobByID(ID.mob.AHTU):setRespawnTime(math.random(900, 10800));
 
-    -- Prepare everything for Full Speed Ahead!
+    -- Prepare everything for Full Speed Ahead! (OOE Quest)
     -- local syrillia   = zone:queryEntitiesByName("Syrillia")[1]
     -- local syrilliaID = syrillia:getID()
 
