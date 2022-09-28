@@ -172,7 +172,7 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (17649830, 0, 'Water_Elemental',          'Water Elemental',          18,  -7.37,     5.106,     170.64,    127 ),
     (17649831, 0, 'Goblin_Bandit',            'Goblin Bandit',            27,  5.096,     3.93,      166.865,   126 ),
     (17649832, 0, 'Goblin_Shepherd',          'Goblin Shepherd',          28,  28.4498,   5.0782,    229.7722,  164 ),
-    (17649833, 0, 'Goblins_Leech',            'Goblin\'s Leech',          36,  0,         0,         0,         0   ),
+    (17649833, 0, 'Goblins_Leech',            'Goblin\'s Leech',          36,  1,         11         1,         0   ),
     (17649834, 0, 'Goblin_Mercenary',         'Goblin Mercenary',         29,  43.103,    5.677,     181.977,   23  ),
     (17649835, 0, 'Water_Elemental',          'Water Elemental',          18,  19.981,    4.995,     167.218,   127 ),
     (17649836, 0, 'Goblin_Alchemist',         'Goblin Alchemist',         26,  22.167,    5.238,     234.65,    168 ),
