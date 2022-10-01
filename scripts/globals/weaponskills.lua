@@ -506,7 +506,6 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
 
     -- We've now accounted for any crit from SA/TA, or damage bonus for a Hybrid WS, so nullify them
     calcParams.forcedFirstCrit = false
-    calcParams.hybridHit = false
     calcParams.sneakApplicable = false
     calcParams.trickApplicable = false
     dmg = base

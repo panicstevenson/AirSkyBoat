@@ -9,11 +9,12 @@ INSERT INTO traits VALUES (24,'clear mind',3,40,2,1400,20,NULL,0); -- Clear Mind
 
 UPDATE traits SET content_tag = 'COP' WHERE name = 'auto refresh' AND job = '7'; -- PLD Auto Refresh to COP
 
-UPDATE traits SET value = '5' WHERE name = 'fast cast' AND rank = '1'; -- RDM Fast Cast 1
-UPDATE traits SET value = '10' WHERE name = 'fast cast' AND rank = '2'; -- RDM Fast Cast 2
-UPDATE traits SET value = '15' WHERE name = 'fast cast' AND rank = '3'; -- RDM Fast Cast 3
-UPDATE traits SET value = '20' WHERE name = 'fast cast' AND rank = '4'; -- RDM Fast Cast 4
-UPDATE traits SET value = '25' WHERE name = 'fast cast' AND rank = '5'; -- RDM Fast Cast 5
-
 UPDATE traits SET content_tag = 'COP' WHERE name = 'assassin'; -- THF Assassin Trait
 UPDATE traits SET content_tag = 'COP' WHERE name = 'strafe'; -- DRG Strafe (Change to COP)
+UPDATE traits SET content_tag = 'COP' WHERE name = 'desperate blows';
+UPDATE traits SET content_tag = 'COP', level = 40, value = 5 WHERE name = 'ninja tool expert.';
+UPDATE traits SET content_tag = 'COP' WHERE name = 'shield mastery' AND job = '7';
+UPDATE traits SET level = 30 WHERE name = "triple attack" AND rank = 1;
+REPLACE INTO `traits` (`traitid`, `name`, `job`, `level`, `rank`, `modifier`, `value`, `content_tag`, `meritid`) VALUES
+    (87,'ninja tool expert.',13,60,2,308,10,'TOAU',2818),
+    (87,'ninja tool expert.',13,75,2,308,15,'TOAU',2818);

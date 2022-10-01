@@ -174,11 +174,13 @@ local function getSpellBonusAcc(caster, target, spell, params)
     return magicAccBonus
 end
 
-local function calculateMagicHitRate(magicacc, magiceva)
+local function calculateMagicHitRate(magicacc, magiceva, hybridHit, dLvl)
     local p = 0
     local magicAccDiff = magicacc - magiceva
 
-    if magicAccDiff < 0 then
+    if magicAccDiff < 0 and hybridHit then
+        p = utils.clamp(((75 + math.floor(magicAccDiff / 2)) - (4 * dLvl)), 5, 95)
+    elseif magicAccDiff < 0 then
         p = utils.clamp(((50 + math.floor(magicAccDiff / 2))), 5, 95)
     else
         p = utils.clamp(((50 + magicAccDiff)), 5, 95)
@@ -553,11 +555,14 @@ end
 
 -- Applies resistance for things that may not be spells - ie. Quick Draw
 function applyResistanceAbility(player, target, wsID, params)
-    return applyResistanceEffect(player, target, wsID, params)
+    return applyResistanceEffect(player, target, wsID, params, params.hybridHit)
 end
 
 -- Applies resistance for additional effects
-function applyResistanceAddEffect(player, target, element, bonus)
+function applyResistanceAddEffect(player, target, element, bonus, hybridHit)
+    if hybridHit == nil then
+        hybridHit = false
+    end
 
     local p = getMagicHitRate(player, target, 0, element, 0, bonus)
 
@@ -579,13 +584,17 @@ function applyResistanceAddEffectWS(player, target, element, bonus)
     return resist
 end
 
-function getMagicHitRate(caster, target, skillType, element, effectRes, bonusAcc, dStat)
+function getMagicHitRate(caster, target, skillType, element, effectRes, bonusAcc, dStat, hybridHit)
     local magicacc = 0
     local magiceva = 0
     local resMod = 0
     local dLvl = target:getMainLvl() - caster:getMainLvl()
     local dStatAcc = 0
     effectRes = 1 - (effectRes / 100)
+
+    if hybridHit == nil then
+        hybridHit = false
+    end
 
     -- resist everything if real magic shield is active (see effects/magic_shield)
     if target:hasStatusEffect(xi.effect.MAGIC_SHIELD) then
@@ -697,7 +706,7 @@ function getMagicHitRate(caster, target, skillType, element, effectRes, bonusAcc
     local maccFood = magicacc * (caster:getMod(xi.mod.FOOD_MACCP)/100)
     magicacc = magicacc + utils.clamp(maccFood, 0, caster:getMod(xi.mod.FOOD_MACC_CAP))
 
-    return calculateMagicHitRate(magicacc, magiceva)
+    return calculateMagicHitRate(magicacc, magiceva, hybridHit, dLvl)
 end
 
 -- Returns resistance value from given magic hit rate (p)

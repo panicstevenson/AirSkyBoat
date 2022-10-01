@@ -9,7 +9,11 @@ ability_object.onAbilityCheck = function(player, target, ability)
 end
 
 ability_object.onUseAbility = function(user, target, ability)
-    --Leave blank.
+    if user:getMainJob() == xi.job.WAR then
+        user:addEnmity(target, 250, 0)
+    else
+        user:addEnmity(target, 180, 0)
+    end
 end
 
 return ability_object
