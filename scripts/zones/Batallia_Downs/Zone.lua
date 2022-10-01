@@ -13,35 +13,36 @@ zone_object.onChocoboDig = function(player, precheck)
     return xi.chocoboDig.start(player, precheck)
 end
 
-local function registerRegionAroundNPC(zone, NPCID, zoneID)
-    local npc = GetNPCByID(NPCID)
-    local x = npc:getXPos()
-    local y = npc:getYPos()
-    local z = npc:getZPos()
-    local distance = 7
+-- Used for OOE Chocobo Quest
+-- local function registerRegionAroundNPC(zone, NPCID, zoneID)
+--     local npc = GetNPCByID(NPCID)
+--     local x = npc:getXPos()
+--     local y = npc:getYPos()
+--     local z = npc:getZPos()
+--     local distance = 7
 
-    zone:registerRegion(zoneID,
-        x - distance, y - distance, z - distance,
-        x + distance, y + distance, z + distance)
-end
+--     zone:registerRegion(zoneID,
+--         x - distance, y - distance, z - distance,
+--         x + distance, y + distance, z + distance)
+-- end
 
 zone_object.onInitialize = function(zone)
     UpdateNMSpawnPoint(ID.mob.AHTU);
     GetMobByID(ID.mob.AHTU):setRespawnTime(math.random(900, 10800));
 
-    -- Prepare everything for Full Speed Ahead!
-    local syrillia   = zone:queryEntitiesByName("Syrillia")[1]
-    local syrilliaID = syrillia:getID()
+    -- Prepare everything for Full Speed Ahead! (OOE Quest)
+    -- local syrillia   = zone:queryEntitiesByName("Syrillia")[1]
+    -- local syrilliaID = syrillia:getID()
 
-    ID.npc.SYRILLIA         = syrilliaID
-    ID.npc.BLUE_BEAM_BASE   = syrilliaID + 1
-    ID.npc.RAPTOR_FOOD_BASE = syrilliaID + 9
+    -- ID.npc.SYRILLIA         = syrilliaID
+    -- ID.npc.BLUE_BEAM_BASE   = syrilliaID + 1
+    -- ID.npc.RAPTOR_FOOD_BASE = syrilliaID + 9
 
-    for i = 0, 7 do
-        registerRegionAroundNPC(zone, ID.npc.RAPTOR_FOOD_BASE + i, i + 1)
-    end
+    -- for i = 0, 7 do
+    --     registerRegionAroundNPC(zone, ID.npc.RAPTOR_FOOD_BASE + i, i + 1)
+    -- end
 
-    registerRegionAroundNPC(zone, ID.npc.SYRILLIA, 9)
+    -- registerRegionAroundNPC(zone, ID.npc.SYRILLIA, 9)
 
     xi.voidwalker.zoneOnInit(zone)
 end

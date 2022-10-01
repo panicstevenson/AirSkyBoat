@@ -170,11 +170,11 @@ INSERT INTO `mob_spawn_sets` VALUES (113, 20, 7);
 INSERT INTO `mob_spawn_sets` VALUES (113, 21, 3);
 INSERT INTO `mob_spawn_sets` VALUES (113, 22, 3);
 INSERT INTO `mob_spawn_sets` VALUES (113, 23, 4);
-INSERT INTO `mob_spawn_sets` VALUES (113, 24, 7);
+INSERT INTO `mob_spawn_sets` VALUES (113, 24, 2);
 INSERT INTO `mob_spawn_sets` VALUES (113, 25, 3);
-INSERT INTO `mob_spawn_sets` VALUES (113, 26, 5);
-INSERT INTO `mob_spawn_sets` VALUES (113, 27, 4);
-INSERT INTO `mob_spawn_sets` VALUES (113, 28, 2);
+INSERT INTO `mob_spawn_sets` VALUES (113, 26, 4);
+INSERT INTO `mob_spawn_sets` VALUES (113, 27, 2);
+INSERT INTO `mob_spawn_sets` VALUES (113, 28, 1);
 INSERT INTO `mob_spawn_sets` VALUES (113, 29, 9);
 INSERT INTO `mob_spawn_sets` VALUES (113, 30, 6);
 INSERT INTO `mob_spawn_sets` VALUES (113, 31, 2);
@@ -197,9 +197,11 @@ INSERT INTO `mob_spawn_sets` VALUES (113, 47, 3);
 INSERT INTO `mob_spawn_sets` VALUES (113, 48, 5);
 INSERT INTO `mob_spawn_sets` VALUES (113, 49, 2);
 INSERT INTO `mob_spawn_sets` VALUES (113, 50, 3);
-INSERT INTO `mob_spawn_sets` VALUES (113, 51, 4);
-INSERT INTO `mob_spawn_sets` VALUES (113, 52, 4);
-INSERT INTO `mob_spawn_sets` VALUES (113, 53, 4);
+INSERT INTO `mob_spawn_sets` VALUES (113, 51, 2);
+INSERT INTO `mob_spawn_sets` VALUES (113, 52, 2);
+INSERT INTO `mob_spawn_sets` VALUES (113, 53, 2);
+INSERT INTO `mob_spawn_sets` VALUES (113, 54, 2);
+INSERT INTO `mob_spawn_sets` VALUES (113, 55, 3);
 
 -- Carpenters Landing
 INSERT INTO `mob_spawn_sets` VALUES (2, 1, 1);
@@ -210,8 +212,8 @@ INSERT INTO `mob_spawn_sets` VALUES (2, 5, 2);
 INSERT INTO `mob_spawn_sets` VALUES (2, 6, 2);
 
 -- Castle Oztroja
-INSERT INTO `mob_spawn_sets` VALUES (151, 1, 1);
-INSERT INTO `mob_spawn_sets` VALUES (151, 2, 1);
+INSERT INTO `mob_spawn_sets` VALUES (151, 1, 2);
+INSERT INTO `mob_spawn_sets` VALUES (151, 2, 3);
 INSERT INTO `mob_spawn_sets` VALUES (151, 3, 1);
 INSERT INTO `mob_spawn_sets` VALUES (151, 4, 1);
 INSERT INTO `mob_spawn_sets` VALUES (151, 5, 1);
@@ -221,8 +223,25 @@ INSERT INTO `mob_spawn_sets` VALUES (151, 8, 1);
 INSERT INTO `mob_spawn_sets` VALUES (151, 9, 1);
 INSERT INTO `mob_spawn_sets` VALUES (151, 10, 1);
 INSERT INTO `mob_spawn_sets` VALUES (151, 11, 1);
-INSERT INTO `mob_spawn_sets` VALUES (151, 12, 1);
-INSERT INTO `mob_spawn_sets` VALUES (151, 13, 1);
+INSERT INTO `mob_spawn_sets` VALUES (151, 12, 3);
+INSERT INTO `mob_spawn_sets` VALUES (151, 13, 2);
+INSERT INTO `mob_spawn_sets` VALUES (151, 14, 4);
+INSERT INTO `mob_spawn_sets` VALUES (151, 15, 4);
+INSERT INTO `mob_spawn_sets` VALUES (151, 16, 4);
+INSERT INTO `mob_spawn_sets` VALUES (151, 17, 4);
+INSERT INTO `mob_spawn_sets` VALUES (151, 18, 1);
+INSERT INTO `mob_spawn_sets` VALUES (151, 19, 5);
+INSERT INTO `mob_spawn_sets` VALUES (151, 20, 1);
+INSERT INTO `mob_spawn_sets` VALUES (151, 21, 4);
+INSERT INTO `mob_spawn_sets` VALUES (151, 22, 2);
+INSERT INTO `mob_spawn_sets` VALUES (151, 23, 2);
+INSERT INTO `mob_spawn_sets` VALUES (151, 24, 2);
+INSERT INTO `mob_spawn_sets` VALUES (151, 25, 1);
+INSERT INTO `mob_spawn_sets` VALUES (151, 26, 5);
+INSERT INTO `mob_spawn_sets` VALUES (151, 27, 2);
+INSERT INTO `mob_spawn_sets` VALUES (151, 28, 2);
+INSERT INTO `mob_spawn_sets` VALUES (151, 29, 6);
+INSERT INTO `mob_spawn_sets` VALUES (151, 30, 2);
 
 -- Castle Zvahl Baileys
 INSERT INTO `mob_spawn_sets` VALUES (161, 1, 2);
@@ -576,6 +595,20 @@ INSERT INTO `mob_spawn_sets` VALUES (205, 22, 1);
 INSERT INTO `mob_spawn_sets` VALUES (205, 23, 1);
 INSERT INTO `mob_spawn_sets` VALUES (205, 24, 3);
 
+-- Inner Horutoto Ruins
+INSERT INTO `mob_spawn_sets` VALUES (192, 1, 1);
+INSERT INTO `mob_spawn_sets` VALUES (192, 2, 2);
+INSERT INTO `mob_spawn_sets` VALUES (192, 3, 1);
+INSERT INTO `mob_spawn_sets` VALUES (192, 4, 2);
+INSERT INTO `mob_spawn_sets` VALUES (192, 5, 2);
+INSERT INTO `mob_spawn_sets` VALUES (192, 6, 2);
+INSERT INTO `mob_spawn_sets` VALUES (192, 7, 2);
+INSERT INTO `mob_spawn_sets` VALUES (192, 8, 2);
+INSERT INTO `mob_spawn_sets` VALUES (192, 9, 2);
+INSERT INTO `mob_spawn_sets` VALUES (192, 10, 2);
+INSERT INTO `mob_spawn_sets` VALUES (192, 11, 3);
+INSERT INTO `mob_spawn_sets` VALUES (192, 12, 3);
+
 -- Jugner Forest
 INSERT INTO `mob_spawn_sets` VALUES (104, 1, 2);
 INSERT INTO `mob_spawn_sets` VALUES (104, 2, 3);
@@ -602,6 +635,33 @@ INSERT INTO `mob_spawn_sets` VALUES (104, 22, 2);
 INSERT INTO `mob_spawn_sets` VALUES (104, 23, 2);
 INSERT INTO `mob_spawn_sets` VALUES (104, 24, 2);
 INSERT INTO `mob_spawn_sets` VALUES (104, 25, 6);
+
+-- King Ranperres Tomb
+INSERT INTO `mob_spawn_sets` VALUES (190, 1, 3);
+INSERT INTO `mob_spawn_sets` VALUES (190, 2, 3);
+INSERT INTO `mob_spawn_sets` VALUES (190, 3, 6);
+INSERT INTO `mob_spawn_sets` VALUES (190, 4, 6);
+INSERT INTO `mob_spawn_sets` VALUES (190, 5, 1);
+INSERT INTO `mob_spawn_sets` VALUES (190, 6, 1);
+INSERT INTO `mob_spawn_sets` VALUES (190, 7, 1);
+INSERT INTO `mob_spawn_sets` VALUES (190, 8, 1);
+INSERT INTO `mob_spawn_sets` VALUES (190, 9, 1);
+INSERT INTO `mob_spawn_sets` VALUES (190, 10, 2);
+INSERT INTO `mob_spawn_sets` VALUES (190, 11, 2);
+INSERT INTO `mob_spawn_sets` VALUES (190, 12, 1);
+INSERT INTO `mob_spawn_sets` VALUES (190, 13, 2);
+INSERT INTO `mob_spawn_sets` VALUES (190, 14, 2);
+INSERT INTO `mob_spawn_sets` VALUES (190, 15, 1);
+INSERT INTO `mob_spawn_sets` VALUES (190, 16, 1);
+INSERT INTO `mob_spawn_sets` VALUES (190, 17, 2);
+INSERT INTO `mob_spawn_sets` VALUES (190, 18, 1);
+INSERT INTO `mob_spawn_sets` VALUES (190, 19, 3);
+INSERT INTO `mob_spawn_sets` VALUES (190, 20, 3);
+INSERT INTO `mob_spawn_sets` VALUES (190, 21, 3);
+INSERT INTO `mob_spawn_sets` VALUES (190, 22, 3);
+INSERT INTO `mob_spawn_sets` VALUES (190, 23, 1);
+INSERT INTO `mob_spawn_sets` VALUES (190, 24, 1);
+INSERT INTO `mob_spawn_sets` VALUES (190, 25, 1);
 
 -- Konschtat Highlands
 INSERT INTO `mob_spawn_sets` VALUES (108, 1, 4);
@@ -637,8 +697,12 @@ INSERT INTO `mob_spawn_sets` VALUES (173, 6, 10);
 
 -- Kuftal Tunnel
 INSERT INTO `mob_spawn_sets` VALUES (174, 1, 2);
-INSERT INTO `mob_spawn_sets` VALUES (174, 2, 3);
-INSERT INTO `mob_spawn_sets` VALUES (174, 3, 1);
+INSERT INTO `mob_spawn_sets` VALUES (174, 2, 8);
+INSERT INTO `mob_spawn_sets` VALUES (174, 3, 2);
+INSERT INTO `mob_spawn_sets` VALUES (174, 4, 2);
+INSERT INTO `mob_spawn_sets` VALUES (174, 5, 2);
+INSERT INTO `mob_spawn_sets` VALUES (174, 6, 2);
+INSERT INTO `mob_spawn_sets` VALUES (174, 7, 3);
 
 -- La Theine Plateau
 INSERT INTO `mob_spawn_sets` VALUES (102, 1, 6);
@@ -750,6 +814,8 @@ INSERT INTO `mob_spawn_sets` VALUES (198, 28, 4);
 INSERT INTO `mob_spawn_sets` VALUES (198, 29, 3);
 INSERT INTO `mob_spawn_sets` VALUES (198, 30, 3);
 INSERT INTO `mob_spawn_sets` VALUES (198, 31, 3);
+INSERT INTO `mob_spawn_sets` VALUES (198, 32, 2);
+INSERT INTO `mob_spawn_sets` VALUES (198, 33, 1);
 
 -- Meriphataud Mountains
 INSERT INTO `mob_spawn_sets` VALUES (119, 1, 5);
@@ -935,7 +1001,7 @@ INSERT INTO `mob_spawn_sets` VALUES (193, 12, 4);
 INSERT INTO `mob_spawn_sets` VALUES (193, 13, 4);
 INSERT INTO `mob_spawn_sets` VALUES (193, 14, 1);
 
--- Outer Horutoto Ruins
+-- Phomiuna Aqueducts
 INSERT INTO `mob_spawn_sets` VALUES (27, 1, 5);
 INSERT INTO `mob_spawn_sets` VALUES (27, 2, 1);
 INSERT INTO `mob_spawn_sets` VALUES (27, 3, 6);
@@ -944,6 +1010,7 @@ INSERT INTO `mob_spawn_sets` VALUES (27, 5, 6);
 INSERT INTO `mob_spawn_sets` VALUES (27, 6, 6);
 INSERT INTO `mob_spawn_sets` VALUES (27, 7, 6);
 INSERT INTO `mob_spawn_sets` VALUES (27, 8, 6);
+INSERT INTO `mob_spawn_sets` VALUES (27, 9, 1);
 
 -- Palborough Mines
 INSERT INTO `mob_spawn_sets` VALUES (143, 1, 2);
@@ -1071,12 +1138,18 @@ INSERT INTO `mob_spawn_sets` VALUES (30, 1, 1);
 INSERT INTO `mob_spawn_sets` VALUES (30, 2, 2);
 INSERT INTO `mob_spawn_sets` VALUES (30, 3, 1);
 INSERT INTO `mob_spawn_sets` VALUES (30, 4, 2);
+INSERT INTO `mob_spawn_sets` VALUES (30, 5, 2);
+INSERT INTO `mob_spawn_sets` VALUES (30, 6, 8);
 
 -- Riverne-Site B01
 INSERT INTO `mob_spawn_sets` VALUES (29, 1, 1);
 INSERT INTO `mob_spawn_sets` VALUES (29, 2, 3);
 INSERT INTO `mob_spawn_sets` VALUES (29, 3, 1);
 INSERT INTO `mob_spawn_sets` VALUES (29, 4, 1);
+INSERT INTO `mob_spawn_sets` VALUES (29, 5, 1);
+INSERT INTO `mob_spawn_sets` VALUES (29, 6, 3);
+INSERT INTO `mob_spawn_sets` VALUES (29, 7, 5);
+INSERT INTO `mob_spawn_sets` VALUES (29, 8, 1);
 
 -- The Shrine of Ru Avitau
 INSERT INTO `mob_spawn_sets` VALUES (178, 1, 9);
@@ -1102,6 +1175,19 @@ INSERT INTO `mob_spawn_sets` VALUES (178, 20, 3);
 INSERT INTO `mob_spawn_sets` VALUES (178, 22, 1);
 INSERT INTO `mob_spawn_sets` VALUES (178, 23, 1);
 INSERT INTO `mob_spawn_sets` VALUES (178, 24, 1);
+
+-- Toramori Canal
+INSERT INTO `mob_spawn_sets` VALUES (169, 1, 11);
+INSERT INTO `mob_spawn_sets` VALUES (169, 2, 1);
+INSERT INTO `mob_spawn_sets` VALUES (169, 3, 1);
+INSERT INTO `mob_spawn_sets` VALUES (169, 4, 1);
+INSERT INTO `mob_spawn_sets` VALUES (169, 5, 8);
+INSERT INTO `mob_spawn_sets` VALUES (169, 6, 23);
+INSERT INTO `mob_spawn_sets` VALUES (169, 7, 1);
+INSERT INTO `mob_spawn_sets` VALUES (169, 8, 1);
+INSERT INTO `mob_spawn_sets` VALUES (169, 9, 3);
+INSERT INTO `mob_spawn_sets` VALUES (169, 10, 3);
+INSERT INTO `mob_spawn_sets` VALUES (169, 11, 3);
 
 -- Upper Delkfutts Tower
 INSERT INTO `mob_spawn_sets` VALUES (158, 1, 2);
