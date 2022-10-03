@@ -6725,4 +6725,19 @@ ObjectList = {
     {
         { 17649793, "Goblin Enchanter" },
     },
+    [237] =
+    -- Metalworks
+    {
+        { 17748066, "Conrad" },
+    },
+    [240] =
+    -- Port Windurst
+    {
+        { 17760466, "Mumbo-Bumbo" },
+    },
+    [241] =
+    -- Windurst Woods
+    {
+        { 17764831, "Polo-Colo" },
+    },
 }

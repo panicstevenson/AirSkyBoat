@@ -16,6 +16,8 @@ local zone_object = {}
 zone_object.onInitialize = function(zone)
     zone:registerRegion(1, 23, 0, -43, 44, 7, -39) -- Inside Tenshodo HQ. TODO: Find out if this is used other than in ZM 17 (not anymore). Remove if not.
     xi.chocobo.initZone(zone)
+    xi.horizon.teleport.handleOPEnable()
+    xi.horizon.teleport.addNPC(zone)
 end
 
 zone_object.onZoneIn = function(player, prevZone)
