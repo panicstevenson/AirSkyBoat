@@ -908,12 +908,12 @@ namespace synthutils
             {
                 invSlotID = tempSlotID;
 
-                CItem* PItem = PChar->getStorage(LOC_INVENTORY)->GetItem(invSlotID);
+                CItem* PCraftItem = PChar->getStorage(LOC_INVENTORY)->GetItem(invSlotID);
 
-                if (PItem != nullptr)
+                if (PCraftItem != nullptr)
                 {
-                    PItem->setSubType(ITEM_LOCKED);
-                    PChar->pushPacket(new CInventoryAssignPacket(PItem, INV_NOSELECT));
+                    PCraftItem->setSubType(ITEM_LOCKED);
+                    PChar->pushPacket(new CInventoryAssignPacket(PCraftItem, INV_NOSELECT));
                 }
             }
         }
