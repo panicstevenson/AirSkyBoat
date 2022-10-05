@@ -22,15 +22,15 @@ xi.settings.main =
     -- This generally results in a more accurate presentation of your selected expansions,
     -- as well as a less confusing player experience for things that are disabled (things that are disabled are not loaded).
     -- This feature correlates to the content_tag column in the SQL files.
-    RESTRICT_CONTENT = 0,
+    RESTRICT_CONTENT = 1,
 
     -- Enable Expansion (1 = Enabled, 0 = Disabled)
     ENABLE_COP       = 1,
-    ENABLE_TOAU      = 1,
-    ENABLE_WOTG      = 1,
-    ENABLE_ACP       = 1,
-    ENABLE_AMK       = 1,
-    ENABLE_ASA       = 1,
+    ENABLE_TOAU      = 0,
+    ENABLE_WOTG      = 0,
+    ENABLE_ACP       = 0,
+    ENABLE_AMK       = 0,
+    ENABLE_ASA       = 0,
     ENABLE_ABYSSEA   = 0,
     ENABLE_SOA       = 0,
     ENABLE_ROV       = 0,
@@ -38,7 +38,7 @@ xi.settings.main =
     ENABLE_NEODYNA   = 0,
 
     -- FIELDS OF VALOR/Grounds of Valor settings
-    ENABLE_FIELD_MANUALS  = 1, -- Enables Fields of Valor
+    ENABLE_FIELD_MANUALS  = 0, -- Enables Fields of Valor
     ENABLE_GROUNDS_TOMES  = 0, -- Enables Grounds of Valor
     ENABLE_SURVIVAL_GUIDE = 0, -- Enables Survival Guides (Not Implemented)
     REGIME_WAIT           = 1, -- Make people wait till 00:00 game time as in retail. If it's 0, there is no wait time.
@@ -59,7 +59,7 @@ xi.settings.main =
     CAP_CURRENCY_VALOR     = 50000,
 
     -- PL EXP Nerf
-    PL_PENALTY = 0,
+    PL_PENALTY = 1,
 
     -- Land King System
     LandKingSystem_NQ = 1, -- Default to pop system as loading the module turns off the pop system.
@@ -100,6 +100,7 @@ xi.settings.main =
     ADVANCED_JOB_LEVEL             = 30, -- Minimum level to accept advanced job quests.  Set to 0 to start the game with advanced jobs.
     ALL_MAPS                       = 0,  -- Set to 1 to give starting characters all the maps.
     UNLOCK_OUTPOST_WARPS           = 0,  -- Set to 1 to give starting characters all outpost warps.  2 to add Tu'Lia and Tavnazia.
+    ENABLE_OP_WARPS                = false,
 
     SHOP_PRICE      = 1.000, -- Multiplies prices in NPC shops.
     GIL_RATE        = 1.000, -- Multiplies gil earned from quests.  Won't always display in game.
@@ -119,7 +120,7 @@ xi.settings.main =
     ITEM_POWER      = 1.000, -- Multiplies the effect of items such as Potions and Ethers.
     WEAPON_SKILL_POWER  = 1.000, -- Multiplies damage dealt by Weapon Skills.
 
-    USE_ADOULIN_WEAPON_SKILL_CHANGES = true, -- true/false. Change to toggle new Adoulin weapon skill damage calculations
+    USE_ADOULIN_WEAPON_SKILL_CHANGES = false, -- true/false. Change to toggle new Adoulin weapon skill damage calculations
     DISABLE_PARTY_EXP_PENALTY        = false, -- true/false.
 
     -- TRUSTS

@@ -1,26 +1,22 @@
 -----------------------------------
--- Area: Bastok Mines
+-- Area: Metalworks
 --  NPC: Conrad
 -- Outpost Teleporter NPC
--- !pos 94.457 -0.375 -66.161 234
+-- !pos 130.6146 -16.9836 25.4512 237
 -----------------------------------
 require("scripts/globals/conquest")
+require("scripts/globals/horizon_teleports")
 -----------------------------------
 local entity = {}
 
-local teleporterNation = xi.nation.BASTOK
-local teleporterEvent  = 581
-
 entity.onTrigger = function(player, npc)
-    xi.conquest.teleporterOnTrigger(player, teleporterNation, teleporterEvent)
+    xi.horizon.teleport.triggerOPWarp(player, npc)
 end
 
 entity.onEventUpdate = function(player, csid, option)
-    xi.conquest.teleporterOnEventUpdate(player, csid, option, teleporterEvent)
 end
 
 entity.onEventFinish = function(player, csid, option)
-    xi.conquest.teleporterOnEventFinish(player, csid, option, teleporterEvent)
 end
 
 return entity
