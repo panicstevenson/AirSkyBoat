@@ -6572,7 +6572,32 @@ namespace battleutils
         int32  recast = base;
 
         // get Fast Cast reduction, caps at 80%/2 = 40% reduction in recast -- https://www.bg-wiki.com/ffxi/Fast_Cast
-        float fastCastReduction = std::clamp(static_cast<float>(PEntity->getMod(Mod::FASTCAST)) / 2.0f, 0.0f, 40.0f);
+        float fastCastReduction = static_cast<float>(PEntity->getMod(Mod::FASTCAST));
+
+        if (PEntity->objtype == TYPE_PC)
+        {
+            auto* PChar = static_cast<CCharEntity*>(PEntity);
+            if (PChar && charutils::hasTrait(PChar, TRAIT_FAST_CAST))
+            {
+                if (PChar && ((PChar->GetMJob() == JOB_RDM && PChar->GetMLevel() >= 15) ||
+                              (PChar->GetMLevel() >= 30)))
+                {
+                    fastCastReduction -= 5.f;
+                }
+                if (PChar && ((PChar->GetMJob() == JOB_RDM && PChar->GetMLevel() >= 35) ||
+                              (PChar->GetMLevel() >= 70)))
+                {
+                    fastCastReduction -= 5.f;
+                }
+                if (PChar && (PChar->GetMJob() == JOB_RDM && PChar->GetMLevel() >= 55))
+                {
+                    fastCastReduction -= 5.f;
+                }
+            }
+        }
+
+        fastCastReduction = std::clamp(fastCastReduction / 2.0f, 0.0f, 40.0f);
+
         // no known cap (limited by Inspiration merits + Futhark Trousers augment for a total retail cap value of 60%/2 = 30%)
         float inspirationRecastReduction = static_cast<float>(PEntity->getMod(Mod::INSPIRATION_FAST_CAST)) / 2.0f;
 
@@ -7100,7 +7125,7 @@ namespace battleutils
         }
     }
 
-    float GetRangedDistanceCorrection(CBattleEntity* PBattleEntity, float distance)
+    float GetRangedDistanceCorrection(CBattleEntity* PBattleEntity, float distance, bool atk)
     {
         CCharEntity* PChar = nullptr;
 
@@ -7134,70 +7159,132 @@ namespace battleutils
             RMainSub  = ((CItemWeapon*)PRangedSlot)->getSubSkillType();
         }
 
+        float correction = 1.00f;
+
         bool LongBowCurve  = (RMainType == 25 && RMainSub == 9);                                         // Longbows Only
         bool CrossBowCurve = ((RMainType == 25 && RMainSub == 0) || (RMainType == 26 && RMainSub == 0)); // Crossbows and Shortbows
         bool GunCurve      = (RMainType == 26 && RMainSub == 1);                                         // Guns Only
+        bool sweetSpot     = false;
 
         if (LongBowCurve)
         {
             if (distance <= 3.00f) // <=3'
-                return 0.65f + ((1.67f * distance) / 100);
-            if (distance <= 5.00f) // <=5.0'
-                return 0.65f + ((2.60f * distance) / 100);
-            if (distance < 7.50f) // <7.5'
-                return 0.65f + ((4.66f * distance) / 100);
-            if (distance <= 10.50f) // Sweet Spot from 7.5' to 10.5'
-                return 1.00f;
-            if (distance <= 15.00f) // <=15.0'
-                return 1.00f + ((-1.78f * distance) / 100);
-            if (distance <= 20.00f) // <=20.0'
-                return 1.00f + ((-1.15f * distance) / 100);
-
-            return 1.00f + ((-0.90f * distance) / 100); // Default to >20' Curve w/o Cap
+            {
+                correction = 0.65f + ((1.67f * distance) / 100);
+            }
+            else if (distance <= 5.00f) // <=5.0'
+            {
+                correction = 0.65f + ((2.60f * distance) / 100);
+            }
+            else if (distance < 7.50f) // <7.5'
+            {
+                correction = 0.65f + ((4.66f * distance) / 100);
+            }
+            else if (distance <= 10.50f) // Sweet Spot from 7.5' to 10.5'
+            {
+                sweetSpot  = true;
+                correction = 1.00f;
+            }
+            else if (distance <= 15.00f) // <=15.0'
+            {
+                correction = 1.00f + ((-1.78f * distance) / 100);
+            }
+            else if (distance <= 20.00f) // <=20.0'
+            {
+                correction = 1.00f + ((-1.15f * distance) / 100);
+            }
+            else
+            {
+                correction = 1.00f + ((-0.90f * distance) / 100); // Default to >20' Curve w/o Cap
+            }
         }
         else if (CrossBowCurve)
         {
             if (distance <= 3.00f) // <=3'
-                return 0.65f + ((3.30f * distance) / 100);
-            if (distance <= 5.00f) // <=5'
-                return 0.65f + ((4.40f * distance) / 100);
-            if (distance < 6.00f) // <6'
-                return 0.65f + ((5.83f * distance) / 100);
-            if (distance <= 10.00f) // Sweet Spot from 6' to 10'
-                return 1.00f;
-            if (distance <= 15.00f) // <=15'
-                return 1.00f + ((-2.00f * distance) / 100);
-            if (distance <= 20.00f) // <=20'
-                return 1.00f + ((-1.10f * distance) / 100);
-
-            return 0.86f; // Default to >20' Curve w/ 86% Cap
+            {
+                correction = 0.65f + ((3.30f * distance) / 100);
+            }
+            else if (distance <= 5.00f) // <=5'
+            {
+                correction = 0.65f + ((4.40f * distance) / 100);
+            }
+            else if (distance < 6.00f) // <6'
+            {
+                correction = 0.65f + ((5.83f * distance) / 100);
+            }
+            else if (distance <= 10.00f) // Sweet Spot from 6' to 10'
+            {
+                sweetSpot  = true;
+                correction = 1.00f;
+            }
+            else if (distance <= 15.00f) // <=15'
+            {
+                correction = 1.00f + ((-2.00f * distance) / 100);
+            }
+            else if (distance <= 20.00f) // <=20'
+            {
+                correction = 1.00f + ((-1.10f * distance) / 100);
+            }
+            else
+            {
+                correction = 0.86f; // Default to >20' Curve w/ 86% Cap
+            }
         }
         else if (GunCurve)
         {
             if (distance <= 3.00f) // <=3'
-                return 0.75 + ((3.33f * distance) / 100);
-            if (distance < 4.50f) // <4.5'
-                return 0.75 + ((5.56f * distance) / 100);
-            if (distance <= 5.50f) // Sweet spot from 4.5' to 5.5'
-                return 1.00f;
-            if (distance <= 7.50f) // <=7.5'
-                return 1.00f + ((-2.50f * distance) / 100);
-            if (distance <= 10) // <=10'
-                return 1.00f + ((-2.22f * distance) / 100);
-            if (distance <= 15) // <=15'
-                return 1.00f + ((-1.26f * distance) / 100);
-            if (distance <= 20) // <=20'
-                return 1.00f + ((-0.96f * distance) / 100);
-
-            return 1.00f + ((-0.67f * distance) / 100);
+            {
+                correction = 0.75 + ((3.33f * distance) / 100);
+            }
+            else if (distance < 4.50f) // <4.5'
+            {
+                correction = 0.75 + ((5.56f * distance) / 100);
+            }
+            else if (distance <= 5.50f) // Sweet spot from 4.5' to 5.5'
+            {
+                sweetSpot  = true;
+                correction = 1.00f;
+            }
+            else if (distance <= 7.50f) // <=7.5'
+            {
+                correction = 1.00f + ((-2.50f * distance) / 100);
+            }
+            else if (distance <= 10) // <=10'
+            {
+                correction = 1.00f + ((-2.22f * distance) / 100);
+            }
+            else if (distance <= 15) // <=15'
+            {
+                correction = 1.00f + ((-1.26f * distance) / 100);
+            }
+            else if (distance <= 20) // <=20'
+            {
+                correction = 1.00f + ((-0.96f * distance) / 100);
+            }
+            else
+            {
+                correction = 1.00f + ((-0.67f * distance) / 100);
+            }
         }
         else // Default to Throwing Curve
         {
             if (distance <= 1.0f)
-                return 1.00f; // Sweet Spot Under or at 1'
-
-            return 1.00f - ((1.00f * distance) / 100); // Lose 1%/yalm
+            {
+                sweetSpot  = true;
+                correction = 1.00f; // Sweet Spot Under or at 1'
+            }
+            else
+            {
+                correction = 1.00f - ((1.00f * distance) / 100); // Lose 1%/yalm
+            }
         }
+
+        if (!sweetSpot && atk && PChar->GetMJob() != (JOB_RNG | JOB_COR))
+        {
+            correction = std::clamp(correction - 0.15f, 0.f, 1.00f);
+        }
+
+        return correction;
     }
 
     float CheckLiementAbsorb(CBattleEntity* PBattleEntity, DAMAGE_TYPE DamageType)
@@ -7263,9 +7350,14 @@ namespace battleutils
                 PMob->health.hp = PMob->health.maxhp;
                 PMob->setModifier(Mod::CLAIMBOT_REPORT_CHECK, 1);
 
-                if (PMob->id != (17277127 | 16912846 | 16912847)) // If I'm Not Shikigami Weapon or Jailer of Prudence
+                if (PMob->id != 17277127) // If I'm Not Shikigami Weapon
                 {
                     PMob->status = STATUS_TYPE::MOB;
+                    PMob->loc.zone->UpdateEntityPacket(PMob, ENTITY_UPDATE, UPDATE_COMBAT);
+                }
+                else
+                {
+                    PMob->status = STATUS_TYPE::INVISIBLE;
                     PMob->loc.zone->UpdateEntityPacket(PMob, ENTITY_UPDATE, UPDATE_COMBAT);
                 }
             }

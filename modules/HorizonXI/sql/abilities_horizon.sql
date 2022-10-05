@@ -13,3 +13,5 @@ UPDATE abilities SET content_tag = 'COP', recastTime = '90' WHERE name = 'hasso'
 UPDATE abilities SET content_tag = 'WOTG' WHERE name = 'avatars_favor'; -- ID 250: Avatar's Favor (Gate to COP for now)
 UPDATE abilities SET content_tag = 'COP' WHERE name = 'ready'; -- ID 251: Ready (Change to COP)
 UPDATE abilities SET recastTime = '1' WHERE abilityId > '671' AND abilityId < '773'; -- Ready Charge Changes
+UPDATE abilities SET recastTime = '120' WHERE name = 'high_jump';
+UPDATE abilities SET recastTime = '1200' WHERE name = 'bestial_loyalty';

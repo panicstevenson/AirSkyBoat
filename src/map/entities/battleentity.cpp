@@ -438,7 +438,7 @@ uint16 CBattleEntity::GetRangedWeaponDmg()
     if (objtype == TYPE_MOB)
     {
         auto* PMob = static_cast<CMobEntity*>(this);
-        return (mobutils::GetWeaponDamage(PMob, SLOT_RANGED) + getMod(Mod::RANGED_DMG_RATING)) * battleutils::GetRangedDistanceCorrection(this, distance(this->loc.p, this->GetBattleTarget()->loc.p));
+        return (mobutils::GetWeaponDamage(PMob, SLOT_RANGED) + getMod(Mod::RANGED_DMG_RATING)) * battleutils::GetRangedDistanceCorrection(this, distance(this->loc.p, this->GetBattleTarget()->loc.p), false);
     }
 
     if (auto* weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_RANGED]))
@@ -731,7 +731,7 @@ uint16 CBattleEntity::RATT(uint8 skill, float distance, uint16 bonusSkill)
     int32 ATT = 8 + GetSkill(skill) + bonusSkill + m_modStat[Mod::RATT] + battleutils::GetRangedAttackBonuses(this) + STR() / 2;
     if ((this->objtype == TYPE_PC) || (this->objtype == TYPE_PET && this->PMaster->objtype == TYPE_PC && ((CPetEntity*)this)->getPetType() == PET_TYPE::AUTOMATON)) // PC or PC Automaton
     {
-        ATT = int32((float)ATT * battleutils::GetRangedDistanceCorrection(this, distance));
+        ATT = int32((float)ATT * battleutils::GetRangedDistanceCorrection(this, distance, true));
     }
     return ATT + (ATT * m_modStat[Mod::RATTP] / 100) + std::min<int16>((ATT * m_modStat[Mod::FOOD_RATTP] / 100), m_modStat[Mod::FOOD_RATT_CAP]);
 }
@@ -768,7 +768,7 @@ uint16 CBattleEntity::RACC(uint8 skill, float distance, uint16 bonusSkill)
     {
         if (!this->StatusEffectContainer->HasStatusEffect(EFFECT_SHARPSHOT))
         {
-            acc = int32((float)acc * battleutils::GetRangedDistanceCorrection(this, distance));
+            acc = int32((float)acc * battleutils::GetRangedDistanceCorrection(this, distance, false));
         }
     }
     return acc + std::min<int16>(((100 + getMod(Mod::FOOD_RACCP) * acc) / 100), getMod(Mod::FOOD_RACC_CAP));
@@ -974,11 +974,10 @@ void CBattleEntity::SetSLevel(uint8 slvl)
                 m_slvl = (slvl > (m_mlvl * 2) / 3 ? (m_mlvl == 1 ? 1 : (m_mlvl * 2) / 3) : slvl);
                 break;
             case 3:
-            default:  // equal (75/75, 99/99)
+            default: // equal (75/75, 99/99)
                 m_slvl = (slvl > m_mlvl ? (m_mlvl == 1 ? 1 : m_mlvl) : slvl);
                 break;
         }
-
     }
     else
     {

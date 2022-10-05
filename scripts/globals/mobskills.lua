@@ -391,6 +391,41 @@ xi.mobskills.applyPlayerResistance = function(mob, effect, target, diff, bonus, 
     return getMagicResist(p)
 end
 
+xi.mobskills.getWeatherDayBonuses = function (caster, ele)
+    dayWeatherBonus = 1.00
+    if caster:getWeather() == xi.magic.singleWeatherStrong[ele] then
+        if math.random() < 0.33 then
+            dayWeatherBonus = dayWeatherBonus + 0.10
+        end
+    elseif caster:getWeather() == xi.magic.singleWeatherWeak[ele] then
+        if math.random() < 0.33 then
+            dayWeatherBonus = dayWeatherBonus - 0.10
+        end
+    elseif caster:getWeather() == xi.magic.doubleWeatherStrong[ele] then
+        if math.random() < 0.33 then
+            dayWeatherBonus = dayWeatherBonus + 0.25
+        end
+    elseif caster:getWeather() == xi.magic.doubleWeatherWeak[ele] then
+        if math.random() < 0.33 then
+            dayWeatherBonus = dayWeatherBonus - 0.25
+        end
+    end
+    if VanadielDayElement() == xi.magic.dayStrong[ele] then
+        if math.random() < 0.33 then
+            dayWeatherBonus = dayWeatherBonus + 0.10
+        end
+    elseif VanadielDayElement() == xi.magic.dayWeak[ele] then
+        if math.random() < 0.33 then
+            dayWeatherBonus = dayWeatherBonus - 0.10
+        end
+    end
+    if dayWeatherBonus > 1.35 then
+        dayWeatherBonus = 1.35
+    end
+
+    return dayWeatherBonus
+end
+
 xi.mobskills.mobAddBonuses = function(caster, target, dmg, ele, ignoreres) -- used for SMN magical bloodpacts, despite the name.
 
     local ignore = ignoreres or false
@@ -802,6 +837,10 @@ end
 xi.mobskills.mobBuffMove = function(mob, typeEffect, power, tick, duration)
     if mob:hasStatusEffect(xi.effect.HYSTERIA) then
         return xi.msg.basic.NONE
+    end
+
+    if (mob:isPC() or mob:isPet()) and typeEffect == xi.effect.ENTHUNDER then
+        power = math.floor(power * (((180 + mob:getBaseDelay()) * 0.0015) * xi.mobskills.getWeatherDayBonuses(mob, 5)))
     end
 
     if mob:addStatusEffect(typeEffect, power, tick, duration) then
