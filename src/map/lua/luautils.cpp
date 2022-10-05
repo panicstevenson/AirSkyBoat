@@ -821,7 +821,7 @@ namespace luautils
 
                                     if (!found)
                                     {
-                                        ShowError(fmt::format("Could not complete id lookup for {}.ID.{}.{}", zoneName, outerName, name))
+                                        // ShowError(fmt::format("Could not complete id lookup for {}.ID.{}.{}", zoneName, outerName, name))
                                     }
                                 }
                             }
