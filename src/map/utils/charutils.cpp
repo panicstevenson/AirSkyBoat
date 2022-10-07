@@ -5923,6 +5923,85 @@ namespace charutils
         return false;
     }
 
+    bool hasStorageAccess(CCharEntity* PChar)
+    {
+        if (PChar != nullptr)
+        {
+            if (lua["xi"]["settings"]["map"]["MH_STORAGE_ACCESS"] == 0)
+            {
+                return true;
+            }
+            else
+            {
+                REGION_TYPE currentRegion = PChar->loc.zone->GetRegionID();
+                auto        nation        = PChar->profile.nation;
+                REGION_TYPE nationRegion  = REGION_TYPE::JEUNO;
+
+                switch (nation)
+                {
+                    case NATION_SANDORIA:
+                        nationRegion = REGION_TYPE::SANDORIA;
+                        break;
+                    case NATION_BASTOK:
+                        nationRegion = REGION_TYPE::BASTOK;
+                        break;
+                    case NATION_WINDURST:
+                        nationRegion = REGION_TYPE::WINDURST;
+                        break;
+                    default:
+                        nationRegion = REGION_TYPE::JEUNO;
+                        break;
+                }
+
+                if (lua["xi"]["settings"]["map"]["MH_STORAGE_ACCESS"] == 1 &&
+                    (currentRegion == nationRegion || currentRegion == REGION_TYPE::JEUNO))
+                {
+                    return true;
+                }
+                else if (lua["xi"]["settings"]["map"]["MH_STORAGE_ACCESS"] == 2 &&
+                         (currentRegion == nationRegion || currentRegion == REGION_TYPE::JEUNO ||
+                          currentRegion == REGION_TYPE::WEST_AHT_URHGAN))
+                {
+                    return true;
+                }
+                else if (lua["xi"]["settings"]["map"]["MH_STORAGE_ACCESS"] == 3 &&
+                         (currentRegion == nationRegion || currentRegion == REGION_TYPE::JEUNO ||
+                          currentRegion == REGION_TYPE::WEST_AHT_URHGAN || currentRegion == REGION_TYPE::ADOULIN_ISLANDS))
+                {
+                    return true;
+                }
+                else if (lua["xi"]["settings"]["map"]["MH_STORAGE_ACCESS"] == 4 &&
+                         currentRegion == nationRegion)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    bool hasWardrobeAccess(CCharEntity* PChar)
+    {
+        if (!lua["xi"]["settings"]["map"]["WARDROBE_CITY_ONLY"])
+        {
+            return true;
+        }
+        else
+        {
+            if (PChar != nullptr)
+            {
+                auto currentZoneType = PChar->loc.zone->GetType();
+                if (currentZoneType == ZONE_TYPE::CITY)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     uint8 getQuestStatus(CCharEntity* PChar, uint8 log, uint8 quest)
     {
         uint8 current  = PChar->m_questLog[log].current[quest / 8] & (1 << (quest % 8));

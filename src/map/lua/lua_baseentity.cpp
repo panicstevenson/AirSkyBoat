@@ -3118,6 +3118,33 @@ void CLuaBaseEntity::setHomePoint()
 }
 
 /************************************************************************
+ *  Function: isCurrentHomepoint()
+ *  Purpose : Checks to see if where the player is standing now is roughly its homepoint.
+ *  Example : player:isCurrentHomePoint()
+ *  Notes   : Used on moghouse exits after job change.
+ ************************************************************************/
+
+bool CLuaBaseEntity::isCurrentHomepoint()
+{
+    if (m_PBaseEntity != nullptr && m_PBaseEntity->objtype == TYPE_PC)
+    {
+        auto* PChar         = static_cast<CCharEntity*>(m_PBaseEntity);
+        auto  currentZone   = PChar->loc.zone;
+        auto  homepointZone = PChar->profile.home_point.zone;
+        auto  pos           = PChar->loc.p;
+        auto  homepoint     = PChar->profile.home_point.p;
+
+        if ((abs(pos.x - homepoint.x) <= 1) && (abs(pos.y - homepoint.y) <= 1) &&
+            (abs(pos.z - homepoint.z) <= 1) && (currentZone == homepointZone))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/************************************************************************
  *  Function: setJailCell()
  *  Purpose : Sets a PC's jail cell coordinates.
  *  Example : player:setJailCell(cellId)
@@ -15185,6 +15212,7 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("setTeleportMenu", CLuaBaseEntity::setTeleportMenu);
     SOL_REGISTER("getTeleportMenu", CLuaBaseEntity::getTeleportMenu);
     SOL_REGISTER("setHomePoint", CLuaBaseEntity::setHomePoint);
+    SOL_REGISTER("isCurrentHomepoint", CLuaBaseEntity::isCurrentHomepoint);
     SOL_REGISTER("setJailCell", CLuaBaseEntity::setJailCell);
     SOL_REGISTER("resetPlayer", CLuaBaseEntity::resetPlayer);
 

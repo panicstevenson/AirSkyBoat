@@ -27,6 +27,8 @@ zone_object.onZoneIn = function(player, prevZone)
         cs = 2
     end
 
+    xi.moghouse.exitJobChange(player, prevZone)
+
     return cs
 end
 
@@ -50,6 +52,8 @@ zone_object.onEventFinish = function(player, csid, option)
         player:completeMission(xi.mission.log_id.SOA, xi.mission.id.soa.HEARTWINGS_AND_THE_KINDHEARTED)
         player:addMission(xi.mission.log_id.SOA, xi.mission.id.soa.PIONEER_REGISTRATION)
     end
+
+    xi.moghouse.exitJobChangeFinish(player, csid, option)
 end
 
 return zone_object
