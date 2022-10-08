@@ -375,6 +375,7 @@ xi.dynamis.normalDynamicSpawn = function(oMob, oMobIndex, target)
                     xi.dynamis.mobOnDeath(mob)
                 end,
                 releaseIdOnDeath = true,
+                spawnSet = 3,
                 specialSpawnAnimation = oMob ~= nil,
                 mixins =
                 {
@@ -556,6 +557,7 @@ xi.dynamis.nonStandardDynamicSpawn = function(mobIndex, oMob, forceLink, zoneID,
             xi.dynamis.mobOnDeath(mob)
         end,
         releaseIdOnDeath = true,
+        spawnSet = 3,
         specialSpawnAnimation = oMob ~= nil,
         mixins = mobFunctions[mobMobType]["mixins"],
     })
@@ -1147,6 +1149,7 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
         onMobWeaponSkill= xi.dynamis.nmFunctions[xi.dynamis.nmInfoLookup[mobName][7]]["onMobWeaponSkill"][1],
         onMobDeath= xi.dynamis.nmFunctions[xi.dynamis.nmInfoLookup[mobName][7]]["onMobDeath"][1],
         releaseIdOnDeath = true,
+        spawnSet = 3,
         specialSpawnAnimation = oMob ~= nil,
         mixins = xi.dynamis.nmFunctions[xi.dynamis.nmInfoLookup[mobName][7]]["mixins"],
     })
@@ -1491,6 +1494,7 @@ xi.dynamis.spawnDynamicPet =function(target, oMob, mobJob)
         onMobFight = petFunctions[mobJob][functionLookup]["onMobFight"],
         onMobDeath = function(mob, playerArg, isKiller) xi.dynamis.onPetDeath(mob) end,
         releaseIdOnDeath = true,
+        spawnSet = 3,
         specialSpawnAnimation = oMob ~= nil,
         mixins = petFunctions[mobJob][functionLookup]["mixins"],
     })
@@ -1608,8 +1612,6 @@ xi.dynamis.setMobStats = function(mob)
         mob:setMobMod(xi.mobMod.CHECK_AS_NM, 1)
         local job = mob:getMainJob()
 
-        mob:setMobMod(xi.mobMod.HP_SCALE, 132)
-        mob:setHP(mob:getMaxHP())
         mob:setMobLevel(math.random(78,80))
         mob:setTrueDetection(true)
 
@@ -1722,8 +1724,6 @@ xi.dynamis.setNightmareStats = function(mob)
         xi.dynamis.setSpecialSkill(mob)
         mob:setMobMod(xi.mobMod.CHECK_AS_NM, 1)
         local job = mob:getMainJob()
-        mob:setMobMod(xi.mobMod.HP_SCALE, 132)
-        mob:setHP(mob:getMaxHP())
         mob:setMobLevel(math.random(78,80))
         mob:setTrueDetection(true)
 
@@ -1756,8 +1756,6 @@ xi.dynamis.setNMStats = function(mob)
     mob:addStatusEffect(xi.effect.BATTLEFIELD, 1, 0, 0, true)
     xi.dynamis.setSpecialSkill(mob)
     mob:setMobMod(xi.mobMod.CHECK_AS_NM, 2)
-    mob:setMobMod(xi.mobMod.HP_SCALE, 132)
-    mob:setHP(mob:getMaxHP())
     mob:setMobLevel(math.random(80,82))
     mob:setTrueDetection(true)
     xi.dynamis.setMDB(mob)
@@ -1809,8 +1807,6 @@ xi.dynamis.setMegaBossStats = function(mob)
     mob:setMobType(xi.mobskills.mobType.BATTLEFIELD)
     mob:addStatusEffect(xi.effect.BATTLEFIELD, 1, 0, 0, true)
     mob:setMobMod(xi.mobMod.CHECK_AS_NM, 2)
-    mob:setMobMod(xi.mobMod.HP_SCALE, 132)
-    mob:setHP(mob:getMaxHP())
     mob:setMobLevel(88)
     mob:setMod(xi.mod.STR, -10)
     mob:setTrueDetection(true)
@@ -1832,8 +1828,6 @@ xi.dynamis.setPetStats = function(mob)
 end
 
 xi.dynamis.setAnimatedWeaponStats = function(mob)
-    mob:setMobMod(xi.mobMod.HP_SCALE, 132)
-    mob:setHP(mob:getMaxHP())
     mob:setMobType(xi.mobskills.mobType.BATTLEFIELD)
     mob:addStatusEffect(xi.effect.BATTLEFIELD, 1, 0, 0, true)
     mob:setMobMod(xi.mobMod.CHECK_AS_NM, 2)
