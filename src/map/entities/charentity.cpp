@@ -1522,7 +1522,14 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         }
         else
         {
-            PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast);
+            if (this->StatusEffectContainer->HasStatusEffect(EFFECT_SEIGAN) && PAbility->getID() == 62)
+            {
+                PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast / 2);
+            }
+            else
+            {
+                PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast);
+            }
         }
 
         uint16 recastID = PAbility->getRecastId();
@@ -2154,7 +2161,14 @@ void CCharEntity::Die()
 
     if (this->PPet)
     {
-        petutils::DespawnPet(this);
+        if (PPet->StatusEffectContainer->HasStatusEffect(EFFECT_CHARM))
+        {
+            petutils::DetachPet(this);
+        }
+        else
+        {
+            petutils::DespawnPet(this);
+        }
     }
 
     Die(death_duration);
