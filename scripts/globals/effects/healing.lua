@@ -81,7 +81,6 @@ effect_object.onEffectTick = function(target, effect)
                 xi.roe.onRecordTrigger(target, 4)
             end
 
-            target:addHP(healHP)
             if target:getHPP() < 100 then
                 target:updateEnmityFromCure(target, healHP)
             end
