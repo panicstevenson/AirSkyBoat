@@ -1614,8 +1614,15 @@ xi.dynamis.setMobStats = function(mob)
         mob:setMobMod(xi.mobMod.CHECK_AS_NM, 1)
         local job = mob:getMainJob()
 
-        mob:setMobLevel(math.random(78,80))
         mob:setTrueDetection(true)
+
+        if     mob:getFamily() == 359 then -- If Hydra
+            mob:setMobLevel(math.random(80,82))
+        elseif mob:getFamily() == 358 then -- If Kindred
+            mob:setMobLevel(math.random(77,80))
+        else
+            mob:setMobLevel(math.random(75,77))
+        end
 
         if     job == xi.job.WAR then
             local params = {  }
