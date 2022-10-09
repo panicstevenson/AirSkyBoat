@@ -21,6 +21,8 @@ local DIG_GRANT_BURROW = xi.settings.main.DIG_GRANT_BURROW
 local DIG_GRANT_BORE = xi.settings.main.DIG_GRANT_BORE
 local DIG_DISTANCE_REQ = xi.settings.main.DIG_DISTANCE_REQ
 
+local find_nothing = "You dig and you dig, but you find nothing."
+
 local digReq =
 {
     NONE     = 0,
@@ -1117,14 +1119,14 @@ xi.chocoboDig.start = function(player, precheck)
                 calculateSkillUp(player)
             end
 
-            player:messageText(player, text.FIND_NOTHING, false)
+            player:PrintToPlayer(find_nothing, 13)
 
             return true
         end
 
         -- dig chance failure
         if roll > (DIG_RATE * moonmodifier * skillmodifier) then -- base digging rate is 85% and it is multiplied by the moon and skill modifiers
-            player:messageText(player, text.FIND_NOTHING)
+            player:PrintToPlayer(find_nothing, 13)
         -- dig chance success
         else
             local itemId = getChocoboDiggingItem(player)
@@ -1144,7 +1146,7 @@ xi.chocoboDig.start = function(player, precheck)
 
             -- got a crystal ore, but lacked weather or skill to dig it up
             else
-                player:messageText(player, text.FIND_NOTHING, false)
+                player:PrintToPlayer(find_nothing, 13)
             end
         end
 
