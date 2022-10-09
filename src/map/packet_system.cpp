@@ -1365,6 +1365,33 @@ void SmallPacket0x029(map_session_data_t* const PSession, CCharEntity* const PCh
 
     CItem* PItem = PChar->getStorage(FromLocationID)->GetItem(FromSlotID);
 
+    if (((ToLocationID == LOC_MOGLOCKER && FromLocationID == LOC_INVENTORY) ||
+         (FromLocationID == LOC_MOGLOCKER && ToLocationID == LOC_INVENTORY)) &&
+        !charutils::hasMogLockerAccess(PChar))
+    {
+        return;
+    }
+    else if (((ToLocationID == LOC_MOGSATCHEL && FromLocationID == LOC_INVENTORY) ||
+              (FromLocationID == LOC_MOGSATCHEL && ToLocationID == LOC_INVENTORY)) &&
+             !(PItem->getID() >= 512 && PItem->getID() <= 528)) // Anything except linkshells/linkpearls/pearlsacks
+    {
+        return;
+    }
+    else if (((ToLocationID == LOC_STORAGE && FromLocationID == LOC_INVENTORY) ||
+              (FromLocationID == LOC_STORAGE && ToLocationID == LOC_INVENTORY)) &&
+             !charutils::hasStorageAccess(PChar))
+    {
+        return;
+    }
+    else if (((ToLocationID == LOC_WARDROBE && FromLocationID == LOC_INVENTORY) ||
+              (FromLocationID == LOC_WARDROBE && ToLocationID == LOC_INVENTORY) ||
+              ((ToLocationID >= LOC_WARDROBE2 && ToLocationID <= LOC_WARDROBE8) && FromLocationID == LOC_INVENTORY) ||
+              ((FromLocationID >= LOC_WARDROBE2 && FromLocationID <= LOC_WARDROBE8) && ToLocationID == LOC_INVENTORY)) &&
+             !charutils::hasWardrobeAccess(PChar))
+    {
+        return;
+    }
+
     if (PItem == nullptr || PItem->isSubType(ITEM_LOCKED))
     {
         if (PItem == nullptr)
@@ -6896,6 +6923,11 @@ void SmallPacket0x100(map_session_data_t* const PSession, CCharEntity* const PCh
         PChar->updatemask |= UPDATE_HP;
 
         charutils::SaveCharStats(PChar);
+
+        if (lua["xi"]["settings"]["map"]["MH_EXIT_HOMEPOINT"])
+        {
+            PChar->setCharVar("[MOGHOUSE]Exit_Job_Change", 1);
+        }
 
         PChar->pushPacket(new CCharJobsPacket(PChar));
         PChar->pushPacket(new CCharUpdatePacket(PChar));

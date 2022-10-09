@@ -36,6 +36,8 @@ zone_object.onZoneIn = function(player,prevZone)
         end
     end
 
+    xi.moghouse.exitJobChange(player, prevZone)
+
     return cs
 end
 
@@ -61,8 +63,11 @@ zone_object.onEventFinish = function(player, csid, option)
     if csid == 500 then
         player:messageSpecial(ID.text.ITEM_OBTAINED, 536)
     elseif csid == 700 then
+        player:setCharVar('[MOGHOUSE]Exit_Job_Change', 0)
         player:setPos(0, 0, 0, 0, 223)
     end
+
+    xi.moghouse.exitJobChangeFinish(player, csid, option)
 end
 
 return zone_object

@@ -154,7 +154,7 @@ namespace anticheat
     bool DoPosHackCheck(CCharEntity* PChar, float newX, float newY, float newZ)
     {
         // clang-format off
-        float new_distance        = static_cast<float>(abs(newX - PChar->loc.p.x) + abs(newZ - PChar->loc.p.z));
+        float new_distance        = abs(newX - PChar->loc.p.x) + abs(newZ - PChar->loc.p.z);
         CharAnticheat_t Anticheat = PChar->m_charAnticheat;
         Anticheat.lastCheckDist   += new_distance;
         time_t timeNow = time(NULL);

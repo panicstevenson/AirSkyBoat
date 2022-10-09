@@ -1,6 +1,9 @@
 -- ------------------------------------------------------------
 -- Horizon Ability Changes
 -- ------------------------------------------------------------
+LOCK TABLES
+    `abilities` WRITE;
+
 UPDATE abilities SET level = '15' WHERE name = 'focus'; -- ID 37: Focus (Change to level 15)
 UPDATE abilities SET level = '25' WHERE name = 'dodge'; -- ID 37: Dodge (Change to level 25)
 UPDATE abilities SET recastTime = '115' WHERE name = 'chakra'; -- ID 38: Chakra (Change to 115s Recast)
@@ -14,6 +17,8 @@ UPDATE abilities SET content_tag = 'WOTG' WHERE name = 'avatars_favor'; -- ID 25
 UPDATE abilities SET content_tag = 'COP' WHERE name = 'ready'; -- ID 251: Ready (Change to COP)
 UPDATE abilities SET recastTime = '1' WHERE abilityId > '671' AND abilityId < '773'; -- Ready Charge Changes
 UPDATE abilities SET recastTime = '120' WHERE name = 'high_jump';
-UPDATE abilities SET recastTime = '1200' WHERE name = 'bestial_loyalty';
+UPDATE abilities SET recastTime = '1200', content_tag = 'COP' WHERE name = 'bestial_loyalty';
 UPDATE abilities set recastTime = '3600', level = '1' WHERE name = 'mikage';
 DELETE FROM abilities WHERE name = 'mijin_gakure';
+
+UNLOCK TABLES;
