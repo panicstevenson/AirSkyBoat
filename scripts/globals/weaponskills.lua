@@ -591,6 +591,10 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
         ['damageType'] = attacker:getWeaponDamageType(xi.slot.MAIN)
     }
 
+    if wsParams.specialDamageType then
+        attack['damageType'] = wsParams.specialDamageType
+    end
+
     local calcParams = {}
     calcParams.wsID = wsID
     calcParams.attackInfo = attack
@@ -662,6 +666,10 @@ function doRangedWeaponskill(attacker, target, wsID, wsParams, tp, action, prima
         ['weaponType'] = attacker:getWeaponSkillType(xi.slot.RANGED),
         ['damageType'] = attacker:getWeaponDamageType(xi.slot.RANGED)
     }
+
+    if wsParams.specialDamageType then
+        attack['damageType'] = wsParams.specialDamageType
+    end
 
     local calcParams =
     {
