@@ -17,17 +17,18 @@ UPDATE traits SET rank = '6' WHERE traitid = '24' AND job = '7' AND level = '80'
 UPDATE traits SET rank = '5' WHERE traitid = '24' AND job = '7' AND level = '65'; -- WHM Clear Mind Adjustment
 UPDATE traits SET rank = '4' WHERE traitid = '24' AND job = '7' AND level = '50'; -- WHM Clear Mind Adjustment
 
-UPDATE traits SET content_tag = 'COP' WHERE name = 'auto refresh' AND job = '7'; -- PLD Auto Refresh to COP
+UPDATE traits SET content_tag = 'COP', level = '25' WHERE name = 'auto refresh' AND job = '7'; -- PLD Auto Refresh to COP
 
-UPDATE traits SET content_tag = 'COP' WHERE name = 'assassin'; -- THF Assassin Trait
+UPDATE traits SET content_tag = 'COP', level = '50' WHERE name = 'assassin'; -- THF Assassin Trait
 UPDATE traits SET content_tag = 'COP' WHERE name = 'strafe'; -- DRG Strafe (Change to COP)
 UPDATE traits SET content_tag = 'COP' WHERE name = 'desperate blows';
-UPDATE traits SET content_tag = 'COP', level = 40, value = 5 WHERE name = 'ninja tool expert.';
 UPDATE traits SET content_tag = 'COP' WHERE name = 'shield mastery' AND job = '7';
-UPDATE traits SET level = 30 WHERE name = "triple attack" AND rank = 1;
+UPDATE traits SET level = 30 WHERE name = "triple attack" AND rank = '1';
+DELETE FROM traits WHERE name = 'nina tool expert';
 REPLACE INTO `traits` (`traitid`, `name`, `job`, `level`, `rank`, `modifier`, `value`, `modifier2`, `value2`, `content_tag`, `meritid`) VALUES
     (24,'clear mind',3,40,3,71,6,1400,20,NULL,0),
-    (87,'ninja tool expert.',13,60,2,308,10,0,0,NULL,2818),
-    (87,'ninja tool expert.',13,75,2,308,15,0,0,NULL,2818);
+    (87,'ninja tool expert.',13,40,1,308,5,0,0,NULL,0),
+    (87,'ninja tool expert.',13,60,2,308,10,0,0,NULL,0),
+    (87,'ninja tool expert.',13,75,3,308,15,0,0,NULL,0);
 
 UNLOCK TABLES;
