@@ -12,6 +12,7 @@ local m = Module:new("horizon_weaponskills")
 
 m:addOverride("xi.globals.weaponskills.burning_blade.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
+    params.numHits = 1
     params.ftp100 = 0.6 params.ftp200 = 0.9 params.ftp300 = 1.2
     params.str_wsc = 0.1 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.3 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
     params.acc100 = 0.0 params.acc200= 0.0 params.acc300= 0.0
@@ -27,6 +28,7 @@ end)
 
 m:addOverride("xi.globals.weaponskills.red_lotus_blade.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
+    params.numHits = 1
     params.ftp100 = 0.6 params.ftp200 = 1.2 params.ftp300 = 1.5
     params.str_wsc = 0.1 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.3 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
     params.acc100 = 0.0 params.acc200= 0.0 params.acc300= 0.0
@@ -58,6 +60,7 @@ end)
 
 m:addOverride("xi.globals.weaponskills.seraph_blade.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
+    params.numHits = 1
     params.ftp100 = 0.6 params.ftp200 = 1.2 params.ftp300 = 1.5
     params.str_wsc = 0.1 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.3 params.chr_wsc = 0.0
     params.acc100 = 0.0 params.acc200= 0.0 params.acc300= 0.0
@@ -263,6 +266,7 @@ end)
 
 m:addOverride("xi.globals.weaponskills.blade_ei.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
+    params.numHits = 1
     params.ftp100 = 0.5 params.ftp200 = 0.75 params.ftp300 = 1
     params.str_wsc = 0.3 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.3 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
     params.acc100 = 0.0 params.acc200= 0.0 params.acc300= 0.0
@@ -335,6 +339,7 @@ end)
 
 m:addOverride("xi.globals.weaponskills.gust_slash.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
+    params.numHits = 1
     params.ftp100 = 0.5 params.ftp200 = 0.75 params.ftp300 = 1.0
     params.str_wsc = 0.0 params.dex_wsc = 0.1 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.3 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
     params.acc100 = 0.0 params.acc200= 0.0 params.acc300= 0.0
@@ -358,19 +363,22 @@ m:addOverride("xi.globals.weaponskills.energy_drain.onUseWeaponSkill", function(
     params.acc100 = 0.0 params.acc200= 0.0 params.acc300= 0.0
     params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
 
+    local tp = player:getTP()
+
     local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
     if not player:hasStatusEffect(xi.effect.HASTE) then
         local effectDuration = 0
-        local effectDurations = { [3000] = 210, [2000] = 150, [1000] = 90 }
-        for tp, dur in pairs(effectDurations) do
-            if player:getTP() >= tp then
-                effectDuration = dur
-                break
-            end
+
+        if tp >= 3000 then
+            effectDuration = 210
+        elseif tp >= 2000 then
+            effectDuration = 150
+        else
+            effectDuration = 90
         end
 
-        player:addStatusEffect(xi.effect.HASTE, 1000, 0, effectDuration)
+        target:addStatusEffect(xi.effect.HASTE, 1000, 0, effectDuration)
     end
 
     if (damage > 0 and target:hasStatusEffect(xi.effect.SLOW) == false) then
@@ -507,7 +515,7 @@ m:addOverride("xi.globals.weaponskills.skullbreaker.onUseWeaponSkill", function(
         local chance = math.floor(25 * tp/1000)
         local effectChance = math.random(0, 100)
         if chance >= effectChance then
-            local duration = (75 + (tp/1000 * 15)) * applyResistanceAddEffect(player, target, xi.magic.ele.NONE, tp/100)
+            local duration = (75 + (tp/1000 * 15)) * applyResistanceAddEffect(player, target, xi.magic.ele.NONE, 0)
             target:addStatusEffect(xi.effect.INT_DOWN, 1, 0, duration)
         end
     end
@@ -529,7 +537,7 @@ m:addOverride("xi.globals.weaponskills.true_strike.onUseWeaponSkill", function(p
     return tpHits, extraHits, criticalHit, damage
 end)
 
-m:addOverride("xi.globals.weaponskills.judgement.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
+m:addOverride("xi.globals.weaponskills.judgment.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 1
     params.ftp100 = 2.5 params.ftp200 = 3.25 params.ftp300 = 4
@@ -729,7 +737,7 @@ m:addOverride("xi.globals.weaponskills.tachi_gekko.onUseWeaponSkill", function(p
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200= 0.0 params.acc300= 0.0
-    params.atk100 = 2; params.atk200 = 2; params.atk300 = 2
+    params.atk100 = 1.75; params.atk200 = 1.75; params.atk300 = 1.75
 
     local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     -- Silence duration changed from 60 to 45 as per bg-wiki: http://www.bg-wiki.com/bg/Tachi:_Gekko
@@ -804,6 +812,7 @@ end)
 
 m:addOverride("xi.globals.weaponskills.freezebite.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
+    params.numHits = 1
     params.ftp100 = 0.5 params.ftp200 = 0.75 params.ftp300 = 1
     params.str_wsc = 0.2 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.3 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
     params.acc100 = 0 params.acc200=0 params.acc300=0
@@ -861,6 +870,7 @@ end)
 
 m:addOverride("xi.globals.weaponskills.dark_harvest.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
+    params.numHits = 1
     params.ftp100 = 0.6 params.ftp200 = 0.9 params.ftp300 = 1.2
     params.str_wsc = 0.1 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.3 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
     params.acc100 = 0 params.acc200=0 params.acc300=0
@@ -876,6 +886,7 @@ end)
 
 m:addOverride("xi.globals.weaponskills.shadow_of_death.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
+    params.numHits = 1
     params.ftp100 = 0.6 params.ftp200 = 1.2 params.ftp300 = 1.5
     params.str_wsc = 0.1 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.3 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
     params.acc100 = 0 params.acc200=0 params.acc300=0
@@ -905,7 +916,7 @@ m:addOverride("xi.globals.weaponskills.nightmare_scythe.onUseWeaponSkill", funct
         local chance = math.floor(25 * tp/1000)
         local effectChance = math.random(0, 100)
         if chance >= effectChance then
-            local duration = 30 * applyResistanceAddEffectWS(player, target, xi.magic.ele.DARK, tp / 100)
+            local duration = 3 * applyResistanceAddEffectWS(player, target, xi.magic.ele.DARK, 0)
             target:addStatusEffect(xi.effect.TERROR, 15, 0, duration)
         end
     end
@@ -963,6 +974,7 @@ end)
 
 m:addOverride("xi.globals.weaponskills.thunder_thrust.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
+    params.numHits = 1
     params.ftp100 = 0.5 params.ftp200 = 1.0 params.ftp300 = 1.5
     params.str_wsc = 0.2 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.2 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
     params.acc100 = 0 params.acc200=0 params.acc300=0
@@ -978,6 +990,7 @@ end)
 
 m:addOverride("xi.globals.weaponskills.raiden_thrust.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
+    params.numHits = 1
     params.ftp100 = 0.6 params.ftp200 = 1.2 params.ftp300 = 1.8
     params.str_wsc = 0.1 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.3 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
     params.acc100 = 0 params.acc200=0 params.acc300=0
@@ -1098,7 +1111,7 @@ m:addOverride("xi.globals.weaponskills.dulling_arrow.onUseWeaponSkill", function
     params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
 
     if (damage > 0 and target:hasStatusEffect(xi.effect.INT_DOWN) == false) then
-        local duration = (75 + (tp/1000 * 15)) * applyResistanceAddEffect(player, target, xi.magic.ele.NONE, tp/100)
+        local duration = (75 + (tp/1000 * 15)) * applyResistanceAddEffect(player, target, xi.magic.ele.NONE, 0)
         target:addStatusEffect(xi.effect.INT_DOWN, 1, 0, duration)
     end
 
@@ -1137,7 +1150,7 @@ m:addOverride("xi.globals.weaponskills.blast_arrow.onUseWeaponSkill", function(p
         local chance = math.floor(25 * tp/1000)
         local effectChance = math.random(0, 100)
         if chance >= effectChance then
-            local duration = (tp/500) * applyResistanceAddEffectWS(player, target, xi.magic.ele.LIGHTNING, tp / 100)
+            local duration = (tp/500) * applyResistanceAddEffectWS(player, target, xi.magic.ele.LIGHTNING, 0)
             target:addStatusEffect(xi.effect.STUN, 1, 0, duration)
         end
     end
@@ -1158,7 +1171,7 @@ m:addOverride("xi.globals.weaponskills.sniper_shot.onUseWeaponSkill", function(p
     local damage, criticalHit, tpHits, extraHits = doRangedWeaponskill(player, target, wsID, params, tp, action, primary)
 
     if (damage > 0 and target:hasStatusEffect(xi.effect.INT_DOWN) == false) then
-        local duration = (75 + (tp/1000 * 15)) * applyResistanceAddEffect(player, target, xi.magic.ele.NONE, tp/100)
+        local duration = (75 + (tp/1000 * 15)) * applyResistanceAddEffect(player, target, xi.magic.ele.NONE, 0)
         target:addStatusEffect(xi.effect.INT_DOWN, 1, 0, duration)
     end
 
@@ -1196,7 +1209,7 @@ m:addOverride("xi.globals.weaponskills.blast_shot.onUseWeaponSkill", function(pl
         local chance = math.floor(25 * tp/1000)
         local effectChance = math.random(0, 100)
         if chance >= effectChance then
-            local duration = (tp/500) * applyResistanceAddEffectWS(player, target, xi.magic.ele.LIGHTNING, tp / 100)
+            local duration = (tp/500) * applyResistanceAddEffectWS(player, target, xi.magic.ele.LIGHTNING, 0)
             target:addStatusEffect(xi.effect.STUN, 1, 0, duration)
         end
     end

@@ -274,11 +274,7 @@ local function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams, f
         ratio = cMeleeRatio(attacker, target, wsParams, calcParams.ignoredDef, calcParams.tp, xi.slot.MAIN)
         pdif = ratio[1]
         pdifCrit =  ratio[2]
-        calcParams.hitRate = getHitRate(attacker, target, false, 0)
-    end
-
-    if wsParams.acc100 ~= 0 then
-        calcParams.hitRate = accVariesWithTP(calcParams.hitRate, calcParams.accStat, calcParams.tp, wsParams.acc100, wsParams.acc200, wsParams.acc300)
+        calcParams.hitRate = getHitRate(attacker, target, false, 0, calcParams, wsParams)
     end
 
     if firstHitAccBonus ~= nil and firstHitAccBonus == true then
@@ -623,7 +619,7 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     calcParams.bonusfTP = gorgetBeltFTP or 0
     calcParams.bonusAcc = (gorgetBeltAcc or 0) + attacker:getMod(xi.mod.WSACC)
     calcParams.bonusWSmods = wsParams.bonusWSmods or 0
-    calcParams.hitRate = getHitRate(attacker, target, false, calcParams.bonusAcc)
+    calcParams.hitRate = getHitRate(attacker, target, false, calcParams.bonusAcc, calcParams, wsParams)
     calcParams.skillType = attack.weaponType
 
     -- Send our wsParams off to calculate our raw WS damage, hits landed, and shadows absorbed
@@ -904,8 +900,23 @@ function getMeleeDmg(attacker, weaponType, kick)
     return { mainhandDamage, offhandDamage }
 end
 
-function getHitRate(attacker, target, capHitRate, bonus)
+function getHitRate(attacker, target, capHitRate, bonus, calcParams, wsParams)
     local flourisheffect = attacker:getStatusEffect(xi.effect.BUILDING_FLOURISH)
+    local accVarryTP = 0
+
+    if wsParams and wsParams.acc100 ~= 0 then
+        local accVarryTP = 0
+
+        if calcParams.tp >= 3000 then
+            accVarryTP = (wsParams.acc300 - 1) * 100
+        elseif calcParams.tp >= 2000 then
+            accVarryTP = (wsParams.acc200 - 1) * 100
+        else
+            accVarryTP = (wsParams.acc300 - 1) * 100
+        end
+
+        attacker:addMod(xi.mod.ACC, accVarryTP)
+    end
 
     if flourisheffect ~= nil and flourisheffect:getPower() > 1 then
         attacker:addMod(xi.mod.ACC, 20 + flourisheffect:getSubPower())
@@ -916,6 +927,10 @@ function getHitRate(attacker, target, capHitRate, bonus)
     end
 
     local hitrate = attacker:getCHitRate(target)
+
+    if wsParams and wsParams.acc100 ~= 0 then
+        attacker:delMod(xi.mod.ACC, accVarryTP)
+    end
 
     if flourisheffect ~= nil and flourisheffect:getPower() > 1 then
         attacker:delMod(xi.mod.ACC, 20 + flourisheffect:getSubPower())

@@ -839,10 +839,6 @@ xi.mobskills.mobBuffMove = function(mob, typeEffect, power, tick, duration)
         return xi.msg.basic.NONE
     end
 
-    if (mob:isPC() or mob:isPet()) and typeEffect == xi.effect.ENTHUNDER then
-        power = math.floor(power * (((180 + mob:getBaseDelay()) * 0.0015) * xi.mobskills.getWeatherDayBonuses(mob, 5)))
-    end
-
     if mob:addStatusEffect(typeEffect, power, tick, duration) then
         return xi.msg.basic.SKILL_GAIN_EFFECT
     end
