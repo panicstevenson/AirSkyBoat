@@ -17,7 +17,6 @@ zone_object.onChocoboDig = function(player, precheck)
 end
 
 zone_object.onInitialize = function(zone)
-    xi.horizon.spawnInitialMobs(zone)
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
     xi.mogTablet.onZoneInitialize(zone)
 
@@ -31,6 +30,8 @@ zone_object.onInitialize = function(zone)
             qm2:setStatus(xi.status.DISAPPEAR)
         end
     end
+
+    xi.horizon.spawnInitialMobs(zone)
 end
 
 zone_object.onZoneTick = function(zone)
