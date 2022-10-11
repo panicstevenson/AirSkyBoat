@@ -88,7 +88,7 @@ xi.settings.map =
     ALL_JOBS_WIDESCAN = true,
 
     -- Modifier to apply to player speed. 0 is the retail accurate default. Negative numbers will reduce it.
-    SPEED_MOD = 0,
+    SPEED_MOD = -10, -- Changing Default just in case
 
     -- Modifier to apply to mount speed. 0 is the retail accurate default. Negative numbers will reduce it.
     -- Note retail treats the mounted speed as double what it actually is.

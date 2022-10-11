@@ -338,6 +338,7 @@ namespace luautils
 
     // Retrive the first itemId that matches a name
     uint16 GetItemIDByName(std::string const& name);
+
 }; // namespace luautils
 
 #endif // _LUAUTILS_H -

@@ -1,0 +1,352 @@
+require("scripts/globals/player")
+
+xi = xi or {}
+xi.hardcore = xi.hardcore or {}
+
+local hardcoreFlag = 0x00010000
+
+xi.hardcore.playerDeath = function(player)
+    if player:getCharVar("hardcore") == 1 then
+        player:setCharVar("hardcore", 0)
+        player:setCharVar("hardcoreDied", 1)
+        if player:checkNameFlags(hardcoreFlag) then
+            player:setFlag(hardcoreFlag)
+        end
+        xi.hardcore.announceDeath(player)
+        player:timer(1500, function(playerArg)
+            playerArg:homepoint()
+        end)
+    end
+end
+
+xi.hardcore.announceDeath = function(player)
+    local playerLvlRewards = player:getCharVar("harcoreLvlRewards")
+
+    player:PrintToPlayer("You have fallen as a hardcore adventurer..", xi.msg.channel.NS_SAY)
+end
+
+xi.hardcore.levelUp = function(player)
+    local levelRewardTiers =
+    {
+        18, 30, 51, 56, 61, 66, 71, 75, 76, 77, 79, 84, 89, 96
+    }
+
+    local playerLvlRewards = player:getCharVar("harcoreLvlRewards")
+    local level = player:getMainLvl()
+    local reward = 0
+
+    if playerLvlRewards ~= 76 then
+        for i in levelRewardTiers do
+            if level == i then
+                reward = i
+                print(i)
+                break
+            end
+        end
+
+        if reward ~= 0 then
+            player:setCharVar("harcoreLvlRewards", reward)
+            player:setCharVar("hardcoreLvlRewardAvail", 1)
+            player:setCharVar("rewardsAvail", player:getCharVar("rewardsAvail") + 1)
+        end
+
+    elseif playerLvlRewards > 75 then
+        player:setCharVar("hardcoreLvlRewards", playerLvlRewards + 1)
+        for i in levelRewardTiers do
+            if playerLvlRewards == i then
+                player:setCharVar("hardcoreLvlRewardAvail", 1)
+                player:setCharVar("rewardsAvail", player:getCharVar("rewardsAvail") + 1)
+                break
+            end
+        end
+    end
+end
+
+xi.hardcore.startSystem = function(player)
+    if player:getCharVar("hardCoreAvail", 0) then
+        player:setCharVar("hardcore", 1)
+        player:setCharVar("hardcoreAvail", 1)
+        player:setFlag(hardcoreFlag)
+    end
+end
+
+xi.hardcore.setupNPC = function(zone)
+    local dynamicTable =
+    {
+        [xi.zone.SOUTHERN_SAN_DORIA] =
+        {
+            objtype = xi.objType.NPC,
+            name = "Francois",
+            look = 131,
+            x = -72.65,
+            y = 2,
+            z = -49.9,
+            rotation = 153,
+            widescan = 1,
+            onTrigger = function(player, npc)
+                local hardcoreStatus = player:getCharVar("hardcore")
+                local hardcoreAvail = player:getCharVar("hardcoreAvail")
+                local deathStatus = player:getCharVar("hardcoreDied")
+
+                if hardcoreStatus == 0 and hardcoreAvail == 0 then
+                    xi.hardcore.dialog(player, 1)
+                    xi.hardcore.menus(player)
+                elseif deathStatus == 1 then
+                    xi.hardcore.dialog(player, 4)
+                elseif hardcoreStatus == 1 then
+                    xi.hardcore.hcmenu(player)
+                elseif hardcoreAvail == 1 and deathStatus == 0 then
+                    xi.hardcore.dialog(player, 5)
+                end
+            end,
+        },
+        [xi.zone.BASTOK_MARKETS] =
+        {
+            objtype = xi.objType.NPC,
+            name = "Franklin",
+            look = 146,
+            x = -246.18,
+            y = -12,
+            z = -87.43,
+            rotation = 146,
+            widescan = 1,
+            onTrigger = function(player, npc)
+                local hardcoreStatus = player:getCharVar("hardcore")
+                local hardcoreAvail = player:getCharVar("hardcoreAvail")
+                local deathStatus = player:getCharVar("hardcoreDied")
+
+                if hardcoreStatus == 0 and hardcoreAvail == 0 then
+                    xi.hardcore.dialog(player, 1)
+                    xi.hardcore.menus(player)
+                elseif deathStatus == 1 then
+                    xi.hardcore.dialog(player, 4)
+                elseif hardcoreStatus == 1 then
+                    xi.hardcore.hcmenu(player)
+                elseif hardcoreAvail == 1 and deathStatus == 0 then
+                    xi.hardcore.dialog(player, 5)
+                end
+            end,
+        },
+        [xi.zone.WINDURST_WOODS] =
+        {
+            objtype = xi.objType.NPC,
+            name = "Francine Tuft",
+            look = 251,
+            x = -22.44,
+            y = 2.75,
+            z = -67,
+            rotation = 110,
+            widescan = 1,
+            onTrigger = function(player, npc)
+                local hardcoreStatus = player:getCharVar("hardcore")
+                local hardcoreAvail = player:getCharVar("hardcoreAvail")
+                local deathStatus = player:getCharVar("hardcoreDied")
+
+                if hardcoreStatus == 0 and hardcoreAvail == 0 then
+                    xi.hardcore.dialog(player, 1)
+                    xi.hardcore.menus(player)
+                elseif deathStatus == 1 then
+                    xi.hardcore.dialog(player, 4)
+                elseif hardcoreStatus == 1 then
+                    xi.hardcore.hcmenu(player)
+                elseif hardcoreAvail == 1 and deathStatus == 0 then
+                    xi.hardcore.dialog(player, 5)
+                end
+            end,
+        },
+        [xi.zone.LOWER_JEUNO] =
+        {
+            objtype = xi.objType.NPC,
+            name = "Frantix",
+            look = 85,
+            x = -54.21,
+            y = 5.9,
+            z = -115,
+            rotation = 204,
+            widescan = 1,
+            onTrigger = function(player, npc)
+                local hardcoreStatus = player:getCharVar("hardcore")
+                local hardcoreAvail = player:getCharVar("hardcoreAvail")
+                local deathStatus = player:getCharVar("hardcoreDied")
+
+                if hardcoreStatus == 0 and hardcoreAvail == 0 then
+                    xi.hardcore.dialog(player, 1)
+                    xi.hardcore.menus(player)
+                elseif deathStatus == 1 then
+                    xi.hardcore.dialog(player, 4)
+                elseif hardcoreStatus == 1 then
+                    xi.hardcore.hcmenu(player)
+                elseif hardcoreAvail == 1 and deathStatus == 0 then
+                    xi.hardcore.dialog(player, 5)
+                end
+            end,
+        },
+    }
+    zone:insertDynamicEntity(dynamicTable[zone:getID()])
+end
+
+xi.hardcore.menus = function(player)
+menu =
+{
+    title = " ",
+    options = {},
+}
+
+local delaySendMenu = function(player)
+    player:timer(50, function(playerArg)
+        playerArg:customMenu(menu)
+    end)
+end
+
+page1 =
+{
+    {
+        "Become a Hardcore Adventurer.",
+        function(playerArg)
+            playerArg:PrintToPlayer("You have become a hardcore adventurer!", xi.msg.channel.NS_SAY)
+            xi.hardcore.startSystem(playerArg)
+        end,
+    },
+    {
+        "Disable Hardcore Adventuring: (Permanent)",
+        function(playerArg)
+            menu.options = page2
+            delaySendMenu(playerArg)
+        end,
+    },
+}
+
+page2 =
+{
+    {
+        "Confirm Declining Hardcore Adventuring",
+        function(playerArg)
+            playerArg:PrintToPlayer("You have declined becoming a hardcore adventurer.", xi.msg.channel.NS_SAY)
+            playerArg:setCharVar("hardcoreAvail", 1)
+        end,
+    },
+    {
+        "Previous Page",
+        function(playerArg)
+            menu.options = page1
+            delaySendMenu(playerArg)
+        end,
+    },
+}
+
+menu.options = page1
+delaySendMenu(player)
+end
+
+xi.hardcore.dialog = function(player, dialogOption)
+    dialogTable =
+    {
+        [1] = "Greetings, I am the hardcore adventurer tutor. Hardcore adventurers risk their all for guts and glory.",
+        [2] = "Ah, welcome back. Let me see if you have any earned any rewards since your last visit..",
+        [3] = "Congratulations, you have earned even greater reputation amongst our ranks.",
+        [4] = "I see you have lost your membership amonst our ranks.. Unfortunately, I can no longer serve you.",
+        [5] = "I see you have declined membership amonst our ranks.. You must therefore find another way..",
+        [6] = "I'm sorry you havn't earned any more glory since your last visit..",
+        [7] = "Hardcore Adventures who fall unconsious are no longer welcome in our ranks.",
+        [8] = "But those who survive and succeed will find themselves rewarded.. And will join the ranks of Legends.",
+    }
+
+    npcList =
+    {
+        [xi.zone.LOWER_JEUNO] = "Frantix",
+        [xi.zone.BASTOK_MARKETS] = "Franklin",
+        [xi.zone.WINDURST_WOODS] = "Francine Tuft",
+        [xi.zone.SOUTHERN_SAN_DORIA] = "Francois",
+    }
+
+    player:PrintToPlayer(dialogTable[dialogOption], xi.msg.channel.SAY, npcList[player:getZoneID()])
+    if dialogOption == 1 then
+        player:PrintToPlayer(dialogTable[7], xi.msg.channel.SAY, npcList[player:getZoneID()])
+        player:PrintToPlayer(dialogTable[8], xi.msg.channel.SAY, npcList[player:getZoneID()])
+    end
+end
+
+xi.hardcore.hcmenu = function(player)
+    menu =
+{
+    title = " ",
+    options = {},
+}
+
+local delaySendMenu = function(player)
+    player:timer(50, function(playerArg)
+        playerArg:customMenu(menu)
+    end)
+end
+
+page1 =
+{
+    {
+        "Enable/Disable Hardcore Flag",
+        function(playerArg)
+            local hardcoreFlag = 0x00010000
+            playerArg:setFlag(hardcoreFlag)
+        end,
+    },
+    {
+        "Check Hardcore Rewards",
+        function(playerArg)
+            xi.hardcore.dialog(player, 2)
+            if player:getCharVar("hardcoreLvlRewardAvail") == 1 then
+                xi.hardcore.dialog(player, 3)
+                xi.hardcore.giveRewards(player)
+            else
+                xi.hardcore.dialog(player, 6)
+            end
+        end,
+    },
+}
+
+menu.options = page1
+delaySendMenu(player)
+end
+
+xi.hardcore.giveRewards = function(player)
+    local lvlRewardsTier = player:getCharVar("hardCoreLvlRewards")
+    local rewardAmount = player:getCharVar("rewardsAvail")
+    local count = 1
+    local rewardTier = 0
+
+    local levelRewardItems =
+    {
+        1, 25735, 1, 1, 1, 26958, 15213, 28540, 1, 1, 1, 1, 1, 26944
+    }
+
+    local levelRewardTiers =
+    {
+        18,30,51,56,61,66,71,75,76,77,79,84,89,96
+    }
+
+    if player:getCharVar("hardcoreLvlRewardAvail") == 1 then
+        player:setCharVar("hardcoreLvlRewardAvail", 0)
+
+        for i in levelRewardTiers do
+            if lvlRewardsTier == i then
+                rewardTier = count
+                break
+            end
+            count = count + 1
+        end
+
+        if rewardAmount > 1 then
+            for i = 0, rewardAmount - 1 do
+                player:addItem(levelRewardItems[rewardTier - i])
+                player:messageSpecial(zones[player:getZoneID()].text.ITEM_OBTAINED, levelRewardItems[rewardTier - i])
+            end
+        else
+            player:addItem(levelRewardItems[rewardTier])
+            player:messageSpecial(zones[player:getZoneID()].text.ITEM_OBTAINED, levelRewardItems[rewardTier])
+        end
+
+        if levelRewardTiers >= 75 then
+            player:setCharVar("hardcoreLvlRewards", levelRewardTiers + 1)
+        end
+
+        player:setCharVar("rewardsAvail", 0)
+    end
+end

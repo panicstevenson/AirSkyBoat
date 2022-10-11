@@ -237,9 +237,13 @@ xi.player.onGameIn = function(player, firstLogin, zoning)
 end
 
 xi.player.onPlayerDeath = function(player)
+    xi.hardcore.playerDeath(player)
 end
 
 xi.player.onPlayerLevelUp = function(player)
+    if player:getCharVar("hardcore") == 1 then
+        xi.hardcore.levelUp(player)
+    end
 end
 
 xi.player.onPlayerLevelDown = function(player)

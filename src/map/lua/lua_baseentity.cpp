@@ -2039,7 +2039,7 @@ void CLuaBaseEntity::setWeather(uint8 weatherType)
  *  Notes   : Used for mounting Chocobo and changing Jeuno music in Winter
  ************************************************************************/
 
-void CLuaBaseEntity::ChangeMusic(uint8 blockID, uint8 musicTrackID)
+void CLuaBaseEntity::ChangeMusic(uint8 blockID, uint16 musicTrackID)
 {
     XI_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
 
@@ -5776,6 +5776,42 @@ void CLuaBaseEntity::addJobTraits(uint8 jobID, uint8 level)
     {
         battleutils::AddTraits(PEntity, traits::GetTraits(jobID), level);
     }
+}
+
+/************************************************************************
+ *  Function: homepoint
+ *  Purpose : Auto homepoints character (on Death)
+ ************************************************************************/
+
+void CLuaBaseEntity::homepoint()
+{
+
+    if (m_PBaseEntity->objtype != TYPE_PC)
+    {
+        ShowWarning("Entity is not a PC.");
+        return;
+    }
+    CCharEntity* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
+
+    // remove weakness on homepoint
+    PChar->StatusEffectContainer->DelStatusEffectSilent(EFFECT_WEAKNESS);
+    PChar->StatusEffectContainer->DelStatusEffectSilent(EFFECT_LEVEL_SYNC);
+
+    PChar->SetDeathTimestamp(0);
+
+    PChar->health.hp = PChar->GetMaxHP();
+    PChar->health.mp = PChar->GetMaxMP();
+
+    PChar->status    = STATUS_TYPE::DISAPPEAR;
+    PChar->animation = ANIMATION_NONE;
+    PChar->updatemask |= UPDATE_HP;
+
+    PChar->loc.boundary    = 0;
+    PChar->loc.p           = PChar->profile.home_point.p;
+    PChar->loc.destination = PChar->profile.home_point.destination;
+
+    PChar->clearPacketList();
+    charutils::SendToZone(PChar, 2, zoneutils::GetZoneIPP(PChar->loc.destination));
 }
 
 /************************************************************************
@@ -15813,6 +15849,7 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("getWorldpassId", CLuaBaseEntity::getWorldpassId);
     SOL_REGISTER("setDigTable", CLuaBaseEntity::setDigTable);
     SOL_REGISTER("getDigTable", CLuaBaseEntity::getDigTable);
+    SOL_REGISTER("homepoint", CLuaBaseEntity::homepoint);
 }
 
 std::ostream& operator<<(std::ostream& os, const CLuaBaseEntity& entity)
