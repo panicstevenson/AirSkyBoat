@@ -15,9 +15,9 @@ end
 
 ability_object.onPetAbility = function(target, pet, skill, summoner)
     local bonusTime = utils.clamp(summoner:getSkillLevel(xi.skill.SUMMONING_MAGIC) - 300, 0, 200)
-    local duration = 60 + bonusTime
+    local duration = 180 + bonusTime
 
-    target:addStatusEffect(xi.effect.WARCRY, 9, 0, duration)
+    target:addStatusEffect(xi.effect.WARCRY, 15, 0, duration)
     skill:setMsg(xi.msg.basic.SKILL_GAIN_EFFECT)
     return xi.effect.WARCRY
 end

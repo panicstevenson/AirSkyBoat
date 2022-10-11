@@ -11972,6 +11972,7 @@ INSERT INTO `item_equipment` VALUES (25906,'baayami_slops_+1',99,119,16384,115,0
 INSERT INTO `item_equipment` VALUES (25907,'turms_subligar',99,119,2359328,148,0,0,128,0,3);
 INSERT INTO `item_equipment` VALUES (25908,'turms_subligar_+1',99,119,2359328,148,0,0,128,0,3);
 INSERT INTO `item_equipment` VALUES (25910,'cait_sith_subligar',1,0,4194303,463,0,0,128,0,0);
+INSERT INTO `item_equipment` VALUES (25911,'denim_pants',1,0,4194303,479,0,0,128,0,0);
 INSERT INTO `item_equipment` VALUES (25920,'ahosi_leggings',99,119,2593826,110,0,0,256,0,0);
 INSERT INTO `item_equipment` VALUES (25921,'skaoi_boots',99,119,3850780,168,0,0,256,0,0);
 INSERT INTO `item_equipment` VALUES (25922,'navon_crackows',99,119,1589788,186,0,0,256,0,0);
@@ -13540,7 +13541,7 @@ INSERT INTO `item_equipment` VALUES (27856,'mekosu._harness',99,119,2462754,375,
 INSERT INTO `item_equipment` VALUES (27857,'respite_cloak',99,119,3851870,47,0,0,32,16,0);
 INSERT INTO `item_equipment` VALUES (27858,'dread_jupon',99,119,2462754,163,0,0,32,0,0);
 INSERT INTO `item_equipment` VALUES (27859,'kengyu_happi',1,0,4194303,368,0,0,32,0,0);
-INSERT INTO `item_equipment` VALUES (27860,'shokujo_happi',1,0,4194303,368,0,0,32,0,0);
+INSERT INTO `item_equipment` VALUES (27860,'shokujo_happi',1,0,4194303,369,0,0,32,0,0);
 INSERT INTO `item_equipment` VALUES (27861,'karmesin_vest',99,119,2473969,33,0,0,32,0,0);
 INSERT INTO `item_equipment` VALUES (27862,'savas_jawshan',99,119,2497,203,0,0,32,0,0);
 INSERT INTO `item_equipment` VALUES (27863,'gorney_haubert_+1',99,119,10689,354,0,0,32,0,0);
@@ -13823,8 +13824,8 @@ INSERT INTO `item_equipment` VALUES (28144,'adapas_slacks_+1',99,118,1065500,3,0
 INSERT INTO `item_equipment` VALUES (28145,'mirador_trou._+1',99,118,66560,63,0,0,128,0,0);
 INSERT INTO `item_equipment` VALUES (28146,'hidalgo_slops_+1',99,118,49180,20,0,0,128,0,0);
 INSERT INTO `item_equipment` VALUES (28148,'perdition_slops',99,119,3850780,19,0,0,128,0,0);
-INSERT INTO `item_equipment` VALUES (28149,'ken._hanmomohiki',1,0,4194303,0,0,0,128,0,0);
-INSERT INTO `item_equipment` VALUES (28150,'sho._hanmomohiki',1,0,4194303,0,0,0,128,0,0);
+INSERT INTO `item_equipment` VALUES (28149,'ken._hanmomohiki',1,0,4194303,368,0,0,128,0,0);
+INSERT INTO `item_equipment` VALUES (28150,'sho._hanmomohiki',1,0,4194303,369,0,0,128,0,0);
 INSERT INTO `item_equipment` VALUES (28151,'sifahir_slacks',99,119,4,176,0,0,128,0,0);
 INSERT INTO `item_equipment` VALUES (28152,'gor._brayettes_+1',99,119,10689,354,0,0,128,0,0);
 INSERT INTO `item_equipment` VALUES (28153,'shned._tights_+1',99,119,2593826,355,0,0,128,0,0);

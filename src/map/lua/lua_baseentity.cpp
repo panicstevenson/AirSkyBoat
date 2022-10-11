@@ -1616,7 +1616,7 @@ bool CLuaBaseEntity::pathThrough(sol::table const& pointsTable, sol::object cons
 
     std::vector<pathpoint_t> points;
 
-    if (flags & PATHFLAG_PATROL)
+    if (flags & PATHFLAG_PATROL || (flags & PATHFLAG_COORDS))
     {
         // Grab points from array and store in points array
         float x, y, z = -1;
@@ -3115,6 +3115,33 @@ void CLuaBaseEntity::setHomePoint()
 
     sql->Query(fmtQuery, PChar->profile.home_point.destination, PChar->profile.home_point.p.rotation, PChar->profile.home_point.p.x,
                PChar->profile.home_point.p.y, PChar->profile.home_point.p.z, PChar->id);
+}
+
+/************************************************************************
+ *  Function: isCurrentHomepoint()
+ *  Purpose : Checks to see if where the player is standing now is roughly its homepoint.
+ *  Example : player:isCurrentHomePoint()
+ *  Notes   : Used on moghouse exits after job change.
+ ************************************************************************/
+
+bool CLuaBaseEntity::isCurrentHomepoint()
+{
+    if (m_PBaseEntity != nullptr && m_PBaseEntity->objtype == TYPE_PC)
+    {
+        auto* PChar         = static_cast<CCharEntity*>(m_PBaseEntity);
+        auto  currentZone   = PChar->loc.zone;
+        auto  homepointZone = PChar->profile.home_point.zone;
+        auto  pos           = PChar->loc.p;
+        auto  homepoint     = PChar->profile.home_point.p;
+
+        if ((abs(pos.x - homepoint.x) <= 1) && (abs(pos.y - homepoint.y) <= 1) &&
+            (abs(pos.z - homepoint.z) <= 1) && (currentZone == homepointZone))
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 /************************************************************************
@@ -5361,69 +5388,156 @@ uint8 CLuaBaseEntity::getSubJob()
 
 void CLuaBaseEntity::changeJob(uint8 newJob)
 {
-    auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity);
-
-    if (!PChar)
+    if (m_PBaseEntity->objtype == TYPE_PC)
     {
-        ShowWarning("CLuaBaseEntity::changeJob() - m_pBaseEntity is not of type Char.");
-        return;
-    }
+        auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity);
 
-    JOBTYPE prevjob = PChar->GetMJob();
-
-    PChar->resetPetZoningInfo();
-
-    PChar->jobs.unlocked |= (1 << newJob);
-    PChar->SetMJob(newJob);
-
-    if (newJob == JOB_BLU)
-    {
-        if (prevjob != JOB_BLU)
+        if (PChar)
         {
-            blueutils::LoadSetSpells(PChar);
+            JOBTYPE prevjob = PChar->GetMJob();
+
+            PChar->resetPetZoningInfo();
+
+            PChar->jobs.unlocked |= (1 << newJob);
+            PChar->SetMJob(newJob);
+
+            if (newJob == JOB_BLU)
+            {
+                if (prevjob != JOB_BLU)
+                {
+                    blueutils::LoadSetSpells(PChar);
+                }
+            }
+            else if (PChar->GetSJob() != JOB_BLU)
+            {
+                blueutils::UnequipAllBlueSpells(PChar);
+            }
+            puppetutils::LoadAutomaton(PChar);
+            charutils::SetStyleLock(PChar, false);
+            luautils::CheckForGearSet(PChar); // check for gear set on gear change
+            jobpointutils::RefreshGiftMods(PChar);
+            charutils::BuildingCharSkillsTable(PChar);
+            charutils::CalculateStats(PChar);
+            charutils::CheckValidEquipment(PChar);
+            PChar->PRecastContainer->ChangeJob();
+            charutils::BuildingCharAbilityTable(PChar);
+            charutils::BuildingCharTraitsTable(PChar);
+
+            // clang-format off
+            PChar->ForParty([](CBattleEntity* PMember)
+            {
+                ((CCharEntity*)PMember)->PLatentEffectContainer->CheckLatentsPartyJobs();
+            });
+            // clang-format on
+
+            PChar->UpdateHealth();
+            PChar->health.hp = PChar->GetMaxHP();
+            PChar->health.mp = PChar->GetMaxMP();
+
+            charutils::SaveCharStats(PChar);
+            charutils::SaveCharJob(PChar, PChar->GetMJob());
+            charutils::SaveCharExp(PChar, PChar->GetMJob());
+            PChar->updatemask |= UPDATE_HP;
+
+            PChar->pushPacket(new CCharJobsPacket(PChar));
+            PChar->pushPacket(new CCharStatsPacket(PChar));
+            PChar->pushPacket(new CCharSkillsPacket(PChar));
+            PChar->pushPacket(new CCharRecastPacket(PChar));
+            PChar->pushPacket(new CCharAbilitiesPacket(PChar));
+            PChar->pushPacket(new CCharUpdatePacket(PChar));
+            PChar->pushPacket(new CMenuMeritPacket(PChar));
+            PChar->pushPacket(new CMonipulatorPacket1(PChar));
+            PChar->pushPacket(new CMonipulatorPacket2(PChar));
+            PChar->pushPacket(new CCharSyncPacket(PChar));
+        }
+        else
+        {
+            ShowWarning("CLuaBaseEntity::changeJob() - m_pBaseEntity is not of type Char.");
+            return;
         }
     }
-    else if (PChar->GetSJob() != JOB_BLU)
+    else if (m_PBaseEntity->objtype == TYPE_MOB)
     {
-        blueutils::UnequipAllBlueSpells(PChar);
+        auto* PMob = dynamic_cast<CMobEntity*>(m_PBaseEntity);
+
+        if (PMob)
+        {
+            PMob->SetMJob(newJob);
+
+            // Change weapon type based on new job
+            CItemWeapon* PWeapon = new CItemWeapon(0);
+            PWeapon->setDelay(4000);
+            PWeapon->setBaseDelay(4000);
+
+            switch (newJob)
+            {
+                case JOB_MNK:
+                case JOB_PUP:
+                    PWeapon->setSkillType(SKILL_HAND_TO_HAND);
+                    PWeapon->setBaseDelay(8000);
+                    PWeapon->setDelay(8000);
+                    break;
+                case JOB_THF:
+                case JOB_BRD:
+                case JOB_RNG:
+                case JOB_COR:
+                    PWeapon->setSkillType(SKILL_DAGGER);
+                    break;
+                case JOB_RDM:
+                case JOB_PLD:
+                case JOB_BLU:
+                    PWeapon->setSkillType(SKILL_SWORD);
+                    break;
+                case JOB_RUN:
+                    PWeapon->setSkillType(SKILL_GREAT_SWORD);
+                    PWeapon->setDelay(8000);
+                    PWeapon->setBaseDelay(8000);
+                    break;
+                case JOB_WAR:
+                case JOB_BST:
+                    PWeapon->setSkillType(SKILL_AXE);
+                    break;
+                case JOB_DRK:
+                    PWeapon->setSkillType(SKILL_SCYTHE);
+                    PWeapon->setDelay(8000);
+                    PWeapon->setBaseDelay(8000);
+                    break;
+                case JOB_DRG:
+                    PWeapon->setSkillType(SKILL_POLEARM);
+                    PWeapon->setDelay(8000);
+                    PWeapon->setBaseDelay(8000);
+                    break;
+                case JOB_NIN:
+                    PWeapon->setSkillType(SKILL_KATANA);
+                    break;
+                case JOB_SAM:
+                    PWeapon->setSkillType(SKILL_GREAT_KATANA);
+                    PWeapon->setDelay(8000);
+                    PWeapon->setBaseDelay(8000);
+                    break;
+                case JOB_WHM:
+                case JOB_BLM:
+                case JOB_GEO:
+                    PWeapon->setSkillType(SKILL_CLUB);
+                    break;
+                case JOB_SMN:
+                    PWeapon->setSkillType(SKILL_STAFF);
+                    PWeapon->setDelay(8000);
+                    PWeapon->setBaseDelay(8000);
+                    break;
+                default:
+                    break;
+            }
+
+            PMob->m_Weapons[SLOT_MAIN] = PWeapon;
+            mobutils::CalculateMobStats(PMob);
+        }
+        else
+        {
+            ShowWarning("CLuaBaseEntity::changeJob() - m_pBaseEntity is not of type Mob.");
+            return;
+        }
     }
-    puppetutils::LoadAutomaton(PChar);
-    charutils::SetStyleLock(PChar, false);
-    luautils::CheckForGearSet(PChar); // check for gear set on gear change
-    jobpointutils::RefreshGiftMods(PChar);
-    charutils::BuildingCharSkillsTable(PChar);
-    charutils::CalculateStats(PChar);
-    charutils::CheckValidEquipment(PChar);
-    PChar->PRecastContainer->ChangeJob();
-    charutils::BuildingCharAbilityTable(PChar);
-    charutils::BuildingCharTraitsTable(PChar);
-
-    // clang-format off
-    PChar->ForParty([](CBattleEntity* PMember)
-    {
-        ((CCharEntity*)PMember)->PLatentEffectContainer->CheckLatentsPartyJobs();
-    });
-    // clang-format on
-
-    PChar->UpdateHealth();
-    PChar->health.hp = PChar->GetMaxHP();
-    PChar->health.mp = PChar->GetMaxMP();
-
-    charutils::SaveCharStats(PChar);
-    charutils::SaveCharJob(PChar, PChar->GetMJob());
-    charutils::SaveCharExp(PChar, PChar->GetMJob());
-    PChar->updatemask |= UPDATE_HP;
-
-    PChar->pushPacket(new CCharJobsPacket(PChar));
-    PChar->pushPacket(new CCharStatsPacket(PChar));
-    PChar->pushPacket(new CCharSkillsPacket(PChar));
-    PChar->pushPacket(new CCharRecastPacket(PChar));
-    PChar->pushPacket(new CCharAbilitiesPacket(PChar));
-    PChar->pushPacket(new CCharUpdatePacket(PChar));
-    PChar->pushPacket(new CMenuMeritPacket(PChar));
-    PChar->pushPacket(new CMonipulatorPacket1(PChar));
-    PChar->pushPacket(new CMonipulatorPacket2(PChar));
-    PChar->pushPacket(new CCharSyncPacket(PChar));
 }
 
 /************************************************************************
@@ -5744,16 +5858,42 @@ uint8 CLuaBaseEntity::levelRestriction(sol::object const& level)
                 PChar->updatemask |= UPDATE_HP;
             }
 
-            if (PChar->PPet)
+            if (PChar->PPet || PChar->PAutomaton)
             {
                 CPetEntity* PPet = static_cast<CPetEntity*>(PChar->PPet);
+
+                if (PChar->PAutomaton)
+                {
+                    PPet = static_cast<CPetEntity*>(PChar->PAutomaton);
+                }
+
                 if (PPet->getPetType() == PET_TYPE::WYVERN)
                 {
                     petutils::LoadWyvernStatistics(PChar, PPet, true);
                 }
+                else if (PPet->getPetType() == PET_TYPE::AUTOMATON)
+                {
+                    if (PChar->GetMJob() == JOB_PUP)
+                    {
+                        PPet->SetMLevel(PChar->GetMLevel());
+                    }
+                    else
+                    {
+                        PPet->SetMLevel(PChar->GetSLevel());
+                    }
+
+                    PPet->SetSLevel(PPet->GetMLevel() / 2);
+                    puppetutils::LoadAutomatonStats(PChar);
+                }
                 else
                 {
                     petutils::DespawnPet(PChar);
+                }
+
+                if (PChar->PPet || PChar->PAutomaton)
+                {
+                    petutils::FinalizePetStatistics(PChar, PPet);
+                    PPet->updatemask |= UPDATE_HP;
                 }
             }
         }
@@ -5785,7 +5925,6 @@ void CLuaBaseEntity::addJobTraits(uint8 jobID, uint8 level)
 
 void CLuaBaseEntity::homepoint()
 {
-
     if (m_PBaseEntity->objtype != TYPE_PC)
     {
         ShowWarning("Entity is not a PC.");
@@ -8390,11 +8529,8 @@ uint8 CLuaBaseEntity::getSkillRank(uint8 rankID)
 
 void CLuaBaseEntity::setSkillRank(uint8 skillID, uint8 newrank)
 {
-    auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity);
-    if (PChar)
+    if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
     {
-        auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
-
         PChar->WorkingSkills.rank[skillID]  = newrank;
         PChar->WorkingSkills.skill[skillID] = (PChar->RealSkills.skill[skillID] / 10) * 0x20 + newrank;
         PChar->RealSkills.rank[skillID]     = newrank;
@@ -8968,7 +9104,7 @@ void CLuaBaseEntity::addPartyEffect(sol::variadic_args va)
     }
 
     CStatusEffect* PEffect =
-        new CStatusEffect(static_cast<EFFECT>(args[0]), args[1], args[2], args[3], args[4], args[5], args[6]);
+        new CStatusEffect(static_cast<EFFECT>(args[0]), static_cast<EFFECT>(args[1]), args[2], args[3], args[4], args[5], args[6]);
 
     CBattleEntity* PEntity = ((CBattleEntity*)m_PBaseEntity);
 
@@ -13741,7 +13877,7 @@ bool CLuaBaseEntity::isAutoAttackEnabled()
 
 int16 CLuaBaseEntity::getMobMod(uint16 mobModID)
 {
-    XI_DEBUG_BREAK_IF(!(m_PBaseEntity->objtype & TYPE_MOB));
+    XI_DEBUG_BREAK_IF(!(m_PBaseEntity->objtype & TYPE_MOB || m_PBaseEntity->objtype & TYPE_TRUST));
 
     return static_cast<CMobEntity*>(m_PBaseEntity)->getMobMod(mobModID);
 }
@@ -13756,7 +13892,7 @@ int16 CLuaBaseEntity::getMobMod(uint16 mobModID)
 void CLuaBaseEntity::addMobMod(uint16 mobModID, int16 value)
 {
     // putting this in here to find elusive bug
-    if (!(m_PBaseEntity->objtype & TYPE_MOB))
+    if (!(m_PBaseEntity->objtype & TYPE_MOB || m_PBaseEntity->objtype & TYPE_TRUST))
     {
         // this once broke on an entity (17532673) but it could not be found
         ShowError("CLuaBaseEntity::addMobMod Expected type mob (%d) but its a (%d)", m_PBaseEntity->id, m_PBaseEntity->objtype);
@@ -13778,7 +13914,7 @@ void CLuaBaseEntity::setMobMod(uint16 mobModID, int16 value)
     XI_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
 
     // putting this in here to find elusive bug
-    if (!(m_PBaseEntity->objtype & TYPE_MOB))
+    if (!(m_PBaseEntity->objtype & TYPE_MOB || m_PBaseEntity->objtype & TYPE_TRUST))
     {
         // this once broke on an entity (17532673) but it could not be found
         ShowError("CLuaBaseEntity::setMobMod Expected type mob (%d) but its a (%d)", m_PBaseEntity->id, m_PBaseEntity->objtype);
@@ -13798,7 +13934,7 @@ void CLuaBaseEntity::setMobMod(uint16 mobModID, int16 value)
 void CLuaBaseEntity::delMobMod(uint16 mobModID, int16 value)
 {
     // putting this in here to find elusive bug
-    if (!(m_PBaseEntity->objtype & TYPE_MOB))
+    if (!(m_PBaseEntity->objtype & TYPE_MOB || m_PBaseEntity->objtype & TYPE_TRUST))
     {
         // this once broke on an entity (17532673) but it could not be found
         ShowError("CLuaBaseEntity::addMobMod Expected type mob (%d) but its a (%d)", m_PBaseEntity->id, m_PBaseEntity->objtype);
@@ -14127,6 +14263,11 @@ void CLuaBaseEntity::useMobAbility(sol::variadic_args va)
             if (PMobSkill->getValidTargets() & TARGET_ENEMY)
             {
                 PEntity->PAI->MobSkill(static_cast<CMobEntity*>(PEntity)->GetBattleTargetID(), skillid);
+            }
+            // Specific case for Moblin Fantocciniman
+            else if (PMobSkill->getValidTargets() & TARGET_PLAYER_PARTY)
+            {
+                PEntity->PAI->MobSkill(PEntity->targid+2, skillid);
             }
             else if (PMobSkill->getValidTargets() & TARGET_SELF)
             {
@@ -15198,6 +15339,7 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("setTeleportMenu", CLuaBaseEntity::setTeleportMenu);
     SOL_REGISTER("getTeleportMenu", CLuaBaseEntity::getTeleportMenu);
     SOL_REGISTER("setHomePoint", CLuaBaseEntity::setHomePoint);
+    SOL_REGISTER("isCurrentHomepoint", CLuaBaseEntity::isCurrentHomepoint);
     SOL_REGISTER("setJailCell", CLuaBaseEntity::setJailCell);
     SOL_REGISTER("resetPlayer", CLuaBaseEntity::resetPlayer);
 
@@ -15849,6 +15991,10 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("getWorldpassId", CLuaBaseEntity::getWorldpassId);
     SOL_REGISTER("setDigTable", CLuaBaseEntity::setDigTable);
     SOL_REGISTER("getDigTable", CLuaBaseEntity::getDigTable);
+
+    SOL_REGISTER("getChocoboRaisingInfo", CLuaBaseEntity::getChocoboRaisingInfo);
+    SOL_REGISTER("setChocoboRaisingInfo", CLuaBaseEntity::setChocoboRaisingInfo);
+    SOL_REGISTER("deleteRaisedChocobo", CLuaBaseEntity::deleteRaisedChocobo);
     SOL_REGISTER("homepoint", CLuaBaseEntity::homepoint);
 }
 

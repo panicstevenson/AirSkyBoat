@@ -441,10 +441,10 @@ void CZone::LoadZoneSettings()
 
         inet_pton(AF_INET, (const char*)sql->GetData(1), &m_zoneIP);
         m_zonePort              = (uint16)sql->GetUIntData(2);
-        m_zoneMusic.m_songDay   = (uint16)sql->GetUIntData(3);           // background music (day)
-        m_zoneMusic.m_songNight = (uint16)sql->GetUIntData(4);           // background music (night)
-        m_zoneMusic.m_bSongS    = (uint16)sql->GetUIntData(5);           // solo battle music
-        m_zoneMusic.m_bSongM    = (uint16)sql->GetUIntData(6);           // party battle music
+        m_zoneMusic.m_songDay   = (uint16)sql->GetUIntData(3);          // background music (day)
+        m_zoneMusic.m_songNight = (uint16)sql->GetUIntData(4);          // background music (night)
+        m_zoneMusic.m_bSongS    = (uint16)sql->GetUIntData(5);          // solo battle music
+        m_zoneMusic.m_bSongM    = (uint16)sql->GetUIntData(6);          // party battle music
         m_tax                   = (uint16)(sql->GetFloatData(7) * 100); // tax for bazaar
         m_miscMask              = (uint16)sql->GetUIntData(8);
 

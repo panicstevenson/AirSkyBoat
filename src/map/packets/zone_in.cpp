@@ -21,13 +21,13 @@
 
 #include "common/socket.h"
 
-#include "zone_in.h"
-#include "map/zone.h"
 #include "../entities/charentity.h"
 #include "../instance.h"
 #include "../status_effect_container.h"
 #include "../utils/zoneutils.h"
 #include "../vana_time.h"
+#include "map/zone.h"
+#include "zone_in.h"
 
 /************************************************************************
  *                                                                       *
@@ -151,8 +151,8 @@ CZoneInPacket::CZoneInPacket(CCharEntity* PChar, int16 csid)
     ref<uint8>(0x21) = PChar->GetGender() * 128 + (1 << PChar->look.size);
 
     // Zone Animation for Transports
-    ref<uint8>(0x27) = PChar->loc.zone->GetZoneDirection();
-    ref<uint8>(0x2A) = PChar->loc.zone->GetZoneAnimation();
+    ref<uint8>(0x27)  = PChar->loc.zone->GetZoneDirection();
+    ref<uint8>(0x2A)  = PChar->loc.zone->GetZoneAnimation();
     ref<uint32>(0x78) = PChar->loc.zone->GetZoneAnimStartTime();
     ref<uint16>(0x7C) = PChar->loc.zone->GetZoneAnimLength();
 
@@ -178,7 +178,7 @@ CZoneInPacket::CZoneInPacket(CCharEntity* PChar, int16 csid)
     ref<uint16>(0x58) = PChar->PInstance ? PChar->PInstance->GetBackgroundMusicNight() : PChar->loc.zone->GetBackgroundMusicNight();
     ref<uint16>(0x5A) = PChar->PInstance ? PChar->PInstance->GetSoloBattleMusic() : PChar->loc.zone->GetSoloBattleMusic();
     ref<uint16>(0x5C) = PChar->PInstance ? PChar->PInstance->GetPartyBattleMusic() : PChar->loc.zone->GetPartyBattleMusic();
-    ref<uint8>(0x5E) = PChar->animation == ANIMATION_MOUNT ? 0x54 : 0xD4;
+    ref<uint8>(0x5E)  = PChar->animation == ANIMATION_MOUNT ? 0x54 : 0xD4;
 
     ref<uint16>(0x60) = PChar->loc.boundary;
     ref<uint16>(0x68) = PChar->loc.zone->GetWeather();

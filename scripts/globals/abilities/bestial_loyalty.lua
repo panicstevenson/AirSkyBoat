@@ -24,6 +24,7 @@ end
 
 ability_object.onUseAbility = function(player, target, ability)
     xi.pet.spawnPet(player, player:getWeaponSubSkillType(xi.slot.AMMO))
+    player:addRecast(xi.recast.ABILITY, ability:getID(), 300)
 end
 
 return ability_object

@@ -280,11 +280,11 @@ end
 xi.teleport.toHomeNation = function(player)
     local pNation = player:getNation()
     if pNation == xi.nation.BASTOK then
-        player:setPos(89, 0 , -66, 0, 234)
+        player:setPos(130.1494, -16.9836, 23.5867, 200, 237)
     elseif pNation == xi.nation.SANDORIA then
-        player:setPos(49, -1 , 29, 164, 231)
+        player:setPos(-237.9669, 8.0000, 18.2202, 114, 231)
     else
-        player:setPos(193, -12 , 220, 64, 240)
+        player:setPos(-135.4855, -5.5000 , 157.9643, 121, 240)
     end
 end
 

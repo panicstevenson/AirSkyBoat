@@ -54,7 +54,7 @@ namespace traits
      ************************************************************************/
     void LoadTraitsList()
     {
-        const char* Query = "SELECT traitid, job, level, rank, modifier, value, content_tag, meritid \
+        const char* Query = "SELECT traitid, job, level, rank, modifier, value, modifier2, value2, content_tag, meritid \
                              FROM traits \
                              WHERE traitid < %u \
                              ORDER BY job, traitid ASC, rank DESC";
@@ -66,7 +66,7 @@ namespace traits
             while (sql->NextRow() == SQL_SUCCESS)
             {
                 char* contentTag = nullptr;
-                sql->GetData(6, &contentTag, nullptr);
+                sql->GetData(8, &contentTag, nullptr);
 
                 if (!luautils::IsContentEnabled(contentTag))
                 {
@@ -80,7 +80,13 @@ namespace traits
                 PTrait->setRank(sql->GetIntData(3));
                 PTrait->setMod(static_cast<Mod>(sql->GetIntData(4)));
                 PTrait->setValue(sql->GetIntData(5));
-                PTrait->setMeritId(sql->GetIntData(7));
+
+                if (sql->GetIntData(6) != 0)
+                {
+                    PTrait->setMod(static_cast<Mod>(sql->GetIntData(6)));
+                    PTrait->setValue(sql->GetIntData(7));
+                }
+                PTrait->setMeritId(sql->GetIntData(9));
 
                 PTraitsList[PTrait->getJob()].push_back(PTrait);
             }

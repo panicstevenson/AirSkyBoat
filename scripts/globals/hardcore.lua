@@ -3,14 +3,85 @@ require("scripts/globals/player")
 xi = xi or {}
 xi.hardcore = xi.hardcore or {}
 
-local hardcoreFlag = 0x00010000
+xi.hardcore.hardcoreFlag = 0x00010000
+
+xi.hardcore.menu =
+{
+    title = " ",
+    options = {},
+}
+
+xi.hardcore.delaySendMenu = function(player)
+    player:timer(50, function(playerArg)
+        playerArg:customMenu(xi.hardcore.menu)
+    end)
+end
+
+xi.hardcore.pages =
+{
+    [1] =
+    {
+        {
+            "Become a Hardcore Adventurer.",
+            function(playerArg)
+                playerArg:PrintToPlayer("You have become a hardcore adventurer!", xi.msg.channel.NS_SAY)
+                xi.hardcore.startSystem(playerArg)
+            end,
+        },
+        {
+            "Disable Hardcore Adventuring: (Permanent)",
+            function(playerArg)
+                xi.hardcore.menu.options = xi.hardcore.pages[2]
+                xi.hardcore.delaySendMenu(playerArg)
+            end,
+        },
+    },
+    [2] =
+    {
+        {
+            "Confirm Declining Hardcore Adventuring",
+            function(playerArg)
+                playerArg:PrintToPlayer("You have declined becoming a hardcore adventurer.", xi.msg.channel.NS_SAY)
+                playerArg:setCharVar("hardcoreAvail", 1)
+            end,
+        },
+        {
+            "Previous Page",
+            function(playerArg)
+                xi.hardcore.menu.options = xi.hardcore.pages[1]
+                xi.hardcore.delaySendMenu(playerArg)
+            end,
+        },
+    },
+    [3] =
+    {
+        {
+            "Enable/Disable Hardcore Flag",
+            function(playerArg)
+                playerArg:setFlag(xi.hardcore.hardcoreFlag)
+            end,
+        },
+        {
+            "Check Hardcore Rewards",
+            function(playerArg)
+                xi.hardcore.dialog(playerArg, 2)
+                if playerArg:getCharVar("hardcoreLvlRewardAvail") == 1 then
+                    xi.hardcore.dialog(playerArg, 3)
+                    xi.hardcore.giveRewards(playerArg)
+                else
+                    xi.hardcore.dialog(playerArg, 6)
+                end
+            end,
+        },
+    }
+}
 
 xi.hardcore.playerDeath = function(player)
     if player:getCharVar("hardcore") == 1 then
         player:setCharVar("hardcore", 0)
         player:setCharVar("hardcoreDied", 1)
-        if player:checkNameFlags(hardcoreFlag) then
-            player:setFlag(hardcoreFlag)
+        if player:checkNameFlags(xi.hardcore.hardcoreFlag) then
+            player:setFlag(xi.hardcore.hardcoreFlag)
         end
         xi.hardcore.announceDeath(player)
         player:timer(1500, function(playerArg)
@@ -21,8 +92,12 @@ end
 
 xi.hardcore.announceDeath = function(player)
     local playerLvlRewards = player:getCharVar("harcoreLvlRewards")
-
-    player:PrintToPlayer("You have fallen as a hardcore adventurer..", xi.msg.channel.NS_SAY)
+    if playerLvlRewards >= 51 then
+        -- turn this into death announcement
+        player:PrintToPlayer("You have fallen as a hardcore adventurer..", xi.msg.channel.NS_SAY)
+    else
+        player:PrintToPlayer("You have fallen as a hardcore adventurer..", xi.msg.channel.NS_SAY)
+    end
 end
 
 xi.hardcore.levelUp = function(player)
@@ -66,7 +141,7 @@ xi.hardcore.startSystem = function(player)
     if player:getCharVar("hardCoreAvail", 0) then
         player:setCharVar("hardcore", 1)
         player:setCharVar("hardcoreAvail", 1)
-        player:setFlag(hardcoreFlag)
+        player:setFlag(xi.hardcore.hardcoreFlag)
     end
 end
 
@@ -186,60 +261,12 @@ xi.hardcore.setupNPC = function(zone)
 end
 
 xi.hardcore.menus = function(player)
-menu =
-{
-    title = " ",
-    options = {},
-}
-
-local delaySendMenu = function(player)
-    player:timer(50, function(playerArg)
-        playerArg:customMenu(menu)
-    end)
-end
-
-page1 =
-{
-    {
-        "Become a Hardcore Adventurer.",
-        function(playerArg)
-            playerArg:PrintToPlayer("You have become a hardcore adventurer!", xi.msg.channel.NS_SAY)
-            xi.hardcore.startSystem(playerArg)
-        end,
-    },
-    {
-        "Disable Hardcore Adventuring: (Permanent)",
-        function(playerArg)
-            menu.options = page2
-            delaySendMenu(playerArg)
-        end,
-    },
-}
-
-page2 =
-{
-    {
-        "Confirm Declining Hardcore Adventuring",
-        function(playerArg)
-            playerArg:PrintToPlayer("You have declined becoming a hardcore adventurer.", xi.msg.channel.NS_SAY)
-            playerArg:setCharVar("hardcoreAvail", 1)
-        end,
-    },
-    {
-        "Previous Page",
-        function(playerArg)
-            menu.options = page1
-            delaySendMenu(playerArg)
-        end,
-    },
-}
-
-menu.options = page1
-delaySendMenu(player)
+    xi.hardcore.menu.options = xi.hardcore.pages[1]
+    xi.hardcore.delaySendMenu(player)
 end
 
 xi.hardcore.dialog = function(player, dialogOption)
-    dialogTable =
+    local dialogTable =
     {
         [1] = "Greetings, I am the hardcore adventurer tutor. Hardcore adventurers risk their all for guts and glory.",
         [2] = "Ah, welcome back. Let me see if you have any earned any rewards since your last visit..",
@@ -251,7 +278,7 @@ xi.hardcore.dialog = function(player, dialogOption)
         [8] = "But those who survive and succeed will find themselves rewarded.. And will join the ranks of Legends.",
     }
 
-    npcList =
+    local npcList =
     {
         [xi.zone.LOWER_JEUNO] = "Frantix",
         [xi.zone.BASTOK_MARKETS] = "Franklin",
@@ -267,43 +294,8 @@ xi.hardcore.dialog = function(player, dialogOption)
 end
 
 xi.hardcore.hcmenu = function(player)
-    menu =
-{
-    title = " ",
-    options = {},
-}
-
-local delaySendMenu = function(player)
-    player:timer(50, function(playerArg)
-        playerArg:customMenu(menu)
-    end)
-end
-
-page1 =
-{
-    {
-        "Enable/Disable Hardcore Flag",
-        function(playerArg)
-            local hardcoreFlag = 0x00010000
-            playerArg:setFlag(hardcoreFlag)
-        end,
-    },
-    {
-        "Check Hardcore Rewards",
-        function(playerArg)
-            xi.hardcore.dialog(player, 2)
-            if player:getCharVar("hardcoreLvlRewardAvail") == 1 then
-                xi.hardcore.dialog(player, 3)
-                xi.hardcore.giveRewards(player)
-            else
-                xi.hardcore.dialog(player, 6)
-            end
-        end,
-    },
-}
-
-menu.options = page1
-delaySendMenu(player)
+    xi.hardcore.menu.options = xi.hardcore.pages[3]
+    xi.hardcore.delaySendMenu(player)
 end
 
 xi.hardcore.giveRewards = function(player)

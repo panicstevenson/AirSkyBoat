@@ -11,7 +11,6 @@ local zone_object = {}
 
 zone_object.onInitialize = function(zone)
     xi.chocobo.initZone(zone)
-    xi.extravaganza.shadowEraHide(ID.npc.SHIXO)
 end
 
 zone_object.onZoneIn = function(player, prevZone)
@@ -30,6 +29,8 @@ zone_object.onZoneIn = function(player, prevZone)
         player:setPos(161, -2, 161, 94)
     end
 
+    xi.moghouse.exitJobChange(player, prevZone)
+
     return cs
 end
 
@@ -45,6 +46,8 @@ zone_object.onEventFinish = function(player, csid, option)
     elseif csid == 65 then
         player:setCharVar("DownwardHelix", 1)
     end
+
+    xi.moghouse.exitJobChangeFinish(player, csid, option)
 end
 
 return zone_object

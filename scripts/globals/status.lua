@@ -824,23 +824,24 @@ xi.effect =
     PROWESS_WS_DMG           = 787, -- (Unimplemented) 2% per tier.
     PROWESS_KILLER           = 788, -- *flat +4 for now
     -- End GoV Prowess fakery
-    FIELD_SUPPORT_FOOD       = 789, -- Used by Fov/GoV food buff.
-    MARK_OF_SEED             = 790, -- Tracks 30 min timer in ACP mission "Those Who Lurk in Shadows (II)"
-    ALL_MISS                 = 791, -- Indicates a target is unable to be hit by normal melee attacks (formerly TOO_HIGH)
-    SUPER_BUFF               = 792,
-    NINJUTSU_ELE_DEBUFF      = 793,
-    HEALING                  = 794,
-    LEAVEGAME                = 795,
-    HASTE_SAMBA_HASTE        = 796,
-    TELEPORT                 = 797,
-    CHAINBOUND               = 798,
-    SKILLCHAIN               = 799,
-    DYNAMIS                  = 800,
-    MEDITATE                 = 801, -- Dummy effect for SAM Meditate JA
-    ELEMENTALRES_DOWN        = 802, -- Elemental resistance down
-    FULL_SPEED_AHEAD         = 803, -- Helper for quest: Full Speed Ahead!
-    HYSTERIA                 = 804, -- Used for Hysteroanima to stop after readying a weaponskill with no msg.
-    TOMAHAWK                 = 805, -- Silent status effect inflicted by a Warrior using the "Tomahawk" job ability
+    FIELD_SUPPORT_FOOD      = 789, -- Used by Fov/GoV food buff.
+    MARK_OF_SEED            = 790, -- Tracks 30 min timer in ACP mission "Those Who Lurk in Shadows (II)"
+    ALL_MISS                = 791, -- Indicates a target is unable to be hit by normal melee attacks (formerly TOO_HIGH)
+    SUPER_BUFF              = 792,
+    NINJUTSU_ELE_DEBUFF     = 793,
+    HEALING                 = 794,
+    LEAVEGAME               = 795,
+    HASTE_SAMBA_HASTE       = 796,
+    TELEPORT                = 797,
+    CHAINBOUND              = 798,
+    SKILLCHAIN              = 799,
+    DYNAMIS                 = 800,
+    MEDITATE                = 801, -- Dummy effect for SAM Meditate JA
+    ELEMENTALRES_DOWN       = 802, -- Elemental resistance down
+    FULL_SPEED_AHEAD        = 803, -- Helper for quest: Full Speed Ahead!
+    HYSTERIA                = 804, -- Used for Hysteroanima to stop after readying a weaponskill with no msg.
+    TOMAHAWK                = 805, -- Silent status effect inflicted by a Warrior using the "Tomahawk" job ability
+    ELEMENTAL_EVASION_DOWN  = 806, -- Used for era+ wyvern breaths.
 
     -- 806-1022
     -- PLACEHOLDER             = 1023 -- The client dat file seems to have only this many "slots", results of exceeding that are untested.
@@ -1785,6 +1786,27 @@ xi.mod =
     -- 570 - 825 used by WS DMG mods these are not spares.
     -- For Next ID, see modifier.h
     -- Spares start at: 1166
+}
+
+xi.immunity =
+{
+    NONE        = 0x00,
+    SLEEP       = 0x01,
+    GRAVITY     = 0x02,
+    BIND        = 0x04,
+    STUN        = 0x08,
+    SILENCE     = 0x10,   -- 16
+    PARALYZE    = 0x20,   -- 32
+    BLIND       = 0x40,   -- 64
+    SLOW        = 0x80,   -- 128
+    POISON      = 0x100,  -- 256
+    ELEGY       = 0x200,  -- 512
+    REQUIEM     = 0x400,  -- 1024
+    LIGHT_SLEEP = 0x800,  -- 2048
+    DARK_SLEEP  = 0x1000, -- 4096
+    ASPIR       = 0x2000, -- 8192
+    TERROR      = 0x4000, -- 16384
+    DISPEL      = 0x8000, -- 32768
 }
 
 xi.latent =

@@ -1,6 +1,9 @@
 -- ------------------------------------------------------------
 -- Horizon Respawn Time Changes (7 min dungeon, 12 min stronghold)
 -- ------------------------------------------------------------
+LOCK TABLES
+    `mob_groups` WRITE;
+
 UPDATE mob_groups SET respawntime = '420' WHERE zoneid = 2      -- Carpenters_Landing
                                              OR zoneid = 9      -- PsoXja
                                              OR zoneid = 34     -- Grand_Palace_of_HuXzoi
@@ -61,3 +64,5 @@ UPDATE mob_groups SET minLevel = 18, maxLevel = 21 WHERE groupid = "33" AND zone
 UPDATE mob_groups SET spawntype = 32, respawntime = 0 WHERE name = "Bat_Eye" and zoneid = 166;
 UPDATE mob_groups SET dropid = 256 WHERE name = "King_Crawler" and zoneid = 197; -- Sets King Crawler drop to match Soldier Crawler (KC is OOE) This NEEDS dynaamic renamer
 UPDATE mob_groups SET spawntype = 32, respawntime = 0 WHERE name = "Wyvern" and zoneid = 213;
+
+UNLOCK TABLES;

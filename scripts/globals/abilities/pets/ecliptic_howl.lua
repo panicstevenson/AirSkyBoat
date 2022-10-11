@@ -18,26 +18,29 @@ ability_object.onPetAbility = function(target, pet, skill, summoner)
     local duration = 180 + bonusTime
 
     local moon = VanadielMoonPhase()
-    local buffvalue = 0
-    if moon > 90 then
-        buffvalue = 25
-    elseif moon > 75 then
-        buffvalue = 21
-    elseif moon > 60 then
-        buffvalue = 17
-    elseif moon > 40 then
-        buffvalue = 13
-    elseif moon > 25 then
-        buffvalue = 9
-    elseif moon > 10 then
-        buffvalue = 5
-    else
-        buffvalue = 1
+    local accuracy = 0
+    local evasion = 0
+
+    if moon > 90 then -- Full Moon
+        accuracy = 25
+        evasion = 15
+    elseif moon > 60 then -- Gibbous Moon
+        accuracy = 21
+        evasion = 18
+    elseif moon > 25 then -- Quarter Moon
+        accuracy = 18
+        evasion = 18
+    elseif moon > 10 then -- Crescent Moon
+        accuracy = 16
+        evasion = 21
+    else -- New Moon
+        accuracy = 15
+        evasion = 25
     end
     target:delStatusEffect(xi.effect.ACCURACY_BOOST)
     target:delStatusEffect(xi.effect.EVASION_BOOST)
-    target:addStatusEffect(xi.effect.ACCURACY_BOOST, buffvalue, 0, duration)
-    target:addStatusEffect(xi.effect.EVASION_BOOST, 25-buffvalue, 0, duration)
+    target:addStatusEffect(xi.effect.ACCURACY_BOOST, accuracy, 0, duration)
+    target:addStatusEffect(xi.effect.EVASION_BOOST, evasion, 0, duration)
     skill:setMsg(xi.msg.basic.NONE)
     return 0
 end

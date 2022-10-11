@@ -19591,6 +19591,7 @@ INSERT INTO `item_basic` VALUES (25906,0,'baayami_slops_+1','baayami_slops_+1',1
 INSERT INTO `item_basic` VALUES (25907,0,'turms_subligar','turms_subligar',1,2084,20,0,40425);
 INSERT INTO `item_basic` VALUES (25908,0,'turms_subligar_+1','turms_subligar_+1',1,2080,20,0,0);
 INSERT INTO `item_basic` VALUES (25910,0,'cait_sith_subligar','cait_sith_subligar',1,63552,0,1,0);
+INSERT INTO `item_basic` VALUES (25911,0,'denim_pants','denim_pants',1,63552,0,1,0);
 INSERT INTO `item_basic` VALUES (25920,0,'ahosi_leggings','ahosi_leggings',1,63568,0,0,0);
 INSERT INTO `item_basic` VALUES (25921,0,'skaoi_boots','skaoi_boots',1,63568,0,0,0);
 INSERT INTO `item_basic` VALUES (25922,0,'navon_crackows','navon_crackows',1,63568,0,0,0);

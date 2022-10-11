@@ -9,7 +9,6 @@ local zone_object = {}
 
 zone_object.onInitialize = function(zone)
     xi.chocobo.initZone(zone)
-    xi.extravaganza.shadowEraHide(ID.npc.SHENNI)
 end
 
 zone_object.onZoneIn = function(player, prevZone)
@@ -21,6 +20,8 @@ zone_object.onZoneIn = function(player, prevZone)
         player:setPos(-177, -8, position, 127)
     end
 
+    xi.moghouse.exitJobChange(player, prevZone)
+
     return cs
 end
 
@@ -31,6 +32,7 @@ zone_object.onEventUpdate = function(player, csid, option)
 end
 
 zone_object.onEventFinish = function(player, csid, option)
+    xi.moghouse.exitJobChangeFinish(player, csid, option)
 end
 
 return zone_object

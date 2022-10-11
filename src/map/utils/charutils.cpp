@@ -135,6 +135,7 @@ namespace charutils
         float raceStat  = 0; // The final HP number for a race-based level.
         float jobStat   = 0; // Estimate HP level for the level based on the primary profession.
         float sJobStat  = 0; // HP final number for a level based on a secondary profession.
+        float totalStat = 0; // Total stats before merits and subjob calculations.
         int32 bonusStat = 0; // HP bonus number that is added subject to some conditions.
 
         int32 baseValueColumn   = 0; // Column number with base number HP
@@ -275,7 +276,7 @@ namespace charutils
 
             if (mainLevelOver60 > 0)
             {
-                raceStat += floor(grade::GetStatScale(grade, scaleOver60) * mainLevelOver60);
+                raceStat += grade::GetStatScale(grade, scaleOver60) * mainLevelOver60;
             }
 
             // Calculation by profession
@@ -284,7 +285,7 @@ namespace charutils
 
             if (mainLevelOver60 > 0)
             {
-                jobStat += floor(grade::GetStatScale(grade, scaleOver60) * mainLevelOver60);
+                jobStat += grade::GetStatScale(grade, scaleOver60) * mainLevelOver60;
             }
 
             // Calculation for an additional profession
@@ -298,11 +299,14 @@ namespace charutils
                 sJobStat = 0;
             }
 
+            // Rank A Race + Rank A Job = 71 stat -> Clamp max base stat of 70
+            totalStat = std::clamp((raceStat + jobStat), 0.f, 70.f);
+
             // get each merit bonus stat, str,dex,vit and so on...
             MeritBonus = PChar->PMeritPoints->GetMeritValue(statMerit[StatIndex - 2], PChar);
 
             // Value output
-            ref<uint16>(&PChar->stats, counter) = floor((uint16)(settings::get<float>("map.PLAYER_STAT_MULTIPLIER") * (raceStat + jobStat + sJobStat) + MeritBonus));
+            ref<uint16>(&PChar->stats, counter) = floor((uint16)(settings::get<float>("map.PLAYER_STAT_MULTIPLIER") * (totalStat + sJobStat) + MeritBonus));
             counter += 2;
         }
     }
@@ -1553,7 +1557,7 @@ namespace charutils
                         }
                     }
                 }
-
+                luautils::OnItemDrop(PChar, PItem);
                 delete PItem;
             }
         }
@@ -1680,7 +1684,7 @@ namespace charutils
             }
 
             // Call the LUA event before actually "unequipping" the item so the script can do stuff with it first
-            if (((CItemEquipment*)PItem)->getScriptType() & SCRIPT_EQUIP)
+            if (((CItemEquipment*)PItem)->getScriptType() & SCRIPT_EQUIP || ((CItemEquipment*)PItem)->isType(ITEM_USABLE))
             {
                 luautils::OnItemCheck(PChar, PItem, ITEMCHECK::UNEQUIP, nullptr);
             }
@@ -1695,11 +1699,11 @@ namespace charutils
                 PChar->m_EquipFlag = 0;
                 for (uint8 i = 0; i < 16; ++i)
                 {
-                    CItem* PItem = PChar->getEquip((SLOTTYPE)i);
+                    CItem* PSlotItem = PChar->getEquip(static_cast<SLOTTYPE>(i));
 
-                    if ((PItem != nullptr) && PItem->isType(ITEM_EQUIPMENT))
+                    if ((PSlotItem != nullptr) && PSlotItem->isType(ITEM_EQUIPMENT))
                     {
-                        PChar->m_EquipFlag |= ((CItemEquipment*)PItem)->getScriptType();
+                        PChar->m_EquipFlag |= (static_cast<CItemEquipment*>(PSlotItem))->getScriptType();
                     }
                 }
             }
@@ -2547,7 +2551,7 @@ namespace charutils
         }
         if (equipSlotID == SLOT_MAIN || equipSlotID == SLOT_RANGED || equipSlotID == SLOT_SUB)
         {
-            if (!PItem || !PItem->isType(ITEM_EQUIPMENT) ||
+            if (!PItem || (!PItem->isType(ITEM_EQUIPMENT) && PItem->getID() != 0) ||
                 (((CItemWeapon*)PItem)->getSkillType() != SKILL_STRING_INSTRUMENT && ((CItemWeapon*)PItem)->getSkillType() != SKILL_WIND_INSTRUMENT))
             {
                 // If the weapon ISN'T a wind based instrument or a string based instrument
@@ -2709,10 +2713,11 @@ namespace charutils
         }
 
         // add in melee ws
-        PItem                       = dynamic_cast<CItemWeapon*>(PChar->getEquip(SLOT_MAIN));
-        uint8       skill           = PItem ? PItem->getSkillType() : (uint8)SKILL_HAND_TO_HAND;
-        const auto& WeaponSkillList = battleutils::GetWeaponSkills(skill);
-        for (auto&& PSkill : WeaponSkillList)
+        PItem       = dynamic_cast<CItemWeapon*>(PChar->getEquip(SLOT_MAIN));
+        uint8 skill = PItem ? PItem->getSkillType() : (uint8)SKILL_HAND_TO_HAND;
+
+        const auto& MeleeWeaponSkillList = battleutils::GetWeaponSkills(skill);
+        for (auto&& PSkill : MeleeWeaponSkillList)
         {
             if (battleutils::CanUseWeaponskill(PChar, PSkill) || PSkill->getID() == main_ws || (isInDynamis && (PSkill->getID() == main_ws_dyn)))
             {
@@ -2724,9 +2729,9 @@ namespace charutils
         PItem = dynamic_cast<CItemWeapon*>(PChar->getEquip(SLOT_RANGED));
         if (PItem != nullptr && PItem->isType(ITEM_WEAPON) && PItem->getSkillType() != SKILL_THROWING)
         {
-            skill                       = PItem ? PItem->getSkillType() : 0;
-            const auto& WeaponSkillList = battleutils::GetWeaponSkills(skill);
-            for (auto&& PSkill : WeaponSkillList)
+            skill                             = PItem ? PItem->getSkillType() : 0;
+            const auto& RangedWeaponSkillList = battleutils::GetWeaponSkills(skill);
+            for (auto&& PSkill : RangedWeaponSkillList)
             {
                 if ((battleutils::CanUseWeaponskill(PChar, PSkill)) || PSkill->getID() == range_ws || (isInDynamis && (PSkill->getID() == range_ws_dyn)))
                 {
@@ -5919,6 +5924,85 @@ namespace charutils
         {
             return true;
         }
+        return false;
+    }
+
+    bool hasStorageAccess(CCharEntity* PChar)
+    {
+        if (PChar != nullptr)
+        {
+            if (lua["xi"]["settings"]["map"]["MH_STORAGE_ACCESS"] == 0)
+            {
+                return true;
+            }
+            else
+            {
+                REGION_TYPE currentRegion = PChar->loc.zone->GetRegionID();
+                auto        nation        = PChar->profile.nation;
+                REGION_TYPE nationRegion  = REGION_TYPE::JEUNO;
+
+                switch (nation)
+                {
+                    case NATION_SANDORIA:
+                        nationRegion = REGION_TYPE::SANDORIA;
+                        break;
+                    case NATION_BASTOK:
+                        nationRegion = REGION_TYPE::BASTOK;
+                        break;
+                    case NATION_WINDURST:
+                        nationRegion = REGION_TYPE::WINDURST;
+                        break;
+                    default:
+                        nationRegion = REGION_TYPE::JEUNO;
+                        break;
+                }
+
+                if (lua["xi"]["settings"]["map"]["MH_STORAGE_ACCESS"] == 1 &&
+                    (currentRegion == nationRegion || currentRegion == REGION_TYPE::JEUNO))
+                {
+                    return true;
+                }
+                else if (lua["xi"]["settings"]["map"]["MH_STORAGE_ACCESS"] == 2 &&
+                         (currentRegion == nationRegion || currentRegion == REGION_TYPE::JEUNO ||
+                          currentRegion == REGION_TYPE::WEST_AHT_URHGAN))
+                {
+                    return true;
+                }
+                else if (lua["xi"]["settings"]["map"]["MH_STORAGE_ACCESS"] == 3 &&
+                         (currentRegion == nationRegion || currentRegion == REGION_TYPE::JEUNO ||
+                          currentRegion == REGION_TYPE::WEST_AHT_URHGAN || currentRegion == REGION_TYPE::ADOULIN_ISLANDS))
+                {
+                    return true;
+                }
+                else if (lua["xi"]["settings"]["map"]["MH_STORAGE_ACCESS"] == 4 &&
+                         currentRegion == nationRegion)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    bool hasWardrobeAccess(CCharEntity* PChar)
+    {
+        if (!lua["xi"]["settings"]["map"]["WARDROBE_CITY_ONLY"])
+        {
+            return true;
+        }
+        else
+        {
+            if (PChar != nullptr)
+            {
+                auto currentZoneType = PChar->loc.zone->GetType();
+                if (currentZoneType == ZONE_TYPE::CITY)
+                {
+                    return true;
+                }
+            }
+        }
+
         return false;
     }
 

@@ -153,7 +153,7 @@ public:
     void  setWeather(uint8 weatherType); // Set Weather condition (GM COMMAND)
 
     // PC Instructions
-    void ChangeMusic(uint8 blockID, uint16 musicTrackID);                    // Sets the specified music Track for specified music block.
+    void ChangeMusic(uint8 blockID, uint16 musicTrackID);                   // Sets the specified music Track for specified music block.
     void sendMenu(uint32 menu);                                             // Displays a menu (AH,Raise,Tractor,MH etc)
     bool sendGuild(uint16 guildID, uint8 open, uint8 close, uint8 holiday); // Sends guild shop menu
     void openSendBox();                                                     // Opens send box (to deliver items)
@@ -199,6 +199,7 @@ public:
     void   setTeleportMenu(uint16 type, sol::object const& teleportObj); // Set favorites or menu layout preferences for homepoints or survival guides
     auto   getTeleportMenu(uint8 type) -> sol::table;                    // Get favorites and menu layout preferences
     void   setHomePoint();                                               // Sets character's homepoint
+    bool   isCurrentHomepoint();                                         // Checks to a character's homepoint vs their current position.
     void   setJailCell();
 
     void resetPlayer(const char* charName); // if player is stuck, GM command @resetPlayer name

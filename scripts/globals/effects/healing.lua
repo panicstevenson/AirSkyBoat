@@ -60,15 +60,15 @@ effect_object.onEffectTick = function(target, effect)
 
     if healtime > 2 then
         -- curse II also known as "zombie"
-        if not(target:hasStatusEffect(xi.effect.DISEASE)) and target:hasStatusEffect(xi.effect.PLAGUE) == false and target:hasStatusEffect(xi.effect.CURSE_II) == false then
+        if not (target:hasStatusEffect(xi.effect.DISEASE)) and target:hasStatusEffect(xi.effect.PLAGUE) == false and target:hasStatusEffect(xi.effect.CURSE_II) == false then
             local healHP = 0
             if target:getContinentID() == 1 and target:hasStatusEffect(xi.effect.SIGNET) then
-                healHP = 10 + (3 * math.floor(target:getMainLvl() / 10)) + (healtime - 2) * (1 + math.floor(target:getMaxHP() / 300)) + target:getMod(xi.mod.HPHEAL)
+                healHP = 10 + ((2 * math.floor(target:getMainLvl() / 10)) * 3) + ((2 * (1 + math.floor(target:getMaxHP() / 300))) * (healtime - 2)) + target:getMod(xi.mod.HPHEAL)
             elseif target:getMaster() ~= nil then -- Beastmaster's Stay ability
                 healHP = 10 + (3 * math.floor(target:getMainLvl() / 10)) + (healtime - 2) * (2.5 + math.floor(target:getMaxHP() / 100)) + target:getMod(xi.mod.HPHEAL)
             else
                 target:addTP(xi.settings.main.HEALING_TP_CHANGE)
-                healHP = 10 + (healtime - 2) + target:getMod(xi.mod.HPHEAL)
+                healHP = 10 + (3 * math.floor(target:getMainLvl() / 10)) + ((1 + math.floor(target:getMaxHP() / 300)) * (healtime - 2)) + target:getMod(xi.mod.HPHEAL)
             end
 
             -- Records of Eminence: Heal Without Using Magic
@@ -81,7 +81,6 @@ effect_object.onEffectTick = function(target, effect)
                 xi.roe.onRecordTrigger(target, 4)
             end
 
-            target:addHP(healHP)
             if target:getHPP() < 100 then
                 target:updateEnmityFromCure(target, healHP)
             end

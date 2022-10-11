@@ -274,11 +274,7 @@ local function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams, f
         ratio = cMeleeRatio(attacker, target, wsParams, calcParams.ignoredDef, calcParams.tp, xi.slot.MAIN)
         pdif = ratio[1]
         pdifCrit =  ratio[2]
-        calcParams.hitRate = getHitRate(attacker, target, false, 0)
-    end
-
-    if wsParams.acc100 ~= 0 then
-        calcParams.hitRate = accVariesWithTP(calcParams.hitRate, calcParams.accStat, calcParams.tp, wsParams.acc100, wsParams.acc200, wsParams.acc300)
+        calcParams.hitRate = getHitRate(attacker, target, false, 0, calcParams, wsParams)
     end
 
     if firstHitAccBonus ~= nil and firstHitAccBonus == true then
@@ -432,11 +428,7 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
         ftp = 1
     end
 
-    if not isRanged then
-        base = (calcParams.weaponDamage[1] + calcParams.fSTR + wsMods) * ftp
-    else
-        base = (calcParams.weaponDamage[1] + calcParams.weaponDamage[2] + calcParams.fSTR + wsMods) * ftp
-    end
+    base = (calcParams.weaponDamage[1] + calcParams.fSTR + wsMods) * ftp
 
     local dmg = base
 
@@ -506,10 +498,8 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
 
     -- We've now accounted for any crit from SA/TA, or damage bonus for a Hybrid WS, so nullify them
     calcParams.forcedFirstCrit = false
-    calcParams.hybridHit = false
     calcParams.sneakApplicable = false
     calcParams.trickApplicable = false
-    dmg = base
 
     -- For items that apply bonus damage to the first hit of a weaponskill (but not later hits),
     -- store bonus damage for first hit, for use after other calculations are done
@@ -517,6 +507,8 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
 
     -- Reset fTP if it's not supposed to carry over across all hits for this WS
     if not wsParams.multiHitfTP then ftp = 1 end -- We'll recalculate our mainhand damage after doing offhand
+
+    base = (calcParams.weaponDamage[1] + calcParams.fSTR + wsMods) * ftp
 
     -- Do the extra hit for our offhand if applicable
     if calcParams.extraOffhandHit and finaldmg < targetHp then
@@ -596,6 +588,10 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
         ['damageType'] = attacker:getWeaponDamageType(xi.slot.MAIN)
     }
 
+    if wsParams.specialDamageType then
+        attack['damageType'] = wsParams.specialDamageType
+    end
+
     local calcParams = {}
     calcParams.wsID = wsID
     calcParams.attackInfo = attack
@@ -624,7 +620,7 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     calcParams.bonusfTP = gorgetBeltFTP or 0
     calcParams.bonusAcc = (gorgetBeltAcc or 0) + attacker:getMod(xi.mod.WSACC)
     calcParams.bonusWSmods = wsParams.bonusWSmods or 0
-    calcParams.hitRate = getHitRate(attacker, target, false, calcParams.bonusAcc)
+    calcParams.hitRate = getHitRate(attacker, target, false, calcParams.bonusAcc, calcParams, wsParams)
     calcParams.skillType = attack.weaponType
 
     -- Send our wsParams off to calculate our raw WS damage, hits landed, and shadows absorbed
@@ -667,6 +663,10 @@ function doRangedWeaponskill(attacker, target, wsID, wsParams, tp, action, prima
         ['weaponType'] = attacker:getWeaponSkillType(xi.slot.RANGED),
         ['damageType'] = attacker:getWeaponDamageType(xi.slot.RANGED)
     }
+
+    if wsParams.specialDamageType then
+        attack['damageType'] = wsParams.specialDamageType
+    end
 
     local calcParams =
     {
@@ -901,12 +901,23 @@ function getMeleeDmg(attacker, weaponType, kick)
     return { mainhandDamage, offhandDamage }
 end
 
-function getRangedDamage(attacker)
-    return { attacker:getRangedDmg(), attacker:getAmmoDmg() }
-end
-
-function getHitRate(attacker, target, capHitRate, bonus)
+function getHitRate(attacker, target, capHitRate, bonus, calcParams, wsParams)
     local flourisheffect = attacker:getStatusEffect(xi.effect.BUILDING_FLOURISH)
+    local accVarryTP = 0
+
+    if wsParams and wsParams.acc100 ~= 0 then
+        local accVarryTP = 0
+
+        if calcParams.tp >= 3000 then
+            accVarryTP = (wsParams.acc300 - 1) * 100
+        elseif calcParams.tp >= 2000 then
+            accVarryTP = (wsParams.acc200 - 1) * 100
+        else
+            accVarryTP = (wsParams.acc300 - 1) * 100
+        end
+
+        attacker:addMod(xi.mod.ACC, accVarryTP)
+    end
 
     if flourisheffect ~= nil and flourisheffect:getPower() > 1 then
         attacker:addMod(xi.mod.ACC, 20 + flourisheffect:getSubPower())
@@ -917,6 +928,10 @@ function getHitRate(attacker, target, capHitRate, bonus)
     end
 
     local hitrate = attacker:getCHitRate(target)
+
+    if wsParams and wsParams.acc100 ~= 0 then
+        attacker:delMod(xi.mod.ACC, accVarryTP)
+    end
 
     if flourisheffect ~= nil and flourisheffect:getPower() > 1 then
         attacker:delMod(xi.mod.ACC, 20 + flourisheffect:getSubPower())

@@ -16,6 +16,8 @@ local zone_object = {}
 zone_object.onInitialize = function(zone)
     zone:registerRegion(1, 23, 0, -43, 44, 7, -39) -- Inside Tenshodo HQ. TODO: Find out if this is used other than in ZM 17 (not anymore). Remove if not.
     xi.chocobo.initZone(zone)
+    xi.horizon.teleport.handleOPEnable()
+    xi.horizon.teleport.addNPC(zone)
     xi.hardcore.setupNPC(zone)
 end
 
@@ -43,6 +45,8 @@ zone_object.onZoneIn = function(player, prevZone)
     then
         player:setPos(41.2, -5, 84, 85)
     end
+
+    xi.moghouse.exitJobChange(player, prevZone)
 
     return cs
 end
@@ -104,6 +108,7 @@ zone_object.onEventUpdate = function(player, csid, option)
 end
 
 zone_object.onEventFinish = function(player, csid, option)
+    xi.moghouse.exitJobChangeFinish(player, csid, option)
 end
 
 return zone_object

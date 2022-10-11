@@ -34,6 +34,9 @@ ability_object.onUseAbility = function(pet, target, skill, action)
 
     local dmg = AbilityFinalAdjustments(dmgmod, pet, skill, target, xi.attackType.BREATH, xi.damageType.WATER, xi.mobskills.shadowBehavior.IGNORE_SHADOWS)
     target:takeDamage(dmg, pet, xi.attackType.BREATH, xi.damageType.WATER)
+
+    target:addStatusEffectEx(xi.effect.ELEMENTAL_EVASION_DOWN, xi.effect.NONE, 1, 0, 15, 1, 0, 0, xi.effectFlag.NO_LOSS_MESSAGE, true)
+
     return dmg
 end
 
