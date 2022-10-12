@@ -7,7 +7,6 @@ require('scripts/globals/conquest')
 local zone_object = {}
 
 zone_object.onInitialize = function(zone)
-    xi.horizon.spawnInitialMobs(zone)
     UpdateNMSpawnPoint(ID.mob.DREXERION_THE_CONDEMNED)
     GetMobByID(ID.mob.DREXERION_THE_CONDEMNED):setRespawnTime(math.random(900, 10800))
 
@@ -16,6 +15,8 @@ zone_object.onInitialize = function(zone)
 
     UpdateNMSpawnPoint(ID.mob.BLOODSUCKER)
     GetMobByID(ID.mob.BLOODSUCKER):setRespawnTime(3600)
+
+    xi.horizon.spawnInitialMobs(zone)
 end
 
 zone_object.onZoneIn = function(player, prevZone)

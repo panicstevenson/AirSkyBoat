@@ -12,11 +12,11 @@ require('scripts/globals/zone')
 local zone_object = {}
 
 zone_object.onInitialize = function(zone)
-    xi.horizon.spawnInitialMobs(zone)
     UpdateNMSpawnPoint(ID.mob.CAPRICIOUS_CASSIE)
     GetMobByID(ID.mob.CAPRICIOUS_CASSIE):setRespawnTime(math.random(900, 10800))
 
     xi.treasure.initZone(zone)
+    xi.horizon.spawnInitialMobs(zone)
 end
 
 zone_object.onZoneIn = function(player, prevZone)

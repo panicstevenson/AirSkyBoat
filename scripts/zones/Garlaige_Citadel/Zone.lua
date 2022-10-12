@@ -9,7 +9,6 @@ require('scripts/globals/status')
 local zone_object = {}
 
 zone_object.onInitialize = function(zone)
-    xi.horizon.spawnInitialMobs(zone)
     -- Banishing Gate #1
     zone:registerRegion(1, -208, -1, 224, -206, 1, 227)
     zone:registerRegion(2, -208, -1, 212, -206, 1, 215)
@@ -38,6 +37,7 @@ zone_object.onInitialize = function(zone)
     GetMobByID(ID.mob.SERKET):setRespawnTime(math.random(900, 10800))
 
     xi.treasure.initZone(zone)
+    xi.horizon.spawnInitialMobs(zone)
 end
 
 zone_object.onZoneIn = function(player, prevZone)

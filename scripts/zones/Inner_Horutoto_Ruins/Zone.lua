@@ -9,13 +9,13 @@ require('scripts/globals/status')
 local zone_object = {}
 
 zone_object.onInitialize = function(zone)
-    xi.horizon.spawnInitialMobs(zone)
     zone:registerRegion(1, -260.7, 0, -30.2, -259.4, 1, -29.1) -- Red
     zone:registerRegion(2, -264.0, 0, -24.7, -262.4, 1, -23.5) -- White
     zone:registerRegion(3, -257.8, 0, -24.9, -256.1, 1, -23.5) -- Black
     zone:registerRegion(4, -261, -3, 182, -257, -1, 186) -- Teleport at H-6
 
     xi.treasure.initZone(zone)
+    xi.horizon.spawnInitialMobs(zone)
 end
 
 zone_object.onZoneIn = function(player, prevZone)

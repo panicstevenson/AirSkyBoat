@@ -19,10 +19,10 @@ zone_object.onChocoboDig = function(player, precheck)
 end
 
 zone_object.onInitialize = function(zone)
-    xi.horizon.spawnInitialMobs(zone)
     xi.helm.initZone(zone, xi.helm.type.EXCAVATION)
     xi.chocobo.initZone(zone)
     xi.voidwalker.zoneOnInit(zone)
+    xi.horizon.spawnInitialMobs(zone)
 end
 
 zone_object.onZoneIn = function(player, prevZone)

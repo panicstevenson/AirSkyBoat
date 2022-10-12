@@ -9,11 +9,11 @@ require('scripts/globals/status')
 local zone_object = {}
 
 zone_object.onInitialize = function(zone)
-    xi.horizon.spawnInitialMobs(zone)
     UpdateNMSpawnPoint(ID.mob.GUIVRE)
     GetMobByID(ID.mob.GUIVRE):setRespawnTime(math.random(900, 10800))
 
     xi.treasure.initZone(zone)
+    xi.horizon.spawnInitialMobs(zone)
 end
 
 zone_object.onConquestUpdate = function(zone, updatetype)

@@ -9,7 +9,6 @@ require('scripts/globals/zone')
 local zone_object = {}
 
 zone_object.onInitialize = function(zone)
-    xi.horizon.spawnInitialMobs(zone)
     zone:registerRegion(1, -90, 17, 45, -84, 19, 51)  -- map 4 NW porter
     zone:registerRegion(1, 17, -90, 45, -85, 18, 51)  -- map 4 NW porter
     zone:registerRegion(2, -90, 17, -10, -85, 18, -5)  -- map 4 SW porter
@@ -34,6 +33,7 @@ zone_object.onInitialize = function(zone)
     GetMobByID(ID.mob.GRAND_DUKE_BATYM):setRespawnTime(math.random(900, 10800))
 
     xi.treasure.initZone(zone)
+    xi.horizon.spawnInitialMobs(zone)
 end
 
 zone_object.onConquestUpdate = function(zone, updatetype)

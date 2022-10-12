@@ -9,11 +9,11 @@ require('scripts/globals/status')
 local zone_object = {}
 
 zone_object.onInitialize = function(zone)
-    xi.horizon.spawnInitialMobs(zone)
 --    UpdateNMSpawnPoint(ID.mob.SATIATOR)
 --    GetMobByID(ID.mob.SATIATOR):setRespawnTime(math.random(3600, 21600))
 
     xi.promyvion.initZone(zone)
+    xi.horizon.spawnInitialMobs(zone)
 end
 
 zone_object.onZoneIn = function(player, prevZone)
