@@ -534,6 +534,10 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
     local hitsDone = 1
     local numHits = getMultiAttacks(attacker, target, wsParams.numHits)
 
+    if wsParams.hybridWS then
+        numHits = utils.clamp(numHits, 0, 3)
+    end
+
     while hitsDone < numHits and finaldmg < targetHp do -- numHits is hits in the base WS _and_ DA/TA/QA procs during those hits
         hitdmg, calcParams = getSingleHitDamage(attacker, target, dmg, wsParams, calcParams, false, isRanged)
 

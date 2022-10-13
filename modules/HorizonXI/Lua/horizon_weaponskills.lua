@@ -473,30 +473,30 @@ m:addOverride("xi.globals.weaponskills.starlight.onUseWeaponSkill", function(pla
     local damage = 15 + (player:getSkillLevel(11)/9)
     local damagemod = 0
 
-    local modSort = { [3000] = 3, [2000] = 2, [1000] = 1 }
-    for tp, ftp in pairs(modSort) do
-        if player:getTP() >= tp then
-            damagemod = ftp
-            break
-        end
+    if tp >= 3000 then
+        damagemod = 3
+    elseif tp >= 2000 then
+        damagemod = 2
+    elseif tp >= 1000 then
+        damagemod = 1
     end
 
-    return 1, 0, false, damagemod
+    return 1, 0, false, damagemod * damage
 end)
 
 m:addOverride("xi.globals.weaponskills.moonlight.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
     local damage = 5 + (player:getSkillLevel(11)/9)
     local damagemod = 0
 
-    local modSort = { [3000] = 2, [2000] = 1.5, [1000] = 1 }
-    for tp, ftp in pairs(modSort) do
-        if player:getTP() >= tp then
-            damagemod = ftp
-            break
-        end
+    if tp >= 3000 then
+        damagemod = 2
+    elseif tp >= 2000 then
+        damagemod = 1.5
+    elseif tp >= 1000 then
+        damagemod = 1
     end
 
-    return 1, 0, false, damagemod
+    return 1, 0, false, damagemod * damage
 end)
 
 m:addOverride("xi.globals.weaponskills.skullbreaker.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
@@ -880,7 +880,7 @@ m:addOverride("xi.globals.weaponskills.dark_harvest.onUseWeaponSkill", function(
     params.includemab = true
     params.hybridWS = true
 
-    local damage, criticalHit, tpHits, extraHits = doHybridWeaponskill(player, target, wsID, params, tp, action, primary)
+    local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary)
     return tpHits, extraHits, criticalHit, damage
 end)
 
