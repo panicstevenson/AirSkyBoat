@@ -193,6 +193,64 @@ UPDATE mob_groups SET minLevel = 52, maxLevel = 54 WHERE name = "Sand_Spider"  a
 -- Gustav_Tunnel (Zone 212)
 UPDATE mob_groups SET minLevel = 45, maxLevel = 48 WHERE name = "Hell_Bat"  and zoneid = 212;
 
+-- --------------------------- --
+-- HP VALUES FOR TESTING PURPOSES
+-- --------------------------- --
+-- Valk
+UPDATE mob_groups SET HP = 480 WHERE name = "Damselfly"  and zoneid = 103;
+UPDATE mob_groups SET HP = 360 WHERE name = "Hill_Lizard"  and zoneid = 103;
+UPDATE mob_groups SET HP = 480 WHERE name = "Snipper"  and zoneid = 103;
+UPDATE mob_groups SET HP = 600 WHERE name = "Beach_Pugil"  and zoneid = 103;
+-- Rolanberry
+UPDATE mob_groups SET HP = 600 WHERE name = "Death_Wasp"  and zoneid = 110;
+UPDATE mob_groups SET HP = 670 WHERE name = "Berry_Grub"  and zoneid = 110;
+-- Qufim
+UPDATE mob_groups SET HP = 515 WHERE name = "Land_Worm"  and zoneid = 126;
+UPDATE mob_groups SET HP = 680 WHERE name = "Clipper"  and zoneid = 126;
+UPDATE mob_groups SET HP = 700 WHERE name = "Greater_Pugil"  and zoneid = 126;
+-- Carp
+UPDATE mob_groups SET HP = 1050 WHERE name = "Birdtrap"  and zoneid = 2;
+UPDATE mob_groups SET HP = 810 WHERE name = "Diving_Beetle"  and zoneid = 2;
+UPDATE mob_groups SET HP = 900 WHERE name = "Sabertooth_Tiger"  and zoneid = 2;
+UPDATE mob_groups SET HP = 950 WHERE name = "Spinous_Pugil"  and zoneid = 2;
+-- Yuhunga
+UPDATE mob_groups SET HP = 1000 WHERE name = "Yuhtunga_Mandragora"  and zoneid = 123;
+UPDATE mob_groups SET HP = 950 WHERE name = "Death_Jacket"  and zoneid = 123;
+UPDATE mob_groups SET HP = 1000 WHERE name = "Ivory_Lizard"  and zoneid = 123;
+-- Yohtor
+UPDATE mob_groups SET HP = 1400 WHERE name = "Yhoator_Mandragora"  and zoneid = 124;
+UPDATE mob_groups SET HP = 1450 WHERE name = "Yhoator_Wasp"  and zoneid = 124;
+UPDATE mob_groups SET HP = 1640 WHERE name = "White_Lizard"  and zoneid = 124;
+-- bibiki
+UPDATE mob_groups SET HP = 1300 WHERE name = "Eft"  and zoneid = 4;
+UPDATE mob_groups SET HP = 1400 WHERE name = "Marine_Dhalmel"  and zoneid = 4;
+-- Zitah
+UPDATE mob_groups SET HP = 1900 WHERE name = "Ogrefly"  and zoneid = 121;
+UPDATE mob_groups SET HP = 1750 WHERE name = "Goblin_Robber"  and zoneid = 121;
+UPDATE mob_groups SET HP = 2000 WHERE name = "Myxomycete"  and zoneid = 121;
+UPDATE mob_groups SET HP = 1700 WHERE name = "Lesser_Gaylas"  and zoneid = 121;
+UPDATE mob_groups SET HP = 2200 WHERE name = "Master_Coeurl"  and zoneid = 121;
+UPDATE mob_groups SET HP = 2200 WHERE name = "Hell_Hound"  and zoneid = 121;
+-- Crawlers
+UPDATE mob_groups SET HP = 1850 WHERE name = "Worker_Crawler"  and zoneid = 197;
+UPDATE mob_groups SET HP = 1850 WHERE name = "Maze_Lizard"  and zoneid = 197;
+UPDATE mob_groups SET HP = 2300 WHERE name = "Soldier_Crawler"  and zoneid = 197;
+UPDATE mob_groups SET HP = 2600 WHERE name = "Labyrinth_Lizard"  and zoneid = 197;
+UPDATE mob_groups SET HP = 2500 WHERE name = "Hornfly"  and zoneid = 197;
+UPDATE mob_groups SET HP = 2500 WHERE name = "Exoray"  and zoneid = 197;
+-- KRT
+UPDATE mob_groups SET HP = 3700 WHERE name = "Dire_Bat"  and zoneid = 190;
+UPDATE mob_groups SET HP = 3200 WHERE name = "Tomb_Worm"  and zoneid = 190;
+-- Pso
+UPDATE mob_groups SET HP = 3800 WHERE name = "Diremite_Stalker"  and zoneid = 9;
+UPDATE mob_groups SET HP = 4000 WHERE name = "Dire_Bat"  and zoneid = 9;
+UPDATE mob_groups SET HP = 4000 WHERE name = "Snow_Lizard"  and zoneid = 9;
+-- The_Shrine_of_RuAvitau
+UPDATE mob_groups SET HP = 5400 WHERE name = "Snow_Lizard"  and zoneid = 178;
+UPDATE mob_groups SET HP = 5400 WHERE name = "Snow_Lizard"  and zoneid = 178;
+-- --------------------------- --
+-- HP VALUES FOR TESTING PURPOSES
+-- --------------------------- --
 
 
 UNLOCK TABLES;
