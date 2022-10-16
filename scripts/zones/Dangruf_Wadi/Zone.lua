@@ -7,9 +7,9 @@ require('scripts/globals/keyitems')
 require('scripts/globals/treasure')
 require('scripts/globals/status')
 -----------------------------------
-local zone_object = {}
+local zoneObject = {}
 
-zone_object.onInitialize = function(zone)
+zoneObject.onInitialize = function(zone)
     zone:registerRegion(1, -133.5, 2, 132.6, -132.7, 4,  133.8)  -- I-8 Geyser
     zone:registerRegion(2, -213.5, 2,  92.6, -212.7, 4,   94.0)  -- H-8 Geyser
     zone:registerRegion(3,  -67.3, 2, 532.8,  -66.3, 4,  534.0)  -- J-3 Geyser
@@ -18,11 +18,11 @@ zone_object.onInitialize = function(zone)
     xi.horizon.spawnInitialMobs(zone)
 end
 
-zone_object.onConquestUpdate = function(zone, updatetype)
+zoneObject.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
 end
 
-zone_object.onZoneIn = function(player, prevZone)
+zoneObject.onZoneIn = function(player, prevZone)
     local cs = -1
 
     if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
@@ -32,7 +32,7 @@ zone_object.onZoneIn = function(player, prevZone)
     return cs
 end
 
-zone_object.onRegionEnter = function(player, region)
+zoneObject.onRegionEnter = function(player, region)
     switch (region:GetRegionID()): caseof
     {
         [1] = function (x)
@@ -52,16 +52,16 @@ zone_object.onRegionEnter = function(player, region)
     }
 end
 
-zone_object.onRegionLeave = function(player, region)
+zoneObject.onRegionLeave = function(player, region)
 end
 
-zone_object.onEventUpdate = function(player, csid, option)
+zoneObject.onEventUpdate = function(player, csid, option)
 end
 
-zone_object.onEventFinish = function(player, csid, option)
+zoneObject.onEventFinish = function(player, csid, option)
 end
 
-zone_object.onGameHour = function(zone)
+zoneObject.onGameHour = function(zone)
     local nm = GetMobByID(ID.mob.GEYSER_LIZARD)
     local pop = nm:getLocalVar("pop")
 
@@ -74,7 +74,7 @@ zone_object.onGameHour = function(zone)
     end
 end
 
-zone_object.onZoneWeatherChange = function(weather)
+zoneObject.onZoneWeatherChange = function(weather)
     if
         weather == xi.weather.NONE or
         weather == xi.weather.SUNSHINE
@@ -85,4 +85,4 @@ zone_object.onZoneWeatherChange = function(weather)
     end
 end
 
-return zone_object
+return zoneObject

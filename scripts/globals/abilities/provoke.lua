@@ -2,13 +2,13 @@
 -- Ability: Provoke
 -- Job: Warrior
 -----------------------------------
-local ability_object = {}
+local abilityObject = {}
 
-ability_object.onAbilityCheck = function(player, target, ability)
+abilityObject.onAbilityCheck = function(player, target, ability)
     return 0, 0
 end
 
-ability_object.onUseAbility = function(user, target, ability)
+abilityObject.onUseAbility = function(user, target, ability)
     if user:getMainJob() == xi.job.WAR then
         user:addEnmity(target, 250, 0)
     else
@@ -16,4 +16,4 @@ ability_object.onUseAbility = function(user, target, ability)
     end
 end
 
-return ability_object
+return abilityObject

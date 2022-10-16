@@ -8,13 +8,13 @@ require('scripts/globals/chocobo')
 require('scripts/globals/quests')
 require('scripts/globals/zone')
 -----------------------------------
-local zone_object = {}
+local zoneObject = {}
 
-zone_object.onInitialize = function(zone)
+zoneObject.onInitialize = function(zone)
     xi.chocobo.initZone(zone)
 end
 
-zone_object.onZoneIn = function(player, prevZone)
+zoneObject.onZoneIn = function(player, prevZone)
     local cs = -1
     local month = tonumber(os.date("%m"))
     local day = tonumber(os.date("%d"))
@@ -52,11 +52,11 @@ zone_object.onZoneIn = function(player, prevZone)
     return cs
 end
 
-zone_object.onConquestUpdate = function(zone, updatetype)
+zoneObject.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
 end
 
-zone_object.onTransportEvent = function(player, transport)
+zoneObject.onTransportEvent = function(player, transport)
     if transport == 223 then
         player:startEvent(10010)
     elseif transport == 224 then
@@ -68,10 +68,10 @@ zone_object.onTransportEvent = function(player, transport)
     end
 end
 
-zone_object.onEventUpdate = function(player, csid, option)
+zoneObject.onEventUpdate = function(player, csid, option)
 end
 
-zone_object.onEventFinish = function(player, csid, option)
+zoneObject.onEventFinish = function(player, csid, option)
     if csid == 10010 then
         player:setCharVar('[MOGHOUSE]Exit_Job_Change', 0)
         player:setPos(0, 0, 0, 0, 223)
@@ -89,4 +89,4 @@ zone_object.onEventFinish = function(player, csid, option)
     xi.moghouse.exitJobChangeFinish(player, csid, option)
 end
 
-return zone_object
+return zoneObject
