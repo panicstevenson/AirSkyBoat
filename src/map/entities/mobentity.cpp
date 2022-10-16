@@ -1713,12 +1713,12 @@ void CMobEntity::OnDespawn(CDespawnState& /*unused*/)
 
         while (success == false && i <= maxTries) // While no success, try until maxTries then use failback of respawning same mob.
         {
-            int    vectorSize   = static_cast<int>(this->loc.zone->m_MultiSpawnVector[this->m_spawnSet].size() - 1); // Get size of the vector for random purposes minus 1 to account for 0 position
-            uint8  randomChoice = xirand::GetRandomNumber(0, vectorSize);                                            // Find a random iterator between 0 and max vector size
+            int    vectorSize   = static_cast<int>(this->loc.zone->m_MultiSpawnVector[this->m_spawnSet].size()); // Get size of the vector for random purposes minus 1 to account for 0 position
+            uint8  randomChoice = xirand::GetRandomNumber(0, vectorSize);                                        // Find a random iterator between 0 and max vector size
             uint32 mobId        = this->loc.zone->m_MultiSpawnVector[this->m_spawnSet][randomChoice];
             auto*  PMob         = dynamic_cast<CMobEntity*>(zoneutils::GetEntity(mobId, TYPE_MOB | TYPE_PET));
 
-            if (PMob != nullptr) // Failure results in ID removal and vector cleaning to reduce nullptr issues and improve runtime
+            if (PMob != nullptr)
             {
                 if (PMob->status == STATUS_TYPE::DISAPPEAR)
                 {
@@ -1731,31 +1731,31 @@ void CMobEntity::OnDespawn(CDespawnState& /*unused*/)
 
                     if (PMob->m_SpawnType == SPAWNTYPE_NORMAL) // If I am a normal spawn
                     {
-                        this->m_AllowRespawn = false;                                                // Stop me from respawning
                         PMob->m_AllowRespawn = true;                                                 // Let my friend respawn
-                        PMob->PAI->Internal_Respawn(std::chrono::milliseconds(PMob->m_RespawnTime)); // Set my friend's internal respawn time.
-                        success = true;                                                              // Mark this as a success
+                        PMob->PAI->Internal_Respawn(std::chrono::milliseconds(this->m_RespawnTime)); // Set my friend's internal respawn time.
+                        this->m_AllowRespawn = false;
+                        success              = true; // Mark this as a success
                     }
                     else if (PMob->m_SpawnType == SPAWNTYPE_ATNIGHT && (hourAdj >= 20 || hourAdj < 4)) // If I only spawn during night
                     {
-                        this->m_AllowRespawn = false;                                                // Stop me from respawning
                         PMob->m_AllowRespawn = true;                                                 // Let my friend respawn
-                        PMob->PAI->Internal_Respawn(std::chrono::milliseconds(PMob->m_RespawnTime)); // Set my friend's internal respawn time.
-                        success = true;                                                              // Mark this as a success
+                        PMob->PAI->Internal_Respawn(std::chrono::milliseconds(this->m_RespawnTime)); // Set my friend's internal respawn time.
+                        this->m_AllowRespawn = false;
+                        success              = true; // Mark this as a success
                     }
                     else if (PMob->m_SpawnType == SPAWNTYPE_ATEVENING && (hourAdj >= 18 || hourAdj < 6)) // If I only spawn in the evening
                     {
-                        this->m_AllowRespawn = false;                                                // Stop me from respawning
                         PMob->m_AllowRespawn = true;                                                 // Let my friend respawn
-                        PMob->PAI->Internal_Respawn(std::chrono::milliseconds(PMob->m_RespawnTime)); // Set my friend's internal respawn time.
-                        success = true;                                                              // Mark this as a success
+                        PMob->PAI->Internal_Respawn(std::chrono::milliseconds(this->m_RespawnTime)); // Set my friend's internal respawn time.
+                        this->m_AllowRespawn = false;
+                        success              = true; // Mark this as a success
                     }
                     else if (PMob->m_SpawnType == SPAWNTYPE_ATDUSK && (hourAdj >= 17 || hourAdj < 7)) // If I only spawn at dusk
                     {
-                        this->m_AllowRespawn = false;                                                // Stop me from respawning
                         PMob->m_AllowRespawn = true;                                                 // Let my friend respawn
-                        PMob->PAI->Internal_Respawn(std::chrono::milliseconds(PMob->m_RespawnTime)); // Set my friend's internal respawn time.
-                        success = true;                                                              // Mark this as a success
+                        PMob->PAI->Internal_Respawn(std::chrono::milliseconds(this->m_RespawnTime)); // Set my friend's internal respawn time.
+                        this->m_AllowRespawn = false;
+                        success              = true; // Mark this as a success
                     }
                     else
                     {
@@ -1769,6 +1769,7 @@ void CMobEntity::OnDespawn(CDespawnState& /*unused*/)
             }
         }
     }
+
     else
     {
         PAI->Internal_Respawn(std::chrono::milliseconds(m_RespawnTime));
