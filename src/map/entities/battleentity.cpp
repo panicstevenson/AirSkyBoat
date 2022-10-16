@@ -602,7 +602,7 @@ int32 CBattleEntity::addMP(int32 mp)
 int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullptr*/, ATTACK_TYPE attackType /* = ATTACK_NONE*/,
                                 DAMAGE_TYPE damageType /* = DAMAGE_NONE*/)
 {
-    if (this->GetLocalVar("DAMAGE_NULL") != 0)
+    if (this->GetLocalVar("DAMAGE_NULL") == 1)
     {
         amount %= 2;
         this->SetLocalVar("DAMAGE_DEALT", amount);
@@ -1533,18 +1533,6 @@ bool CBattleEntity::ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags)
 
             return false;
         }
-    }
-    else if (targetFlags & TARGET_PLAYER_PARTY)
-    {
-        if (!isDead())
-        {
-            if (allegiance == ALLEGIANCE_TYPE::MOB && PInitiator->allegiance == ALLEGIANCE_TYPE::MOB)
-            {
-                return allegiance == PInitiator->allegiance;
-            }
-        }
-
-        return false;
     }
 
     return (targetFlags & TARGET_SELF) &&

@@ -532,7 +532,7 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
 
     -- Calculate additional hits if a multiHit WS (or we're supposed to get a DA/TA/QA proc from main hit)
     local hitsDone = 1
-    local numHits = getMultiAttacks(attacker, target, wsParams.numHits)
+    local numHits = utils.clamp(getMultiAttacks(attacker, target, wsParams.numHits), 0, 8)
 
     if wsParams.hybridWS then
         numHits = utils.clamp(numHits, 0, 3)
