@@ -996,6 +996,10 @@ void CZoneEntities::TOTDChange(TIMETYPE TOTD)
                 {
                     PMob->SetDespawnTime(1ms);
                     PMob->m_AllowRespawn = false;
+                    if (PMob->PPet)
+                    {
+                        dynamic_cast<CMobEntity*>(PMob->PPet)->SetDespawnTime(1ms);
+                    }
                 }
                 else if ((PMob->m_SpawnType & SPAWNTYPE_ATNIGHT) && PMob->m_spawnSet != 0) // Multispawn At Night
                 {
@@ -1016,6 +1020,10 @@ void CZoneEntities::TOTDChange(TIMETYPE TOTD)
                 {
                     PMob->SetDespawnTime(1ms);
                     PMob->m_AllowRespawn = false;
+                    if (PMob->PPet)
+                    {
+                        dynamic_cast<CMobEntity*>(PMob->PPet)->SetDespawnTime(1ms);
+                    }
                 }
                 else if ((PMob->m_SpawnType & SPAWNTYPE_ATEVENING) && PMob->m_spawnSet != 0) // Multispawn At Evening
                 {
