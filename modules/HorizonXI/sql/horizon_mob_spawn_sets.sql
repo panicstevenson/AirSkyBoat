@@ -1001,6 +1001,21 @@ INSERT INTO `mob_spawn_sets` VALUES (193, 12, 4);
 INSERT INTO `mob_spawn_sets` VALUES (193, 13, 4);
 INSERT INTO `mob_spawn_sets` VALUES (193, 14, 1);
 
+-- Outer Horutoto Ruins
+INSERT INTO `mob_spawn_sets` VALUES (194, 1, 1);
+INSERT INTO `mob_spawn_sets` VALUES (194, 2, 1);
+INSERT INTO `mob_spawn_sets` VALUES (194, 3, 1);
+INSERT INTO `mob_spawn_sets` VALUES (194, 4, 1);
+INSERT INTO `mob_spawn_sets` VALUES (194, 5, 1);
+INSERT INTO `mob_spawn_sets` VALUES (194, 6, 1);
+INSERT INTO `mob_spawn_sets` VALUES (194, 7, 1);
+INSERT INTO `mob_spawn_sets` VALUES (194, 8, 1);
+INSERT INTO `mob_spawn_sets` VALUES (194, 9, 1);
+INSERT INTO `mob_spawn_sets` VALUES (194, 10, 1);
+INSERT INTO `mob_spawn_sets` VALUES (194, 11, 1);
+INSERT INTO `mob_spawn_sets` VALUES (194, 12, 1);
+INSERT INTO `mob_spawn_sets` VALUES (194, 13, 1);
+
 -- Phomiuna Aqueducts
 INSERT INTO `mob_spawn_sets` VALUES (27, 1, 5);
 INSERT INTO `mob_spawn_sets` VALUES (27, 2, 1);
