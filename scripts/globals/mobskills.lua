@@ -149,7 +149,7 @@ end
 -- if xi.mobskills.physicalTpBonus.DMG_VARIES -> three values are
 
 xi.mobskills.mobPhysicalMove = function(mob, target, skill, numberofhits, accmod, dmgmod, tpeffect, mtp000, mtp150, mtp300, offcratiomod, wSC)
-    local returninfo = {}
+    local returninfo = { }
     local fStr = 0
 
     if wSC == nil then
@@ -199,7 +199,7 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numberofhits, accmod
         mtp300 = 1.0
     end
 
-    local params = { atk000 = mtp000, atk150 = mtp150, atk300 = mtp300, }
+    local params = { atk000 = mtp000, atk150 = mtp150, atk300 = mtp300 }
     local pdifTable = cMeleeRatio(mob, target, params, 0, mob:getTP(), xi.slot.main)
     local pdif = pdifTable[1]
     local pdifcrit = pdifTable[2]
@@ -305,7 +305,7 @@ end
 -- xi.mobskills.magicalTpBonus.DMG_BONUS and TP=200, tpvalue = 2, assume V=150  --> damage is now 150*(TP*2)/100 = 600
 
 xi.mobskills.mobMagicalMove = function(mob, target, skill, damage, element, dmgmod, tpeffect, tpvalue, ignoreresist)
-    local returninfo = {}
+    local returninfo = { }
     local ignoreres = ignoreresist or false
 
     --get all the stuff we need
