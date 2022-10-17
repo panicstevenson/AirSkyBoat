@@ -297,8 +297,8 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
 (17436963, 0,  'Demons_Elemental',         'Demon\'s Elemental',       18,  -59.13,    22.5,      6.639,     162 ),
 (17436964, 0,  'Dark_Spark',               'Dark Spark',               48,  62.948,    -24.549,   20.641,    222 ),
 (17436965, 0,  'Mimic',                    'Mimic',                    49,  189.783,   20.29,     20.761,    77  ),
-(17436966, 0,  'Marquis_Andrealphus','Marquis Andrealphus',50,-4,-24,20,0),
-(17436967, 0,  'Demon_Banneret','Demon Banneret',51,20,-24,24,65),
-(17436968, 0,  'Demon_Secretary','Demon Secretary',52,20,-24,33,65),
-(17436969, 0,  'Demon_Banneret','Demon Banneret',51,20,-24,14,192),
-(17436970, 0,  'Demon_Secretary','Demon Secretary',52,20,-24,23,192);
+(17436966, 0,  'Marquis_Andrealphus',      'Marquis Andrealphus',      50,  -4,        -24,       20,        0   ),
+(17436967, 0,  'Demon_Banneret',           'Demon Banneret',           51,  20,        -24,       24,        65  ),
+(17436968, 0,  'Demon_Secretary',          'Demon Secretary',          52,  20,        -24,       33,        65  ),
+(17436969, 0,  'Demon_Banneret',           'Demon Banneret',           51,  20,        -24,       14,        192 ),
+(17436970, 0,  'Demon_Secretary',          'Demon Secretary',          52,  20,        -24,       23,        192 );
