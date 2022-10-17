@@ -322,4 +322,5 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
 (17596732, 0,  'Roly-Poly',                'Roly-Poly',                44,  -140,      -0.5,      180,       61  ),
 (17596733, 0,  'Mephitas',                 'Mephitas',                 48,  -167.889,  18.75,     321.51,    238 ),
 (17596734, 0,  'Mephitas',                 'Mephitas',                 48,  -361.299,  18.5,      283.13,    19  ),
-(17596735, 0,  'Mephitas',                 'Mephitas',                 48,  -260.17,   18.869,    233.899,   197 );
+(17596735, 0,  'Mephitas',                 'Mephitas',                 48,  -260.17,   18.869,    233.899,   197 ),
+(17596834, 0,  'Wanzo-Unzozo',             'Wanzo-Unzozo',             49,  -381.1,    -12,       398,       1   );
