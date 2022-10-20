@@ -7051,7 +7051,7 @@ void SmallPacket0x100(map_session_data_t* const PSession, CCharEntity* const PCh
 
         if (lua["xi"]["settings"]["map"]["MH_EXIT_HOMEPOINT"])
         {
-            PChar->setCharVar("[MOGHOUSE]Exit_Job_Change", 1);
+            PChar->setVolatileCharVar("[MOGHOUSE]Exit_Job_Change", 1);
         }
 
         PChar->pushPacket(new CCharJobsPacket(PChar));

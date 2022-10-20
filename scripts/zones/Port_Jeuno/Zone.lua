@@ -47,7 +47,12 @@ zoneObject.onZoneIn = function(player, prevZone)
         end
     end
 
-    xi.moghouse.exitJobChange(player, prevZone)
+    if prevZone == player:getZoneID() then
+        xi.moghouse.exitJobChange(player, prevZone)
+    else
+        player:setVolatileCharVar('[MOGHOUSE]Exit_Pending', 0)
+        player:setVolatileCharVar('[MOGHOUSE]Exit_Job_Change', 0)
+    end
 
     return cs
 end
@@ -73,16 +78,16 @@ end
 
 zoneObject.onEventFinish = function(player, csid, option)
     if csid == 10010 then
-        player:setCharVar('[MOGHOUSE]Exit_Job_Change', 0)
+        player:setVolatileCharVar('[MOGHOUSE]Exit_Job_Change', 0)
         player:setPos(0, 0, 0, 0, 223)
     elseif csid == 10011 then
-        player:setCharVar('[MOGHOUSE]Exit_Job_Change', 0)
+        player:setVolatileCharVar('[MOGHOUSE]Exit_Job_Change', 0)
         player:setPos(0, 0, 0, 0, 225)
     elseif csid == 10012 then
-        player:setCharVar('[MOGHOUSE]Exit_Job_Change', 0)
+        player:setVolatileCharVar('[MOGHOUSE]Exit_Job_Change', 0)
         player:setPos(0, 0, 0, 0, 224)
     elseif csid == 10013 then
-        player:setCharVar('[MOGHOUSE]Exit_Job_Change', 0)
+        player:setVolatileCharVar('[MOGHOUSE]Exit_Job_Change', 0)
         player:setPos(0, 0, 0, 0, 226)
     end
 

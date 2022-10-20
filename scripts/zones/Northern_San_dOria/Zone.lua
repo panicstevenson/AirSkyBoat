@@ -44,7 +44,12 @@ zoneObject.onZoneIn = function(player, prevZone)
         player:setPos(130, -0.2, -3, 160)
     end
 
-    xi.moghouse.exitJobChange(player, prevZone)
+    if prevZone == player:getZoneID() then
+        xi.moghouse.exitJobChange(player, prevZone)
+    else
+        player:setVolatileCharVar('[MOGHOUSE]Exit_Pending', 0)
+        player:setVolatileCharVar('[MOGHOUSE]Exit_Job_Change', 0)
+    end
 
     return cs
 end
@@ -81,7 +86,7 @@ zoneObject.onEventFinish = function(player, csid, option)
     if csid == 535 then
         player:messageSpecial(ID.text.ITEM_OBTAINED, 536) -- adventurer coupon
     elseif csid == 569 then
-        player:setCharVar('[MOGHOUSE]Exit_Job_Change', 0)
+        player:setVolatileCharVar('[MOGHOUSE]Exit_Job_Change', 0)
         player:setPos(0, 0, -13, 192, 233)
     elseif csid == 49 and npcUtil.completeQuest(player, xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.PEACE_FOR_THE_SPIRIT, { item = 12513, fame = 60, title = xi.title.PARAGON_OF_RED_MAGE_EXCELLENCE }) then
         player:setCharVar("peaceForTheSpiritCS", 0)
