@@ -713,10 +713,13 @@ public:
     virtual void           OnDisengage(CAttackState&);
     /* Casting */
     virtual void OnCastFinished(CMagicState&, action_t&);
-    virtual void OnCastInterrupted(CMagicState&, action_t&, MSGBASIC_ID msg);
+    virtual void OnCastInterrupted(CMagicState&, action_t&, MSGBASIC_ID msg, bool blockedCast);
     /* Weaponskill */
     virtual void OnWeaponSkillFinished(CWeaponSkillState& state, action_t& action);
     virtual void OnChangeTarget(CBattleEntity* PTarget);
+
+    // Used to set an action to an "interrupted" state
+    void setActionInterrupted(action_t& action, CBattleEntity* PTarget, uint16 messageID, uint16 actionID);
 
     virtual void OnAbility(CAbilityState&, action_t&)
     {
@@ -778,10 +781,10 @@ public:
     std::vector<int16> m_MSNonItemValues;        // Tracking movement speed from non-item sources
 
 private:
-    JOBTYPE    m_mjob; // главная профессия
-    JOBTYPE    m_sjob; // дополнительная профессия
-    uint8      m_mlvl; // ТЕКУЩИЙ уровень главной профессии
-    uint8      m_slvl; // ТЕКУЩИЙ уровень дополнительной профессии
+    JOBTYPE m_mjob; // главная профессия
+    JOBTYPE m_sjob; // дополнительная профессия
+    uint8   m_mlvl; // ТЕКУЩИЙ уровень главной профессии
+    uint8   m_slvl; // ТЕКУЩИЙ уровень дополнительной профессии
 
     uint16     m_battleTarget{ 0 };
     time_point m_battleStartTime;
