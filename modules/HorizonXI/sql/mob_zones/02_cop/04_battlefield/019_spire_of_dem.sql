@@ -4,6 +4,7 @@
 -- ZONE 019 - Spire of Dem
 
 REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`, `groupid`, `pos_x`, `pos_y`, `pos_z`, `pos_rot`) VALUES
+    -- Ancient Flames Beckon
     (16855041, 0,  'Progenerator',             'Progenerator',             1,   -240,      60,        0,         190       ),
     (16855042, 0,  'Offspring',                'Offspring',                2,   -240,      60,        0,         190       ),
     (16855043, 0,  'Offspring',                'Offspring',                2,   -240,      60,        0,         190       ),
@@ -19,6 +20,8 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (16855053, 0,  'Offspring',                'Offspring',                2,   240,       -60,       0,         190       ),
     (16855054, 0,  'Offspring',                'Offspring',                2,   240,       -60,       0,         190       ),
     (16855055, 0,  'Offspring',                'Offspring',                2,   240,       -60,       0,         190       ),
+    
+    -- You Are What You Eat
     (16855056, 0,  'Ingester',                 'Ingester',                 3,   -240,      60,        0,         190       ),
     (16855057, 0,  'Neoingester',              'Neoingester',              4,   1,         1,         1,         1         ),
     (16855058, 0,  'Neogorger',                'Neogorger',                5,   1,         1,         1,         1         ),
@@ -34,6 +37,8 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (16855070, 0,  'Neogorger',                'Neogorger',                5,   1,         1,         1,         1         ),
     (16855071, 0,  'Neosatiator',              'Neosatiator',              6,   1,         1,         1,         1         ),
     (16855072, 0,  'Wanderer',                 'Wanderer',                 7,   1,         1,         1,         1         ),
+    
+    -- Empty Dreams
     (16855074, 0,  'Recollector',              'Recollector',              8,   0,         0,         0,         0         ),
     (16855075, 0,  'Insatiable_Gorger',        'Insatiable Gorger',        9,   0,         0,         0,         0         ),
     (16855076, 0,  'Insatiable_Offspring',     'Insatiable Offspring',     10,  0,         0,         0,         0         ),

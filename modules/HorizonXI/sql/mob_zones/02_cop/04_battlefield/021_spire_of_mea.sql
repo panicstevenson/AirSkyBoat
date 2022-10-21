@@ -4,9 +4,13 @@
 -- ZONE 021 - Spire of Mea
 
 REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`, `groupid`, `pos_x`, `pos_y`, `pos_z`, `pos_rot`) VALUES
+    
+    -- Ancient Flames Beckon
     (16863233, 0,  'Delver',                   'Delver',                   1,   -240,      60,        0.1,       190       ),
     (16863234, 0,  'Delver',                   'Delver',                   1,   0.007,     0,         0.116,     190       ),
     (16863235, 0,  'Delver',                   'Delver',                   1,   240.006,   -60,       0.131,     190       ),
+
+    -- Playing Host
     (16863236, 0,  'Envier',                   'Envier',                   2,   -240,      60,        0,         190       ),
     (16863237, 0,  'Seether',                  'Seether',                  3,   1,         1,         1,         1         ),
     (16863238, 0,  'Seether',                  'Seether',                  3,   1,         1,         1,         1         ),
@@ -19,6 +23,8 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (16863247, 0,  'Seether',                  'Seether',                  3,   1,         1,         1,         1         ),
     (16863248, 0,  'Seether',                  'Seether',                  3,   1,         1,         1,         1         ),
     (16863249, 0,  'Seether',                  'Seether',                  3,   1,         1,         1,         1         ),
+
+    -- Empty Desires
     (16863251, 0,  'Recollector',              'Recollector',              4,   0,         0,         0,         0         ),
     (16863252, 0,  'Quenchless_Craver',        'Quenchless Craver',        5,   0,         0,         0,         0         ),
     (16863253, 0,  'Forsaken_Baelfyr',         'Forsaken Baelfyr',         6,   0,         0,         0,         0         ),
