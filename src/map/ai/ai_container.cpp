@@ -186,7 +186,12 @@ bool CAIContainer::Inactive(duration _duration, bool canChangeState)
         return false;
     }
 
-    return ForceChangeState<CInactiveState>(PEntity, _duration, canChangeState);
+    return ForceChangeState<CInactiveState>(PEntity, _duration, canChangeState, false);
+}
+
+bool CAIContainer::Untargetable(duration _duration, bool canChangeState)
+{
+    return ForceChangeState<CInactiveState>(PEntity, _duration, canChangeState, true);
 }
 
 bool CAIContainer::Internal_Engage(uint16 targetid)
@@ -224,6 +229,10 @@ bool CAIContainer::Internal_Cast(uint16 targetid, SpellID spellid)
     auto* entity = dynamic_cast<CBattleEntity*>(PEntity);
     if (entity)
     {
+        if (auto target = entity->GetEntity(targetid); target && target->PAI->IsUntargetable())
+        {
+            return false;
+        }
         return ChangeState<CMagicState>(entity, targetid, spellid);
     }
     return false;
@@ -263,6 +272,10 @@ bool CAIContainer::Internal_WeaponSkill(uint16 targid, uint16 wsid)
     auto* entity = dynamic_cast<CBattleEntity*>(PEntity);
     if (entity)
     {
+        if (auto target = entity->GetEntity(targid); target && target->PAI->IsUntargetable())
+        {
+            return false;
+        }
         return ChangeState<CWeaponSkillState>(entity, targid, wsid);
     }
     return false;
@@ -273,6 +286,10 @@ bool CAIContainer::Internal_MobSkill(uint16 targid, uint16 wsid)
     auto* entity = dynamic_cast<CMobEntity*>(PEntity);
     if (entity)
     {
+        if (auto target = entity->GetEntity(targid); target && target->PAI->IsUntargetable())
+        {
+            return false;
+        }
         return ChangeState<CMobSkillState>(entity, targid, wsid);
     }
     return false;
@@ -283,6 +300,10 @@ bool CAIContainer::Internal_PetSkill(uint16 targid, uint16 abilityid)
     auto* entity = dynamic_cast<CPetEntity*>(PEntity);
     if (entity)
     {
+        if (auto target = entity->GetEntity(targid); target && target->PAI->IsUntargetable())
+        {
+            return false;
+        }
         return ChangeState<CPetSkillState>(entity, targid, abilityid);
     }
     return false;
@@ -293,6 +314,10 @@ bool CAIContainer::Internal_Ability(uint16 targetid, uint16 abilityid)
     auto* entity = dynamic_cast<CBattleEntity*>(PEntity);
     if (entity)
     {
+        if (auto target = entity->GetEntity(targetid); target && target->PAI->IsUntargetable())
+        {
+            return false;
+        }
         return ChangeState<CAbilityState>(entity, targetid, abilityid);
     }
     return false;
@@ -303,6 +328,10 @@ bool CAIContainer::Internal_RangedAttack(uint16 targetid)
     auto* entity = dynamic_cast<CBattleEntity*>(PEntity);
     if (entity)
     {
+        if (auto target = entity->GetEntity(targetid); target && target->PAI->IsUntargetable())
+        {
+            return false;
+        }
         return ChangeState<CRangeState>(entity, targetid);
     }
     return false;
@@ -498,6 +527,11 @@ bool CAIContainer::IsEngaged()
     }
 
     return PEntity->animation == ANIMATION_ATTACK;
+}
+
+bool CAIContainer::IsUntargetable()
+{
+    return PEntity->PAI->IsCurrentState<CInactiveState>() && static_cast<CInactiveState*>(PEntity->PAI->GetCurrentState())->GetUntargetable();
 }
 
 time_point CAIContainer::getTick()
