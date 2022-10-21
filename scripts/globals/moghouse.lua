@@ -180,11 +180,14 @@ xi.moghouse.addMogLockerExpiryTime = function(player, numBronze)
 end
 
 xi.moghouse.exitJobChange = function(player, prevZone)
-    if xi.settings.map.MH_EXIT_HOMEPOINT then
-        if player:getCharVar('[MOGHOUSE]Exit_Job_Change') == 1 and not player:isCurrentHomepoint() then
-            player:timer(100, function(playerArg)
-                playerArg:startEvent(30004)
-            end)
+    if player:getCharVar('[MOGHOUSE]Exit_Pending') == 1 then
+        player:setVolatileCharVar('[MOGHOUSE]Exit_Pending', 0)
+        if xi.settings.map.MH_EXIT_HOMEPOINT then
+            if player:getCharVar('[MOGHOUSE]Exit_Job_Change') == 1 and not player:isCurrentHomepoint() then
+                player:timer(100, function(playerArg)
+                    playerArg:startEvent(30004)
+                end)
+            end
         end
     end
 end
@@ -194,7 +197,7 @@ xi.moghouse.exitJobChangeFinish = function(player, csid, option)
         if csid == 30004 and option == 0 then
             player:setHomePoint()
         elseif csid == 30004 then
-            player:setCharVar('[MOGHOUSE]Exit_Job_Change', 0)
+            player:setVolatileCharVar('[MOGHOUSE]Exit_Job_Change', 0)
         end
     end
 end
