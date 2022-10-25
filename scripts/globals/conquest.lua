@@ -1033,7 +1033,7 @@ xi.conquest.overseerOnTrade = function(player, npc, trade, guardNation, guardTyp
             if addPoints > 0 and pRank ~= 1 and pRankPoints < 4000 then
                 if pRankPoints + addPoints >= 4000 then
                     player:setRankPoints(4000)
-                    player:addCP((pRankPoints + (addPoints) - 4000)/14) -- Nerfing overflow crystal CP gain
+                    player:addCP((pRankPoints + (addPoints) - 4000) / 14) -- Nerfing overflow crystal CP gain
                     player:showText(npc, mOffset + 44) -- "Your rank points are full. We've added the excess to your conquest points."
                 else
                     player:addRankPoints(addPoints)
@@ -1346,7 +1346,7 @@ xi.conquest.teleporterOnEventUpdate = function(player, csid, option, teleporterE
     if csid == teleporterEvent then
         local region = option - 1073741829
         local fee = xi.conquest.outpostFee(player, region)
-        local cpFee = fee/10
+        local cpFee = fee / 10
 
         player:updateEvent(player:getGil(), fee, 0, cpFee, player:getCP())
     end
@@ -1366,7 +1366,7 @@ xi.conquest.teleporterOnEventFinish = function(player, csid, option, teleporterE
         -- TELEPORT WITH CP
         elseif option >= 1029 and option <= 1047 then
             local region = option - 1029
-            local cpFee = xi.conquest.outpostFee(player, region)/10
+            local cpFee = xi.conquest.outpostFee(player, region) / 10
 
             if xi.conquest.canTeleportToOutpost(player, region) and player:getCP() >= cpFee then
                 player:delCP(cpFee)
