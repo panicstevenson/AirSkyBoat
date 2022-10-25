@@ -1005,6 +1005,12 @@ void CBattleEntity::SetSLevel(uint8 slvl)
     {
         m_slvl = this->GetMLevel();
     }
+    else if (this->objtype == TYPE_PET &&
+             (static_cast<CPetEntity*>(this)->getPetType() == PET_TYPE::AVATAR || static_cast<CPetEntity*>(this)->getPetType() == PET_TYPE::AVATAR) &&
+             static_cast<CPetEntity*>(this)->PMaster != nullptr && static_cast<CPetEntity*>(this)->PMaster->objtype == TYPE_PC)
+    {
+        m_slvl = this->GetMLevel();
+    }
     else
     {
         auto ratio = settings::get<uint8>("map.SUBJOB_RATIO");
