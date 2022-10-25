@@ -999,6 +999,12 @@ void CBattleEntity::SetSLevel(uint8 slvl)
                 break;
         }
     }
+    else if (this->objtype == TYPE_PET &&
+             (static_cast<CPetEntity*>(this)->getPetType() == PET_TYPE::AVATAR || static_cast<CPetEntity*>(this)->getPetType() == PET_TYPE::AVATAR) &&
+             static_cast<CPetEntity*>(this)->PMaster != nullptr && static_cast<CPetEntity*>(this)->PMaster->objtype == TYPE_PC)
+    {
+        m_slvl = this->GetMLevel();
+    }
     else
     {
         auto ratio = settings::get<uint8>("map.SUBJOB_RATIO");
@@ -1945,7 +1951,6 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
     }
 
     battleutils::ClaimMob(PTarget, this); // Mobs get claimed whether or not your attack actually is intimidated/paralyzed
-    this->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_ATTACK | EFFECTFLAG_DETECTABLE);
     PTarget->LastAttacked = server_clock::now();
 
     if (battleutils::IsParalyzed(this))
@@ -2251,6 +2256,8 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
     /////////////////////////////////////////////////////////////////////////////////////////////
     // End of attack loop
     /////////////////////////////////////////////////////////////////////////////////////////////
+
+    this->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_ATTACK | EFFECTFLAG_DETECTABLE);
 
     return true;
 }
