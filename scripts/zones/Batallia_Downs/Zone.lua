@@ -27,8 +27,8 @@ end
 -- end
 
 zoneObject.onInitialize = function(zone)
-    UpdateNMSpawnPoint(ID.mob.AHTU);
-    GetMobByID(ID.mob.AHTU):setRespawnTime(math.random(900, 10800));
+    UpdateNMSpawnPoint(ID.mob.AHTU)
+    GetMobByID(ID.mob.AHTU):setRespawnTime(math.random(900, 10800))
 
     -- Prepare everything for Full Speed Ahead! (OOE Quest)
     -- local syrillia   = zone:queryEntitiesByName("Syrillia")[1]
@@ -48,10 +48,10 @@ zoneObject.onInitialize = function(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)
-    local cs = -1;
+    local cs = -1
 
     if (player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0) then
-        player:setPos(-693.609, -14.583, 173.59, 30);
+        player:setPos(-693.609, -14.583, 173.59, 30)
     end
 
     if player:getCharVar("[QUEST]FullSpeedAhead") == 1 then -- Normal Mode
@@ -81,7 +81,7 @@ zoneObject.onRegionEnter = function(player, region)
     if player:hasStatusEffect(xi.effect.FULL_SPEED_AHEAD) then
         xi.fsa.onRegionEnter(player, region:GetRegionID())
     end
-end;
+end
 
 zoneObject.onEventUpdate = function(player, csid, option)
     if csid == 901 then
