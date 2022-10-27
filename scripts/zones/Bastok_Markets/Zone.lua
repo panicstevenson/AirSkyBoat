@@ -10,6 +10,7 @@ local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
     applyHalloweenNpcCostumes(zone:getID())
+    xi.hardcore.setupNPC(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

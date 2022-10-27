@@ -14,6 +14,7 @@ zoneObject.onInitialize = function(zone)
     applyHalloweenNpcCostumes(zone:getID())
     xi.chocobo.initZone(zone)
     xi.conquest.toggleRegionalNPCs(zone)
+    xi.hardcore.setupNPC(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

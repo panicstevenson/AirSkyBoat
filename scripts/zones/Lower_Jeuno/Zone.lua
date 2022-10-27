@@ -18,6 +18,7 @@ zoneObject.onInitialize = function(zone)
     xi.chocobo.initZone(zone)
     xi.horizon.teleport.handleOPEnable()
     xi.horizon.teleport.addNPC(zone)
+    xi.hardcore.setupNPC(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)
