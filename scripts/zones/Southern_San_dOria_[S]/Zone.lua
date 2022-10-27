@@ -7,13 +7,13 @@ require('scripts/globals/quests')
 require('scripts/globals/zone')
 require('scripts/globals/extravaganza')
 -----------------------------------
-local zone_object = {}
+local zoneObject = {}
 
-zone_object.onInitialize = function(zone)
+zoneObject.onInitialize = function(zone)
     xi.chocobo.initZone(zone)
 end
 
-zone_object.onZoneIn = function(player, prevZone)
+zoneObject.onZoneIn = function(player, prevZone)
     local cs = -1
 
     if prevZone == xi.zone.EAST_RONFAURE_S then
@@ -29,18 +29,23 @@ zone_object.onZoneIn = function(player, prevZone)
         player:setPos(161, -2, 161, 94)
     end
 
-    xi.moghouse.exitJobChange(player, prevZone)
+    if prevZone == player:getZoneID() then
+        xi.moghouse.exitJobChange(player, prevZone)
+    else
+        player:setVolatileCharVar('[MOGHOUSE]Exit_Pending', 0)
+        player:setVolatileCharVar('[MOGHOUSE]Exit_Job_Change', 0)
+    end
 
     return cs
 end
 
-zone_object.onRegionEnter = function(player, region)
+zoneObject.onRegionEnter = function(player, region)
 end
 
-zone_object.onEventUpdate = function(player, csid, option)
+zoneObject.onEventUpdate = function(player, csid, option)
 end
 
-zone_object.onEventFinish = function(player, csid, option)
+zoneObject.onEventFinish = function(player, csid, option)
     if csid == 62 then
         player:setCharVar("KnotQuiteThere", 3)
     elseif csid == 65 then
@@ -50,4 +55,4 @@ zone_object.onEventFinish = function(player, csid, option)
     xi.moghouse.exitJobChangeFinish(player, csid, option)
 end
 
-return zone_object
+return zoneObject

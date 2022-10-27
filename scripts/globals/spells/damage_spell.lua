@@ -293,7 +293,8 @@ xi.spells.damage.calculateBaseDamage = function(caster, target, spell, spellId, 
         end
 
     -- Divine magic and Non-Player Elemental magic. TODO: Investigate "inflection point" (I) and its relation with the terms "soft cap" and "hard cap"
-    elseif skillType == xi.skill.DIVINE_MAGIC or
+    elseif
+        skillType == xi.skill.DIVINE_MAGIC or
         (skillType == xi.skill.ELEMENTAL_MAGIC and not caster:isPC())
     then
         local spellMultiplier = pTable[spellId][mNPC] -- M
@@ -436,6 +437,9 @@ end
 
 -- This function is used to calculate Resist tiers. The resist tiers work differently for enfeebles (which usually affect duration, not potency) than for nukes.
 -- This is for nukes damage only. If an spell happens to do both damage and apply an status effect, they are calculated separately.
+-- TODO: Reduce complexity
+-- Disable cyclomatic complexity check for this function:
+-- luacheck: ignore 561
 xi.spells.damage.calculateResist = function(caster, target, spell, skillType, spellElement, statDiff, bonusMagicAccuracy, element)
     local resist        = 1 -- The variable we want to calculate
     local casterJob     = caster:getMainJob()
@@ -445,6 +449,7 @@ xi.spells.damage.calculateResist = function(caster, target, spell, skillType, sp
     local magicAcc      = caster:getMod(xi.mod.MACC) + caster:getILvlMacc() + bonusMagicAccuracy
     local magicHitRate  = 0
     local resMod        = 0 -- Some spells may possibly be non elemental.
+    local resModAdj     = 0
 
     -- Magic Bursts of the correct element do not get resisted. SDT isn't involved here.
     local _, skillchainCount = FormMagicBurst(spellElement, target)
@@ -479,11 +484,21 @@ xi.spells.damage.calculateResist = function(caster, target, spell, skillType, sp
     end
 
     if spellElement ~= xi.magic.ele.NONE then
-        if target:isMob() then
+        if target:isMob() and target:isNM() then
             tryBuildResistance(target, xi.magic.resistMod[spellElement], false)
         end
         -- Mod set in database. Base 0 means not resistant nor weak.
         resMod = target:getMod(xi.magic.resistMod[spellElement])
+
+        if resMod > 0 then
+            if resMod <= 100 then
+                resModAdj = math.floor(resMod / 100)
+            elseif resMod <= 145 then
+                resModAdj = 1 + (resMod - 100)
+            else
+                resModAdj = 46 + math.floor((resMod - 145) / 2)
+            end
+        end
 
         -- Add acc for elemental affinity accuracy and element specific accuracy
         local affinityBonus = caster:getMod(strongAffinityAcc[spellElement]) * 10
@@ -520,6 +535,15 @@ xi.spells.damage.calculateResist = function(caster, target, spell, skillType, sp
         (casterWeather == xi.magic.singleWeatherStrong[spellElement] or casterWeather == xi.magic.doubleWeatherStrong[spellElement])
     then
         magicAcc = magicAcc + 15
+    end
+
+    -- Apply Divine Emblem to Banish and Holy families
+    if
+        casterJob == xi.job.PLD and
+        skillType == xi.skill.DIVINE_MAGIC and
+        caster:hasStatusEffect(xi.effect.DIVINE_EMBLEM)
+    then
+        magicAcc = magicAcc + 100 -- TODO: Confirm this value in retail
     end
 
     -- Dark Seal
@@ -588,7 +612,7 @@ xi.spells.damage.calculateResist = function(caster, target, spell, skillType, sp
 
         [xi.job.RDM] = function()
             -- Category 1
-            if spellElement >= xi.magic.element.FIRE and spellElement <= xi.magic.element.WATER then
+            if spellElement >= xi.magic.ele.FIRE and spellElement <= xi.magic.ele.WATER then
                 magicAcc = magicAcc + caster:getMerit(rdmMerit[spellElement])
             end
 
@@ -626,10 +650,10 @@ xi.spells.damage.calculateResist = function(caster, target, spell, skillType, sp
     -----------------------------------
     local magiceva = target:getMod(xi.mod.MEVA)
     if target:isPC() then
-        magiceva = magiceva * ((100 + resMod) / 100)
+        magiceva = magiceva + resModAdj
     else
         levelDiff = utils.clamp(levelDiff, 0, 200) -- Mobs should not have a disadvantage when targeted
-        magiceva =  (magiceva + (4 * levelDiff)) * ((100 + resMod) / 100)
+        magiceva =  magiceva + (4 * levelDiff) + resModAdj
     end
 
     -----------------------------------
@@ -660,22 +684,56 @@ xi.spells.damage.calculateResist = function(caster, target, spell, skillType, sp
         end
     end
 
+    local sixteenthTrigger = false
+    local eighthTrigger = false
+    local quarterTrigger = false
+
+    if element and element ~= xi.magic.ele.NONE then
+        resMod = target:getMod(xi.magic.resistMod[element])
+    end
+
+    if (target:isPC() or (target:isPet() and target:getMaster():getObjType() == xi.objType.PC)) and resMod >= 0 then
+        if resMod > 145 then
+            sixteenthTrigger = true
+        end
+
+        if resMod > 100 then
+            eighthTrigger = true
+        end
+
+        quarterTrigger = true
+    end
+
+    if target:isMob() then
+        if evaMult < 1.50 then
+            quarterTrigger = true
+        end
+
+        if evaMult < 1.30 then
+            eighthTrigger = true
+        end
+
+        if evaMult < 1.15 then
+            sixteenthTrigger = true
+        end
+    end
+
     local p = utils.clamp(((magicHitRate * evaMult) / 100), 0.05, 3.00) -- clamp at minimum 0.05, clamp at max of 3.0 to be safe
     local resistVal = 1
 
     -- Resistance thresholds based on p.  A higher p leads to lower resist rates, and a lower p leads to higher resist rates.
-    local half     = (1 - p)
+    local half      = (1 - p)
     local quart     = ((1 - p)^2)
     local eighth    = ((1 - p)^3)
     local sixteenth = ((1 - p)^4)
     local resvar    = math.random()
 
     -- Determine final resist based on which thresholds have been crossed.
-    if resvar <= sixteenth then
+    if resvar <= sixteenth and sixteenthTrigger then
         resistVal = 0.0625
-    elseif resvar <= eighth then
+    elseif resvar <= eighth and eighthTrigger then
         resistVal = 0.125
-    elseif resvar <= quart then
+    elseif resvar <= quart and quarterTrigger then
         resistVal = 0.25
     elseif resvar <= half then
         resistVal = 0.5
@@ -701,7 +759,6 @@ xi.spells.damage.calculateIfMagicBurstBonus = function(caster, target, spell, sp
     local magicBurstBonus        = 1.0
     local modBurst               = 1.0
     local ancientMagicBurstBonus = 0
-    local _, skillchainCount     = FormMagicBurst(spellElement, target) -- External function. Not present in magic.lua.
 
     -- TODO: merge spellFamily and spell ID tables into one table in spell_data.lua, then maybe ad a family for all AM and use spellFamily here instead of spellID
     if spellId >= xi.magic.spell.FLARE and spellId <= xi.magic.spell.FLOOD_II then
@@ -739,10 +796,10 @@ xi.spells.damage.calculateIfMagicBurstBonus = function(caster, target, spell, sp
 end
 
 xi.spells.damage.calculateDayAndWeather = function(caster, target, spell, spellId, spellElement)
-    local dayAndWeather  = 1 -- The variable we want to calculate
-    local weather        = caster:getWeather()
-    local dayElement     = VanadielDayElement()
-    local isHelixSpell   = false -- TODO: I'm not sure thats the correct way to handle helixes. This is how we handle it and im not gonna change it for now.
+    local dayAndWeather = 1 -- The variable we want to calculate
+    local weather       = caster:getWeather()
+    local dayElement    = VanadielDayElement()
+    local isHelixSpell  = false -- TODO: I'm not sure thats the correct way to handle helixes. This is how we handle it and im not gonna change it for now.
 
     -- See if its a Helix type spell
     if spellId >= 278 and spellId <= 285 then
@@ -860,14 +917,27 @@ xi.spells.damage.calculateTMDA = function(caster, target, damageType)
     if targetMagicDamageAdjustment < 0 then -- skip MDT/DT/MDTII etc for Liement if we absorb.
         return targetMagicDamageAdjustment
     end
-    -- The values set for this modifiers are base 10,000.
+
+    -- The values set for this modifiers are base 10000.
     -- -2500 in item_mods.sql means -25% damage recived.
     -- 2500 would mean 25% ADDITIONAL damage taken.
-    -- The effects of the "Shell" spells are also included in this step. The effect also aplies a negative value.
+    -- The effects of the "Shell" spells are also included in this step.
 
     targetMagicDamageAdjustment = xi.damage.returnDamageTakenMod(target, xi.attackType.MAGICAL)
 
     return targetMagicDamageAdjustment
+end
+
+-- Divine Emblem applies its own damage multiplier.
+xi.spells.damage.calculateDivineEmblemMultiplier = function(caster, target, spell)
+    local divineEmblemMultiplier = 1
+
+    if caster:hasStatusEffect(xi.effect.DIVINE_EMBLEM) then
+        divineEmblemMultiplier = 1 + caster:getSkillLevel(xi.skill.DIVINE_MAGIC) / 100
+        caster:delStatusEffect(xi.effect.DIVINE_EMBLEM)
+    end
+
+    return divineEmblemMultiplier
 end
 
 -- Ebullience applies an entirely separate multiplier.
@@ -945,7 +1015,8 @@ xi.spells.damage.calculateNukeAbsorbOrNullify = function(caster, target, spell, 
         nukeAbsorbOrNullify = -1
     end
     -- Calculate chance for spell nullification.
-    if math.random(1, 100) < (target:getMod(nullMod[spellElement]) + 1) then
+    local nullifyChance = math.random(1, 100)
+    if nullifyChance < (target:getMod(nullMod[spellElement]) + 1) or nullifyChance < target:getMod(xi.mod.MAGIC_NULL) then
         nukeAbsorbOrNullify = 0
     end
 
@@ -977,6 +1048,7 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     local dayAndWeather               = xi.spells.damage.calculateDayAndWeather(caster, target, spell, spellId, spellElement)
     local magicBonusDiff              = xi.spells.damage.calculateMagicBonusDiff(caster, target, spell, spellId, skillType, spellElement)
     local targetMagicDamageAdjustment = xi.spells.damage.calculateTMDA(caster, target, spellDamageType)
+    local divineEmblemMultiplier      = xi.spells.damage.calculateDivineEmblemMultiplier(caster, target, spell)
     local ebullienceMultiplier        = xi.spells.damage.calculateEbullienceMultiplier(caster, target, spell)
     local skillTypeMultiplier         = xi.spells.damage.calculateSkillTypeMultiplier(caster, target, spell, skillType)
     local ninSkillBonus               = xi.spells.damage.calculateNinSkillBonus(caster, target, spell, spellId, skillType)
@@ -1055,6 +1127,7 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     -- printf("dayAndWeather = %s", dayAndWeather)
     -- printf("magicBonusDiff = %s", magicBonusDiff)
     -- printf("TMDA = %s", targetMagicDamageAdjustment)
+    -- printf("divineEmblemMultiplier = %s", divineEmblemMultiplier)
     -- printf("ebullienceMultiplier = %s", ebullienceMultiplier)
     -- printf("skillTypeMultiplier = %s", skillTypeMultiplier)
     -- printf("ninSkillBonus = %s", ninSkillBonus)
@@ -1078,6 +1151,7 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     finalDamage = math.floor(finalDamage * dayAndWeather)
     finalDamage = math.floor(finalDamage * magicBonusDiff)
     finalDamage = math.floor(finalDamage * targetMagicDamageAdjustment)
+    finalDamage = math.floor(finalDamage * divineEmblemMultiplier)
     finalDamage = math.floor(finalDamage * ebullienceMultiplier)
     finalDamage = math.floor(finalDamage * skillTypeMultiplier)
     finalDamage = math.floor(finalDamage * ninSkillBonus)

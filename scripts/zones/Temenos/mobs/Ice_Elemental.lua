@@ -41,24 +41,24 @@ entity.onMobRoam = function(mob)
         local offset = mob:getID() - ID.mob.TEMENOS_E_MOB[2]
         local pause = mob:getLocalVar("pause")
         if pause < os.time() then
-            local point = (mob:getLocalVar("point") % 2)+1
+            local point = (mob:getLocalVar("point") % 2) + 1
             mob:setLocalVar("point", point)
             mob:pathTo(path[offset][point][1], path[offset][point][2], path[offset][point][3], flags)
-            mob:setLocalVar("pause", os.time()+5)
+            mob:setLocalVar("pause", os.time() + 5)
         end
     end
 end
 
-entity.onMobDeath = function(mob, player, isKiller, noKiller)
-    if isKiller or noKiller then
+entity.onMobDeath = function(mob, player, optParams)
+    if optParams.isKiller or optParams.noKiller then
         local battlefield = mob:getBattlefield()
         if battlefield:getLocalVar("crateOpenedF2") ~= 1 then
             local mobID = mob:getID()
             if mobID >= ID.mob.TEMENOS_C_MOB[2] then
                 GetMobByID(ID.mob.TEMENOS_C_MOB[2]):setMod(xi.mod.ICE_SDT, -5000) -- IDK WTF is going on here. Will refactor when Temenos is converted.
-                if GetMobByID(ID.mob.TEMENOS_C_MOB[2]+5):isAlive() then
-                    DespawnMob(ID.mob.TEMENOS_C_MOB[2]+5)
-                    SpawnMob(ID.mob.TEMENOS_C_MOB[2]+11)
+                if GetMobByID(ID.mob.TEMENOS_C_MOB[2] + 5):isAlive() then
+                    DespawnMob(ID.mob.TEMENOS_C_MOB[2] + 5)
+                    SpawnMob(ID.mob.TEMENOS_C_MOB[2] + 11)
                 end
             else
                 local mobX = mob:getXPos()

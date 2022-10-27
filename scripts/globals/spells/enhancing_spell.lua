@@ -338,7 +338,7 @@ xi.spells.enhancing.calculateEnhancingDuration = function(caster, target, spell,
 
     -- Deodorize, Invisible and Sneak have a random factor to base duration.
     if spellEffect == xi.effect.DEODORIZE or spellEffect == xi.effect.INVISIBLE or spellEffect == xi.effect.SNEAK then
-        duration = calculateDuration(math.random(130, 310), spell:getSkillType(), spell:getSpellGroup(), caster, target)
+        duration = xi.magic.calculateDuration(math.random(130, 310), spell:getSkillType(), spell:getSpellGroup(), caster, target)
         duration = duration + target:getMod(xi.mod.INVISIBLE_DURATION)
     end
 
@@ -381,6 +381,12 @@ xi.spells.enhancing.calculateEnhancingDuration = function(caster, target, spell,
     -- Bar-Element
     elseif (spellEffect >= xi.effect.BARFIRE and spellEffect <= xi.effect.BARWATER) or spellEffect == xi.effect.BARAMNESIA or (spellEffect >= xi.effect.BARSLEEP and spellEffect <= xi.effect.BARVIRUS) then
         duration = utils.clamp(duration + 0.8 * (skillLevel - 180), 150, 240) -- Min duration is 2.5 minutes, Max duration is 4 minutes
+
+    -- En-Spells
+    elseif (spellEffect >= xi.effect.ENFIRE and spellEffect <= xi.effect.ENWATER) or (spellEffect >= xi.effect.ENFIRE_II and spellEffect <= xi.effect.ENWATER_II) then
+        if caster:getEquipID(xi.slot.MAIN) == xi.items.BUZZARD_TUCK or caster:getEquipID(xi.slot.SUB) == xi.items.BUZZARD_TUCK then
+            duration = duration + 30 -- Sword enhancement spell duration +5
+        end
 
     end
 

@@ -165,7 +165,7 @@ entity.onMobWeaponSkill = function(target, mob, skill)
         mob:setAnimationSub(0)
         local opticCounter = mob:getLocalVar("opticCounter")
 
-        opticCounter = opticCounter +1
+        opticCounter = opticCounter + 1
         mob:setLocalVar("opticCounter", opticCounter)
 
         if opticCounter > 2 then
@@ -182,7 +182,7 @@ entity.onMobDisengage = function(mob)
     mob:setAnimationSub(0)
 end
 
-entity.onMobDeath = function(mob, isKiller, player)
+entity.onMobDeath = function(mob, player, optParams)
 end
 
 return entity

@@ -129,80 +129,6 @@ local enableOPWarps =
     '[OP_Warp]Unlock_Mob_Sauromague',
 }
 
-local priceMenu =
-{
-    onStart = function(playerArg)
-        playerArg:addStatusEffectEx(xi.effect.TERROR, xi.effect.TERROR, 69, 0, 99999, 0, 0, 1, xi.effectFlag.ON_ZONE, true)
-    end,
-    title = "",
-    options = { },
-    onEnd = function(playerArg)
-        if playerArg:hasStatusEffect(xi.effect.TERROR) then
-            playerArg:delStatusEffectSilent(xi.effect.TERROR)
-        end
-    end,
-}
-
-local pagesTable =
-{
-    [1] = { },
-    [2] = { },
-    [3] = { },
-    [4] = { },
-    [5] = { },
-    [6] = { },
-}
-
-local teleportMenu =
-{
-    onStart = function(playerArg)
-        playerArg:addStatusEffectEx(xi.effect.TERROR, xi.effect.TERROR, 69, 0, 99999, 0, 0, 1, xi.effectFlag.ON_ZONE, true)
-    end,
-    title = "Which region would you like to teleport to?",
-    options = { },
-    onEnd = function(playerArg)
-        if playerArg:hasStatusEffect(xi.effect.TERROR) then
-            playerArg:delStatusEffectSilent(xi.effect.TERROR)
-        end
-    end,
-}
-local function hasOPWarp(player, region)
-    local hasOP = player:getTeleport(player:getNation(), region + 5)
-
-    if not hasOP then
-        if xi.settings.main.UNLOCK_OUTPOST_WARPS == 2 then
-            hasOP = true
-        elseif xi.settings.main.UNLOCK_OUTPOST_WARPS == 1 then
-            hasOP = region <= xi.region.ELSHIMOUPLANDS
-        end
-    end
-
-    return hasOP
-end
-
-local function getAvailableWarps(player)
-    local availableWarps = { }
-    local mainLvl = player:getMainLvl()
-
-    for region, data in pairs(outposts) do
-        if hasOPWarp(player, region) then
-            if player:getZoneID() == xi.zone.LOWER_JEUNO and data.lvlRed <= mainLvl then
-                table.insert(availableWarps, region)
-            elseif data.lvlOrg <= mainLvl then
-                table.insert(availableWarps, region)
-            end
-        end
-    end
-
-    return availableWarps
-end
-
-local delaySendMenu = function(player, menu)
-    player:timer(50, function(playerArg)
-        playerArg:customMenu(menu)
-    end)
-end
-
 xi.horizon.teleport.checkOPEnable = function()
     local killCount = 0
 
@@ -232,6 +158,21 @@ xi.horizon.teleport.triggerOPWarp = function(player, npc)
     local npcNation = npcTable[player:getZoneID()].nation
     local zoneId = player:getZoneID()
     local name = npcTable[zoneId].name
+    local availableWarps = { }
+    local mainLvl = player:getMainLvl()
+    local teleportMenu =
+    {
+        onStart = function(playerArg)
+            playerArg:addStatusEffectEx(xi.effect.TERROR, xi.effect.TERROR, 69, 0, 99999, 0, 0, 1, xi.effectFlag.ON_ZONE, true)
+        end,
+        title = "Which region would you like to teleport to?",
+        options = { },
+        onEnd = function(playerArg)
+            if playerArg:hasStatusEffect(xi.effect.TERROR) then
+                playerArg:delStatusEffectSilent(xi.effect.TERROR)
+            end
+        end,
+    }
 
     player:setLocalVar('[OP_Warp]npcId', npc:getID())
 
@@ -258,7 +199,15 @@ xi.horizon.teleport.triggerOPWarp = function(player, npc)
         return
     end
 
-    local availableWarps = getAvailableWarps(player)
+    for region, data in pairs(outposts) do
+        if player:hasTeleport(player:getNation(), region + 5) then
+            if player:getZoneID() == xi.zone.LOWER_JEUNO and data.lvlRed <= mainLvl then
+                table.insert(availableWarps, region)
+            elseif data.lvlOrg <= mainLvl then
+                table.insert(availableWarps, region)
+            end
+        end
+    end
 
     if availableWarps[1] == nil then
         player:timer(250, function(playerArg)
@@ -288,14 +237,40 @@ xi.horizon.teleport.triggerOPWarp = function(player, npc)
         return
     end
 
-    xi.horizon.teleport.createRegionMenus(player, availableWarps)
+    local pagesTable = xi.horizon.teleport.createRegionMenus(player, availableWarps)
     teleportMenu.options = pagesTable[1]
-    delaySendMenu(player, teleportMenu)
+
+    player:timer(50, function(playerArg)
+        playerArg:customMenu(teleportMenu)
+    end)
 end
 
 xi.horizon.teleport.createRegionMenus = function(player, availableWarps)
     local warpIndex = 1
     local pagesNeeded = math.ceil(#availableWarps / 3)
+    local pagesTable =
+    {
+        [1] = { },
+        [2] = { },
+        [3] = { },
+        [4] = { },
+        [5] = { },
+        [6] = { },
+    }
+    local teleportMenu =
+    {
+        onStart = function(playerArg)
+            playerArg:addStatusEffectEx(xi.effect.TERROR, xi.effect.TERROR, 69, 0, 99999, 0, 0, 1, xi.effectFlag.ON_ZONE, true)
+        end,
+        title = "Which region would you like to teleport to?",
+        options = { },
+        onEnd = function(playerArg)
+            if playerArg:hasStatusEffect(xi.effect.TERROR) then
+                playerArg:delStatusEffectSilent(xi.effect.TERROR)
+            end
+        end,
+    }
+
     for page = 1, pagesNeeded, 1 do
         local pageArg = { }
 
@@ -323,7 +298,9 @@ xi.horizon.teleport.createRegionMenus = function(player, availableWarps)
                 "Go Back",
                 function(playerArg)
                     teleportMenu.options = pagesTable[1]
-                    delaySendMenu(player, teleportMenu)
+                    playerArg:timer(50, function(playerAr)
+                        playerAr:customMenu(teleportMenu)
+                    end)
                 end
             }
         else
@@ -332,7 +309,9 @@ xi.horizon.teleport.createRegionMenus = function(player, availableWarps)
                 "Next Page",
                 function(playerArg)
                     teleportMenu.options = pagesTable[page + 1]
-                    delaySendMenu(playerArg, teleportMenu)
+                    playerArg:timer(50, function(playerAr)
+                        playerAr:customMenu(teleportMenu)
+                    end)
                 end
             }
         end
@@ -341,6 +320,7 @@ xi.horizon.teleport.createRegionMenus = function(player, availableWarps)
         pagesTable[page] = pageArg
     end
 
+    return pagesTable
 end
 
 xi.horizon.teleport.sendPriceMenu = function(player, region)
@@ -348,6 +328,19 @@ xi.horizon.teleport.sendPriceMenu = function(player, region)
     local dialogTable = dialogTableOrg
     local name = npcTable[player:getZoneID()].name
     local owner = GetRegionOwner(region)
+    local priceMenu =
+    {
+        onStart = function(playerArg)
+            playerArg:addStatusEffectEx(xi.effect.TERROR, xi.effect.TERROR, 69, 0, 99999, 0, 0, 1, xi.effectFlag.ON_ZONE, true)
+        end,
+        title = "",
+        options = { },
+        onEnd = function(playerArg)
+            if playerArg:hasStatusEffect(xi.effect.TERROR) then
+                playerArg:delStatusEffectSilent(xi.effect.TERROR)
+            end
+        end,
+    }
 
     if player:getZoneID() == xi.zone.LOWER_JEUNO then
         price = outpostOptions[region].feeRed
@@ -371,7 +364,10 @@ xi.horizon.teleport.sendPriceMenu = function(player, region)
         },
     }
 
-    delaySendMenu(player, priceMenu)
+    player:timer(50, function(playerArg)
+        playerArg:customMenu(priceMenu)
+    end)
+
     if owner == player:getNation() then
         player:PrintToPlayer(string.format(dialogTable.teleportControlled, price), 0, name)
     else
@@ -379,25 +375,15 @@ xi.horizon.teleport.sendPriceMenu = function(player, region)
     end
 end
 
-xi.horizon.getDialogTable = function(player)
-
-    local dialogTable = dialogTableOrg
-
-    if player:getZoneID() == xi.zone.LOWER_JEUNO then
-        dialogTable = dialogTableGob
-    end
-
-    return dialogTable
-end
-
 xi.horizon.teleport.handleOPWarp = function(player, region)
-    local dialogTable = xi.horizon.getDialogTable(player)
+    local dialogTable = dialogTableOrg
     local cost = outpostOptions[region].feeOrg
     local npc = GetNPCByID(player:getLocalVar('[OP_Warp]npcId'))
     local name = npcTable[player:getZoneID()].name
 
     if player:getZoneID() == xi.zone.LOWER_JEUNO then
         cost = outpostOptions[region].feeRed
+        dialogTable = dialogTableGob
     end
 
     if player:getGil() >= cost then
@@ -475,5 +461,7 @@ xi.horizon.teleport.triggerTaruWarp = function(player, npc)
         player:PrintToPlayer(string.format(dialogTableTaru.text2, taru.destZoneString), 0, npc:getName())
     end)
 
-    delaySendMenu(player, warpMenu)
+    player:timer(50, function(playerArg)
+        playerArg:customMenu(warpMenu)
+    end)
 end

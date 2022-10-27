@@ -95,7 +95,7 @@ xi.settings.map =
     MOUNT_SPEED_MOD = 0,
 
     -- Modifier to apply to agro'd monster speed. 0 is the retail accurate default. Negative numbers will reduce it.
-    MOB_SPEED_MOD = 0,
+    MOB_SPEED_MOD = -10,
 
     -- Allows you to manipulate the constant multiplier in the skill-up rate formulas, having a potent effect on skill-up rates.
     SKILLUP_CHANCE_MULTIPLIER = 1.0,
@@ -212,6 +212,9 @@ xi.settings.map =
     -- Minimum time between uses of yell command (in seconds).
     YELL_COOLDOWN = 30,
     YELL_MIN_LEVEL = 10,
+
+    -- Prevent players from sending tells to hidden GMs. You will still receive them from other GMs.
+    BLOCK_TELL_TO_HIDDEN_GM = false,
 
     -- Command Audit [logging] commands with lower permission than this will not be logged.
     -- Zero for no logging at all. Commands given to non GMs are not logged.

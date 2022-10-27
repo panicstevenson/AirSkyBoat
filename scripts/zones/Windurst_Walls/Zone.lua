@@ -6,13 +6,13 @@ require('scripts/globals/conquest')
 require('scripts/globals/quests')
 require('scripts/globals/zone')
 -----------------------------------
-local zone_object = {}
+local zoneObject = {}
 
-zone_object.onInitialize = function(zone)
+zoneObject.onInitialize = function(zone)
     zone:registerRegion(1, -2, -17, 140, 2, -16, 142)
 end
 
-zone_object.onZoneIn = function(player, prevZone)
+zoneObject.onZoneIn = function(player, prevZone)
     local cs = -1
 
     -- MOG HOUSE EXIT
@@ -21,16 +21,21 @@ zone_object.onZoneIn = function(player, prevZone)
         player:setPos(-257.5, -5.05, position, 0)
     end
 
-    xi.moghouse.exitJobChange(player, prevZone)
+    if prevZone == player:getZoneID() then
+        xi.moghouse.exitJobChange(player, prevZone)
+    else
+        player:setVolatileCharVar('[MOGHOUSE]Exit_Pending', 0)
+        player:setVolatileCharVar('[MOGHOUSE]Exit_Job_Change', 0)
+    end
 
     return cs
 end
 
-zone_object.onConquestUpdate = function(zone, updatetype)
+zoneObject.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
 end
 
-zone_object.onRegionEnter = function(player, region)
+zoneObject.onRegionEnter = function(player, region)
     switch (region:GetRegionID()): caseof
     {
         [1] = function (x)  -- Heaven's Tower enter portal
@@ -39,13 +44,13 @@ zone_object.onRegionEnter = function(player, region)
     }
 end
 
-zone_object.onRegionLeave = function(player, region)
+zoneObject.onRegionLeave = function(player, region)
 end
 
-zone_object.onEventUpdate = function(player, csid, option)
+zoneObject.onEventUpdate = function(player, csid, option)
 end
 
-zone_object.onEventFinish = function(player, csid, option)
+zoneObject.onEventFinish = function(player, csid, option)
     if csid == 86 then
         player:setPos(0, 0, -22.40, 192, 242)
     end
@@ -53,4 +58,4 @@ zone_object.onEventFinish = function(player, csid, option)
     xi.moghouse.exitJobChangeFinish(player, csid, option)
 end
 
-return zone_object
+return zoneObject

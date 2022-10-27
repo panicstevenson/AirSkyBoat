@@ -57,11 +57,11 @@ end
 
 entity.onMobDisengage = function(mob, weather)
     for i, offset in ipairs(offsets) do
-        DespawnMob(mob:getID()+offset)
+        DespawnMob(mob:getID() + offset)
     end
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
     player:addTitle(xi.title.VRTRA_VANQUISHER)
 end
 

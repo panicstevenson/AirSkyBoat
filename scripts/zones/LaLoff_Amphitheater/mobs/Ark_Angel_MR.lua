@@ -27,7 +27,7 @@ entity.onMobEngaged = function(mob, target)
 
     local mobid = mob:getID()
 
-    for member = mobid-1, mobid+6 do
+    for member = mobid-1, mobid + 6 do
         local m = GetMobByID(member)
         if m:getCurrentAction() == xi.act.ROAMING then
             m:updateEnmity(target)
@@ -44,7 +44,7 @@ entity.onMobFight = function(mob, target)
     end
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
 end
 
 return entity

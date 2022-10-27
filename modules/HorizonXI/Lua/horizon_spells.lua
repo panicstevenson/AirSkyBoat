@@ -25,16 +25,16 @@ m:addOverride("xi.globals.spells.black.drain.onSpellCast", function(caster, targ
     params.attribute = xi.mod.INT
     params.skillType = xi.skill.DARK_MAGIC
     params.bonus = 1.0
-    local resist = applyResistance(caster, target, spell, params)
+    local resist = xi.magic.applyResistance(caster, target, spell, params)
 
     --get the resisted damage
     dmg = dmg * resist
 
     --add on bonuses (staff/day/weather/jas/mab/etc all go in this function)
-    dmg = addBonuses(caster, spell, target, dmg)
+    dmg = xi.magic.addBonuses(caster, spell, target, dmg)
 
     --add in target adjustment
-    dmg = adjustForTarget(target, dmg, spell:getElement())
+    dmg = xi.magic.adjustForTarget(target, dmg, spell:getElement())
 
     --add in final adjustments
     if (dmg < 0) then
@@ -50,7 +50,7 @@ m:addOverride("xi.globals.spells.black.drain.onSpellCast", function(caster, targ
         dmg = dmg / 2
     end
 
-    dmg = finalMagicAdjustments(caster, target, spell, dmg)
+    dmg = xi.magic.finalMagicAdjustments(caster, target, spell, dmg)
 
     caster:addHP(dmg)
 
@@ -72,16 +72,16 @@ m:addOverride("xi.globals.spells.black.drain_ii.onSpellCast", function(caster, t
     params.attribute = xi.mod.INT
     params.skillType = xi.skill.DARK_MAGIC
     params.bonus = 1.0
-    local resist = applyResistance(caster, target, spell, params)
+    local resist = xi.magic.applyResistance(caster, target, spell, params)
 
     --get the resisted damage
     dmg = dmg * resist
 
     --add on bonuses (staff/day/weather/jas/mab/etc all go in this function)
-    dmg = addBonuses(caster, spell, target, dmg)
+    dmg = xi.magic.addBonuses(caster, spell, target, dmg)
 
     --add in target adjustment
-    dmg = adjustForTarget(target, dmg, spell:getElement())
+    dmg = xi.magic.adjustForTarget(target, dmg, spell:getElement())
 
     --add in final adjustments
     if (dmg < 0) then
@@ -101,7 +101,7 @@ m:addOverride("xi.globals.spells.black.drain_ii.onSpellCast", function(caster, t
         dmg = dmg / 2
     end
 
-    dmg = finalMagicAdjustments(caster, target, spell, dmg)
+    dmg = xi.magic.finalMagicAdjustments(caster, target, spell, dmg)
 
     local leftOver = (caster:getHP() + dmg) - caster:getMaxHP()
 
@@ -109,7 +109,7 @@ m:addOverride("xi.globals.spells.black.drain_ii.onSpellCast", function(caster, t
         caster:addStatusEffect(xi.effect.MAX_HP_BOOST, (leftOver/caster:getMaxHP())*100, 0, 60)
     end
 
-    dmg = finalMagicAdjustments(caster, target, spell, dmg)
+    dmg = xi.magic.finalMagicAdjustments(caster, target, spell, dmg)
     caster:addHP(dmg)
     spell:setMsg(xi.msg.basic.MAGIC_DRAIN_HP) --change msg to 'xxx hp drained from the yyyy.'
 
@@ -127,7 +127,7 @@ m:addOverride("xi.globals.spells.black.absorb-acc.onSpellCast", function(caster,
         params.skillType = xi.skill.DARK_MAGIC
         params.bonus = 0
         params.effect = nil
-        local resist = applyResistance(caster, target, spell, params)
+        local resist = xi.magic.applyResistance(caster, target, spell, params)
         if (resist <= 0.125) then
             spell:setMsg(xi.msg.basic.MAGIC_RESIST)
         else
@@ -151,7 +151,7 @@ m:addOverride("xi.globals.spells.black.absorb-agi.onSpellCast", function(caster,
         params.skillType = xi.skill.DARK_MAGIC
         params.bonus = 0
         params.effect = nil
-        local resist = applyResistance(caster, target, spell, params)
+        local resist = xi.magic.applyResistance(caster, target, spell, params)
         if (resist <= 0.125) then
             spell:setMsg(xi.msg.basic.MAGIC_RESIST)
         else
@@ -175,7 +175,7 @@ m:addOverride("xi.globals.spells.black.absorb-chr.onSpellCast", function(caster,
         params.skillType = xi.skill.DARK_MAGIC
         params.bonus = 0
         params.effect = nil
-        local resist = applyResistance(caster, target, spell, params)
+        local resist = xi.magic.applyResistance(caster, target, spell, params)
         if (resist <= 0.125) then
             spell:setMsg(xi.msg.basic.MAGIC_RESIST)
         else
@@ -199,7 +199,7 @@ m:addOverride("xi.globals.spells.black.absorb-dex.onSpellCast", function(caster,
         params.skillType = xi.skill.DARK_MAGIC
         params.bonus = 0
         params.effect = nil
-        local resist = applyResistance(caster, target, spell, params)
+        local resist = xi.magic.applyResistance(caster, target, spell, params)
         if (resist <= 0.125) then
             spell:setMsg(xi.msg.basic.MAGIC_RESIST)
         else
@@ -223,7 +223,7 @@ m:addOverride("xi.globals.spells.black.absorb-int.onSpellCast", function(caster,
         params.skillType = xi.skill.DARK_MAGIC
         params.bonus = 0
         params.effect = nil
-        local resist = applyResistance(caster, target, spell, params)
+        local resist = xi.magic.applyResistance(caster, target, spell, params)
         if (resist <= 0.125) then
             spell:setMsg(xi.msg.basic.MAGIC_RESIST)
         else
@@ -247,7 +247,7 @@ m:addOverride("xi.globals.spells.black.absorb-mnd.onSpellCast", function(caster,
         params.skillType = xi.skill.DARK_MAGIC
         params.bonus = 0
         params.effect = nil
-        local resist = applyResistance(caster, target, spell, params)
+        local resist = xi.magic.applyResistance(caster, target, spell, params)
         if (resist <= 0.125) then
             spell:setMsg(xi.msg.basic.MAGIC_RESIST)
         else
@@ -271,7 +271,7 @@ m:addOverride("xi.globals.spells.black.absorb-str.onSpellCast", function(caster,
         params.skillType = xi.skill.DARK_MAGIC
         params.bonus = 0
         params.effect = nil
-        local resist = applyResistance(caster, target, spell, params)
+        local resist = xi.magic.applyResistance(caster, target, spell, params)
         if (resist <= 0.125) then
             spell:setMsg(xi.msg.basic.MAGIC_RESIST)
         else
@@ -295,7 +295,7 @@ m:addOverride("xi.globals.spells.black.absorb-vit.onSpellCast", function(caster,
         params.skillType = xi.skill.DARK_MAGIC
         params.bonus = 0
         params.effect = nil
-        local resist = applyResistance(caster, target, spell, params)
+        local resist = xi.magic.applyResistance(caster, target, spell, params)
         if (resist <= 0.125) then
             spell:setMsg(xi.msg.basic.MAGIC_RESIST)
         else
@@ -319,7 +319,7 @@ m:addOverride("xi.globals.spells.songs.horde_lullaby.onSpellCast", function(cast
     params.skillType = xi.skill.SINGING
     params.bonus = 0
     params.effect = xi.effect.LULLABY
-    local resm = applyResistanceEffect(caster, target, spell, params)
+    local resm = xi.magic.applyResistanceEffect(caster, target, spell, params)
 
     if resm < 0.5 then
         spell:setMsg(xi.msg.basic.MAGIC_RESIST) -- resist message
@@ -332,7 +332,7 @@ m:addOverride("xi.globals.spells.songs.horde_lullaby.onSpellCast", function(cast
         end
 
         duration = duration * resm
-        duration = calculateBuildDuration(target, duration, params.effect)
+        duration = xi.magic.calculateBuildDuration(target, duration, params.effect)
 
         if duration == 0 then
             spell:setMsg(xi.msg.basic.NONE)

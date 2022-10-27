@@ -125,6 +125,7 @@ CMobEntity::CMobEntity()
     m_TrueDetection = false;
     m_Detects       = DETECT_NONE;
     m_Link          = 0;
+    m_isAggroable   = false;
     m_battlefieldID = 0;
     m_bcnmID        = 0;
 
@@ -539,10 +540,23 @@ bool CMobEntity::ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags)
     {
         return false;
     }
+
+    if (targetFlags & TARGET_PLAYER_PARTY)
+    {
+        if (!isDead())
+        {
+            if (allegiance == ALLEGIANCE_TYPE::MOB && PInitiator->allegiance == ALLEGIANCE_TYPE::MOB && allegiance == PInitiator->allegiance)
+            {
+                return true;
+            }
+        }
+    }
+
     if (CBattleEntity::ValidTarget(PInitiator, targetFlags))
     {
         return true;
     }
+
     if (targetFlags & TARGET_PLAYER_DEAD && (m_Behaviour & BEHAVIOUR_RAISABLE) && isDead())
     {
         return true;
@@ -580,16 +594,14 @@ void CMobEntity::Spawn()
 
     PEnmityContainer->Clear();
 
-    uint8 level = m_minLevel;
+    // The underlying function in GetRandomNumber doesn't accept uint8 as <T> so use uint32
+    // https://stackoverflow.com/questions/31460733/why-arent-stduniform-int-distributionuint8-t-and-stduniform-int-distri
+    uint8 level = static_cast<uint8>(xirand::GetRandomNumber<uint32>(m_minLevel, m_maxLevel + 1));
 
-    // Generate a random level between min and max level
-    if (m_maxLevel > m_minLevel)
-    {
-        level += xirand::GetRandomNumber(0, m_maxLevel - m_minLevel + 1);
-    }
-
+    TraitList.clear(); // Clear traits just in case from random levels. Traits are recalculated in mobutils::CalculateMobStat().
+                       // Note: Traits are NOT stored on DB load as of writing, so mobs won't gradually get stronger on respawn from restoreModifiers()
     SetMLevel(level);
-    SetSLevel(level); // calculated in function
+    SetSLevel(level); // subjob calculated in function as appropriate
 
     mobutils::CalculateMobStats(this);
     mobutils::GetAvailableSpells(this);
@@ -745,17 +757,35 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
             PAI->TargetFind->findSingleTarget(PTarget, findFlags);
         }
     }
+    else // Out of range
+    {
+        action.actiontype         = ACTION_MOBABILITY_INTERRUPT;
+        action.actionid           = 0;
+        actionList_t& actionList  = action.getNewActionList();
+        actionList.ActionTargetID = PTarget->id;
 
-    uint16 targets = (uint16)PAI->TargetFind->m_targets.size();
+        actionTarget_t& actionTarget = actionList.getNewActionTarget();
+        actionTarget.animation       = 0x1FC; // Hardcoded magic sent from the server
+        actionTarget.messageID       = MSGBASIC_TOO_FAR_AWAY;
+        actionTarget.speceffect      = SPECEFFECT::BLOOD;
+        return;
+    }
 
+    uint16 targets = static_cast<uint16>(PAI->TargetFind->m_targets.size());
+
+    // No targets, perhaps something like Super Jump or otherwise untargetable
     if (targets == 0)
     {
         action.actiontype         = ACTION_MOBABILITY_INTERRUPT;
+        action.actionid           = 28787; // Some hardcoded magic for interrupts
         actionList_t& actionList  = action.getNewActionList();
         actionList.ActionTargetID = id;
 
         actionTarget_t& actionTarget = actionList.getNewActionTarget();
-        actionTarget.animation       = PSkill->getID();
+        actionTarget.animation       = 0x1FC; // Hardcoded magic sent from the server
+        actionTarget.messageID       = 0;
+        actionTarget.reaction        = REACTION::ABILITY | REACTION::HIT;
+
         return;
     }
 
@@ -1311,9 +1341,8 @@ void CMobEntity::DropItems(CCharEntity* PChar)
         }
     }
 
-    uint16 Pzone = PChar->getZone();
-
-    bool validZone = ((Pzone > 0 && Pzone < 39) || (Pzone > 42 && Pzone < 134) || (Pzone > 135 && Pzone < 185) || (Pzone > 188 && Pzone < 255));
+    ZONE_TYPE zoneType  = zoneutils::GetZone(PChar->getZone())->GetType();
+    bool      validZone = zoneType != ZONE_TYPE::BATTLEFIELD && zoneType != ZONE_TYPE::DYNAMIS;
 
     if (!getMobMod(MOBMOD_NO_DROPS) && validZone && charutils::CheckMob(m_HiPCLvl, GetMLevel()) > EMobDifficulty::TooWeak)
     {
@@ -1700,12 +1729,12 @@ void CMobEntity::OnDespawn(CDespawnState& /*unused*/)
 
         while (success == false && i <= maxTries) // While no success, try until maxTries then use failback of respawning same mob.
         {
-            int    vectorSize   = static_cast<int>(this->loc.zone->m_MultiSpawnVector[this->m_spawnSet].size() - 1); // Get size of the vector for random purposes minus 1 to account for 0 position
-            uint8  randomChoice = xirand::GetRandomNumber(0, vectorSize);                                            // Find a random iterator between 0 and max vector size
+            int    vectorSize   = static_cast<int>(this->loc.zone->m_MultiSpawnVector[this->m_spawnSet].size()); // Get size of the vector for random purposes minus 1 to account for 0 position
+            uint8  randomChoice = xirand::GetRandomNumber(0, vectorSize);                                        // Find a random iterator between 0 and max vector size
             uint32 mobId        = this->loc.zone->m_MultiSpawnVector[this->m_spawnSet][randomChoice];
             auto*  PMob         = dynamic_cast<CMobEntity*>(zoneutils::GetEntity(mobId, TYPE_MOB | TYPE_PET));
 
-            if (PMob != nullptr) // Failure results in ID removal and vector cleaning to reduce nullptr issues and improve runtime
+            if (PMob != nullptr)
             {
                 if (PMob->status == STATUS_TYPE::DISAPPEAR)
                 {
@@ -1718,31 +1747,31 @@ void CMobEntity::OnDespawn(CDespawnState& /*unused*/)
 
                     if (PMob->m_SpawnType == SPAWNTYPE_NORMAL) // If I am a normal spawn
                     {
-                        this->m_AllowRespawn = false;                                                // Stop me from respawning
                         PMob->m_AllowRespawn = true;                                                 // Let my friend respawn
-                        PMob->PAI->Internal_Respawn(std::chrono::milliseconds(PMob->m_RespawnTime)); // Set my friend's internal respawn time.
-                        success = true;                                                              // Mark this as a success
+                        PMob->PAI->Internal_Respawn(std::chrono::milliseconds(this->m_RespawnTime)); // Set my friend's internal respawn time.
+                        this->m_AllowRespawn = false;
+                        success              = true; // Mark this as a success
                     }
                     else if (PMob->m_SpawnType == SPAWNTYPE_ATNIGHT && (hourAdj >= 20 || hourAdj < 4)) // If I only spawn during night
                     {
-                        this->m_AllowRespawn = false;                                                // Stop me from respawning
                         PMob->m_AllowRespawn = true;                                                 // Let my friend respawn
-                        PMob->PAI->Internal_Respawn(std::chrono::milliseconds(PMob->m_RespawnTime)); // Set my friend's internal respawn time.
-                        success = true;                                                              // Mark this as a success
+                        PMob->PAI->Internal_Respawn(std::chrono::milliseconds(this->m_RespawnTime)); // Set my friend's internal respawn time.
+                        this->m_AllowRespawn = false;
+                        success              = true; // Mark this as a success
                     }
                     else if (PMob->m_SpawnType == SPAWNTYPE_ATEVENING && (hourAdj >= 18 || hourAdj < 6)) // If I only spawn in the evening
                     {
-                        this->m_AllowRespawn = false;                                                // Stop me from respawning
                         PMob->m_AllowRespawn = true;                                                 // Let my friend respawn
-                        PMob->PAI->Internal_Respawn(std::chrono::milliseconds(PMob->m_RespawnTime)); // Set my friend's internal respawn time.
-                        success = true;                                                              // Mark this as a success
+                        PMob->PAI->Internal_Respawn(std::chrono::milliseconds(this->m_RespawnTime)); // Set my friend's internal respawn time.
+                        this->m_AllowRespawn = false;
+                        success              = true; // Mark this as a success
                     }
                     else if (PMob->m_SpawnType == SPAWNTYPE_ATDUSK && (hourAdj >= 17 || hourAdj < 7)) // If I only spawn at dusk
                     {
-                        this->m_AllowRespawn = false;                                                // Stop me from respawning
                         PMob->m_AllowRespawn = true;                                                 // Let my friend respawn
-                        PMob->PAI->Internal_Respawn(std::chrono::milliseconds(PMob->m_RespawnTime)); // Set my friend's internal respawn time.
-                        success = true;                                                              // Mark this as a success
+                        PMob->PAI->Internal_Respawn(std::chrono::milliseconds(this->m_RespawnTime)); // Set my friend's internal respawn time.
+                        this->m_AllowRespawn = false;
+                        success              = true; // Mark this as a success
                     }
                     else
                     {
@@ -1756,6 +1785,7 @@ void CMobEntity::OnDespawn(CDespawnState& /*unused*/)
             }
         }
     }
+
     else
     {
         PAI->Internal_Respawn(std::chrono::milliseconds(m_RespawnTime));

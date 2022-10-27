@@ -18,13 +18,13 @@ require("scripts/globals/status")
 require("scripts/globals/bluemagic")
 require("scripts/globals/msg")
 -----------------------------------
-local spell_object = {}
+local spellObject = {}
 
-spell_object.onMagicCastingCheck = function(caster, target, spell)
+spellObject.onMagicCastingCheck = function(caster, target, spell)
     return 0
 end
 
-spell_object.onSpellCast = function(caster, target, spell)
+spellObject.onSpellCast = function(caster, target, spell)
     local typeEffectOne = xi.effect.DEFENSE_BOOST
     local typeEffectTwo = xi.effect.ICE_SPIKES
     local powerOne = 12
@@ -36,7 +36,7 @@ spell_object.onSpellCast = function(caster, target, spell)
         local diffMerit = caster:getMerit(xi.merit.DIFFUSION)
 
         if (diffMerit > 0) then
-            duration = duration + (duration/100)* diffMerit
+            duration = duration + (duration / 100) * diffMerit
         end
 
         caster:delStatusEffect(xi.effect.DIFFUSION)
@@ -55,4 +55,4 @@ spell_object.onSpellCast = function(caster, target, spell)
     return returnEffect
 end
 
-return spell_object
+return spellObject

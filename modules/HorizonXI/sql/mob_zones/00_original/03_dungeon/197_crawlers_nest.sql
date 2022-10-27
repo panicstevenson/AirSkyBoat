@@ -253,7 +253,7 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
 (17584375, 0,  'Exoray',                   'Exoray',                   15,  0,         0,         0,         0   ),
 (17584376, 0,  'Exoray',                   'Exoray',                   15,  -64,       -9,        78,        51  ),
 (17584377, 0,  'Mushussu',                 'Mushussu',                 30,  40,        -1,        345,       49  ),
-(17584378, 0,  'Mushussu',                 'Mushussu',                 30,  -45.569,   -0.492,    -324.077,  237 ),
+(17584378, 0,  'Frank',                    'Frank',                    30,  -45.569,   -0.492,    -324.077,  237 ),
 (17584379, 0,  'Mushussu',                 'Mushussu',                 30,  43,        -1,        372,       127 ),
 (17584380, 0,  'Mushussu',                 'Mushussu',                 30,  44,        -1,        360,       52  ),
 (17584381, 0,  'Witch_Hazel',              'Witch Hazel',              28,  -61,       -8,        142,       127 ),

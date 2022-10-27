@@ -52,7 +52,7 @@ entity.onMobFight = function(mob, target)
                 mob:setLocalVar("COPY_SPELL", 0)
                 mob:setLocalVar("delay", 0)
             else
-                mob:setLocalVar("delay", delay+1)
+                mob:setLocalVar("delay", delay + 1)
             end
         end
     end
@@ -89,7 +89,7 @@ entity.onMagicHit = function(caster, target, spell)
     return 1
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
     -- Despawn the pets if alive
     DespawnMob(ID.mob.KFGHRAH_WHM)
     DespawnMob(ID.mob.KFGHRAH_BLM)

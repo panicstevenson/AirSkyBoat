@@ -8,9 +8,9 @@ require("scripts/globals/items")
 require("scripts/globals/pathfind")
 require("scripts/globals/utils")
 -----------------------------------
-local instance_object = {}
+local instanceObject = {}
 
-instance_object.registryRequirements = function(player)
+instanceObject.registryRequirements = function(player)
     return player:hasKeyItem(xi.ki.PERIQIA_ASSAULT_ORDERS) and
            player:getCurrentAssault() == xi.assault.mission.SEAGULL_GROUNDED and
            player:getCharVar("assaultEntered") == 0 and
@@ -18,52 +18,55 @@ instance_object.registryRequirements = function(player)
            player:getMainLvl() > 50
 end
 
-instance_object.entryRequirements = function(player)
+instanceObject.entryRequirements = function(player)
     return player:hasKeyItem(xi.ki.PERIQIA_ASSAULT_ORDERS) and
            player:getCurrentAssault() == xi.assault.mission.SEAGULL_GROUNDED and
            player:getCharVar("assaultEntered") == 0 and
            player:getMainLvl() > 50
 end
 
-instance_object.onInstanceCreated = function(instance)
+instanceObject.onInstanceCreated = function(instance)
 end
 
-instance_object.onInstanceCreatedCallback = function(player, instance)
+instanceObject.onInstanceCreatedCallback = function(player, instance)
     xi.assault.onInstanceCreatedCallback(player, instance)
     xi.instance.onInstanceCreatedCallback(player, instance)
 end
 
-instance_object.afterInstanceRegister = function(player)
+instanceObject.afterInstanceRegister = function(player)
     local instance = player:getInstance()
 
     xi.assault.afterInstanceRegister(player, xi.items.CAGE_OF_REEF_FIREFLIES)
-    GetNPCByID(ID.npc.RUNE_OF_RELEASE, instance):setPos(-495.000,-9.695,-72.000,0)
-    GetNPCByID(ID.npc.ANCIENT_LOCKBOX, instance):setPos(-490.000,-9.900,-72.000,0)
+    GetNPCByID(ID.npc.RUNE_OF_RELEASE, instance):setPos(-495.000, -9.695, -72.000, 0)
+    GetNPCByID(ID.npc.ANCIENT_LOCKBOX, instance):setPos(-490.000, -9.900, -72.000, 0)
 end
 
-instance_object.onInstanceTimeUpdate = function(instance, elapsed)
+instanceObject.onInstanceTimeUpdate = function(instance, elapsed)
     local mob = GetMobByID(ID.mob[xi.assault.mission.SEAGULL_GROUNDED].MOBS_START.EXCALIAC, instance)
     if mob ~= nil then
-        instance_object.onTrack(instance)
+        instanceObject.onTrack(instance)
     end
     xi.instance.updateInstanceTime(instance, elapsed, ID.text)
 end
 
-instance_object.onInstanceFailure = function(instance)
+instanceObject.onInstanceFailure = function(instance)
     xi.assault.onInstanceFailure(instance)
 end
 
-instance_object.onInstanceProgressUpdate = function(instance, progress)
+instanceObject.onInstanceProgressUpdate = function(instance, progress)
 end
 
-instance_object.onInstanceComplete = function(instance)
+instanceObject.onInstanceComplete = function(instance)
     xi.assault.onInstanceComplete(instance, 8, 8)
 end
 
-instance_object.onEventFinish = function(player, csid, option)
+instanceObject.onEventFinish = function(player, csid, option)
 end
 
-instance_object.onTrack = function(instance)
+-- TODO: Reduce complexity
+-- Disable cyclomatic complexity check for this function:
+-- luacheck: ignore 561
+instanceObject.onTrack = function(instance)
     local path =
     {
         [0] =
@@ -355,7 +358,7 @@ instance_object.onTrack = function(instance)
         for _, enemys in pairs(mobs) do
             if mob:checkDistance(enemys) < 12 and mob:getID() ~= enemys:getID() and enemys:isSpawned() then
                 if mobChatMessage == 0 then
-                    mob:setLocalVar("runTimer", os.time() + math.random(20,40))
+                    mob:setLocalVar("runTimer", os.time() + math.random(20, 40))
                     mob:setLocalVar("mobChatMessage", 1)
                     mob:setLocalVar("moveStatus", 1)
                     mob:setLocalVar("runStart", 1)
@@ -466,24 +469,24 @@ instance_object.onTrack = function(instance)
     if moveLock == 1 and constantMove == 1 then
         if mob:atPoint(path[pathLeg][pathPoint]) then
             if moveStatus == 0 then
-                mob:setLocalVar("pathPoint", pathPoint+1)
+                mob:setLocalVar("pathPoint", pathPoint + 1)
             else
                 if runTimer >= os.time() then
-                    mob:setLocalVar("pathPoint", pathPoint-1)
+                    mob:setLocalVar("pathPoint", pathPoint - 1)
                 else
                     if runStart == 1 then
                         mob:setLocalVar("moveLock", 0)
                         if lockToggle == 0 then
-                            mob:showText(mob,ID.text.EXCALIACE_TIRED)
+                            mob:showText(mob, ID.text.EXCALIACE_TIRED)
                             mob:timer(15000, function(mobArg)
-                                mobArg:setLocalVar("runTimer", os.time() + math.random(20,40))
+                                mobArg:setLocalVar("runTimer", os.time() + math.random(20, 40))
                                 mobArg:setLocalVar("moveLock", 1)
                                 mobArg:setLocalVar("lockToggle", 0)
                             end)
                             mob:setLocalVar("lockToggle", 1)
                         end
                     else
-                        mob:setLocalVar("runTimer", os.time() + math.random(30,40))
+                        mob:setLocalVar("runTimer", os.time() + math.random(30, 40))
                         mob:showText(mob, ID.text.EXCALIACE_RUN)
                         mob:setLocalVar("runStart", 1)
                         mob:setSpeed(100)
@@ -492,12 +495,12 @@ instance_object.onTrack = function(instance)
             end
 -- Pathing Control Conditions
             if moveStatus == 0 then
-                if mob:atPoint(path[0][#path[0]]) and bit.band(pathProgressMask, bit.lshift(1,0)) == 0 then
+                if mob:atPoint(path[0][#path[0]]) and bit.band(pathProgressMask, bit.lshift(1, 0)) == 0 then
                     mob:setLocalVar("pathLeg", 1)
                     mob:setLocalVar("pathPoint", 19)
                     mob:setLocalVar("pathProgressMask", 1)
 -- Top Room Option Conditions
-                elseif mob:atPoint(path[1][30]) and bit.band(pathProgressMask, bit.lshift(1,1)) == 0 then
+                elseif mob:atPoint(path[1][30]) and bit.band(pathProgressMask, bit.lshift(1, 1)) == 0 then
                     mob:setLocalVar("moveLock", 0)
                     if lockToggle == 0 then
                         mob:timer(10000, function(mobArg)
@@ -508,20 +511,20 @@ instance_object.onTrack = function(instance)
                         end)
                         mob:setLocalVar("lockToggle", 1)
                     end
-                elseif mob:atPoint(path[topRoomsOption][7]) and bit.band(pathProgressMask, bit.lshift(1,1)) == 0 then
+                elseif mob:atPoint(path[topRoomsOption][7]) and bit.band(pathProgressMask, bit.lshift(1, 1)) == 0 then
                     mob:setLocalVar("moveLock", 0)
                     if lockToggle == 0 then
                         mob:timer(10000, function(mobArg)
                             mobArg:setLocalVar("pathLeg", 1)
                             mobArg:setLocalVar("pathPoint", 30)
-                            mobArg:setLocalVar("pathProgressMask", pathProgressMask+2)
+                            mobArg:setLocalVar("pathProgressMask", pathProgressMask + 2)
                             mobArg:setLocalVar("moveLock", 1)
                             mobArg:setLocalVar("lockToggle", 0)
                         end)
                         mob:setLocalVar("lockToggle", 1)
                     end
 -- Middle Room Option Conditions
-                elseif mob:atPoint(path[1][34]) and bit.band(pathProgressMask, bit.lshift(1,2)) == 0 then
+                elseif mob:atPoint(path[1][34]) and bit.band(pathProgressMask, bit.lshift(1, 2)) == 0 then
                     mob:setLocalVar("moveLock", 0)
                     if lockToggle == 0 then
                         mob:timer(10000, function(mobArg)
@@ -532,20 +535,20 @@ instance_object.onTrack = function(instance)
                         end)
                         mob:setLocalVar("lockToggle", 1)
                     end
-                elseif mob:atPoint(path[middleRoomsOption][7]) and bit.band(pathProgressMask, bit.lshift(1,2)) == 0 then
+                elseif mob:atPoint(path[middleRoomsOption][7]) and bit.band(pathProgressMask, bit.lshift(1, 2)) == 0 then
                     mob:setLocalVar("moveLock", 0)
                     if lockToggle == 0 then
                         mob:timer(10000, function(mobArg)
                             mobArg:setLocalVar("pathLeg", 1)
                             mobArg:setLocalVar("pathPoint", 34)
-                            mobArg:setLocalVar("pathProgressMask", pathProgressMask+4)
+                            mobArg:setLocalVar("pathProgressMask", pathProgressMask + 4)
                             mobArg:setLocalVar("moveLock", 1)
                             mobArg:setLocalVar("lockToggle", 0)
                         end)
                         mob:setLocalVar("lockToggle", 1)
                     end
 -- Bottom Room Option Conditions
-                elseif mob:atPoint(path[1][38]) and bit.band(pathProgressMask, bit.lshift(1,3)) == 0 then
+                elseif mob:atPoint(path[1][38]) and bit.band(pathProgressMask, bit.lshift(1, 3)) == 0 then
                     mob:setLocalVar("moveLock", 0)
                     if lockToggle == 0 then
                         mob:timer(10000, function(mobArg)
@@ -556,13 +559,13 @@ instance_object.onTrack = function(instance)
                         end)
                         mob:setLocalVar("lockToggle", 1)
                     end
-                elseif mob:atPoint(path[bottomRoomsOption][7]) and bit.band(pathProgressMask, bit.lshift(1,3)) == 0 then
+                elseif mob:atPoint(path[bottomRoomsOption][7]) and bit.band(pathProgressMask, bit.lshift(1, 3)) == 0 then
                     mob:setLocalVar("moveLock", 0)
                     if lockToggle == 0 then
                         mob:timer(10000, function(mobArg)
                             mobArg:setLocalVar("pathLeg", 1)
                             mobArg:setLocalVar("pathPoint", 38)
-                            mobArg:setLocalVar("pathProgressMask", pathProgressMask+8)
+                            mobArg:setLocalVar("pathProgressMask", pathProgressMask + 8)
                             mobArg:setLocalVar("moveLock", 1)
                             mobArg:setLocalVar("lockToggle", 0)
                         end)
@@ -610,4 +613,4 @@ instance_object.onTrack = function(instance)
     end
 end
 
-return instance_object
+return instanceObject

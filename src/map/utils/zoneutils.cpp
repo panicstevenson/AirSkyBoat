@@ -82,15 +82,10 @@ namespace zoneutils
                 if (!PZone.second->m_WeatherVector.empty())
                 {
                     PZone.second->SetWeather((WEATHER)PZone.second->m_WeatherVector.at(0).common);
-
-                    // ShowDebug(CL_YELLOW"zonetuils::InitializeWeather: Static weather of %s updated to %u", PZone.second->GetName(),
-                    // PZone.second->m_WeatherVector.at(0).m_common);
                 }
                 else
                 {
                     PZone.second->SetWeather(WEATHER_NONE); // If not weather data found, initialize with WEATHER_NONE
-
-                    // ShowDebug(CL_YELLOW"zonetuils::InitializeWeather: Static weather of %s updated to WEATHER_NONE", PZone.second->GetName());
                 }
             }
         }
@@ -120,8 +115,6 @@ namespace zoneutils
     {
         g_PTrigger->targid = TargID;
         g_PTrigger->id     = ((4096 + ZoneID) << 12) + TargID;
-
-        ShowWarning("Server need NPC <%u>", g_PTrigger->id);
         return g_PTrigger;
     }
 
@@ -789,6 +782,9 @@ namespace zoneutils
             g_PZoneList[0] = CreateZone(0);
         }
 
+        // IDs attached to xi.zone[name] need to be populated before NPCs and Mobs are loaded
+        luautils::PopulateIDLookups();
+
         LoadNPCList();
         LoadMOBList();
         campaign::LoadState();
@@ -1106,6 +1102,40 @@ namespace zoneutils
                 return REGION_TYPE::EAST_ULBUKA;
         }
         return REGION_TYPE::UNKNOWN;
+    }
+
+    uint8 GetFameAreaFromZone(uint16 ZoneID)
+    {
+        switch (ZoneID)
+        {
+            case ZONE_SOUTHERN_SANDORIA:
+            case ZONE_NORTHERN_SANDORIA:
+            case ZONE_PORT_SANDORIA:
+            case ZONE_CHATEAU_DORAGUILLE:
+                return 0;
+            case ZONE_PORT_BASTOK:
+            case ZONE_BASTOK_MARKETS:
+            case ZONE_BASTOK_MINES:
+            case ZONE_METALWORKS:
+                return 1;
+            case ZONE_WINDURST_WATERS:
+            case ZONE_WINDURST_WALLS:
+            case ZONE_PORT_WINDURST:
+            case ZONE_WINDURST_WOODS:
+            case ZONE_HEAVENS_TOWER:
+                return 2;
+            case ZONE_RULUDE_GARDENS:
+            case ZONE_UPPER_JEUNO:
+            case ZONE_LOWER_JEUNO:
+            case ZONE_PORT_JEUNO:
+                return 3;
+            case ZONE_RABAO:
+            case ZONE_SELBINA:
+                return 4;
+            case ZONE_NORG:
+                return 5;
+        }
+        return 255;
     }
 
     CONTINENT_TYPE GetCurrentContinent(uint16 ZoneID)

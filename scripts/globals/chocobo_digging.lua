@@ -93,6 +93,7 @@ local digInfo =
         {   701,   8, digReq.BORE     },
         {   696,  30, digReq.BORE     },
         {  4570,  10, digReq.MODIFIER },
+        {  4570,  10, digReq.MODIFIER },
         {  4487,  11, digReq.MODIFIER },
         {  4409,  12, digReq.MODIFIER },
         {  1188,  10, digReq.MODIFIER },
@@ -853,9 +854,9 @@ local function canDig(player, lastDigTable)
     local currY           = math.floor(posTable.y)
     local currZ           = math.floor(posTable.z)
     local distanceSquared = (lastDigX - currX) * (lastDigX - currX) + (lastDigY - currY) * (lastDigY - currY) + (lastDigZ - currZ) * (lastDigZ - currZ)
-    local zoneInTime               = player:getLocalVar('ZoneInTime')
+    local zoneInTime      = player:getLocalVar('ZoneInTime')
     local currentTime     = os.time()
-    local skillRank                = player:getSkillRank(xi.skill.DIG)
+    local skillRank       = player:getSkillRank(xi.skill.DIG)
     -- personal dig caps
     local digCap          = DIG_FATIGUE + (skillRank * 10)
     -- base delay -5 for each rank
@@ -955,6 +956,9 @@ local function calculateSkillUp(player)
     end
 end
 
+-- TODO: Reduce complexity
+-- Disable cyclomatic complexity check for this function:
+-- luacheck: ignore 561
 local function getChocoboDiggingItem(player)
     local allItems        = digInfo[player:getZoneID()]
     local burrowAbility = (DIG_GRANT_BURROW == 1) and 1 or 0
@@ -1115,7 +1119,7 @@ xi.chocoboDig.start = function(player, precheck)
         end
 
         if zoneDugCurrent + 1 > DIG_ZONE_LIMIT then
-            if skillRank < 10 then -- Safety check. Let's not try to skill-up if at max skill.
+            if skillRank < 10 and xi.settings.main.DIG_FATIGUE_SKILL_UP then -- Safety check. Let's not try to skill-up if at max skill.
                 calculateSkillUp(player)
             end
 

@@ -204,6 +204,7 @@ CZoneInPacket::CZoneInPacket(CCharEntity* PChar, int16 csid)
         ref<uint8>(0x80)  = 1;
         ref<uint16>(0xAA) = GetMogHouseID(PChar);   // Mog House id
         ref<uint8>(0xAE)  = GetMogHouseFlag(PChar); // Mog House leaving flag
+        PChar->setVolatileCharVar("[MOGHOUSE]Exit_Pending", 1);
     }
     else
     {

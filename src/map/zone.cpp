@@ -666,8 +666,6 @@ void CZone::UpdateWeather()
     SetWeather((WEATHER)Weather);
     luautils::OnZoneWeatherChange(GetID(), Weather);
 
-    // ShowDebug(CL_YELLOW"Zone::zone_update_weather: Weather of %s updated to %u", PZone->GetName(), Weather);
-
     CTaskMgr::getInstance()->AddTask(new CTaskMgr::CTask("zone_update_weather", server_clock::now() + std::chrono::seconds(WeatherNextUpdate), this,
                                                          CTaskMgr::TASK_ONCE, zone_update_weather));
 }
@@ -728,6 +726,8 @@ void CZone::IncreaseZoneCounter(CCharEntity* PChar)
     {
         createZoneTimer();
     }
+
+    PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_ON_ZONE_PATHOS, true);
 
     CharZoneIn(PChar);
 }
@@ -1042,6 +1042,34 @@ void CZone::CharZoneIn(CCharEntity* PChar)
         if (auto* PBattlefield = m_BattlefieldHandler->GetBattlefield(PChar, true))
         {
             PBattlefield->InsertEntity(PChar, true);
+        }
+        else if (PChar->StatusEffectContainer->HasStatusEffectByFlag(EFFECTFLAG_CONFRONTATION))
+        {
+            // Player is in a zone with a battlefield but they are not part of one.
+            if (PChar->StatusEffectContainer->GetStatusEffect(EFFECT_BATTLEFIELD)->GetSubPower() == 1)
+            {
+                // If inside of the battlefield arena then kick them out
+                m_BattlefieldHandler->addOrphanedPlayer(PChar);
+            }
+            else
+            {
+                // Is not inside of a battlefield arena so remove the battlefield effect
+                PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_CONFRONTATION, true);
+                PChar->StatusEffectContainer->DelStatusEffect(EFFECT_LEVEL_RESTRICTION);
+                if (PChar->PPet)
+                {
+                    PChar->PPet->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_CONFRONTATION, true);
+                }
+            }
+        }
+    }
+    else if (PChar->StatusEffectContainer->HasStatusEffectByFlag(EFFECTFLAG_CONFRONTATION))
+    {
+        // Player is zoning into a zone that does not have a battlefield but the player has a confrontation effect - remove it
+        PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_CONFRONTATION, true);
+        if (PChar->PPet)
+        {
+            PChar->PPet->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_CONFRONTATION, true);
         }
     }
 

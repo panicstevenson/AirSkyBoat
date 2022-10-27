@@ -693,6 +693,11 @@ void SmallPacket0x015(map_session_data_t* const PSession, CCharEntity* const PCh
             {
                 float distanceTravelled = distance(PChar->m_previousLocation.p, PChar->loc.p);
                 PChar->m_charHistory.distanceTravelled += static_cast<uint32>(distanceTravelled);
+
+                if (PChar->bazaar.timer <= time(NULL))
+                {
+                    PChar->pushPacket(new CBazaarMessagePacket(PChar));
+                }
             }
         }
 
@@ -744,6 +749,10 @@ void SmallPacket0x016(map_session_data_t* const PSession, CCharEntity* const PCh
             if (!PEntity)
             {
                 PEntity = zoneutils::GetTrigger(targid, PChar->getZone());
+
+                // PEntity->id will now be the full id of the entity we could not find
+                ShowWarning(fmt::format("Server missing npc_list.sql entry <{}> in zone <{} ({})>",
+                                        PEntity->id, zoneutils::GetZone(PChar->getZone())->GetName(), PChar->getZone()));
             }
             PChar->updateEntityPacket(PEntity, ENTITY_SPAWN, UPDATE_ALL_MOB);
         }
@@ -776,7 +785,6 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
 {
     TracyZoneScoped;
 
-    // uint32 ID = data.ref<uint32>(0x04);
     uint16     TargID       = data.ref<uint16>(0x08);
     uint8      action       = data.ref<uint8>(0x0A);
     position_t actionOffset = {
@@ -839,10 +847,11 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
                 return "Unknown";
         }
     };
-    auto actionStr = actionToStr(action);
-    TracyZoneString(fmt::format("Player Action: {}: {} -> targid: {}", PChar->GetName(), actionStr, TargID));
 
-    DebugActions(fmt::format("CLIENT {} PERFORMING ACTION {} (0x{:02X})", PChar->GetName(), actionStr, action));
+    auto actionStr = fmt::format("Player Action: {}: {} (0x{:02X}) -> targid: {}", PChar->GetName(), actionToStr(action), action, TargID);
+    TracyZoneString(actionStr);
+    ShowTrace(actionStr);
+    DebugActions(actionStr);
 
     switch (action)
     {
@@ -1828,7 +1837,7 @@ void SmallPacket0x036(map_session_data_t* const PSession, CCharEntity* const PCh
 void SmallPacket0x037(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
-    // uint32 EntityID = data.ref<uint32>(0x04);
+
     uint16 TargetID  = data.ref<uint16>(0x0C);
     uint8  SlotID    = data.ref<uint8>(0x0E);
     uint8  StorageID = data.ref<uint8>(0x10);
@@ -3153,7 +3162,6 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
                 {
                     sql->NextRow();
                     ah_listings = (uint32)sql->GetIntData(0);
-                    // ShowDebug(CL_CYAN"%s has %d outstanding listings before placing this one.", PChar->GetName(), ah_listings);
                 }
 
                 if (settings::get<uint8>("map.AH_LIST_LIMIT") && ah_listings >= settings::get<uint8>("map.AH_LIST_LIMIT"))
@@ -3299,18 +3307,32 @@ void SmallPacket0x050(map_session_data_t* const PSession, CCharEntity* const PCh
     uint8 equipSlotID = data.ref<uint8>(0x05); // charequip slot
     uint8 containerID = data.ref<uint8>(0x06); // container id
 
-    if (containerID != LOC_INVENTORY && containerID != LOC_WARDROBE && containerID != LOC_WARDROBE2 && containerID != LOC_WARDROBE3 &&
-        containerID != LOC_WARDROBE4 && containerID != LOC_WARDROBE5 && containerID != LOC_WARDROBE6 && containerID != LOC_WARDROBE7 &&
-        containerID != LOC_WARDROBE8)
+    bool isAdditionalContainer =
+        containerID == LOC_MOGSATCHEL ||
+        containerID == LOC_MOGSACK ||
+        containerID == LOC_MOGCASE;
+
+    bool isEquippableInventory =
+        containerID == LOC_INVENTORY ||
+        containerID == LOC_WARDROBE ||
+        containerID == LOC_WARDROBE2 ||
+        containerID == LOC_WARDROBE3 ||
+        containerID == LOC_WARDROBE4 ||
+        containerID == LOC_WARDROBE5 ||
+        containerID == LOC_WARDROBE6 ||
+        containerID == LOC_WARDROBE7 ||
+        containerID == LOC_WARDROBE8 ||
+        (settings::get<bool>("main.EQUIP_FROM_OTHER_CONTAINERS") &&
+         isAdditionalContainer);
+
+    bool isLinkshell =
+        equipSlotID == SLOT_LINK1 ||
+        equipSlotID == SLOT_LINK2;
+
+    // Sanity check
+    if (!isEquippableInventory && !isLinkshell)
     {
-        if (equipSlotID != 16 && equipSlotID != 17)
-        {
-            return;
-        }
-        else if (containerID != LOC_MOGSATCHEL && containerID != LOC_MOGSACK && containerID != LOC_MOGCASE)
-        {
-            return;
-        }
+        return;
     }
 
     charutils::EquipItem(PChar, slotID, equipSlotID, containerID); // current
@@ -3403,10 +3425,8 @@ void SmallPacket0x053(map_session_data_t* const PSession, CCharEntity* const PCh
 
         for (int i = 0x08; i < 0x08 + (0x08 * count); i += 0x08)
         {
-            // uint8 slotId = data.ref<uint8>(i);
-            uint8 equipSlotId = data.ref<uint8>(i + 0x01);
-            // uint8 locationId = data.ref<uint8>(i + 0x02);
-            uint16 itemId = data.ref<uint16>(i + 0x04);
+            uint8  equipSlotId = data.ref<uint8>(i + 0x01);
+            uint16 itemId      = data.ref<uint16>(i + 0x04);
 
             if (equipSlotId > SLOT_BACK || equipSlotId == SLOT_RANGED || equipSlotId == SLOT_AMMO)
             {
@@ -3531,9 +3551,7 @@ void SmallPacket0x05B(map_session_data_t* const PSession, CCharEntity* const PCh
     if (!PChar->isInEvent())
         return;
 
-    // auto CharID = data.ref<uint32>(0x04);
-    auto Result = data.ref<uint32>(0x08);
-    // auto ZoneID = data.ref<uint16>(0x10);
+    auto Result  = data.ref<uint32>(0x08);
     auto EventID = data.ref<uint16>(0x12);
 
     if (PChar->currentEvent->eventId == EventID)
@@ -3580,9 +3598,7 @@ void SmallPacket0x05C(map_session_data_t* const PSession, CCharEntity* const PCh
     if (!PChar->isInEvent())
         return;
 
-    // auto CharID = data.ref<uint32>(0x10);
-    auto Result = data.ref<uint32>(0x14);
-    // auto ZoneID = data.ref<uint16>(0x18);
+    auto Result  = data.ref<uint32>(0x14);
     auto EventID = data.ref<uint16>(0x1A);
 
     if (PChar->currentEvent->eventId == EventID)
@@ -3867,7 +3883,7 @@ void SmallPacket0x05E(map_session_data_t* const PSession, CCharEntity* const PCh
 void SmallPacket0x060(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
-    // uint32 charid = data.ref<uint32>(0x04);
+
     std::string updateString = std::string((char*)data[12]);
     luautils::OnEventUpdate(PChar, updateString);
 
@@ -4696,7 +4712,63 @@ void SmallPacket0x084(map_session_data_t* const PSession, CCharEntity* const PCh
             quantity = std::min(quantity, PItem->getQuantity());
             // Store item-to-sell in the last slot of the shop container
             PChar->Container->setItem(PChar->Container->getExSize(), itemID, slotID, quantity);
-            PChar->pushPacket(new CShopAppraisePacket(slotID, PItem->getBasePrice()));
+
+            uint32 basePrice = PItem->getBasePrice();
+            uint16 fame      = 0;
+            float  mult      = 1.0f;
+
+            // Start Fame calculations
+            float fameMultiplier = settings::get<bool>("map.FAME_MULTIPLIER");
+            uint8 fameArea       = zoneutils::GetFameAreaFromZone(PChar->getZone());
+
+            switch (fameArea)
+            {
+                case 0: // San d'Oria
+                case 1: // Bastok
+                case 2: // Windurst
+                    fame = (uint16)(PChar->profile.fame[fameArea] * fameMultiplier);
+                    break;
+                case 3: // Jeuno
+                    fame = (uint16)(PChar->profile.fame[4] + ((PChar->profile.fame[0] + PChar->profile.fame[1] + PChar->profile.fame[2]) * fameMultiplier / 3));
+                    break;
+                case 4: // Selbina / Rabao
+                    fame = (uint16)((PChar->profile.fame[0] + PChar->profile.fame[1]) * fameMultiplier / 2);
+                    break;
+                case 5: // Norg
+                    fame = (uint16)(PChar->profile.fame[3] * fameMultiplier);
+                    break;
+                default: // default to no fame for worst sale price
+                    fame = 0;
+                    break;
+            }
+
+            // Amalasanda
+            if (PChar->getZone() == ZONE_LOWER_JEUNO && PChar->loc.p.x > 23.0f && PChar->loc.p.x < 45.0f && PChar->loc.p.z > -62.0f && PChar->loc.p.z < -29.0f)
+                fame = (uint16)(PChar->profile.fame[3] * fameMultiplier); // use tenshodo fame
+
+            if (basePrice >= 160)
+            {
+                mult = 1.025f;
+                if (fame < 613)
+                {
+                    mult = 1.0f + 0.025f * (float)fame / 612.0f;
+                }
+            }
+
+            if (basePrice < 160)
+            {
+                mult = 1.1f;
+                if (fame < 613)
+                {
+                    mult = 1.0f + 0.1f * (float)fame / 612.0f;
+                }
+            }
+
+            if (basePrice == 1)
+                mult = 1.0f; // dont round down to 0
+            // fame end
+
+            PChar->pushPacket(new CShopAppraisePacket(slotID, basePrice * mult));
         }
         return;
     }
@@ -4722,7 +4794,7 @@ void SmallPacket0x085(map_session_data_t* const PSession, CCharEntity* const PCh
 
     if ((PItem != nullptr) && ((gil != nullptr) && gil->isType(ITEM_CURRENCY)))
     {
-        if (quantity < 1 || quantity > PItem->getStackSize()) // Possible exploit
+        if (quantity < 1 || quantity > PItem->getStackSize()) // Possible exploit m_fameType
         {
             ShowWarning("SmallPacket0x085: Player %s trying to sell invalid quantity %u of itemID %u [to VENDOR] ", PChar->GetName(),
                         quantity);
@@ -4743,7 +4815,62 @@ void SmallPacket0x085(map_session_data_t* const PSession, CCharEntity* const PCh
             return;
         }
 
-        charutils::UpdateItem(PChar, LOC_INVENTORY, 0, quantity * PItem->getBasePrice());
+        uint32 basePrice = PItem->getBasePrice();
+        uint16 fame      = 0;
+        float  mult      = 1.0f;
+
+        // Start Fame calculations
+        float fameMultiplier = settings::get<bool>("map.FAME_MULTIPLIER");
+        uint8 fameArea       = zoneutils::GetFameAreaFromZone(PChar->getZone());
+
+        switch (fameArea)
+        {
+            case 0: // San d'Oria
+            case 1: // Bastok
+            case 2: // Windurst
+                fame = (uint16)(PChar->profile.fame[fameArea] * fameMultiplier);
+                break;
+            case 3: // Jeuno
+                fame = (uint16)(PChar->profile.fame[4] + ((PChar->profile.fame[0] + PChar->profile.fame[1] + PChar->profile.fame[2]) * fameMultiplier / 3));
+                break;
+            case 4: // Selbina / Rabao
+                fame = (uint16)((PChar->profile.fame[0] + PChar->profile.fame[1]) * fameMultiplier / 2);
+                break;
+            case 5: // Norg
+                fame = (uint16)(PChar->profile.fame[3] * fameMultiplier);
+                break;
+            default: // default to no fame for worst sale price
+                fame = 0;
+                break;
+        }
+
+        // Amalasanda
+        if (PChar->getZone() == ZONE_LOWER_JEUNO && PChar->loc.p.x > 23.0f && PChar->loc.p.x < 45.0f && PChar->loc.p.z > -62.0f && PChar->loc.p.z < -29.0f)
+            fame = (uint16)(PChar->profile.fame[3] * fameMultiplier); // use tenshodo fame
+
+        if (basePrice >= 160)
+        {
+            mult = 1.025f;
+            if (fame < 613)
+            {
+                mult = 1.0f + 0.025f * (float)fame / 612.0f;
+            }
+        }
+
+        if (basePrice < 160)
+        {
+            mult = 1.1f;
+            if (fame < 613)
+            {
+                mult = 1.0f + 0.1f * (float)fame / 612.0f;
+            }
+        }
+
+        if (basePrice == 1)
+            mult = 1.0f; // dont round down to 0
+        // fame end
+
+        charutils::UpdateItem(PChar, LOC_INVENTORY, 0, quantity * (uint32)((float)basePrice * mult));
         charutils::UpdateItem(PChar, LOC_INVENTORY, slotID, -(int32)quantity);
         ShowInfo("SmallPacket0x085: Player '%s' sold %u of itemID %u [to VENDOR] ", PChar->GetName(), quantity, itemID);
         PChar->pushPacket(new CMessageStandardPacket(nullptr, itemID, quantity, MsgStd::Sell));
@@ -4832,9 +4959,9 @@ void SmallPacket0x096(map_session_data_t* const PSession, CCharEntity* const PCh
 
         slotQty[invSlotID]++;
 
-        auto* PSlotItem = PChar->getStorage(LOC_INVENTORY)->GetItem(invSlotID);
+        auto* PItem = PChar->getStorage(LOC_INVENTORY)->GetItem(invSlotID);
 
-        if (PSlotItem && PSlotItem->getID() == ItemID && slotQty[invSlotID] <= (PSlotItem->getQuantity() - PSlotItem->getReserve()))
+        if (PItem && PItem->getID() == ItemID && slotQty[invSlotID] <= (PItem->getQuantity() - PItem->getReserve()))
         {
             PChar->CraftContainer->setItem(SlotID + 1, ItemID, invSlotID, 1);
         }
@@ -5714,7 +5841,6 @@ void SmallPacket0x0DC(map_session_data_t* const PSession, CCharEntity* const PCh
         case NFLAG_INVITE:
             // /invite [on|off]
             PChar->nameflags.flags ^= FLAG_INVITE;
-            // PChar->menuConfigFlags.flags ^= NFLAG_INVITE;
             break;
         case NFLAG_AWAY:
             // /away | /online
@@ -5859,7 +5985,7 @@ void SmallPacket0x0DD(map_session_data_t* const PSession, CCharEntity* const PCh
             PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, PChar->ACC(0, 0), PChar->ATT(SLOT_MAIN), MSGBASIC_CHECKPARAM_PRIMARY));
             if (PChar->getEquip(SLOT_SUB) && PChar->getEquip(SLOT_SUB)->isType(ITEM_WEAPON))
             {
-                PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, PChar->ACC(1, 0), PChar->ATT(SLOT_MAIN), MSGBASIC_CHECKPARAM_AUXILIARY));
+                PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, PChar->ACC(1, 0), PChar->ATT(SLOT_SUB), MSGBASIC_CHECKPARAM_AUXILIARY));
             }
             else
             {
@@ -5989,6 +6115,8 @@ void SmallPacket0x0DD(map_session_data_t* const PSession, CCharEntity* const PCh
                 {
                     PTarget->pushPacket(new CMessageStandardPacket(PChar, 0, 0, MsgStd::Examine));
                 }
+
+                PChar->bazaar.timer = time(NULL) + 30;
 
                 PChar->pushPacket(new CBazaarMessagePacket(PTarget));
                 PChar->pushPacket(new CCheckPacket(PChar, PTarget));
@@ -6926,7 +7054,7 @@ void SmallPacket0x100(map_session_data_t* const PSession, CCharEntity* const PCh
 
         if (lua["xi"]["settings"]["map"]["MH_EXIT_HOMEPOINT"])
         {
-            PChar->setCharVar("[MOGHOUSE]Exit_Job_Change", 1);
+            PChar->setVolatileCharVar("[MOGHOUSE]Exit_Job_Change", 1);
         }
 
         PChar->pushPacket(new CCharJobsPacket(PChar));
@@ -7634,7 +7762,6 @@ void SmallPacket0x11D(map_session_data_t* const PSession, CCharEntity* const PCh
         return;
     }
 
-    // auto const& targetID    = data.ref<uint32>(0x04);
     auto const& targetIndex = data.ref<uint16>(0x08);
     auto const& extra       = data.ref<uint16>(0x0A);
 

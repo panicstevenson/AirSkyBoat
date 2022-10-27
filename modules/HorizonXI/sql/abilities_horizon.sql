@@ -18,7 +18,7 @@ UPDATE abilities SET content_tag = 'COP' WHERE name = 'ready'; -- ID 251: Ready 
 UPDATE abilities SET recastTime = '1' WHERE abilityId > '671' AND abilityId < '773'; -- Ready Charge Changes
 UPDATE abilities SET recastTime = '120' WHERE name = 'high_jump';
 UPDATE abilities SET recastTime = '1200', content_tag = 'COP' WHERE name = 'bestial_loyalty';
-UPDATE abilities SET recastTime = '3600', content_tag = 'COP', level = '1' WHERE name = 'mikage';
+UPDATE abilities SET recastTime = '7200', content_tag = 'COP', level = '0' WHERE name = 'mikage'; -- New NIN 2hr
 DELETE FROM abilities WHERE name = 'mijin_gakure';
 
 UNLOCK TABLES;

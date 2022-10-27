@@ -4,6 +4,7 @@
 -- ZONE 206 - Qu'Bia Arena
 
 REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`, `groupid`, `pos_x`, `pos_y`, `pos_z`, `pos_rot`) VALUES
+    -- The Rank 5 Mission
     (17620993, 0, 'Archlich_Taberquoan',      'Archlich Taber\'quoan',    1,   -399.908,  -201.625,  386.934,   196 ),
     (17620994, 0, 'Ancient_Sorcerer',         'Ancient Sorcerer',         2,   -416.616,  -201.625,  409.581,   0   ),
     (17620995, 0, 'Ancient_Sorcerer',         'Ancient Sorcerer',         2,   -382.831,  -201.625,  409.757,   128 ),
@@ -25,6 +26,8 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (17621011, 0, 'Ancient_Warrior',          'Ancient Warrior',          3,   373.84,    200.875,   -322.688,  0   ),
     (17621012, 0, 'Ancient_Warrior',          'Ancient Warrior',          3,   426.232,   200.875,   -322.82,   0   ),
     (17621013, 0, 'Ancient_Warrior',          'Ancient Warrior',          3,   426.077,   200.875,   -336.398,  0   ),
+
+    -- The Heir to the Light (Sandy 9-2)
     (17621014, 0, 'Warlord_Rojgnoj',          'Warlord Rojgnoj',          4,   -400,      -201,      389,       191 ),
     (17621015, 0, 'Rojgnojs_Left_Hand',       'Rojgnoj\'s Left Hand',     5,   -396,      -201,      389,       191 ),
     (17621016, 0, 'Rojgnojs_Right_Hand',      'Rojgnoj\'s Right Hand',    6,   -404,      -201,      389,       191 ),
@@ -67,6 +70,8 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (17621053, 0, 'Worgbut_of_Clan_Death',    'Worgbut of Clan Death',    10,  388.028,   199,       -404.677,  191 ),
     (17621054, 0, 'Worgbut_of_Clan_Death',    'Worgbut of Clan Death',    10,  384.028,   199,       -402.677,  191 ),
     (17621055, 0, 'Death_Clan_Destroyer',     'Death Clan Destroyer',     11,  400.028,   199,       -412.677,  191 ),
+
+    -- Shattering Stars
     (17621056, 0, 'Maat',                     'Maat',                     12,  -399,      -201,      399,       190 ),
     (17621057, 0, 'Maat',                     'Maat',                     12,  1.073,     -1,        -0.901,    190 ),
     (17621058, 0, 'Maat',                     'Maat',                     12,  401.028,   199,       -400.677,  190 ),
@@ -76,6 +81,8 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (17621062, 0, 'Maat',                     'Maat',                     14,  -399,      -201,      399,       190 ),
     (17621063, 0, 'Maat',                     'Maat',                     14,  1.073,     -1,        -0.901,    190 ),
     (17621064, 0, 'Maat',                     'Maat',                     14,  401.028,   199,       -400.677,  190 ),
+
+    -- Die by the Sword (BS30)
     (17621065, 0, 'Gladiatorial_Weapon',      'Gladiatorial Weapon',      15,  -400,      -202,      400,       190 ),
     (17621066, 0, 'Gladiatorial_Weapon',      'Gladiatorial Weapon',      15,  -395,      -201,      400,       190 ),
     (17621067, 0, 'Gladiatorial_Weapon',      'Gladiatorial Weapon',      15,  -405,      -201,      400,       190 ),
@@ -85,8 +92,10 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (17621073, 0, 'Gladiatorial_Weapon',      'Gladiatorial Weapon',      15,  400,       199,       -400,      190 ),
     (17621074, 0, 'Gladiatorial_Weapon',      'Gladiatorial Weapon',      15,  395,       199,       -400,      190 ),
     (17621075, 0, 'Gladiatorial_Weapon',      'Gladiatorial Weapon',      15,  405,       199,       -400,      190 ),
+
+    -- Let Sleeping Dogs Die (BS30)
     (17621077, 0, 'Capelthwaite',             'Capelthwaite',             16,  -404,      -202,      400,       195 ),
-    (17621078, 0, 'Freybug',                  'Freybug',                  17,  96,        -202,      400,       195 ),
+    (17621078, 0, 'Freybug',                  'Freybug',                  17,  -396,      -202,      400,       195 ),
     (17621079, 0, 'Rongeur_Dos',              'Rongeur D\'os',            18,  -400,      -202,      404,       195 ),
     (17621080, 0, 'Guytrash',                 'Guytrash',                 19,  -400,      -202,      396,       195 ),
     (17621082, 0, 'Capelthwaite',             'Capelthwaite',             16,  4,         -2,        0,         195 ),
@@ -94,9 +103,11 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (17621084, 0, 'Rongeur_Dos',              'Rongeur D\'os',            18,  0,         -2,        4,         195 ),
     (17621085, 0, 'Guytrash',                 'Guytrash',                 19,  0,         -2,        -4,        195 ),
     (17621087, 0, 'Capelthwaite',             'Capelthwaite',             16,  404,       197,       -400,      195 ),
-    (17621088, 0, 'Freybug',                  'Freybug',                  17,  6,         197,       -400,      195 ),
+    (17621088, 0, 'Freybug',                  'Freybug',                  17,  396,       197,       -400,      195 ),
     (17621089, 0, 'Rongeur_Dos',              'Rongeur D\'os',            18,  400,       197,       -404,      195 ),
     (17621090, 0, 'Guytrash',                 'Guytrash',                 19,  400,       197,       -396,      195 ),
+
+    -- Factory Rejects (BS40)
     (17621092, 0, 'Doll_Factory',             'Doll Factory',             20,  -400,      -201,      400,       190 ),
     (17621093, 0, 'Generic_Doll',             'Generic Doll',             21,  -400,      -201,      400,       190 ),
     (17621094, 0, 'Generic_Doll',             'Generic Doll',             21,  -400,      -201,      400,       190 ),
@@ -115,36 +126,44 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (17621109, 0, 'Generic_Doll',             'Generic Doll',             21,  400,       199,       -400,      190 ),
     (17621110, 0, 'Generic_Doll',             'Generic Doll',             21,  400,       199,       -400,      190 ),
     (17621111, 0, 'Generic_Doll',             'Generic Doll',             21,  400,       199,       -400,      190 ),
-    (17621113, 0,  'Ghul-I-Beaban',            'Ghul-I-Beaban',           22,  -400,      -202,      400,       190 ),
-    (17621114, 0,  'Ghul-I-Beaban',            'Ghul-I-Beaban',           23,  -400,      -202,      400,       190 ),
-    (17621116, 0,  'Ghul-I-Beaban',            'Ghul-I-Beaban',           22,  0,         -2,        0,         190 ),
-    (17621117, 0,  'Ghul-I-Beaban',            'Ghul-I-Beaban',           23,  0,         -2,        0,         190 ),
-    (17621119, 0,  'Ghul-I-Beaban',            'Ghul-I-Beaban',           22,  400,       197,       -400,      190 ),
-    (17621120, 0,  'Ghul-I-Beaban',            'Ghul-I-Beaban',           23,  400,       197,       -400,      190 ),
-    (17621122, 0, 'Fire_Golem',               'Fire Golem',               24,  -393,      -201,      399,       185 ),
-    (17621123, 0, 'Water_Golem',              'Water Golem',              25,  -397,      -201,      395,       185 ),
-    (17621124, 0, 'Wind_Golem',               'Wind Golem',               26,  -404,      -201,      399,       195 ),
-    (17621125, 0, 'Earth_Golem',              'Earth Golem',              27,  -402,      -201,      395,       195 ),
-    (17621127, 0, 'Fire_Golem',               'Fire Golem',               24,  7.073,     -1,        -0.901,    185 ),
-    (17621128, 0, 'Water_Golem',              'Water Golem',              25,  3.073,     -1,        -4.901,    185 ),
-    (17621129, 0, 'Wind_Golem',               'Wind Golem',               26,  -3.927,    -1,        -0.901,    195 ),
-    (17621130, 0, 'Earth_Golem',              'Earth Golem',              27,  -1.927,    -1,        -4.901,    195 ),
-    (17621132, 0, 'Fire_Golem',               'Fire Golem',               24,  407.028,   199,       -400.677,  185 ),
-    (17621133, 0, 'Water_Golem',              'Water Golem',              25,  403.028,   199,       -404.677,  185 ),
-    (17621134, 0, 'Wind_Golem',               'Wind Golem',               26,  396.028,   199,       -400.677,  195 ),
-    (17621135, 0, 'Earth_Golem',              'Earth Golem',              27,  398.028,   199,       -404.677,  195 ),
-    (17621137, 0, 'Nephiyl_Rampartbreacher',  'Nephiyl Rampartbreacher',  28,  -390,      -201,      405,       178 ),
-    (17621138, 0, 'Nephiyl_Keepcollapser',    'Nephiyl Keepcollapser',    29,  -410,      -201,      405,       210 ),
-    (17621139, 0, 'Nephiyl_Moatfiller',       'Nephiyl Moatfiller',       30,  -410,      -201,      393,       200 ),
-    (17621140, 0, 'Nephiyl_Pinnacletosser',   'Nephiyl Pinnacletosser',   31,  -390,      -201,      393,       178 ),
-    (17621142, 0, 'Nephiyl_Rampartbreacher',  'Nephiyl Rampartbreacher',  28,  10.073,    -1,        5.099,     178 ),
-    (17621143, 0, 'Nephiyl_Keepcollapser',    'Nephiyl Keepcollapser',    29,  -9.927,    -1,        5.099,     210 ),
-    (17621144, 0, 'Nephiyl_Moatfiller',       'Nephiyl Moatfiller',       30,  -9.927,    -1,        -6.901,    200 ),
-    (17621145, 0, 'Nephiyl_Pinnacletosser',   'Nephiyl Pinnacletosser',   31,  10.073,    -1,        -6.901,    178 ),
-    (17621147, 0, 'Nephiyl_Rampartbreacher',  'Nephiyl Rampartbreacher',  28,  410.028,   199,       -394.677,  178 ),
-    (17621148, 0, 'Nephiyl_Keepcollapser',    'Nephiyl Keepcollapser',    29,  390.028,   199,       -394.677,  210 ),
-    (17621149, 0, 'Nephiyl_Moatfiller',       'Nephiyl Moatfiller',       30,  390.028,   199,       -406.677,  200 ),
-    (17621150, 0, 'Nephiyl_Pinnacletosser',   'Nephiyl Pinnacletosser',   31,  410.028,   199,       -406.677,  178 ),
+
+    -- Undying Promise (BS40)
+    (17621113, 0, 'Ghul-I-Beaban',            'Ghul-I-Beaban',            22,  -400,      -202,      400,       190 ),
+    (17621114, 0, 'Ghul-I-Beaban',            'Ghul-I-Beaban',            23,  -400,      -202,      400,       190 ),
+    (17621116, 0, 'Ghul-I-Beaban',            'Ghul-I-Beaban',            22,  0,         -2,        0,         190 ),
+    (17621117, 0, 'Ghul-I-Beaban',            'Ghul-I-Beaban',            23,  0,         -2,        0,         190 ),
+    (17621119, 0, 'Ghul-I-Beaban',            'Ghul-I-Beaban',            22,  400,       197,       -400,      190 ),
+    (17621120, 0, 'Ghul-I-Beaban',            'Ghul-I-Beaban',            23,  400,       197,       -400,      190 ),
+
+    -- Idol Thoughts (BS50)
+    (17621122, 0, 'Fire_Golem',               'Fire Golem',               24,  -404,      -202,      400,       195 ),
+    (17621123, 0, 'Water_Golem',              'Water Golem',              25,  -396,      -202,      400,       195 ),
+    (17621124, 0, 'Wind_Golem',               'Wind Golem',               26,  -400,      -202,      404,       195 ),
+    (17621125, 0, 'Earth_Golem',              'Earth Golem',              27,  -400,      -202,      396,       195 ),
+    (17621127, 0, 'Fire_Golem',               'Fire Golem',               24,  4,         -2,        0,         195 ),
+    (17621128, 0, 'Water_Golem',              'Water Golem',              25,  -4,        -2,        0,         195 ),
+    (17621129, 0, 'Wind_Golem',               'Wind Golem',               26,  0,         -2,        4,         195 ),
+    (17621130, 0, 'Earth_Golem',              'Earth Golem',              27,  0,         -2,        -4,        195 ),
+    (17621132, 0, 'Fire_Golem',               'Fire Golem',               24,  404,       197,       -400,      195 ),
+    (17621133, 0, 'Water_Golem',              'Water Golem',              25,  396,       197,       -400,      195 ),
+    (17621134, 0, 'Wind_Golem',               'Wind Golem',               26,  400,       197,       -404,      195 ),
+    (17621135, 0, 'Earth_Golem',              'Earth Golem',              27,  400,       197,       -396,      195 ),
+
+    -- Demolition Squad (BS60)
+    (17621137, 0, 'Nephiyl_Rampartbreacher',  'Nephiyl Rampartbreacher',  28,  -493,      -202,      400,       192 ),
+    (17621138, 0, 'Nephiyl_Keepcollapser',    'Nephiyl Keepcollapser',    29,  -407,      -202,      400,       192 ),
+    (17621139, 0, 'Nephiyl_Moatfiller',       'Nephiyl Moatfiller',       30,  -400,      -202,      400,       192 ),
+    (17621140, 0, 'Nephiyl_Pinnacletosser',   'Nephiyl Pinnacletosser',   31,  -400,      -202,      493,       192 ),
+    (17621142, 0, 'Nephiyl_Rampartbreacher',  'Nephiyl Rampartbreacher',  28,  7,         -2,        0,         192 ),
+    (17621143, 0, 'Nephiyl_Keepcollapser',    'Nephiyl Keepcollapser',    29,  -7,        -2,        0,         192 ),
+    (17621144, 0, 'Nephiyl_Moatfiller',       'Nephiyl Moatfiller',       30,  0,         -2,        0,         192 ),
+    (17621145, 0, 'Nephiyl_Pinnacletosser',   'Nephiyl Pinnacletosser',   31,  0,         -2,        -7,        192 ),
+    (17621147, 0, 'Nephiyl_Rampartbreacher',  'Nephiyl Rampartbreacher',  28,  407,       197,       -400,      192 ),
+    (17621148, 0, 'Nephiyl_Keepcollapser',    'Nephiyl Keepcollapser',    29,  393,       197,       -400,      192 ),
+    (17621149, 0, 'Nephiyl_Moatfiller',       'Nephiyl Moatfiller',       30,  400,       197,       -400,      192 ),
+    (17621150, 0, 'Nephiyl_Pinnacletosser',   'Nephiyl Pinnacletosser',   31,  400,       197,       -407,      192 ),
+
+    -- Brothers D'Aurphe (BS60)
     (17621152, 0, 'Vaicoliaux_B_DAurphe',     'Vaicoliaux B D\'Aurphe',   32,  -393,      -201,      399,       185 ),
     (17621153, 0, 'Maldaramet_B_DAurphe',     'Maldaramet B D\'Aurphe',   33,  -397,      -201,      395,       185 ),
     (17621154, 0, 'Disfaurit_B_DAurphe',      'Disfaurit B D\'Aurphe',    34,  -404,      -201,      399,       195 ),
@@ -157,6 +176,8 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (17621163, 0, 'Maldaramet_B_DAurphe',     'Maldaramet B D\'Aurphe',   33,  403.028,   199,       -404.677,  185 ),
     (17621164, 0, 'Disfaurit_B_DAurphe',      'Disfaurit B D\'Aurphe',    34,  396.028,   199,       -400.677,  195 ),
     (17621165, 0, 'Jeumouque_B_DAurphe',      'Jeumouque B D\'Aurphe',    35,  398.028,   199,       -404.677,  195 ),
+
+    -- An Awful Autopsy (BS50)
     (17621167, 0, 'Chahnameeds_Stomach',      'Chahnameed\'s Stomach',    36,  -400,      -201,      400,       190 ),
     (17621168, 0, 'Chahnameeds_Intestines',   'Chahnameed\'s Intestines', 37,  1,         1,         1,         185 ),
     (17621169, 0, 'Chahnameeds_Liver',        'Chahnameed\'s Liver',      38,  1,         1,         1,         195 ),
@@ -169,6 +190,8 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (17621178, 0, 'Chahnameeds_Intestines',   'Chahnameed\'s Intestines', 37,  403.028,   199,       -404.677,  185 ),
     (17621179, 0, 'Chahnameeds_Liver',        'Chahnameed\'s Liver',      38,  396.028,   199,       -400.677,  195 ),
     (17621180, 0, 'Chahnameed',               'Chahnameed',               39,  1,         1,         1,         195 ),
+
+    -- Celery (BS60)
     (17621182, 0, 'Annihilated_Anthony',      'Annihilated Anthony',      40,  -397.5,    -201,      400,       185 ),
     (17621183, 0, 'Shredded_Samson',          'Shredded Samson',          41,  -392.5,    -201,      400,       185 ),
     (17621184, 0, 'Mauled_Murdock',           'Mauled Murdock',           42,  -402.5,    -201,      400,       195 ),
@@ -181,6 +204,8 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (17621193, 0, 'Shredded_Samson',          'Shredded Samson',          41,  392.5,     198,       -400,      185 ),
     (17621194, 0, 'Mauled_Murdock',           'Mauled Murdock',           42,  402.5,     198,       -400,      195 ),
     (17621195, 0, 'Punctured_Percy',          'Punctured Percy',          43,  407.5,     198,       -400,      195 ),
+
+    -- Come Into My Parlor (KS30)
     (17621197, 0, 'Anansi',                   'Anansi',                   44,  -400,      -201,      399,       185 ),
     (17621199, 0, 'Son_of_Anansi',            'Son of Anansi',            45,  -400,      -201,      399,       185 ),
     (17621200, 0, 'Son_of_Anansi',            'Son of Anansi',            45,  -400,      -201,      399,       185 ),
@@ -208,6 +233,8 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (17621224, 0, 'Son_of_Anansi',            'Son of Anansi',            45,  401,       199,       -401,      185 ),
     (17621225, 0, 'Son_of_Anansi',            'Son of Anansi',            45,  401,       199,       -401,      185 ),
     (17621226, 0, 'Son_of_Anansi',            'Son of Anansi',            45,  401,       199,       -401,      185 ),
+
+    -- E-vase-ive Action (KS30)
     (17621227, 0, 'Fire_Pot',                 'Fire Pot',                 46,  -404.1,    -201,      407.3,     185 ),
     (17621228, 0, 'Ice_Pot',                  'Ice Pot',                  47,  -395.8,    -201,      407.7,     185 ),
     (17621229, 0, 'Air_Pot',                  'Air Pot',                  48,  -391.5,    -201,      400.3,     185 ),
@@ -226,45 +253,55 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (17621244, 0, 'Earth_Pot',                'Earth Pot',                49,  404.4,     198,       -406.9,    185 ),
     (17621245, 0, 'Thunder_Pot',              'Thunder Pot',              50,  396,       198,       -407.4,    185 ),
     (17621246, 0, 'Water_Pot',                'Water Pot',                51,  391.6,     198,       -400.3,    185 ),
-    (17621248, 0, 'Beelzebub',                'Beelzebub',                52,  0,         0,         0,         0   ),
-    (17621249, 0, 'Hell_Fly',                 'Hell Fly',                 53,  0,         0,         0,         0   ),
-    (17621250, 0, 'Hell_Fly',                 'Hell Fly',                 53,  0,         0,         0,         0   ),
-    (17621251, 0, 'Hell_Fly',                 'Hell Fly',                 53,  0,         0,         0,         0   ),
-    (17621252, 0, 'Hell_Fly',                 'Hell Fly',                 53,  0,         0,         0,         0   ),
-    (17621253, 0, 'Hell_Fly',                 'Hell Fly',                 53,  0,         0,         0,         0   ),
-    (17621254, 0, 'Hell_Fly',                 'Hell Fly',                 53,  0,         0,         0,         0   ),
-    (17621255, 0, 'Hell_Fly',                 'Hell Fly',                 53,  0,         0,         0,         0   ),
-    (17621256, 0, 'Hell_Fly',                 'Hell Fly',                 53,  0,         0,         0,         0   ),
-    (17621258, 0, 'Beelzebub',                'Beelzebub',                52,  0,         0,         0,         0   ),
-    (17621259, 0, 'Hell_Fly',                 'Hell Fly',                 53,  0,         0,         0,         0   ),
-    (17621260, 0, 'Hell_Fly',                 'Hell Fly',                 53,  0,         0,         0,         0   ),
-    (17621261, 0, 'Hell_Fly',                 'Hell Fly',                 53,  0,         0,         0,         0   ),
-    (17621262, 0, 'Hell_Fly',                 'Hell Fly',                 53,  0,         0,         0,         0   ),
-    (17621263, 0, 'Hell_Fly',                 'Hell Fly',                 53,  0,         0,         0,         0   ),
-    (17621264, 0, 'Hell_Fly',                 'Hell Fly',                 53,  0,         0,         0,         0   ),
-    (17621265, 0, 'Hell_Fly',                 'Hell Fly',                 53,  0,         0,         0,         0   ),
-    (17621266, 0, 'Hell_Fly',                 'Hell Fly',                 53,  0,         0,         0,         0   ),
-    (17621268, 0, 'Beelzebub',                'Beelzebub',                52,  0,         0,         0,         0   ),
-    (17621269, 0, 'Hell_Fly',                 'Hell Fly',                 53,  0,         0,         0,         0   ),
-    (17621270, 0, 'Hell_Fly',                 'Hell Fly',                 53,  0,         0,         0,         0   ),
-    (17621271, 0, 'Hell_Fly',                 'Hell Fly',                 53,  0,         0,         0,         0   ),
-    (17621272, 0, 'Hell_Fly',                 'Hell Fly',                 53,  0,         0,         0,         0   ),
-    (17621273, 0, 'Hell_Fly',                 'Hell Fly',                 53,  0,         0,         0,         0   ),
-    (17621274, 0, 'Hell_Fly',                 'Hell Fly',                 53,  0,         0,         0,         0   ),
-    (17621275, 0, 'Hell_Fly',                 'Hell Fly',                 53,  0,         0,         0,         0   ),
-    (17621276, 0, 'Hell_Fly',                 'Hell Fly',                 53,  0,         0,         0,         0   ),
+
+    -- Infernal Swarm (KS30)
+    (17621248, 0, 'Beelzebub',                'Beelzebub',                52,  -400,      -202,      388.7,     192 ),
+    (17621249, 0, 'Hell_Fly',                 'Hell Fly',                 53,  -406,      -202,      396,       192 ),
+    (17621250, 0, 'Hell_Fly',                 'Hell Fly',                 53,  -402,      -202,      396,       192 ),
+    (17621251, 0, 'Hell_Fly',                 'Hell Fly',                 53,  -398,      -202,      396,       192 ),
+    (17621252, 0, 'Hell_Fly',                 'Hell Fly',                 53,  -394,      -202,      396,       192 ),
+    (17621253, 0, 'Hell_Fly',                 'Hell Fly',                 53,  -406,      -202,      392,       192 ),
+    (17621254, 0, 'Hell_Fly',                 'Hell Fly',                 53,  -402,      -202,      392,       192 ),
+    (17621255, 0, 'Hell_Fly',                 'Hell Fly',                 53,  -398,      -202,      392,       192 ),
+    (17621256, 0, 'Hell_Fly',                 'Hell Fly',                 53,  -394,      -202,      392,       192 ),
+    (17621258, 0, 'Beelzebub',                'Beelzebub',                52,  0,         -2,        -12,       192 ),
+    (17621259, 0, 'Hell_Fly',                 'Hell Fly',                 53,  -6,        -2,        -4,        192 ),
+    (17621260, 0, 'Hell_Fly',                 'Hell Fly',                 53,  -2,        -2,        -4,        192 ),
+    (17621261, 0, 'Hell_Fly',                 'Hell Fly',                 53,  2,         -2,        -4,        192 ),
+    (17621262, 0, 'Hell_Fly',                 'Hell Fly',                 53,  6,         -2,        -4,        192 ),
+    (17621263, 0, 'Hell_Fly',                 'Hell Fly',                 53,  -6,        -2,        -8,        192 ),
+    (17621264, 0, 'Hell_Fly',                 'Hell Fly',                 53,  -2,        -2,        -8,        192 ),
+    (17621265, 0, 'Hell_Fly',                 'Hell Fly',                 53,  2,         -2,        -8,        192 ),
+    (17621266, 0, 'Hell_Fly',                 'Hell Fly',                 53,  6,         -2,        -8,        192 ),
+    (17621268, 0, 'Beelzebub',                'Beelzebub',                52,  400,       198,       -412,      192 ),
+    (17621269, 0, 'Hell_Fly',                 'Hell Fly',                 53,  394,       198,       -404,      192 ),
+    (17621270, 0, 'Hell_Fly',                 'Hell Fly',                 53,  398,       198,       -404,      192 ),
+    (17621271, 0, 'Hell_Fly',                 'Hell Fly',                 53,  402,       198,       -404,      192 ),
+    (17621272, 0, 'Hell_Fly',                 'Hell Fly',                 53,  406,       198,       -404,      192 ),
+    (17621273, 0, 'Hell_Fly',                 'Hell Fly',                 53,  394,       198,       -408,      192 ),
+    (17621274, 0, 'Hell_Fly',                 'Hell Fly',                 53,  398,       198,       -408,      192 ),
+    (17621275, 0, 'Hell_Fly',                 'Hell Fly',                 53,  402,       198,       -408,      192 ),
+    (17621276, 0, 'Hell_Fly',                 'Hell Fly',                 53,  406,       198,       -408,      192 ),
+
+    -- Mirror Images
     (17621278, 0, 'Vassago',                  'Vassago',                  54,  0,         0,         0,         0   ),
     (17621279, 0, 'Vassago',                  'Vassago',                  54,  0,         0,         0,         0   ),
     (17621280, 0, 'Vassago',                  'Vassago',                  54,  0,         0,         0,         0   ),
+
+    -- A Furious Finale (DNC LB5)
     (17621281, 0, 'Laila',                    'Laila',                    55,  0,         0,         0,         0   ),
     (17621282, 0, 'Laila',                    'Laila',                    55,  0,         0,         0,         0   ),
     (17621283, 0, 'Laila',                    'Laila',                    55,  0,         0,         0,         0   ),
+
+    -- Clash of the Comrades
     (17621284, 0, 'Adam',                     'Adam',                     56,  0,         0,         0,         0   ),
     (17621285, 0, 'Crabshaw',                 'Crabshaw',                 57,  0,         0,         0,         0   ),
     (17621286, 0, 'Adam',                     'Adam',                     56,  0,         0,         0,         0   ),
     (17621287, 0, 'Crabshaw',                 'Crabshaw',                 57,  0,         0,         0,         0   ),
     (17621288, 0, 'Adam',                     'Adam',                     56,  0,         0,         0,         0   ),
     (17621289, 0, 'Crabshaw',                 'Crabshaw',                 57,  0,         0,         0,         0   ),
+
+    -- Those Who Lurk in Shadows (ACP7)
     (17621290, 0, 'Seed_Orc',                 'Seed Orc',                 58,  -400,      -202.125,  400,       192 ),
     (17621291, 0, 'Seed_Quadav',              'Seed Quadav',              59,  -396,      -202.5,    392.5,     192 ),
     (17621292, 0, 'Seed_Yagudo',              'Seed Yagudo',              60,  -404,      -202.125,  392.5,     192 ),
@@ -277,9 +314,13 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (17621299, 0, 'Seed_Quadav',              'Seed Quadav',              59,  404.028,   197.5,     -407.177,  192 ),
     (17621300, 0, 'Seed_Yagudo',              'Seed Yagudo',              60,  396.028,   197.875,   -407.177,  192 ),
     (17621301, 0, 'Seed_Goblin',              'Seed Goblin',              61,  400.028,   197.875,   -410.677,  192 ),
+
+    -- Beyond Infinity
     (17621302, 0, 'Atori-Tutori_qm',          'Atori-Tutori ???',         62,  -399,      -201,      399,       190 ),
     (17621303, 0, 'Atori-Tutori_qm',          'Atori-Tutori ???',         62,  1.073,     -1,        -0.901,    190 ),
     (17621304, 0, 'Atori-Tutori_qm',          'Atori-Tutori ???',         62,  401.028,   199,       -400.677,  190 ),
+
+    -- *Factory Rejects (SKC10)
     (17621305, 0, 'Doll_Factory',             'Doll Factory',             63,  0,         0,         0,         0   ),
     (17621306, 0, 'Generic_Doll',             'Generic Doll',             64,  0,         0,         0,         0   ),
     (17621307, 0, 'Generic_Doll',             'Generic Doll',             64,  0,         0,         0,         0   ),
@@ -370,6 +411,8 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (17621406, 0, 'Generic_Doll',             'Generic Doll',             64,  0,         0,         0,         0   ),
     (17621407, 0, 'Generic_Doll',             'Generic Doll',             64,  0,         0,         0,         0   ),
     (17621408, 0, 'Generic_Doll',             'Generic Doll',             64,  0,         0,         0,         0   ),
+
+    -- *Demolition Squad (SKC20)
     (17621410, 0, 'Nephiyl_Rampartbreacher',  'Nephiyl Rampartbreacher',  65,  0,         0,         0,         0   ),
     (17621411, 0, 'Nephiyl_Keepcollapser',    'Nephiyl Keepcollapser',    66,  0,         0,         0,         0   ),
     (17621412, 0, 'Nephiyl_Moatfiller',       'Nephiyl Moatfiller',       67,  0,         0,         0,         0   ),
@@ -430,6 +473,8 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (17621481, 0, 'Nephiyl_Keepcollapser',    'Nephiyl Keepcollapser',    66,  0,         0,         0,         0   ),
     (17621482, 0, 'Nephiyl_Moatfiller',       'Nephiyl Moatfiller',       67,  0,         0,         0,         0   ),
     (17621483, 0, 'Nephiyl_Pinnacletosser',   'Nephiyl Pinnacletosser',   68,  0,         0,         0,         0   ),
+
+    -- *Brothers DAurphe (SKC20)
     (17621485, 0, 'Vaicoliaux_B_DAurphe',     'Vaicoliaux B D\'Aurphe',   69,  0,         0,         0,         0   ),
     (17621486, 0, 'Maldaramet_B_DAurphe',     'Maldaramet B D\'Aurphe',   70,  0,         0,         0,         0   ),
     (17621487, 0, 'Disfaurit_B_DAurphe',      'Disfaurit B D\'Aurphe',    71,  0,         0,         0,         0   ),
@@ -490,6 +535,8 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (17621556, 0, 'Maldaramet_B_DAurphe',     'Maldaramet B D\'Aurphe',   70,  0,         0,         0,         0   ),
     (17621557, 0, 'Disfaurit_B_DAurphe',      'Disfaurit B D\'Aurphe',    71,  0,         0,         0,         0   ),
     (17621558, 0, 'Jeumouque_B_DAurphe',      'Jeumouque B D\'Aurphe',    72,  0,         0,         0,         0   ),
+
+    -- Mumors Encore (Sunbreeze Festival)
     (17621560, 0, 'Ullegore',                 'Ullegore',                 73,  0,         0,         0,         0   ),
     (17621561, 0, 'Ullegore',                 'Ullegore',                 73,  0,         0,         0,         0   ),
     (17621562, 0, 'Mumor',                    'Mumor',                    74,  0,         0,         0,         0   ),

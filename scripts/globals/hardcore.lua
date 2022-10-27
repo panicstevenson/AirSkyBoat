@@ -65,7 +65,18 @@ xi.hardcore.pages =
             "Check Hardcore Rewards",
             function(playerArg)
                 xi.hardcore.dialog(playerArg, 2)
-                if playerArg:getCharVar("hardcoreLvlRewardAvail") == 1 then
+                local rewardAmount = playerArg:getCharVar("rewardsAvail")
+                local npcList =
+                {
+                    [xi.zone.LOWER_JEUNO] = "Frantix",
+                    [xi.zone.BASTOK_MARKETS] = "Franklin",
+                    [xi.zone.WINDURST_WOODS] = "Francine Tuft",
+                    [xi.zone.SOUTHERN_SAN_DORIA] = "Francois",
+                }
+                if playerArg:getFreeSlotsCount() < rewardAmount then
+                    playerArg:PrintToPlayer("Please make room in your inventory.", xi.msg.channel.SAY, npcList[playerArg:getZoneID()])
+                    playerArg:PrintToPlayer("You need " .. tostring(rewardAmount) .. " spaces..", xi.msg.channel.SAY , npcList[playerArg:getZoneID()])
+                elseif playerArg:getCharVar("hardcoreLvlRewardAvail") == 1 then
                     xi.hardcore.dialog(playerArg, 3)
                     xi.hardcore.giveRewards(playerArg)
                 else
@@ -111,10 +122,9 @@ xi.hardcore.levelUp = function(player)
     local reward = 0
 
     if playerLvlRewards ~= 76 then
-        for i in levelRewardTiers do
+        for i in pairs(levelRewardTiers) do
             if level == i then
                 reward = i
-                print(i)
                 break
             end
         end
@@ -311,20 +321,18 @@ xi.hardcore.giveRewards = function(player)
 
     local levelRewardTiers =
     {
-        18,30,51,56,61,66,71,75,76,77,79,84,89,96
+        18, 30, 51, 56, 61, 66, 71, 75, 76, 77, 79, 84, 89, 96
     }
 
     if player:getCharVar("hardcoreLvlRewardAvail") == 1 then
-        player:setCharVar("hardcoreLvlRewardAvail", 0)
-
-        for i in levelRewardTiers do
-            if lvlRewardsTier == i then
+        --player:setCharVar("hardcoreLvlRewardAvail", 0)
+        for i in pairs(levelRewardTiers) do
+            if lvlRewardsTier == levelRewardTiers[i] then
                 rewardTier = count
                 break
             end
             count = count + 1
         end
-
         if rewardAmount > 1 then
             for i = 0, rewardAmount - 1 do
                 player:addItem(levelRewardItems[rewardTier - i])
@@ -335,10 +343,6 @@ xi.hardcore.giveRewards = function(player)
             player:messageSpecial(zones[player:getZoneID()].text.ITEM_OBTAINED, levelRewardItems[rewardTier])
         end
 
-        if levelRewardTiers >= 75 then
-            player:setCharVar("hardcoreLvlRewards", levelRewardTiers + 1)
-        end
-
-        player:setCharVar("rewardsAvail", 0)
+        --player:setCharVar("rewardsAvail", 0)
     end
 end
