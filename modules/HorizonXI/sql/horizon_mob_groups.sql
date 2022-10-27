@@ -65,8 +65,9 @@ UPDATE mob_groups SET spawntype = 32, respawntime = 0 WHERE name = "Bat_Eye" and
 UPDATE mob_groups SET dropid = 256 WHERE name = "King_Crawler" and zoneid = 197; -- Sets King Crawler drop to match Soldier Crawler (KC is OOE) This NEEDS dynaamic renamer
 UPDATE mob_groups SET spawntype = 32, respawntime = 0 WHERE name = "Wyvern" and zoneid = 213;
 
+-- ----------------------------------
 -- Horizon Camps Changes  https://docs.google.com/spreadsheets/d/1vGcjQN89ssux3Tc_OC3mCWofOTh25DDgo9TBx6FoRDI/edit#gid=0
-
+-- ----------------------------------
 -- Carpenters_Landing (Zone 2)
 UPDATE mob_groups set minLevel = 16, maxLevel = 19 WHERE name = "Bulldog_Bats" and zoneid =2;
 UPDATE mob_groups set minLevel = 16, maxLevel = 19 WHERE name = "Specter_Bat" and zoneid =2;
@@ -192,5 +193,46 @@ UPDATE mob_groups SET minLevel = 52, maxLevel = 54 WHERE name = "Sand_Spider"  a
 
 -- Gustav_Tunnel (Zone 212)
 UPDATE mob_groups SET minLevel = 45, maxLevel = 48 WHERE name = "Hell_Bat"  and zoneid = 212;
+
+
+-- ----------------------------------
+--     AF Weapon NM Adjustments
+-- ----------------------------------
+-- WAR
+UPDATE mob_groups SET minLevel = 40, maxLevel = 40, HP = 2500 WHERE name = "Barakbok"  and zoneid = 149;
+UPDATE mob_groups SET minLevel = 40, maxLevel = 40, HP = 3000 WHERE name = "Gavotvut"  and zoneid = 149;
+
+-- MNK
+UPDATE mob_groups SET minLevel = 42, maxLevel = 42, HP = 3400 WHERE name = "Wandering_Ghost"  and zoneid = 196;
+
+-- WHM
+UPDATE mob_groups SET minLevel = 42, maxLevel = 42, HP = 3600 WHERE name = "Marchelute"  and zoneid = 103;
+
+-- BLM
+UPDATE mob_groups SET minLevel = 40, maxLevel = 40, HP = 3000 WHERE name = "Chaos_Elemental"  and zoneid = 112;
+
+-- RDM
+UPDATE mob_groups SET minLevel = 42, maxLevel = 42, HP = 3600 WHERE name = "Purpleflash_Brukdok"  and zoneid = 149;
+
+-- PLD
+UPDATE mob_groups SET minLevel = 40, maxLevel = 40, HP = 3000 WHERE name = "Polevik"  and zoneid = 193;
+
+-- DRK
+UPDATE mob_groups SET minLevel = 42, maxLevel = 42, HP = 3600 WHERE name = "Vaa_Huja_the_Erudite"  and zoneid = 145;
+
+-- BRD
+UPDATE mob_groups SET minLevel = 42, maxLevel = 42, HP = 3400 WHERE name = "Tros"  and zoneid = 166;
+
+-- NIN
+UPDATE mob_groups SET minLevel = 40, maxLevel = 40, HP = 2600 WHERE name = "Tsuchigumo"  and zoneid = 114;
+
+-- SAM
+UPDATE mob_groups SET minLevel = 42, maxLevel = 42, HP = 4100 WHERE name = "Isonade"  and zoneid = 121;
+
+-- DRG
+UPDATE mob_groups SET minLevel = 42, maxLevel = 42, HP = 3800 WHERE name = "Decurio_I-III"  and zoneid = 114;
+
+-- SMN
+UPDATE mob_groups SET minLevel = 42, maxLevel = 42, HP = 3400 WHERE name = "Galgalim"  and zoneid = 209;
 
 UNLOCK TABLES;
