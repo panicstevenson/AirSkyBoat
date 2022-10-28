@@ -559,7 +559,7 @@ xi.magic.applyResistanceEffect = function(caster, target, spell, params)
 
     local p = xi.magic.getMagicHitRate(caster, target, skill, element, effectRes, magicaccbonus, diff)
 
-    return xi.magic.getMagicResist(p, target, params.element, effectRes)
+    return xi.magic.getMagicResist(p, target, element, effectRes)
 end
 
 -- Applies resistance for things that may not be spells - ie. Quick Draw
@@ -602,7 +602,6 @@ xi.magic.getMagicHitRate = function(caster, target, skillType, element, effectRe
     local resMod = 0
     local dLvl = target:getMainLvl() - caster:getMainLvl()
     local dStatAcc = 0
-    local resModAdj = 0
 
     if hybridHit == nil then
         hybridHit = false
@@ -697,17 +696,7 @@ xi.magic.getMagicHitRate = function(caster, target, skillType, element, effectRe
             xi.magic.tryBuildResistance(target, xi.magic.resistMod[element], nil, caster)
         end
 
-        resMod = target:getMod(xi.magic.resistMod[element])
-
-        if resMod > 0 then
-            if resMod <= 100 then
-                resModAdj = math.floor(resMod / 100)
-            elseif resMod <= 145 then
-                resModAdj = 1 + (resMod - 100)
-            else
-                resModAdj = 46 + math.floor((resMod - 145) / 2)
-            end
-        end
+        resMod = utils.clamp(target:getMod(xi.magic.resistMod[element]) - 50, 0, 999)
 
         -- Add acc for elemental affinity accuracy and element specific accuracy
         local affinityBonus = AffinityBonusAcc(caster, element)
@@ -716,10 +705,10 @@ xi.magic.getMagicHitRate = function(caster, target, skillType, element, effectRe
     end
 
     if target:isPC() then
-        magiceva = target:getMod(xi.mod.MEVA) + resModAdj
+        magiceva = target:getMod(xi.mod.MEVA) + resMod
     else
         dLvl = utils.clamp(dLvl, 0, 200) -- Mobs should not have a disadvantage when targeted
-        magiceva = target:getMod(xi.mod.MEVA) + (4 * dLvl) + resModAdj
+        magiceva = target:getMod(xi.mod.MEVA) + (4 * dLvl) + resMod
     end
 
     bonusAcc = bonusAcc + caster:getMerit(xi.merit.MAGIC_ACCURACY) + caster:getMerit(xi.merit.NIN_MAGIC_ACCURACY)
@@ -758,39 +747,39 @@ xi.magic.getMagicResist = function(magicHitRate, target, element, effectRes)
         resMod = target:getMod(xi.magic.resistMod[element])
     end
 
-    if effectRes then
-        resMod = resMod + target:getMod(effectRes)
+    local playerTriggerPoints =
+    {
+        resMod > 200,
+        resMod > 100,
+        resMod >= 0,
+    }
+    local mobTriggerPoints =
+    {
+        evaMult < 1.15,
+        evaMult < 1.30,
+        evaMult < 1.50,
+    }
+    local selectedTable = mobTriggerPoints
+
+    if target:isPC() then
+        selectedTable = playerTriggerPoints
     end
 
-    if (target:isPC() or (target:isPet() and target:getMaster():getObjType() == xi.objType.PC)) and resMod >= 0 then
-        if resMod > 145 then
-            sixteenthTrigger = true
-        end
+    if playerTriggerPoints[1] then
+        sixteenthTrigger = true
+    end
 
-        if resMod > 100 then
-            eighthTrigger = true
-        end
+    if selectedTable[2] then
+        eighthTrigger = true
+    end
 
+    if selectedTable[3] then
         quarterTrigger = true
-    end
-
-    if target:isMob() then
-        if evaMult < 1.50 then
-            quarterTrigger = true
-        end
-
-        if evaMult < 1.30 then
-            eighthTrigger = true
-        end
-
-        if evaMult < 1.15 then
-            sixteenthTrigger = true
-        end
     end
 
     local baseRes = 1
 
-    if effectRes ~= nil then
+    if effectRes and effectRes > 0 then
         baseRes = baseRes - (effectRes / 100)
     end
 

@@ -48,7 +48,7 @@ namespace mobutils
 
     /************************************************************************
      *                                                                       *
-     *  Расчет базовой величины оружия монстров                              *
+     *  Calculate mob base weapon damage                                     *
      *                                                                       *
      ************************************************************************/
 
@@ -127,8 +127,7 @@ namespace mobutils
 
     /************************************************************************
      *                                                                       *
-     *  Базовое значение для расчера характеристик                           *
-     *  (на название не хватило фантазии)                                    *
+     *  Base value for stat calculations                                     *
      *                                                                       *
      ************************************************************************/
 
@@ -157,8 +156,7 @@ namespace mobutils
 
     /************************************************************************
      *                                                                       *
-     *  Базовое значение для расчерта защиты и уклонения                     *
-     *  (на название не хватило фантазии)                                    *
+     *  Base value for defense and evasion calculation                       *
      *                                                                       *
      ************************************************************************/
 
@@ -212,7 +210,7 @@ namespace mobutils
 
     /************************************************************************
      *                                                                       *
-     *  Расчет атрибутов (характеристик) монстра                             *
+     *  Calculate mob stats                                                  *
      *                                                                       *
      ************************************************************************/
 
@@ -294,7 +292,6 @@ namespace mobutils
                 else
                 {
                     mLvlScale = 0;
-                    // sjHP = 0;
                 }
 
                 sjHP = std::ceil((sjJobScale * (std::max((mLvlScale - 1), 0)) + (0.5 + 0.5 * sjScaleXHP) * (std::max(mLvlScale - 10, 0)) + std::max(mLvlScale - 30, 0) + std::max(mLvlScale - 50, 0) + std::max(mLvlScale - 70, 0)) / 2);
@@ -338,7 +335,7 @@ namespace mobutils
                 // pets have lower health (TODO: Capture pet HP and correct scaling)
                 if (PMob->PMaster != nullptr)
                 {
-                    mobHP *= 0.35f;
+                    mobHP *= 0.30f; // Retail captures have all pets at 30% of the mobs family of the same level
                 }
 
                 PMob->health.maxhp = (int16)(mobHP);
