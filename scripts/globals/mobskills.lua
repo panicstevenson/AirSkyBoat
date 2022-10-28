@@ -369,8 +369,8 @@ end
 -- statmod = the stat to account for resist (INT, MND, etc) e.g. xi.mod.INT
 -- This determines how much the monsters ability resists on the player.
 xi.mobskills.applyPlayerResistance = function(mob, effect, target, diff, bonus, element)
-    local percentBonus = 0
     local magicaccbonus = 0
+    local percentBonus = 0
 
     if diff > 10 then
         magicaccbonus = magicaccbonus + 10 + (diff - 10) / 2
@@ -388,7 +388,7 @@ xi.mobskills.applyPlayerResistance = function(mob, effect, target, diff, bonus, 
 
     local p = xi.magic.getMagicHitRate(mob, target, 0, element, percentBonus, magicaccbonus)
 
-    return xi.magic.getMagicResist(p)
+    return xi.magic.getMagicResist(p, target, element, xi.magic.getEffectResistance(target, effect))
 end
 
 xi.mobskills.getWeatherDayBonuses = function (caster, ele)
@@ -789,7 +789,6 @@ end
 
 -- Adds a status effect to a target
 xi.mobskills.mobStatusEffectMove = function(mob, target, typeEffect, power, tick, duration, subEffect, subPower)
-
     if mob:hasStatusEffect(xi.effect.HYSTERIA) then
         return xi.msg.basic.NONE
     end
@@ -818,7 +817,6 @@ end
 
 -- similar to status effect move except, this will not land if the attack missed
 xi.mobskills.mobPhysicalStatusEffectMove = function(mob, target, skill, typeEffect, power, tick, duration)
-
     if (xi.mobskills.mobPhysicalHit(skill)) then
         return xi.mobskills.mobStatusEffectMove(mob, target, typeEffect, power, tick, duration)
     end
