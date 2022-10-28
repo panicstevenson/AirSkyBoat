@@ -241,4 +241,19 @@ UPDATE mob_groups SET minLevel = 42, maxLevel = 42, HP = 3800 WHERE name = "Decu
 -- SMN
 UPDATE mob_groups SET minLevel = 42, maxLevel = 42, HP = 3400 WHERE name = "Galgalim"  and zoneid = 209;
 
+-- --------------------------------------------------------
+-- Horizon Mob Subjob Manager
+-- --------------------------------------------------------
+-- This adjustment to the table will add data to the tables to control whether
+-- a mob's subjob level is:
+-- 0: None
+-- 1: Halved (eg: 75/35)
+-- 2: Two-thirds (eg: 75/50)
+-- 3: Equal (eg: 75/75)
+-- --------------------------------------------------------
+
+ALTER TABLE `mob_groups`
+	ADD COLUMN IF NOT EXISTS `subratio` TINYINT(2) UNSIGNED NOT NULL DEFAULT '3' AFTER `maxLevel`,
+	ADD CONSTRAINT IF NOT EXISTS subjob_type CHECK (subratio <= 3);
+
 UNLOCK TABLES;
