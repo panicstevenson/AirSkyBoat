@@ -198,8 +198,8 @@ UPDATE mob_groups SET minLevel = 45, maxLevel = 48 WHERE name = "Hell_Bat"  and 
 -- KA Stuff
 UPDATE mob_groups SET HP = 5000, MP = 500 WHERE name = "Knight_Crab"  and zoneid = 104;
 UPDATE mob_groups SET HP = 45000, MP = 500 WHERE name = "King_Arthro"  and zoneid = 104;
-INSERT INTO `mob_groups` VALUES (89,2271,104,'Queen_Crab',0,128,6037,10000,2000,50,50,0,'NULL');
-INSERT INTO `mob_groups` VALUES (90,2271,104,'Pawn_Crab',0,128,6037,200,2000,50,50,0,'NULL');
+INSERT INTO `mob_groups` VALUES (89,2271,104,'Queen_Crab',0,128,6037,10000,2000,50,50,0,NULL);
+INSERT INTO `mob_groups` VALUES (90,2271,104,'Pawn_Crab',0,128,6037,200,2000,50,50,0,NULL);
 
 -- ----------------------------------
 --     AF Weapon NM Adjustments
