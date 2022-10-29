@@ -458,50 +458,47 @@ namespace mobutils
         uint16 mMND = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(), 7), mLvl);
         uint16 mCHR = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(), 8), mLvl);
 
-        uint16 sSTR = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(), 2), sLvl) / 2; // Horizon change (All mobs will have sSTAT / 2)
-        uint16 sDEX = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(), 3), sLvl) / 2; // Horizon change (All mobs will have sSTAT / 2)
-        uint16 sVIT = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(), 4), sLvl) / 2; // Horizon change (All mobs will have sSTAT / 2)
-        uint16 sAGI = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(), 5), sLvl) / 2; // Horizon change (All mobs will have sSTAT / 2)
-        uint16 sINT = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(), 6), sLvl) / 2; // Horizon change (All mobs will have sSTAT / 2)
-        uint16 sMND = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(), 7), sLvl) / 2; // Horizon change (All mobs will have sSTAT / 2)
-        uint16 sCHR = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(), 8), sLvl) / 2; // Horizon change (All mobs will have sSTAT / 2)
+        uint16 sSTR = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(), 2), sLvl);
+        uint16 sDEX = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(), 3), sLvl);
+        uint16 sVIT = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(), 4), sLvl);
+        uint16 sAGI = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(), 5), sLvl);
+        uint16 sINT = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(), 6), sLvl);
+        uint16 sMND = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(), 7), sLvl);
+        uint16 sCHR = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(), 8), sLvl);
 
         // As per conversation with Jimmayus, all mobs at any level get bonus stats from subjobs.
         // From lvl 45 onwards, 1/2. Before lvl 30, 1/4. In between, the value gets progresively higher, from 1/4 at 30 to 1/2 at 44.
         // Im leaving that range at 1/3, for now.
-
-        // THIS IS ASB VALUES, WHICH ARE 100% ERA ACCURATE
-        // Leaving this commented out in case we revert.
-        // if (mLvl >= 45)
-        // {
-        //     sSTR /= 2;
-        //     sDEX /= 2;
-        //     sAGI /= 2;
-        //     sINT /= 2;
-        //     sMND /= 2;
-        //     sCHR /= 2;
-        //     sVIT /= 2;
-        // }
-        // else if (mLvl > 30)
-        // {
-        //     sSTR /= 3;
-        //     sDEX /= 3;
-        //     sAGI /= 3;
-        //     sINT /= 3;
-        //     sMND /= 3;
-        //     sCHR /= 3;
-        //     sVIT /= 3;
-        // }
-        // else
-        // {
-        //     sSTR /= 4;
-        //     sDEX /= 4;
-        //     sAGI /= 4;
-        //     sINT /= 4;
-        //     sMND /= 4;
-        //     sCHR /= 4;
-        //     sVIT /= 4;
-        // }
+        if (mLvl >= 45)
+        {
+            sSTR /= 2;
+            sDEX /= 2;
+            sAGI /= 2;
+            sINT /= 2;
+            sMND /= 2;
+            sCHR /= 2;
+            sVIT /= 2;
+        }
+        else if (mLvl > 30)
+        {
+            sSTR /= 3;
+            sDEX /= 3;
+            sAGI /= 3;
+            sINT /= 3;
+            sMND /= 3;
+            sCHR /= 3;
+            sVIT /= 3;
+        }
+        else
+        {
+            sSTR /= 4;
+            sDEX /= 4;
+            sAGI /= 4;
+            sINT /= 4;
+            sMND /= 4;
+            sCHR /= 4;
+            sVIT /= 4;
+        }
 
         // [stat] = [family Stat] + [main job Stat] + [sub job Stat]
         PMob->stats.STR = fSTR + mSTR + sSTR;
