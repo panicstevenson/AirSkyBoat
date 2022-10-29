@@ -1480,8 +1480,8 @@ Usage:
         (mob_family_system.HP / 100), (mob_family_system.MP / 100), mob_pools.hasSpellScript, mob_pools.spellList, mob_groups.poolid, \
         mob_groups.allegiance, namevis, aggro, mob_pools.skill_list_id, mob_pools.true_detection, mob_family_system.detects, \
         mob_family_system.charmable, \
-        mob_resistances.fire_eem, mob_resistances.ice_eem, mob_resistances.wind_eem, mob_resistances.earth_eem, mob_resistances.lightning_eem, mob_resistances.water_eem, \
-        mob_resistances.light_eem, mob_resistances.dark_eem \
+        mob_ele_evasion.fire_eem, mob_ele_evasion.ice_eem, mob_ele_evasion.wind_eem, mob_ele_evasion.earth_eem, mob_ele_evasion.lightning_eem, mob_ele_evasion.water_eem, \
+        mob_ele_evasion.light_eem, mob_ele_evasion.dark_eem \
         FROM mob_groups INNER JOIN mob_pools ON mob_groups.poolid = mob_pools.poolid \
         INNER JOIN mob_resistances ON mob_pools.resist_id = mob_resistances.resist_id \
         INNER JOIN mob_family_system ON mob_pools.familyid = mob_family_system.familyID \
