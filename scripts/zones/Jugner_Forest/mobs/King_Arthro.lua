@@ -24,7 +24,10 @@ local spawnBabyCrab1 = function(mob, zone, target)
         groupZoneId = 104,
         releaseIdOnDeath = true,
         onMobDeath = function(baby1Arg, playerArg, isKiller)
-            GetMobByID(ID.mob.KING_ARTHRO):setMod(xi.mod.UDMGPHYS, 5000)
+            GetMobByID(ID.mob.KING_ARTHRO):setMod(xi.mod.UDMGPHYS, 3000)
+            GetMobByID(ID.mob.KING_ARTHRO):setMod(xi.mod.DMGPHYS, 3000)
+            GetMobByID(ID.mob.KING_ARTHRO):setMod(xi.mod.UDMGMAGIC, 3000)
+            GetMobByID(ID.mob.KING_ARTHRO):setMod(xi.mod.DMGMAGIC, 3000)
             GetMobByID(ID.mob.KING_ARTHRO):setLocalVar("Rook", 0)
         end,
         onMobSpawn = function(baby1Arg)
@@ -37,7 +40,10 @@ local spawnBabyCrab1 = function(mob, zone, target)
     baby1:spawn()
     baby1:updateEnmity(mob:getTarget())
 
-    mob:setMod(xi.mod.UDMGPHYS, 9000)
+    mob:setMod(xi.mod.UDMGPHYS, -9500)
+    mob:setMod(xi.mod.DMGPHYS, -9500)
+    mob:setMod(xi.mod.UDMGMAGIC, -9500)
+    mob:setMod(xi.mod.DMGMAGIC, -9500)
 end
 
 local spawnBabyCrab2 = function(mob, zone, target)
@@ -86,6 +92,9 @@ local spawnQueenCrab = function(mob, zone, target)
             local spell = 202
             baby1Arg:setMod(xi.mod.SILENCERES, 100)
             baby1Arg:setMod(xi.mod.UFASTCAST, 50)
+            baby1Arg:setMod(xi.mod.MACC, 1000)
+            baby1Arg:setMod(xi.mod.INT, 140)
+
             if baby1Arg:getLocalVar('CastTime') < os.time()  then
                 baby1Arg:castSpell(spell, baby1Arg:getTarget())
                 baby1Arg:setLocalVar('CastTime', os.time() + 12)
@@ -154,8 +163,11 @@ end
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
     mob:setMod(xi.mod.UFASTCAST, 100)
-    mob:setMod(xi.mod.UDMGPHYS, 5000)
-    mob:setMod(xi.mod.UDMGMAGIC, 5000)
+    mob:setMod(xi.mod.UDMGPHYS, -3000)
+    mob:setMod(xi.mod.DMGPHYS, -3000)
+    mob:setMod(xi.mod.UDMGMAGIC, -3000)
+    mob:setMod(xi.mod.DMGMAGIC, -3000)
+    mob:setMod(xi.mod.CLAIMSHIELD, 4000)
 end
 
 entity.onMobSpawn = function(mob)

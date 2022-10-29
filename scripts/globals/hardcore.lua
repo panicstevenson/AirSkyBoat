@@ -7,7 +7,7 @@ xi.hardcore.hardcoreFlag = 0x00010000
 
 xi.hardcore.menu =
 {
-    title = " ",
+    title = "I'm going to be frank with you...",
     options = {},
 }
 
@@ -68,7 +68,7 @@ xi.hardcore.pages =
                 local rewardAmount = playerArg:getCharVar("rewardsAvail")
                 local npcList =
                 {
-                    [xi.zone.LOWER_JEUNO] = "Frantix",
+                    [xi.zone.LOWER_JEUNO] = "Frankstinx",
                     [xi.zone.BASTOK_MARKETS] = "Franklin",
                     [xi.zone.WINDURST_WOODS] = "Francine Tuft",
                     [xi.zone.SOUTHERN_SAN_DORIA] = "Francois",
@@ -242,7 +242,7 @@ xi.hardcore.setupNPC = function(zone)
         [xi.zone.LOWER_JEUNO] =
         {
             objtype = xi.objType.NPC,
-            name = "Frantix",
+            name = "Frankstinx",
             look = 85,
             x = -54.21,
             y = 5.9,
@@ -290,7 +290,7 @@ xi.hardcore.dialog = function(player, dialogOption)
 
     local npcList =
     {
-        [xi.zone.LOWER_JEUNO] = "Frantix",
+        [xi.zone.LOWER_JEUNO] = "Frankstinx",
         [xi.zone.BASTOK_MARKETS] = "Franklin",
         [xi.zone.WINDURST_WOODS] = "Francine Tuft",
         [xi.zone.SOUTHERN_SAN_DORIA] = "Francois",
