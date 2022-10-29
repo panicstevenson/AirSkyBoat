@@ -695,13 +695,9 @@ uint16 CBattleEntity::ATT(uint16 slot)
     {
         ATT += (STR() * 3) / 4;
     }
-    // else if (weapon && weapon->isHandToHand())
-    //{
-    //      ATT += (STR() * 5) / 8;
-    //  }
     else
     {
-        ATT += STR() / 2;
+        ATT += (STR() * 3) / 4;
     }
 
     if (this->StatusEffectContainer->HasStatusEffect(EFFECT_ENDARK))
