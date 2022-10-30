@@ -154,31 +154,22 @@ namespace anticheat
     bool DoPosHackCheck(CCharEntity* PChar, float newX, float newY, float newZ)
     {
         // clang-format off
-        float new_distance        = abs(newX - PChar->loc.p.x) + abs(newZ - PChar->loc.p.z);
-        CharAnticheat_t Anticheat = PChar->m_charAnticheat;
-        Anticheat.lastCheckDist   += new_distance;
         time_t timeNow = time(NULL);
 
-        if ((Anticheat.lastTeleport >= (timeNow - 3)) || (Anticheat.gracePeriod > timeNow))
+        if (timeNow != PChar->m_charAnticheat.lastCheckTime && PChar->m_GMlevel < 2)
         {
-            Anticheat.lastCheckDist = 0;
-            Anticheat.lastCheckTime = timeNow;
-        }
+            float new_distance   = abs(newX - PChar->loc.p.x) + abs(newZ - PChar->loc.p.z);
 
-        if (timeNow != Anticheat.lastCheckTime)
-        {
             /*
                 diffTime is clamped to stop cheaters from AFKing for an extensive period of time
                 then coming back to pos hack. The grace period is the time in seconds before the
                 anticheat engages and is configurable in the settings.
             */
-            uint8 diffTime = std::clamp(static_cast<int32>(timeNow - Anticheat.lastCheckTime), 0, static_cast<int>(settings::get<uint8>("map.ANTICHEAT_POS_HACK_GRACE")));
-            float cheatThreshold = static_cast<float>(settings::get<uint16>("map.ANTICHEAT_POS_HACK_THRESHOLD"));
-            float diffDSec = Anticheat.lastCheckDist / diffTime;
-            bool  hasMovementEffect = (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_FLEE) ||
-                                        PChar->StatusEffectContainer->HasStatusEffect(EFFECT_QUICKENING) ||
-                                        PChar->StatusEffectContainer->HasStatusEffect(EFFECT_BOLTERS_ROLL)) ||
-                                        PChar->StatusEffectContainer->HasStatusEffect(EFFECT_MAZURKA);
+            uint8 diffTime = std::clamp(static_cast<int>(timeNow - PChar->m_charAnticheat.lastCheckTime), 1, static_cast<int>(settings::get<uint8>("map.ANTICHEAT_POS_HACK_GRACE")));
+            float cheatThreshold = 40.f + static_cast<float>(settings::get<uint16>("map.ANTICHEAT_POS_HACK_OVERSPEED"));
+            float diffDSec = ((new_distance / diffTime) * 40.f);
+            PChar->m_charAnticheat.lastCheckTime = timeNow;
+
             bool  isMounted = PChar->isMounted();
 
             if (PChar->GetSpeed() > PChar->speed)
@@ -191,33 +182,28 @@ namespace anticheat
                 cheatThreshold *= 2;
             }
 
-            if ((diffDSec > cheatThreshold) && (!PChar->isCharmed) && (((PChar->nameflags.flags & FLAG_GM) == 0) || (PChar->m_GMlevel < 2)))
+            if ((diffDSec > cheatThreshold) && (!PChar->isCharmed))
             {
-                /*
-                    The speedCounter system is meant to give additional leyway during lag spikes.
-                    This is to counteract major lag spikes auto jailing, instead gives the player an
-                    additional few counts before potentially jailing. This also allows for a lower grace
-                    period of 15s vs 30s. So if a player has a movement effect they effectively get 45s of
-                    grace time compared to 15s.
-                */
-                if ((isMounted || hasMovementEffect) && (Anticheat.speedCounter < 3))
-                {
-                    Anticheat.speedCounter += 1;
-                }
-                else
-                {
-                    anticheat::ReportCheatIncident(PChar, anticheat::CheatID::CHEAT_ID_POS_HACK,
-                                                    static_cast<uint32>(diffDSec * 100),
-                                                    "Player is moving too fast or is teleporting. Speed has been recorded.");
-                    if (anticheat::GetCheatPunitiveAction(anticheat::CheatID::CHEAT_ID_POS_HACK, nullptr, 1) & anticheat::CHEAT_ACTION_BLOCK)
-                    {
-                        return false;
-                    }
-                }
+                PChar->m_charAnticheat.overSpeedCounter++;
             }
             else
             {
-                Anticheat.speedCounter = 0;
+                PChar->m_charAnticheat.speedResetCounter++;
+            }
+
+            if (PChar->m_charAnticheat.speedResetCounter > 55) // Cleans up overspeed counter if they have not sped for 60 syncs.
+            {
+                PChar->m_charAnticheat.speedResetCounter = 0;
+                PChar->m_charAnticheat.overSpeedCounter  = 0;
+            }
+
+            if (PChar->m_charAnticheat.overSpeedCounter > 60 || (diffDSec > (isMounted ? 275 : 200))) // If we have sped for 60 ticks or if we went over 200 yalm/tick (Catches pos hackers).
+            {
+                anticheat::ReportCheatIncident(PChar, anticheat::CheatID::CHEAT_ID_POS_HACK,
+                        static_cast<uint32>(diffDSec),
+                        "Player is moving too fast or is teleporting. Speed has been recorded.");
+                PChar->m_charAnticheat.speedResetCounter = 0;
+                PChar->m_charAnticheat.overSpeedCounter  = 0;
             }
         }
 
@@ -230,8 +216,6 @@ namespace anticheat
         // clang-format off
         if (PChar != nullptr)
         {
-            CharDigging_t DigTable    = PChar->m_charDigging;
-            CharAnticheat_t Anticheat = PChar->m_charAnticheat;
             float minDigDistance      = static_cast<float>(settings::get<uint16>("main.DIG_DISTANCE_REQ"));
             time_t currentTime        = time(NULL);
 
@@ -240,23 +224,22 @@ namespace anticheat
                 This is to allow for players who may be lagging or may have framerate issues to
                 not automatically trigger this system consistently.
             */
-            if ((DigTable.lastDigT + 3.7 > currentTime) &&
-                ((abs(PChar->loc.p.x - DigTable.lastDigX) * abs(PChar->loc.p.z - DigTable.lastDigZ)) > (minDigDistance * minDigDistance)))
+            if ((PChar->m_charDigging.lastDigT + 3.7 > currentTime) &&
+                ((abs(PChar->loc.p.x - PChar->m_charDigging.lastDigX) * abs(PChar->loc.p.z - PChar->m_charDigging.lastDigZ)) > (minDigDistance * minDigDistance)))
             {
-                if (Anticheat.digDistGrace < 3)
+                if (PChar->m_charAnticheat.digDistGrace < 3)
                 {
-                    Anticheat.digDistGrace += 1;
+                    PChar->m_charAnticheat.digDistGrace++;
                     return;
                 }
 
                 anticheat::ReportCheatIncident(PChar, anticheat::CheatID::CHEAT_ID_FAST_DIG,
-                                                static_cast<uint32>(std::round(abs((DigTable.lastDigT + 3.7) - currentTime) * 1000)),
+                                                static_cast<uint32>(std::round(abs((PChar->m_charDigging.lastDigT + 3.7) - currentTime) * 1000)),
                                                 "Player is digging before the animation should have completed. Last animation time difference recorded in ms.");
-                anticheat::GetCheatPunitiveAction(anticheat::CheatID::CHEAT_ID_FAST_DIG, nullptr, 1);
             }
             else
             {
-                Anticheat.digDistGrace = 0;
+                PChar->m_charAnticheat.digDistGrace = 0;
             }
 
             return;
@@ -269,8 +252,6 @@ namespace anticheat
         // clang-format off
         if (PChar != nullptr)
         {
-            CharAnticheat_t Anticheat = PChar->m_charAnticheat;
-
             anticheat::DoDigCheckSetup(PChar, true);
 
             /*
@@ -278,21 +259,20 @@ namespace anticheat
                 is over if the player is below the DIG_AVG time or under the AVG_DIST amount.
                 If the player is consistently under this we should report.
             */
-            if ((Anticheat.digCount > settings::get<uint16>("map.ANTICHEAT_DIG_GRACE_COUNT")) &&
-                (((Anticheat.digDiffAvg < (settings::get<uint16>("map.ANTICHEAT_DIG_AVG_THRESHOLD") * 1000))) ||
-                 ((Anticheat.digDistDiffAvg < (settings::get<uint16>("map.ANTICHEAT_DIG_AVG_DIST_THRESHOLD") * 1000)))))
+            if ((PChar->m_charAnticheat.digCount > settings::get<uint16>("map.ANTICHEAT_DIG_GRACE_COUNT")) &&
+                (((PChar->m_charAnticheat.digDiffAvg < (settings::get<uint16>("map.ANTICHEAT_DIG_AVG_THRESHOLD")))) ||
+                 ((PChar->m_charAnticheat.digDistDiffAvg < (settings::get<uint16>("map.ANTICHEAT_DIG_AVG_DIST_THRESHOLD"))))))
             {
-                uint32 cheatArg = Anticheat.digDistDiffAvg;
+                uint32 cheatArg = PChar->m_charAnticheat.digDistDiffAvg;
 
-                if ((Anticheat.digDiffAvg < (settings::get<uint16>("map.ANTICHEAT_DIG_AVG_THRESHOLD") * 1000)))
+                if ((PChar->m_charAnticheat.digDiffAvg < (settings::get<uint16>("map.ANTICHEAT_DIG_AVG_THRESHOLD"))))
                 {
-                    cheatArg = Anticheat.digDiffAvg;
+                    cheatArg = PChar->m_charAnticheat.digDiffAvg;
                 }
 
                 anticheat::ReportCheatIncident(PChar, anticheat::CheatID::CHEAT_ID_DIG_BOT,
                                 cheatArg,
                                 "Player is dig botting, dig times or movement are too close. Last difference recorded should be divided by 1000.");
-                anticheat::GetCheatPunitiveAction(anticheat::CheatID::CHEAT_ID_DIG_BOT, nullptr, 1);
             }
 
             return;
@@ -305,22 +285,19 @@ namespace anticheat
         // clang-format off
         if (PChar != nullptr)
         {
-            CharDigging_t DigTable    = PChar->m_charDigging;
-            CharAnticheat_t Anticheat = PChar->m_charAnticheat;
-
-            if (Anticheat.prevDigT_1 != 0)
+            if (PChar->m_charAnticheat.prevDigT_1 != 0)
             {
-                Anticheat.digCount         += 1;
-                Anticheat.digDiffTotal     += (uint32)std::round((DigTable.lastDigT - Anticheat.prevDigT_1) * 1000);
-                Anticheat.digDistDiffTotal += (uint32)std::round((sqrt(abs(DigTable.lastDigX - Anticheat.prevDigT_1) * abs(DigTable.lastDigZ - Anticheat.prevDigZ_1))) * 1000);
-                Anticheat.digDiffAvg       =  std::round(Anticheat.digDiffTotal / Anticheat.synthCount);
-                Anticheat.digDistDiffAvg   =  std::round(Anticheat.digDistDiffTotal / Anticheat.digCount);
+                PChar->m_charAnticheat.digCount++;
+                PChar->m_charAnticheat.digDiffTotal     = PChar->m_charAnticheat.digDiffTotal + (uint32)std::round((PChar->m_charDigging.lastDigT - PChar->m_charAnticheat.prevDigT_1));
+                PChar->m_charAnticheat.digDistDiffTotal = PChar->m_charAnticheat.digDistDiffTotal + (uint32)std::round((sqrt(abs(PChar->m_charDigging.lastDigX - PChar->m_charAnticheat.prevDigT_1) * abs(PChar->m_charDigging.lastDigZ - PChar->m_charAnticheat.prevDigZ_1))));
+                PChar->m_charAnticheat.digDiffAvg       =  std::round(PChar->m_charAnticheat.digDiffTotal / PChar->m_charAnticheat.synthCount);
+                PChar->m_charAnticheat.digDistDiffAvg   =  std::round(PChar->m_charAnticheat.digDistDiffTotal / PChar->m_charAnticheat.digCount);
 
             }
 
-            Anticheat.prevDigT_1 = DigTable.lastDigT;
-            Anticheat.prevDigX_1 = DigTable.lastDigX;
-            Anticheat.prevDigZ_1 = DigTable.lastDigZ;
+            PChar->m_charAnticheat.prevDigT_1 = PChar->m_charDigging.lastDigT;
+            PChar->m_charAnticheat.prevDigX_1 = PChar->m_charDigging.lastDigX;
+            PChar->m_charAnticheat.prevDigZ_1 = PChar->m_charDigging.lastDigZ;
 
             return;
         }
@@ -332,18 +309,16 @@ namespace anticheat
         // clang-format off
         if (PChar != nullptr)
         {
-            CharCrafting_t  CraftTable    = PChar->m_charCrafting;
-            CharAnticheat_t Anticheat     = PChar->m_charAnticheat;
-            uint8           craftAnimTime = 10; // Craft animation is 10 seconds long.
+            uint8 craftAnimTime = 10; // Craft animation is 10 seconds long.
 
             /*
                 Check for addons like crafty with auto-recipe swapping.
                 Players should not be able to swap recipes in under 10s.
             */
-            if ((Anticheat.lastSynthReq != CraftTable.lastSynthReq) && ((abs(currentTime - Anticheat.lastSynthStart)) < (settings::get<uint8>("map.ANTICHEAT_CRAFT_SWAP_TIME") + craftAnimTime)))
+            if ((PChar->m_charAnticheat.lastSynthReq != PChar->m_charCrafting.lastSynthReq) && ((abs(currentTime - PChar->m_charAnticheat.lastSynthStart)) < (settings::get<uint8>("map.ANTICHEAT_CRAFT_SWAP_TIME") + craftAnimTime)))
             {
                 anticheat::ReportCheatIncident(PChar, anticheat::CheatID::CHEAT_ID_CRAFT_BOT,
-                                                static_cast<uint32>(std::round(abs((currentTime - Anticheat.lastSynthStart) - craftAnimTime))),
+                                                static_cast<uint32>(std::round(abs((currentTime - PChar->m_charAnticheat.lastSynthStart) - craftAnimTime))),
                                                 "Player swapped crafts in under alloted and is using crafty to auto recipe swap. Recipe start time diff has been recorded in seconds.");
                 anticheat::GetCheatPunitiveAction(anticheat::CheatID::CHEAT_ID_CRAFT_BOT, nullptr, 1);
             }
@@ -356,10 +331,10 @@ namespace anticheat
                 be (1s). By doing this accross 6 crafts, this elimates the
                 chance this is an in-game macro.
             */
-            if ((Anticheat.synthCount > settings::get<uint16>("map.ANTICHEAT_CRAFT_COUNT")) && (Anticheat.synthTimeDiffAvg < (uint32)(settings::get<float>("map.ANTICHEAT_CRAFT_TIME_AVG") * 1000)))
+            if ((PChar->m_charAnticheat.synthCount > settings::get<uint16>("map.ANTICHEAT_CRAFT_COUNT")) && (PChar->m_charAnticheat.synthTimeDiffAvg < (uint32)(settings::get<float>("map.ANTICHEAT_CRAFT_TIME_AVG") * 1000)))
             {
                 anticheat::ReportCheatIncident(PChar, anticheat::CheatID::CHEAT_ID_AUTO_CRAFT,
-                                Anticheat.synthTimeDiffAvg,
+                                PChar->m_charAnticheat.synthTimeDiffAvg,
                                 "Player did multiple crafts with low variance, likely using an auto craft bot. Average start time diff has been recorded in ms.");
                 anticheat::GetCheatPunitiveAction(anticheat::CheatID::CHEAT_ID_AUTO_CRAFT, nullptr, 1);
             }
@@ -372,18 +347,15 @@ namespace anticheat
         // clang-format off
         if (PChar != nullptr)
         {
-            CharCrafting_t  CraftTable = PChar->m_charCrafting;
-            CharAnticheat_t Anticheat  = PChar->m_charAnticheat;
-
-            if (Anticheat.lastSynthStart != 0)
+            if (PChar->m_charAnticheat.lastSynthStart != 0)
             {
-                Anticheat.synthStartTotal  += (currentTime - Anticheat.lastSynthStart);
-                Anticheat.synthCount       += 1;
-                Anticheat.synthTimeDiffAvg = (uint32)std::round((Anticheat.synthStartTotal * 1000) / Anticheat.synthCount);
+                PChar->m_charAnticheat.synthStartTotal  = PChar->m_charAnticheat.synthStartTotal + (currentTime - PChar->m_charAnticheat.lastSynthStart);
+                PChar->m_charAnticheat.synthCount++;
+                PChar->m_charAnticheat.synthTimeDiffAvg = (uint32)std::round((PChar->m_charAnticheat.synthStartTotal * 1000) / PChar->m_charAnticheat.synthCount);
             }
 
-            Anticheat.lastSynthStart = currentTime;
-            Anticheat.lastSynthReq   = CraftTable.lastSynthReq;
+            PChar->m_charAnticheat.lastSynthStart = currentTime;
+            PChar->m_charAnticheat.lastSynthReq   = PChar->m_charCrafting.lastSynthReq;
         }
         // clang-format on
     }
@@ -393,32 +365,30 @@ namespace anticheat
         // clang-format off
         if (PChar != nullptr)
         {
-            CharAnticheat_t Anticheat   = PChar->m_charAnticheat;
-            time_t          currentTime = time(NULL);
+            time_t currentTime = time(NULL);
 
-            if (Anticheat.firstFishingStrike == 0)
+            if (PChar->m_charAnticheat.firstFishingStrike == 0)
             {
-                Anticheat.firstFishingStrike = currentTime;
-                Anticheat.fishingStikes      += 1;
+                PChar->m_charAnticheat.firstFishingStrike = currentTime;
+                PChar->m_charAnticheat.fishingStikes++;
 
                 return false;
             }
-            else if ((Anticheat.firstFishingStrike + 360) < currentTime)
+            else if ((PChar->m_charAnticheat.firstFishingStrike + 360) < currentTime)
             {
-                Anticheat.firstFishingStrike = currentTime;
-                Anticheat.fishingStikes      = 1;
+                PChar->m_charAnticheat.firstFishingStrike = currentTime;
+                PChar->m_charAnticheat.fishingStikes      = 1;
 
                 return false;
             }
 
-            if (Anticheat.fishingStikes >= settings::get<uint16>("map.ANTICHEAT_FISHING_GRACE"))
+            if (PChar->m_charAnticheat.fishingStikes >= settings::get<uint16>("map.ANTICHEAT_FISHING_GRACE"))
             {
-                Anticheat.fishingStikes += 1;
+                PChar->m_charAnticheat.fishingStikes++;
 
                 anticheat::ReportCheatIncident(PChar, anticheat::CheatID::CHEAT_ID_FISH_BOT,
-                                                static_cast<uint32>(Anticheat.fishingStikes),
+                                                static_cast<uint32>(PChar->m_charAnticheat.fishingStikes),
                                                 "Player is either fishing packet manipulating or running a fish bot. Number of strikes has been recorded.");
-                anticheat::GetCheatPunitiveAction(anticheat::CheatID::CHEAT_ID_FISH_BOT, nullptr, 1);
 
                 return true;
             }

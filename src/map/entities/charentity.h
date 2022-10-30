@@ -240,11 +240,11 @@ struct CharHistory_t
 
 struct CharAnticheat_t
 {
-    float  lastCheckDist      = 0;
     time_t lastTeleport       = 0;
     time_t gracePeriod        = 0;
     time_t lastCheckTime      = 0;
-    uint8  speedCounter       = 0;
+    uint8  overSpeedCounter   = 0;
+    uint8  speedResetCounter  = 0;
     time_t prevDigT_1         = 0;
     float  prevDigX_1         = 0;
     float  prevDigZ_1         = 0;

@@ -42,6 +42,8 @@ SET @WARSAMDRG = 0x02000000000000000000000200020000000000000000;
 SET @RNG = 0x00000000000000000000020000000000000000000000;
 SET @RNGCOR = 0x00000000000000000000020000000000020000000000;
 
+UPDATE `weapon_skills` SET skilllevel = '10' WHERE skilllevel = '5';
+
 -- Sword
 UPDATE `weapon_skills` SET primary_sc = @LIQUEFACTION, secondary_sc = @NONE, tertiary_sc = @NONE, skilllevel = '30' WHERE name = 'burning_blade';
 UPDATE `weapon_skills` SET primary_sc = @LIQUEFACTION, secondary_sc = @DETONATION, tertiary_sc = @NONE, main_only = @SUB, jobs = @WARRDMPLDDRKBLU, skilllevel = '50' WHERE name = 'red_lotus_blade';
