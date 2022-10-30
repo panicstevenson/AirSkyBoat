@@ -566,13 +566,13 @@ namespace petutils
         uint16 mMND = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(), 7), PMob->GetMLevel());
         uint16 mCHR = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(), 8), PMob->GetMLevel());
 
-        PMob->stats.STR = (uint16)((fSTR + mSTR) * 0.9f);
-        PMob->stats.DEX = (uint16)((fDEX + mDEX) * 0.9f);
-        PMob->stats.VIT = (uint16)((fVIT + mVIT) * 0.9f);
-        PMob->stats.AGI = (uint16)((fAGI + mAGI) * 0.9f);
-        PMob->stats.INT = (uint16)((fINT + mINT) * 0.9f);
-        PMob->stats.MND = (uint16)((fMND + mMND) * 0.9f);
-        PMob->stats.CHR = (uint16)((fCHR + mCHR) * 0.9f);
+        PMob->stats.STR = (uint16)((fSTR + mSTR));
+        PMob->stats.DEX = (uint16)((fDEX + mDEX));
+        PMob->stats.VIT = (uint16)((fVIT + mVIT));
+        PMob->stats.AGI = (uint16)((fAGI + mAGI));
+        PMob->stats.INT = (uint16)((fINT + mINT));
+        PMob->stats.MND = (uint16)((fMND + mMND));
+        PMob->stats.CHR = (uint16)((fCHR + mCHR));
 
         // Set jugs damageType to impact (blunt) damage. All jugs at level 75 cap do impact (blunt) damage. https://ffxiclopedia.fandom.com/wiki/Category:Familiars
         uint32 id       = PMob->m_PetID;
