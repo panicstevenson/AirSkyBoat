@@ -7339,7 +7339,17 @@ namespace battleutils
                 PMob->health.hp = PMob->health.maxhp;
                 PMob->setModifier(Mod::CLAIMBOT_REPORT_CHECK, 1);
 
-                if (PMob->id != 17277127) // If I'm Not Shikigami Weapon
+                if (PMob->id != 17277127 && PMob->id != 17289575 && PMob->id != 17240413) // If I'm Not Shikigami Weapon or weather NM
+                {
+                    PMob->status = STATUS_TYPE::MOB;
+                    PMob->loc.zone->UpdateEntityPacket(PMob, ENTITY_UPDATE, UPDATE_COMBAT);
+                }
+                else if (PMob->id == 17289575 && (PMob->loc.zone->GetWeather() == WEATHER_DUST_STORM || PMob->loc.zone->GetWeather() == WEATHER_SAND_STORM))
+                {
+                    PMob->status = STATUS_TYPE::MOB;
+                    PMob->loc.zone->UpdateEntityPacket(PMob, ENTITY_UPDATE, UPDATE_COMBAT);
+                }
+                else if (PMob->id == 17240413 && (PMob->loc.zone->GetWeather() == WEATHER_WIND || PMob->loc.zone->GetWeather() == WEATHER_GALES))
                 {
                     PMob->status = STATUS_TYPE::MOB;
                     PMob->loc.zone->UpdateEntityPacket(PMob, ENTITY_UPDATE, UPDATE_COMBAT);

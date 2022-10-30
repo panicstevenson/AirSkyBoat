@@ -237,7 +237,7 @@ xi.settings.map =
 
     -- Set to 1 to enable server side anti-cheating measurements
     ANTICHEAT_ENABLED                = true,
-    ANTICHEAT_POS_HACK_THRESHOLD     = 60,  -- Threshold over speed that anticheat shall act.
+    ANTICHEAT_POS_HACK_OVERSPEED     = 25,  -- Threshold over speed that anticheat shall act.
     ANTICHEAT_POS_HACK_GRACE         = 15,  -- Grace period in seconds before anticheat kicks in.
     ANTICHEAT_CRAFT_SWAP_TIME        = 10,  -- Time in seconds expected for a player to switch crafting recipes normally.
     ANTICHEAT_FISHING_GRACE          = 12,  -- How many strikes/hr a player can have before report.

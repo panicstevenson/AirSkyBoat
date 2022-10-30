@@ -666,7 +666,7 @@ void SmallPacket0x015(map_session_data_t* const PSession, CCharEntity* const PCh
             moved = anticheat::DoPosHackCheck(PChar, newX, newY, newZ);
         }
 
-        if (PChar->isMounted() && ((PChar->m_charDigging.lastDigT + 3700) > currentTime))
+        if (PChar->isMounted() && ((PChar->m_charDigging.lastDigT + 3) > currentTime))
         {
             anticheat::DoDigBotCheck(PChar, newX, newY, newZ);  // Anticheat for DIG_BOT
             anticheat::DoFastDigCheck(PChar, newX, newY, newZ); // Anticheat for FAST_DIG

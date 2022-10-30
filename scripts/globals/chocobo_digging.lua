@@ -844,12 +844,12 @@ local function updatePlayerDigCount(player, increment)
 end
 
 local function canDig(player, lastDigTable)
-    local lastDigTime              = lastDigTable.lastDig
-    local lastDigX                 = lastDigTable.x
-    local lastDigY                 = lastDigTable.y
-    local lastDigZ                 = lastDigTable.z
-    local digCount                 = player:getCharVar('[DIG]DigCount')
-    local posTable                 = player:getPos()
+    local lastDigTime      = lastDigTable.lastDig
+    local lastDigX         = lastDigTable.x
+    local lastDigY         = lastDigTable.y
+    local lastDigZ         = lastDigTable.z
+    local digCount         = player:getCharVar('[DIG]DigCount')
+    local posTable         = player:getPos()
     local currX           = math.floor(posTable.x)
     local currY           = math.floor(posTable.y)
     local currZ           = math.floor(posTable.z)
@@ -960,22 +960,22 @@ end
 -- Disable cyclomatic complexity check for this function:
 -- luacheck: ignore 561
 local function getChocoboDiggingItem(player)
-    local allItems        = digInfo[player:getZoneID()]
+    local allItems      = digInfo[player:getZoneID()]
     local burrowAbility = (DIG_GRANT_BURROW == 1) and 1 or 0
     local boreAbility   = (DIG_GRANT_BORE == 1) and 1 or 0
-    local modifier               = player:getMod(xi.mod.EGGHELM)
-    local totd                   = VanadielTOTD()
+    local modifier      = player:getMod(xi.mod.EGGHELM)
+    local totd          = VanadielTOTD()
     -- Zone Weather
-    local zone                   = player:getZone()
-    local weather                = zone:getWeather()
+    local zone          = player:getZone()
+    local weather       = zone:getWeather()
     -- Waxing 7% - 24%
-    local moon                   = VanadielMoonPhase()
-    local moonDirection          = VanadielMoonDirection()
-    local DigRank                = player:getSkillRank(xi.skill.DIG)
+    local moon          = VanadielMoonPhase()
+    local moonDirection = VanadielMoonDirection()
+    local DigRank       = player:getSkillRank(xi.skill.DIG)
     -- Filter allItems to possibleItems and sum weights
-    local possibleItems          = {}
-    local itemWeight             = 0
-    local sum                    = 0
+    local possibleItems = {}
+    local itemWeight    = 0
+    local sum           = 0
 
     -- Generate a table with items the player can actually dig up based on weather, time, moon, skills, etc...
     for i = 1, #allItems do
@@ -1101,12 +1101,12 @@ xi.chocoboDig.start = function(player, precheck)
     -- make sure the player can dig before going any further
     -- (and also cause i need a return before core can go any further with this)
     if canDig(player, lastDigTable) == true then
-    local roll         = math.random(0, 100)
-    local moon                  = VanadielMoonPhase()
-    local moonmodifier          = 1
-    local skillmodifier = 0.5 + (skillRank / 20) -- 50% at amateur, 55% at recruit, 60% at initiate, and so on, to 100% at exper
-    local zonedug       = '[DIG]ZONE'..player:getZoneID()..'_ITEMS'
-    local zoneDugCurrent        = GetServerVariable(zonedug)
+    local roll           = math.random(0, 100)
+    local moon           = VanadielMoonPhase()
+    local moonmodifier   = 1
+    local skillmodifier  = 0.5 + (skillRank / 20) -- 50% at amateur, 55% at recruit, 60% at initiate, and so on, to 100% at exper
+    local zonedug        = '[DIG]ZONE'..player:getZoneID()..'_ITEMS'
+    local zoneDugCurrent = GetServerVariable(zonedug)
 
         if moon < 50 then
             moon = 100 - moon -- This converts moon phase percent to a number that represents how FAR the moon phase is from 50
