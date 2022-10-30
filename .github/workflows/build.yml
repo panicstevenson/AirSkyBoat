@@ -540,18 +540,8 @@ jobs:
     - name: Check for errors and warnings
       if: ${{ success() || failure() }}
       run: |
-        cat login-server*.log
-        cat search-server*.log
         cat map-server-0*.log
         cat map-server-1*.log
-
-        if grep -qi "warning\|error\|crash" login-server*.log; then
-            exit -1
-        fi
-
-        if grep -qi "warning\|error\|crash" search-server*.log; then
-            exit -1
-        fi
 
         if grep -qi "warning\|error\|crash" map-server-0*.log; then
             exit -1
