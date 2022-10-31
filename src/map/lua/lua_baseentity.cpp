@@ -11964,14 +11964,14 @@ float CLuaBaseEntity::getPDIF(CLuaBaseEntity* PLuaBaseEntity, bool isCritical, f
  *  Notes   : Battleutils calculates via GetRangedDamageRatio
  ************************************************************************/
 
-float CLuaBaseEntity::getRangedPDIF(CLuaBaseEntity* PLuaBaseEntity, bool isCritical, uint16 ignoredDef)
+float CLuaBaseEntity::getRangedPDIF(CLuaBaseEntity* PLuaBaseEntity, bool isCritical, float atkMulti, uint16 ignoredDef)
 {
     XI_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
 
     CBattleEntity* PAttacker = static_cast<CBattleEntity*>(m_PBaseEntity);
     CBattleEntity* PDefender = static_cast<CBattleEntity*>(PLuaBaseEntity->GetBaseEntity());
 
-    return battleutils::GetRangedDamageRatio(PAttacker, PDefender, isCritical, ignoredDef);
+    return battleutils::GetDamageRatio(PAttacker, PDefender, isCritical, atkMulti, SLOT_RANGED, ignoredDef, false);
 }
 
 /************************************************************************
@@ -12032,14 +12032,14 @@ uint8 CLuaBaseEntity::getParryRate(CLuaBaseEntity* PLuaBaseEntity)
  *  Notes   : Battleutils calculates via GetHitRate
  ************************************************************************/
 
-uint8 CLuaBaseEntity::getCHitRate(CLuaBaseEntity* PLuaBaseEntity, uint8 attackNum)
+uint8 CLuaBaseEntity::getCHitRate(CLuaBaseEntity* PLuaBaseEntity, uint8 attackNum, int8 accBonus)
 {
     XI_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
 
     CBattleEntity* PAttacker = static_cast<CBattleEntity*>(m_PBaseEntity);
     CBattleEntity* PDefender = static_cast<CBattleEntity*>(PLuaBaseEntity->GetBaseEntity());
 
-    return battleutils::GetHitRate(PAttacker, PDefender, attackNum);
+    return battleutils::GetHitRate(PAttacker, PDefender, attackNum, accBonus);
 }
 
 /************************************************************************
@@ -12049,14 +12049,14 @@ uint8 CLuaBaseEntity::getCHitRate(CLuaBaseEntity* PLuaBaseEntity, uint8 attackNu
  *  Notes   : Battleutils calculates via GetRangedHitRate
  ************************************************************************/
 
-uint8 CLuaBaseEntity::getCRangedHitRate(CLuaBaseEntity* PLuaBaseEntity)
+uint8 CLuaBaseEntity::getCRangedHitRate(CLuaBaseEntity* PLuaBaseEntity, int8 accBonus)
 {
     XI_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
 
     CBattleEntity* PAttacker = static_cast<CBattleEntity*>(m_PBaseEntity);
     CBattleEntity* PDefender = static_cast<CBattleEntity*>(PLuaBaseEntity->GetBaseEntity());
 
-    return battleutils::GetRangedHitRate(PAttacker, PDefender, false);
+    return battleutils::GetRangedHitRate(PAttacker, PDefender, false, accBonus);
 }
 
 /************************************************************************
@@ -14892,7 +14892,7 @@ void CLuaBaseEntity::setClaimedTraverserStones(uint16 totalStones)
 uint32 CLuaBaseEntity::getHistory(uint8 index)
 {
     uint32 outStat = 0;
-    if (m_PBaseEntity->objtype != TYPE_PC)
+    if (m_PBaseEntity->objtype == TYPE_PC)
     {
         auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
         switch (index)
@@ -14944,6 +14944,106 @@ uint32 CLuaBaseEntity::getHistory(uint8 index)
         }
     }
     return outStat;
+}
+
+/************************************************************************
+ *  Function: getFishingHistory()
+ *  Purpose : Gets a lua table with all player fishing stats
+ *  Example : player:getFishingHistory
+ *  Notes   : This will return whatever is cached at runtime, not the contents of the db!
+ ************************************************************************/
+
+auto CLuaBaseEntity::getFishingStats() -> sol::table
+{
+    if (auto PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
+    {
+        auto table = lua.create_table();
+
+        table["fishLinesCast"]      = PChar->m_fishHistory.fishLinesCast;
+        table["fishReeled"]         = PChar->m_fishHistory.fishReeled;
+        table["fishLongestId"]      = PChar->m_fishHistory.fishLongestId;
+        table["fishLongestLength"]  = PChar->m_fishHistory.fishLongest;
+        table["fishHeaviestId"]     = PChar->m_fishHistory.fishHeaviestId;
+        table["fishHeaviestWeight"] = PChar->m_fishHistory.fishHeaviest;
+
+        return table;
+    }
+    else
+    {
+        ShowDebug("Called getFishingStats on object other than PC");
+        return sol::lua_nil;
+    }
+}
+
+auto CLuaBaseEntity::getFishingCatches() -> sol::table
+{
+    if (auto PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
+    {
+        auto table = lua.create_table();
+
+        for (int i = 0; i < 6; i++)
+        {
+            table.add(PChar->m_fishHistory.fishList[i]);
+        }
+
+        return table;
+    }
+    else
+    {
+        ShowDebug("Called getFishingCatches on object other than PC");
+        return sol::lua_nil;
+    }
+}
+
+void CLuaBaseEntity::setFishCaught(uint32 fishId, bool isCaught)
+{
+    if (auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity))
+    {
+        fishingutils::SetPlayerFishIndex(PChar, fishId, isCaught);
+    }
+}
+
+void CLuaBaseEntity::clearFishCaught()
+{
+    if (auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity))
+    {
+        for (int it = 0; it <= 5; it++)
+        {
+            PChar->m_fishHistory.fishList[it] = 0;
+        }
+    }
+}
+
+void CLuaBaseEntity::clearFishHistory()
+{
+    if (auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity))
+    {
+        PChar->m_fishHistory.fishHeaviest   = 0;
+        PChar->m_fishHistory.fishHeaviestId = 0;
+        PChar->m_fishHistory.fishLinesCast  = 0;
+        PChar->m_fishHistory.fishLongest    = 0;
+        PChar->m_fishHistory.fishLongestId  = 0;
+        PChar->m_fishHistory.fishReeled     = 0;
+    }
+}
+
+bool CLuaBaseEntity::hasCaughtFish(uint32 fishId)
+{
+    if (auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity))
+    {
+        uint8 fishIndex = fishingutils::GetFishIndex(fishId);
+        uint8 indexSet  = (fishIndex & 0xE0) >> 5;
+
+        if (indexSet <= 5 && fishIndex > 0)
+        {
+            if (((PChar->m_fishHistory.fishList[indexSet]) >> (fishIndex & 0x1F)) & 1U)
+            {
+                return true;
+            }
+        }
+    }
+
+    return false;
 }
 
 auto CLuaBaseEntity::getChocoboRaisingInfo() -> sol::table
@@ -15375,6 +15475,7 @@ uint8 CLuaBaseEntity::getMannequinPose(uint16 itemID)
 
     return 0;
 }
+
 //==========================================================//
 
 void CLuaBaseEntity::Register()
@@ -16183,6 +16284,15 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("deleteRaisedChocobo", CLuaBaseEntity::deleteRaisedChocobo);
     SOL_REGISTER("homepoint", CLuaBaseEntity::homepoint);
 
+    // Fishing Data
+    SOL_REGISTER("getFishingStats", CLuaBaseEntity::getFishingStats);
+    SOL_REGISTER("getFishingCatches", CLuaBaseEntity::getFishingCatches);
+    SOL_REGISTER("setFishCaught", CLuaBaseEntity::setFishCaught);
+    SOL_REGISTER("hasCaughtFish", CLuaBaseEntity::hasCaughtFish);
+    SOL_REGISTER("clearFishCaught", CLuaBaseEntity::clearFishCaught);
+    SOL_REGISTER("clearFishHistory", CLuaBaseEntity::clearFishHistory);
+
+    // Mannequins
     SOL_REGISTER("setMannequinPose", CLuaBaseEntity::setMannequinPose);
     SOL_REGISTER("getMannequinPose", CLuaBaseEntity::getMannequinPose);
 }

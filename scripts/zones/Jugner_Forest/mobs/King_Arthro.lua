@@ -24,10 +24,10 @@ local spawnBabyCrab1 = function(mob, zone, target)
         groupZoneId = 104,
         releaseIdOnDeath = true,
         onMobDeath = function(baby1Arg, playerArg, isKiller)
-            GetMobByID(ID.mob.KING_ARTHRO):setMod(xi.mod.UDMGPHYS, 3000)
-            GetMobByID(ID.mob.KING_ARTHRO):setMod(xi.mod.DMGPHYS, 3000)
-            GetMobByID(ID.mob.KING_ARTHRO):setMod(xi.mod.UDMGMAGIC, 3000)
-            GetMobByID(ID.mob.KING_ARTHRO):setMod(xi.mod.DMGMAGIC, 3000)
+            GetMobByID(ID.mob.KING_ARTHRO):setMod(xi.mod.UDMGPHYS, -3000)
+            GetMobByID(ID.mob.KING_ARTHRO):setMod(xi.mod.DMGPHYS, -3000)
+            GetMobByID(ID.mob.KING_ARTHRO):setMod(xi.mod.UDMGMAGIC, -3000)
+            GetMobByID(ID.mob.KING_ARTHRO):setMod(xi.mod.DMGMAGIC, -3000)
             GetMobByID(ID.mob.KING_ARTHRO):setLocalVar("Rook", 0)
         end,
         onMobSpawn = function(baby1Arg)

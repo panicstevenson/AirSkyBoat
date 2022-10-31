@@ -1806,6 +1806,7 @@ xi.mod =
     LIGHT_EEM                     = 1164, -- Elemental Evasion Multiplier (Known as SDT in common magic accuracy formulas) (out of 100)
     DARK_EEM                      = 1165, -- Elemental Evasion Multiplier (Known as SDT in common magic accuracy formulas) (out of 100)
     TAME_SUCCESS_RATE             = 1166, -- Tame Success Rate +
+    RAMPART_MAGIC_SHIELD          = 1167, -- Rampart Magic Shield
 
     -- Horizon Specific Mods
     CURE_SPELL_COST               = 1400, -- Sets Cure Cost Reduction (Out of 100)
@@ -2566,7 +2567,7 @@ xi.mobMod =
     DETECTION           = 16, -- Overrides mob family's detection method. In order to set to override to none an unused bit must be set such as DETECT_NONE1.
     NO_DESPAWN          = 17, -- do not despawn when too far from spawn. Gob Diggers have this.
     VAR                 = 18, -- temp var for whatever. Gets cleared on spawn
-    -- 19 Available for use
+    CAN_SHIELD_BLOCK    = 19, -- toggle shield use for mobs without physical shields (trusts)
     TP_USE_CHANCE       = 20, -- % chance to use tp
     PET_SPELL_LIST      = 21, -- set pet spell list
     NA_CHANCE           = 22, -- % chance to cast -na
