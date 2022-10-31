@@ -419,12 +419,10 @@ bool CCharEntity::isNewPlayer() const
 
 void CCharEntity::setPetZoningInfo()
 {
-    // edge case protection in case zone and despawn/pet death occur around same time.
     if (PPet == nullptr)
         return;
 
-    // Always save pet zoning information.  Use constructor to determine whether or not we spawn the pet based on pet type.
-    if (PPet->objtype == TYPE_PET)
+    if (PPet && PPet->objtype == TYPE_PET)
     {
         switch (((CPetEntity*)PPet)->getPetType())
         {
@@ -445,6 +443,7 @@ void CCharEntity::setPetZoningInfo()
             default:
                 break;
         }
+        petZoningInfo.respawnPet = true;
     }
 }
 
