@@ -157,7 +157,7 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
 (16814231, 0,  'Gargoyle-Iota',            'Gargoyle-Iota',            47,  -293.987,  0.247,     -205.945,  3   ),
 (16814232, 0,  'Gargoyle-Kappa',           'Gargoyle-Kappa',           48,  -294.559,  0.247,     -214.478,  223 ),
 (16814233, 0,  'Gargoyle-Lambda',          'Gargoyle-Lambda',          49,  -333.962,  32.247,    -173.925,  219 ),
-(16814234, 0,  'Gargoyle-Mu',              'Gargoyle-Mu',              50,  -329.669,  31.747,    -173.013,  179 ),
+(16814234, 0,  'Gargoyle-Mu',              'Gargoyle-Mu',              50,  -325.678,  32.247,    -174.5,    166 ),
 (16814235, 0,  'Cryptonberry_Harrier',     'Cryptonberry Harrier',     25,  -325.678,  32.247,    -174.5,    16  ),
 (16814236, 0,  'Tonberrys_Elemental',      'Tonberry\'s Elemental',    26,  -302.628,  15.399,    -260.958,  253 ),
 (16814237, 0,  'Cryptonberry_Stalker',     'Cryptonberry Stalker',     27,  -307.693,  15.403,    -260.482,  128 ),
