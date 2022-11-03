@@ -857,7 +857,7 @@ uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
         }
         else
         {
-            ACC += (int16)(DEX() * 0.5);
+            ACC += (int16)(DEX() * 0.75);
         }
         ACC         = (ACC + m_modStat[Mod::ACC] + offsetAccuracy);
         auto* PChar = dynamic_cast<CCharEntity*>(this);
