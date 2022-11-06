@@ -354,16 +354,34 @@ int32 lobbydata_parse(int32 fd)
                     ShowInfo("lobbydata_parse: zoneid:(%u),zoneip:(%s),zoneport:(%u) for char:(%u)", ZoneID, ip2str(ntohl(ZoneIP)), ZonePort, charid);
 
                     // Check the number of sessions
-                    uint16 sessionCount = 0;
+                    uint16      accountsOnIP = 0;
+                    uint16      accountOnIP  = 0;
+                    uint32      addr         = sd->client_addr;
+                    std::string accountIP    = std::to_string((addr & 0xFF000000) >> 24) + "." +
+                                            std::to_string((addr & 0xFF0000) >> 16) + "." +
+                                            std::to_string((addr & 0xFF00) >> 8) + "." +
+                                            std::to_string(addr & 0xFF);
 
-                    fmtQuery = "SELECT COUNT(client_addr) \
-                                FROM accounts_sessions \
-                                WHERE client_addr = %u;";
+                    fmtQuery = "SELECT count(accid) \
+                                FROM account_ip_record \
+                                WHERE client_ip = '%s' \
+                                AND accid = %u";
 
-                    if (sql->Query(fmtQuery, sd->client_addr) != SQL_ERROR && sql->NumRows() != 0)
+                    if (sql->Query(fmtQuery, accountIP, sd->accid) != SQL_ERROR && sql->NumRows() != 0)
                     {
                         sql->NextRow();
-                        sessionCount = (uint16)sql->GetIntData(0);
+                        accountOnIP = (uint16)sql->GetIntData(0);
+                    }
+
+                    fmtQuery = "SELECT count(DISTINCT accid) \
+                                FROM account_ip_record \
+                                WHERE client_ip = '%s' \
+                                AND login_time > (DATE_SUB(NOW(), INTERVAL 30 DAY));";
+
+                    if (sql->Query(fmtQuery, accountIP) != SQL_ERROR && sql->NumRows() != 0)
+                    {
+                        sql->NextRow();
+                        accountsOnIP = (uint16)sql->GetIntData(0);
                     }
 
                     fmtQuery = "SELECT UNIX_TIMESTAMP(exception) \
@@ -378,16 +396,34 @@ int32 lobbydata_parse(int32 fd)
                         exceptionTime = sql->GetUInt64Data(0);
                     }
 
+                    fmtQuery = "SELECT COUNT(*) \
+                                FROM account_ip_record \
+                                WHERE client_ip = '%s' \
+                                AND accid IN ( \
+                                    SELECT accid \
+                                    FROM ip_exceptions \
+                                    WHERE linkedacc = %u \
+                                    AND exception > NOW());";
+
+                    uint16 childCheck = 0;
+
+                    if (sql->Query(fmtQuery, accountIP, sd->accid) != SQL_ERROR && sql->NumRows() != 0)
+                    {
+                        sql->NextRow();
+                        childCheck = (uint16)sql->GetIntData(0);
+                    }
+
                     uint64 timeStamp    = std::chrono::duration_cast<std::chrono::seconds>(server_clock::now().time_since_epoch()).count();
                     bool   isNotMaint   = !settings::get<bool>("login.MAINT_MODE");
                     auto   loginLimit   = settings::get<uint8>("login.LOGIN_LIMIT");
                     bool   excepted     = exceptionTime > timeStamp;
-                    bool   loginLimitOK = loginLimit == 0 || sessionCount < loginLimit || excepted;
+                    bool   amIgood      = accountOnIP > 0;
+                    bool   loginLimitOK = loginLimit == 0 || excepted || amIgood || accountsOnIP == 0 || childCheck;
                     bool   isGM         = gmlevel > 0;
 
                     if (!loginLimitOK)
                     {
-                        ShowWarning("%s already has %u active session(s), limit is %u", sd->login, sessionCount, loginLimit);
+                        ShowWarning("%s already has %u active session(s), limit is %u", addr, accountsOnIP, loginLimit);
                     }
 
                     if ((isNotMaint && loginLimitOK) || isGM)

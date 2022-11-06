@@ -59,11 +59,43 @@ int32 connect_client_login(int32 listenfd)
     struct sockaddr_in client_address;
     if ((fd = connect_client(listenfd, client_address)) != -1)
     {
-        create_session(fd, recv_to_fifo, send_from_fifo, login_parse);
-        sessions[fd]->client_addr = ntohl(client_address.sin_addr.s_addr);
-        return fd;
+        if (!isBanned(ntohl(client_address.sin_addr.s_addr)))
+        {
+            create_session(fd, recv_to_fifo, send_from_fifo, login_parse);
+            sessions[fd]->client_addr = ntohl(client_address.sin_addr.s_addr);
+            return fd;
+        }
+        else
+        {
+            // Insert code to deal with banned addresses?
+            ShowInfo("Banned User logged in from IP: %s", ip2str(ntohl(client_address.sin_addr.s_addr)));
+        }
     }
     return -1;
+}
+
+bool isBanned(uint32 ip)
+{
+    // Check for banned IP against all addresses and masks in the database
+    const char* Query = "SELECT address, mask FROM ip_bans;";
+    int32       ret   = sql->Query(Query);
+    if (ret != SQL_ERROR && sql->NumRows() != 0)
+    {
+        uint32 bHost = 0;
+        uint32 bMask = 0;
+        ShowInfo("Checking IP: %s", ip2str(ip));
+        while (sql->NextRow() == SQL_SUCCESS)
+        {
+            bHost = sql->GetUIntData(0);
+            bMask = sql->GetUIntData(1);
+            ShowInfo("Checking address: %s | mask: %s", ip2str(bHost), ip2str(bMask));
+            if ((ip & bMask) == (bHost & bMask))
+            {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 int32 login_parse(int32 fd)
