@@ -713,12 +713,12 @@ local loot =
             { itemid = 4272, droprate = 176 }, -- Slice Of Dragon Meat
         },
 
-        {
-            { itemid =     0, droprate = 392 }, -- Nothing
-            { itemid = xi.items.SPEAR_STRAP, droprate = 354 },
-            { itemid = xi.items.SWORD_STRAP, droprate = 165 },
-            { itemid = xi.items.POLE_GRIP,   droprate =  89 },
-        },
+        -- {
+        --     { itemid =     0, droprate = 392 }, -- Nothing
+        --     { itemid = xi.items.SPEAR_STRAP, droprate = 354 },
+        --     { itemid = xi.items.SWORD_STRAP, droprate = 165 },
+        --     { itemid = xi.items.POLE_GRIP,   droprate =  89 },
+        -- },
 
         {
             { itemid = 14764, droprate = 586 }, -- Minuet Earring
@@ -791,8 +791,8 @@ local loot =
         {
             { itemid = 911, droprate = 292 },   -- Rampaging Horn
             { itemid = 910, droprate = 265 },   -- Lumbering Horn
-            { itemid = 19024, droprate = 354 }, -- Sword Strap
-            { itemid = 19027, droprate = 89 },  -- Claymore Grip
+            -- { itemid = 19024, droprate = 354 }, -- Sword Strap
+            -- { itemid = 19027, droprate = 89 },  -- Claymore Grip
         },
         {
             { itemid = 737, droprate = 109 },   -- Chunk Of Gold Ore
@@ -840,12 +840,12 @@ local loot =
         },
 
         {
-            { itemid = 13402, droprate = 101 }, -- Cassie Earring
+            { itemid = 13402, droprate = 70 }, -- Cassie Earring
             { itemid =   920, droprate = 275 }, -- Malboro Vine
             { itemid =  1013, droprate = 275 }, -- Morbolger Vine
-            { itemid = xi.items.CLAYMORE_GRIP, droprate =  43 },
-            { itemid = xi.items.POLE_GRIP,     droprate = 203 },
-            { itemid = xi.items.SPEAR_STRAP,   droprate = 116 },
+            -- { itemid = xi.items.CLAYMORE_GRIP, droprate =  43 },
+            -- { itemid = xi.items.POLE_GRIP,     droprate = 203 },
+            -- { itemid = xi.items.SPEAR_STRAP,   droprate = 116 },
         },
 
         {

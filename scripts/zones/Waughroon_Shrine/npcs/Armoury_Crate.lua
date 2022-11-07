@@ -598,9 +598,9 @@ local loot =
         {
             { itemid = xi.items.AHRIMAN_LENS, droprate = 250 },
             { itemid = xi.items.AHRIMAN_WING, droprate = 250 },
-            { itemid = xi.items.POLE_GRIP,    droprate =  50 },
-            { itemid = xi.items.SWORD_STRAP,  droprate =  15 },
-            { itemid = xi.items.SPEAR_STRAP,  droprate = 250 },
+            -- { itemid = xi.items.POLE_GRIP,    droprate =  50 },
+            -- { itemid = xi.items.SWORD_STRAP,  droprate =  15 },
+            -- { itemid = xi.items.SPEAR_STRAP,  droprate = 250 },
         },
         {
             { itemid = xi.items.COFFINMAKER,  droprate = 250 },
@@ -674,9 +674,9 @@ local loot =
         {
             { itemid = 17624, droprate = 504 }, -- Anubiss Knife
             { itemid = 747,   droprate =  22 }, -- Orichalcum Ingot
-            { itemid = xi.items.CLAYMORE_GRIP, droprate =  86 },
-            { itemid = xi.items.POLE_GRIP,     droprate = 146 },
-            { itemid = xi.items.SWORD_STRAP,   droprate = 220 },
+            -- { itemid = xi.items.CLAYMORE_GRIP, droprate =  86 },
+            -- { itemid = xi.items.POLE_GRIP,     droprate = 146 },
+            -- { itemid = xi.items.SWORD_STRAP,   droprate = 220 },
         },
 
         {
@@ -732,11 +732,11 @@ local loot =
         },
 
         {
-            { itemid =   658, droprate = 275 }, -- Damascus Ingot
+            { itemid =   658, droprate = 100 }, -- Damascus Ingot
             { itemid =   843, droprate = 275 }, -- Giant Bird Plume
-            { itemid = xi.items.CLAYMORE_GRIP, droprate = 144 },
-            { itemid = xi.items.POLE_GRIP,     droprate = 203 },
-            { itemid = xi.items.SPEAR_STRAP,   droprate = 116 },
+            -- { itemid = xi.items.CLAYMORE_GRIP, droprate = 144 },
+            -- { itemid = xi.items.POLE_GRIP,     droprate = 203 },
+            -- { itemid = xi.items.SPEAR_STRAP,   droprate = 116 },
         },
 
         {

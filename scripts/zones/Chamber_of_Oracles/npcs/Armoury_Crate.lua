@@ -155,9 +155,9 @@ local loot =
         {
             { itemid =     0, droprate = 300 }, -- Nothing
             { itemid = 18092, droprate = 150 }, -- Bourdonasse
-            { itemid = xi.items.POLE_GRIP,     droprate = 150 },
-            { itemid = xi.items.SWORD_STRAP,   droprate = 350 },
-            { itemid = xi.items.CLAYMORE_GRIP, droprate =  50 },
+            -- { itemid = xi.items.POLE_GRIP,     droprate = 150 },
+            -- { itemid = xi.items.SWORD_STRAP,   droprate = 350 },
+            -- { itemid = xi.items.CLAYMORE_GRIP, droprate =  50 },
         },
 
         {
@@ -234,9 +234,9 @@ local loot =
             { itemid = 4174,  droprate = 350 }, -- Vile Elixir
             { itemid = 4175,  droprate = 100 }, -- Vile Elixir +1
             { itemid = 4613,  droprate = 100 }, -- Cure V
-            { itemid = xi.items.POLE_GRIP,     droprate = 250 },
-            { itemid = xi.items.SPEAR_STRAP,   droprate = 100 },
-            { itemid = xi.items.CLAYMORE_GRIP, droprate = 100 },
+            -- { itemid = xi.items.POLE_GRIP,     droprate = 250 },
+            -- { itemid = xi.items.SPEAR_STRAP,   droprate = 100 },
+            -- { itemid = xi.items.CLAYMORE_GRIP, droprate = 100 },
         },
         {
             { itemid = 645,  droprate =  50 }, -- Chunk Of Darksteel Ore

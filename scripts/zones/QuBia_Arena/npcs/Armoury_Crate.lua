@@ -38,12 +38,12 @@ local loot =
             { itemid = 13299, droprate =  50 }, -- Drake Earring
             { itemid = 13300, droprate =  50 }, -- Conjurer Earring
         },
-        {
-            { itemid = 0,     droprate = 450 }, -- nothing
-            { itemid = xi.items.SWORD_STRAP, droprate = 250 },
-            { itemid = xi.items.POLE_GRIP,   droprate =  50 },
-            { itemid = xi.items.SPEAR_STRAP, droprate = 250 },
-        },
+        -- {
+        --     { itemid = 0,     droprate = 450 }, -- nothing
+        --     { itemid = xi.items.SWORD_STRAP, droprate = 250 },
+        --     { itemid = xi.items.POLE_GRIP,   droprate =  50 },
+        --     { itemid = xi.items.SPEAR_STRAP, droprate = 250 },
+        -- },
         {
             { itemid = 0,    droprate = 600 }, -- nothing
             { itemid = 4613, droprate = 100 }, -- Cure V
@@ -128,11 +128,11 @@ local loot =
             { itemid = 1110, droprate =  50 }, -- Beetle Blood
         },
         {
-            { itemid = xi.items.CLAYMORE_GRIP,   droprate = 150 },
+            -- { itemid = xi.items.CLAYMORE_GRIP,   droprate = 150 },
             { itemid = xi.items.CORAL_FRAGMENT,  droprate = 150 },
             { itemid = xi.items.PHOENIX_FEATHER, droprate = 150 },
-            { itemid = xi.items.SWORD_STRAP,     droprate = 350 },
-            { itemid = xi.items.POLE_GRIP,       droprate = 200 },
+            -- { itemid = xi.items.SWORD_STRAP,     droprate = 350 },
+            -- { itemid = xi.items.POLE_GRIP,       droprate = 200 },
         },
         {
             { itemid = 0,    droprate = 450 }, -- nothing
@@ -208,13 +208,13 @@ local loot =
             { itemid = xi.items.STEPPE_SASH, droprate = 150 },
             { itemid = xi.items.JUNGLE_SASH, droprate = 150 },
         },
-        {
-            { itemid = 0, droprate = 450 }, -- nothing
-            { itemid = xi.items.STAFF_STRAP,   droprate =  50 },
-            { itemid = xi.items.CLAYMORE_GRIP, droprate =  50 },
-            { itemid = xi.items.POLE_GRIP,     droprate = 300 },
-            { itemid = xi.items.SPEAR_STRAP,   droprate = 150 },
-        },
+        -- {
+        --     { itemid = 0, droprate = 450 }, -- nothing
+        --     { itemid = xi.items.STAFF_STRAP,   droprate =  50 },
+        --     { itemid = xi.items.CLAYMORE_GRIP, droprate =  50 },
+        --     { itemid = xi.items.POLE_GRIP,     droprate = 300 },
+        --     { itemid = xi.items.SPEAR_STRAP,   droprate = 150 },
+        -- },
         {
             { itemid = 0, droprate = 100 }, -- nothing
             { itemid = xi.items.PHILOSOPHERS_STONE, droprate = 400 },
