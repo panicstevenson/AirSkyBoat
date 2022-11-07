@@ -700,9 +700,9 @@ local loot =
         {
             { itemid = xi.items.DIVINE_LOG,       droprate = 650 },
             { itemid = xi.items.LACQUER_TREE_LOG, droprate =  50 },
-            { itemid = xi.items.SWORD_STRAP,      droprate = 100 },
-            { itemid = xi.items.POLE_GRIP,        droprate = 100 },
-            { itemid = xi.items.SPEAR_STRAP,      droprate = 100 },
+            -- { itemid = xi.items.SWORD_STRAP,      droprate = 100 },
+            -- { itemid = xi.items.POLE_GRIP,        droprate = 100 },
+            -- { itemid = xi.items.SPEAR_STRAP,      droprate = 100 },
         },
         {
             { itemid = xi.items.CHUNK_OF_MYTHRIL_ORE,     droprate = 66 },
@@ -749,13 +749,13 @@ local loot =
             { itemid = xi.items.TRAINERS_GLOVES,  droprate = 250 },
             { itemid = xi.items.WARWOLF_BELT,     droprate = 300 },
         },
-        {
-            { itemid = 0, droprate = 300 }, -- Nothing
-            { itemid = xi.items.CLAYMORE_GRIP, droprate =  70 },
-            { itemid = xi.items.POLE_GRIP,     droprate = 100 },
-            { itemid = xi.items.SWORD_STRAP,   droprate = 280 },
-            { itemid = xi.items.TRUMP_CROWN,   droprate = 520 },
-        },
+        -- {
+        --     { itemid = 0, droprate = 300 }, -- Nothing
+        --     { itemid = xi.items.CLAYMORE_GRIP, droprate =  70 },
+        --     { itemid = xi.items.POLE_GRIP,     droprate = 100 },
+        --     { itemid = xi.items.SWORD_STRAP,   droprate = 280 },
+        --     { itemid = xi.items.TRUMP_CROWN,   droprate = 520 },
+        -- },
         {
             { itemid = xi.items.KING_OF_CUPS_CARD,   droprate = 250 },
             { itemid = xi.items.KING_OF_BATONS_CARD, droprate = 350 },
@@ -825,12 +825,12 @@ local loot =
              { itemid = xi.items.ORICHALCUM_INGOT, droprate = 350 },
              { itemid = xi.items.ABSORBING_SHIELD, droprate = 350 },
          },
-         {
-             { itemid = 0, droprate = 300 }, -- Nothing
-             { itemid = xi.items.POLE_GRIP,     droprate = 500 },
-             { itemid = xi.items.SPEAR_STRAP,   droprate = 100 },
-             { itemid = xi.items.CLAYMORE_GRIP, droprate = 100 },
-         },
+        --  {
+        --      { itemid = 0, droprate = 300 }, -- Nothing
+        --      { itemid = xi.items.POLE_GRIP,     droprate = 500 },
+        --      { itemid = xi.items.SPEAR_STRAP,   droprate = 100 },
+        --      { itemid = xi.items.CLAYMORE_GRIP, droprate = 100 },
+        --  },
          {
              { itemid = xi.items.CHUNK_OF_MYTHRIL_ORE,     droprate =  60 },
              { itemid = xi.items.CHUNK_OF_DARKSTEEL_ORE,   droprate =  60 },
