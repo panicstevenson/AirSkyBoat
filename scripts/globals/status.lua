@@ -1823,6 +1823,7 @@ xi.mod =
     CLAIMSHIELD_FAKE_SPAWN        = 1411, -- Enables popping the mob early as an invisible entity without targeting with Claimshield enabled. Time in ms.
     MOBSHIELD_FAKE_SPAWN          = 1412, -- Time in ms a mob should be spawned before claim. Used to catch nasty claimbots.
     CLAIMBOT_REPORT_CHECK         = 1413, -- Indicates whether claimbot report has gone through.
+    MOBSHIELD                     = 1414, -- Adds Mobshield to a Mob (Claimshield without claim period or enmity update)
 
     -- IF YOU ADD ANY NEW MODIFIER HERE, ADD IT IN src/map/modifier.h ASWELL!
 

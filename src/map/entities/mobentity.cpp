@@ -636,7 +636,7 @@ void CMobEntity::Spawn()
     {
         PAI->Internal_ClaimShieldState();
     }
-    else if (this->m_Type == MOBTYPE_NOTORIOUS)
+    else if (getMod(Mod::MOBSHIELD) > 0)
     {
         PAI->Internal_MobShieldState();
     }
