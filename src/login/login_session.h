@@ -28,12 +28,13 @@
 
 struct login_session_data_t
 {
-    char   login[17];
-    uint32 accid;
-    uint32 serviced;
-    uint32 client_addr;
-    uint16 client_port;
-    uint32 servip;
+    char        login[17];
+    uint32      accid;
+    uint32      serviced;
+    uint32      client_addr;
+    std::string mac_addr;
+    uint16      client_port;
+    uint32      servip;
 
     char  charname[16];
     int32 login_fd;

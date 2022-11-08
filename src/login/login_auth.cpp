@@ -120,16 +120,18 @@ int32 login_parse(int32 fd)
     }
 
     // all auth packets have one structure:
-    // [login][passwords][code] => summary assign 33 bytes
-    if (sessions[fd]->rdata.size() == 33)
+    // [login][passwords][code][mac_address] => summary assign 50 bytes
+    if (sessions[fd]->rdata.size() == 50)
     {
         char* buff = &sessions[fd]->rdata[0];
         int8  code = ref<uint8>(buff, 32);
 
         std::string name(buff, buff + 16);
         std::string password(buff + 16, buff + 32);
+        std::string mac(buff + 33, buff + 50);
         char        escaped_name[16 * 2 + 1];
         char        escaped_pass[32 * 2 + 1];
+        char        escaped_mac[17 * 2 + 1];
 
         std::fill_n(sd->login, sizeof sd->login, '\0');
         std::copy(name.cbegin(), name.cend(), sd->login);
@@ -146,6 +148,10 @@ int32 login_parse(int32 fd)
 
         sql->EscapeString(escaped_name, name.c_str());
         sql->EscapeString(escaped_pass, password.c_str());
+        sql->EscapeString(escaped_mac, mac.c_str());
+
+        // assign mac address to socket
+        sessions[fd]->mac_addr = std::string(escaped_mac);
 
         switch (code)
         {
@@ -160,6 +166,7 @@ int32 login_parse(int32 fd)
                     ret = sql->NextRow();
 
                     sd->accid    = sql->GetUIntData(0);
+                    sd->mac_addr = sessions[fd]->mac_addr;
                     uint8 status = (uint8)sql->GetUIntData(1);
 
                     if (status & ACCOUNT_STATUS_CODE::NORMAL)
