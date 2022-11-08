@@ -1737,7 +1737,7 @@ void CMobEntity::OnDespawn(CDespawnState& /*unused*/)
 
             if (PMob != nullptr)
             {
-                if (PMob->status == STATUS_TYPE::DISAPPEAR)
+                if (!PMob->m_AllowRespawn)
                 {
                     uint32 hourAdj = std::round(CVanaTime::getInstance()->getHour() + ((PMob->m_RespawnTime / 1000) / 144)); // 2m 24s per Vana Hour
 
