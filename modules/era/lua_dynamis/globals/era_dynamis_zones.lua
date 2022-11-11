@@ -166,6 +166,9 @@ for _, zoneID in pairs(startingZones) do
                 xi.dynamis.cleanupDynamis(dynamisZone)
             end
         end
+        if dynamisZone:getID() == xi.zone.QUFIM_ISLAND then
+            xi.hnm_system.checkSpawn(zone)
+        end
     end)
 end
 

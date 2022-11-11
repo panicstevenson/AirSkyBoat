@@ -371,7 +371,7 @@ namespace battleutils
 
         if (level > maxLevel)
         {
-            ShowDebug("battleutils::GetMaxSkill() received level value greater than array size! (Received: %d, Clamped to: %d)", level, maxLevel);
+            // ShowDebug("battleutils::GetMaxSkill() received level value greater than array size! (Received: %d, Clamped to: %d)", level, maxLevel);
         }
 
         return g_SkillTable[std::clamp<uint8>(level, 0, maxLevel)][g_SkillRanks[SkillID][JobID]];
@@ -383,7 +383,7 @@ namespace battleutils
 
         if (level > maxLevel)
         {
-            ShowDebug("battleutils::GetMaxSkill() received level value greater than array size! (Received: %d, Clamped to: %d)", level, maxLevel);
+            // ShowDebug("battleutils::GetMaxSkill() received level value greater than array size! (Received: %d, Clamped to: %d)", level, maxLevel);
         }
 
         return g_SkillTable[std::clamp<uint8>(level, 0, maxLevel)][rank];
