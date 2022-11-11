@@ -31,15 +31,27 @@ xi.hnm_system.startup = function(zone)
 
     -- add 5 minutes if the mob is supposed to spawn isntantly on server startup (Adds crash buffer)
     if os.time > fafnogg then
-        fafnogg = fafnogg + 300
+        fafnogg = os.time() + 300
     end
 
     if os.time > adamantoise then
-        adamantoise = adamantoise + 300
+        adamantoise = os.time() + 300
     end
 
     if os.time > behemoth then
-        behemoth = behemoth + 300
+        behemoth = os.time() + 300
+    end
+
+    if fZone == 0 then
+        fZone = zones[4] -- Very First spawn in Dragons Aery
+    end
+
+    if aZone == 0 then
+        aZone = zones[8] -- Very First spawn in Valley
+    end
+
+    if bZone == 0 then
+        bZone = zones[13] -- Very First spawn in Dominion
     end
 
     for i in pairs(zones) do
@@ -61,11 +73,11 @@ end
 
 xi.hnm_system.onDeath = function(mob)
     local type = mob:getLocalVar("HNMType")
-    local HQ = mob:getLocalVar("HQ")
+    local hQ = mob:getLocalVar("HQ")
     local fDay = GetServerVariable("FafnirDay")
     local aDay = GetServerVariable("AdamantoiseDay")
     local bDay = GetServerVariable("BehemothDay")
-    local respawn = os.time() + 79200 + (math.random(0,6) * 600) -- 22 hour min 23 hour max with 6 windows at 10  mins
+    local respawn = os.time() + 79200 + (math.random(0, 6) * 600) -- 22 hour min 23 hour max with 6 windows at 10  mins
 
     local zones =
     {
@@ -85,11 +97,11 @@ xi.hnm_system.onDeath = function(mob)
     }
 
     if type == 1 then
-        local fzone = zones[math.random(1,4)]
-        for i = 1,4 do
+        local fzone = zones[math.random(1, 4)]
+        for i = 1, 4 do
             GetZone(zones[i]):setLocalVar("[HNM]Fafnir", respawn)
             GetZone(zones[i]):setLocalVar("FafID", 0)
-            if HQ == 1 then
+            if hQ == 1 then
                 GetZone(zones[i]):setLocalVar("FafnirDay", 1)
             else
                 GetZone(zones[i]):setLocalVar("FafnirDay", fDay + 1)
@@ -100,17 +112,17 @@ xi.hnm_system.onDeath = function(mob)
         SetServerVariable("[HNM]Fafnir", respawn)
         SetServerVariable("FafnirZone", fzone)
 
-        if HQ == 1 then
+        if hQ == 1 then
             SetServerVariable("FafnirDay", 1)
         else
             SetServerVariable("FafnirDay", fDay + 1)
         end
     elseif type == 2 then
-        local azone = zones[math.random(5,8)]
-        for i = 5,8 do
+        local azone = zones[math.random(5, 8)]
+        for i = 5, 8 do
             GetZone(zones[i]):setLocalVar("[HNM]Adamantoise", respawn)
             GetZone(zones[i]):setLocalVar("AddyID", 0)
-            if HQ == 1 then
+            if hQ == 1 then
                 GetZone(zones[i]):setLocalVar("AdamantoiseDay", 1)
             else
                 GetZone(zones[i]):setLocalVar("AdamantoiseDay", aDay + 1)
@@ -121,17 +133,17 @@ xi.hnm_system.onDeath = function(mob)
         SetServerVariable("[HNM]Adamantoise", respawn)
         SetServerVariable("AdamantoiseZone", azone)
 
-        if HQ == 1 then
+        if hQ == 1 then
             SetServerVariable("AdamantoiseDay", 0)
         else
             SetServerVariable("AdamantoiseDay", aDay + 1)
         end
     else
-        local bzone = zones[math.random(9,13)]
-        for i = 5,8 do
+        local bzone = zones[math.random(9, 13)]
+        for i = 9, 13 do
             GetZone(zones[i]):setLocalVar("[HNM]Behemoth", respawn)
             GetZone(zones[i]):setLocalVar("BeheID", 0)
-            if HQ == 1 then
+            if hQ == 1 then
                 GetZone(zones[i]):setLocalVar("BehemothDay", 1)
             else
                 GetZone(zones[i]):setLocalVar("BehemothDay", bDay + 1)
@@ -142,7 +154,7 @@ xi.hnm_system.onDeath = function(mob)
         SetServerVariable("[HNM]Behemoth", respawn)
         SetServerVariable("BehemothZone", bzone)
 
-        if HQ == 1 then
+        if hQ == 1 then
             SetServerVariable("BehemothDay", 1)
         else
             SetServerVariable("BehemothDay", aDay + 1)
@@ -194,16 +206,28 @@ end
 xi.hnm_system.spawnFafnir = function(zone)
     local spawnPoints =
     {
-        [xi.zones.THE_SANCTUARY_OF_ZITAH] = {1,2,3,4,5,6,7,8,9,10,11,12},
-        [xi.zone.ROMAEVE] = {1,2,3,4,5,6,7,8,9,10,11,12},
-        [xi.zone.THE_BOYAHDA_TREE] = {1,2,3,4,5,6,7,8,9,10,11,12},
-        [xi.zone.DRAGONS_AERY] = {1,2,3,4,5,6,7,8,9,10,11,12}
+        [xi.zones.THE_SANCTUARY_OF_ZITAH] =
+        {
+            607.58, -0.12, -167.62, 20.19, 0.231, 97.6, -484, 0, 236.55, -289.96, 0, 210.84
+        },
+        [xi.zone.ROMAEVE] =
+        {
+            0.14, -28, 97.8, 114, -8, 46, -116, -8, 42.28, -48.23, -2, -93.6
+        },
+        [xi.zone.THE_BOYAHDA_TREE] =
+        {
+            -255.88, 9.8, -271.1, -227.57, 9.92, -292.97, -256.54, 9.69, -290.59, -253.46, 9.77, -266.3
+        },
+        [xi.zone.DRAGONS_AERY] =
+        {
+            78.000, 6.000, 39.000, 80.965, 6.868, 42.384, 75.645, 6.749, 35.790, 89.395, 6.805, 39.952
+        }
     }
 
-    local point = math.random(1,4)
+    local point = math.random(1, 4)
 
     if point ~= 1 then
-        for i = 0,2 do
+        for i = 0, 2 do
             point = point + (i * 3)
         end
     end
@@ -214,7 +238,7 @@ xi.hnm_system.spawnFafnir = function(zone)
         x = spawnPoints[zone:getID()][point],
         y = spawnPoints[zone:getID()][point] + 1,
         z = spawnPoints[zone:getID()][point] + 2,
-        rotation = math.random(1,360),
+        rotation = math.random(1, 360),
         groupId = 5,
         groupZoneId = 154,
         releaseIdOnDeath = true,
@@ -239,16 +263,28 @@ end
 xi.hnm_system.spawnNidhogg = function(zone)
     local spawnPoints =
     {
-        [xi.zones.THE_SANCTUARY_OF_ZITAH] = {1,2,3,4,5,6,7,8,9,10,11,12},
-        [xi.zone.ROMAEVE] = {1,2,3,4,5,6,7,8,9,10,11,12},
-        [xi.zone.THE_BOYAHDA_TREE] = {1,2,3,4,5,6,7,8,9,10,11,12},
-        [xi.zone.DRAGONS_AERY] = {1,2,3,4,5,6,7,8,9,10,11,12}
+        [xi.zones.THE_SANCTUARY_OF_ZITAH] =
+        {
+            607.58, -0.12, -167.62, 20.19, 0.231, 97.6, -484, 0, 236.55, -289.96, 0, 210.84
+        },
+        [xi.zone.ROMAEVE] =
+        {
+            0.14, -28, 97.8, 114, -8, 46, -116, -8, 42.28, -48.23, -2, -93.6
+        },
+        [xi.zone.THE_BOYAHDA_TREE] =
+        {
+            -255.88, 9.8, -271.1, -227.57, 9.92, -292.97, -256.54, 9.69, -290.59, -253.46, 9.77, -266.3
+        },
+        [xi.zone.DRAGONS_AERY] =
+        {
+            78.000, 6.000, 39.000, 80.965, 6.868, 42.384, 75.645, 6.749, 35.790, 89.395, 6.805, 39.952
+        }
     }
 
-    local point = math.random(1,4)
+    local point = math.random(1, 4)
 
     if point ~= 1 then
-        for i = 0,2 do
+        for i = 0, 2 do
             point = point + (i * 3)
         end
     end
@@ -259,7 +295,7 @@ xi.hnm_system.spawnNidhogg = function(zone)
         x = spawnPoints[zone:getID()][point],
         y = spawnPoints[zone:getID()][point] + 1,
         z = spawnPoints[zone:getID()][point] + 2,
-        rotation = math.random(1,360),
+        rotation = math.random(1, 360),
         groupId = 6,
         groupZoneId = 154,
         releaseIdOnDeath = true,
@@ -282,16 +318,28 @@ end
 xi.hnm_system.spawnAddy = function(zone)
     local spawnPoints =
     {
-        [xi.zones.VALLEY_OF_SORROWS] = {1,2,3,4,5,6,7,8,9,10,11,12},
-        [xi.zone.GUSTAV_TUNNEL] = {1,2,3,4,5,6,7,8,9,10,11,12},
-        [xi.zone.CAPE_TERIGGAN] = {1,2,3,4,5,6,7,8,9,10,11,12},
-        [xi.zone.KUFTAL_TUNNEL] = {1,2,3,4,5,6,7,8,9,10,11,12}
+        [xi.zones.VALLEY_OF_SORROWS] =
+        {
+            -26.068, -0.038, 23.504, -47.618, 0.018, -29.171, -1.446, 0.543, 13.472, -5.911, 0.282, 9.178
+        },
+        [xi.zone.GUSTAV_TUNNEL] =
+        {
+            -272.3, -9.6, -1.2, -294, -10.33, -23.04, -331.21, -9.83, -0.092, -311.31, -9.53, 8.47
+        },
+        [xi.zone.CAPE_TERIGGAN] =
+        {
+            94.3998, 0.39, 165.7, -211.01, -2.31, 489.83, -33.17, -1.19, 67.82, 167.48, 6.87, 206.52
+        },
+        [xi.zone.KUFTAL_TUNNEL] =
+        {
+            94.49, 29.3, 107.56, 69.69, 29.48, 107.3, 66.7, 29.48, 130.2, 90.85, 31.2, 131.49
+        }
     }
 
-    local point = math.random(1,4)
+    local point = math.random(1, 4)
 
     if point ~= 1 then
-        for i = 0,2 do
+        for i = 0, 2 do
             point = point + (i * 3)
         end
     end
@@ -302,7 +350,7 @@ xi.hnm_system.spawnAddy = function(zone)
         x = spawnPoints[zone:getID()][point],
         y = spawnPoints[zone:getID()][point] + 1,
         z = spawnPoints[zone:getID()][point] + 2,
-        rotation = math.random(1,360),
+        rotation = math.random(1, 360),
         groupId = 6,
         groupZoneId = 128,
         releaseIdOnDeath = true,
@@ -325,16 +373,28 @@ end
 xi.hnm_system.spawnAspid = function(zone)
     local spawnPoints =
     {
-        [xi.zones.VALLEY_OF_SORROWS] = {1,2,3,4,5,6,7,8,9,10,11,12},
-        [xi.zone.GUSTAV_TUNNEL] = {1,2,3,4,5,6,7,8,9,10,11,12},
-        [xi.zone.CAPE_TERIGGAN] = {1,2,3,4,5,6,7,8,9,10,11,12},
-        [xi.zone.KUFTAL_TUNNEL] = {1,2,3,4,5,6,7,8,9,10,11,12}
+        [xi.zones.VALLEY_OF_SORROWS] =
+        {
+            -26.068, -0.038, 23.504, -47.618, 0.018, -29.171, -1.446, 0.543, 13.472, -5.911, 0.282, 9.178
+        },
+        [xi.zone.GUSTAV_TUNNEL] =
+        {
+            -272.3, -9.6, -1.2, -294, -10.33, -23.04, -331.21, -9.83, -0.092, -311.31, -9.53, 8.47
+        },
+        [xi.zone.CAPE_TERIGGAN] =
+        {
+            94.3998, 0.39, 165.7, -211.01, -2.31, 489.83, -33.17, -1.19, 67.82, 167.48, 6.87, 206.52
+        },
+        [xi.zone.KUFTAL_TUNNEL] =
+        {
+            94.49, 29.3, 107.56, 69.69, 29.48, 107.3, 66.7, 29.48, 130.2, 90.85, 31.2, 131.49
+        }
     }
 
-    local point = math.random(1,4)
+    local point = math.random(1, 4)
 
     if point ~= 1 then
-        for i = 0,2 do
+        for i = 0, 2 do
             point = point + (i * 3)
         end
     end
@@ -345,7 +405,7 @@ xi.hnm_system.spawnAspid = function(zone)
         x = spawnPoints[zone:getID()][point],
         y = spawnPoints[zone:getID()][point] + 1,
         z = spawnPoints[zone:getID()][point] + 2,
-        rotation = math.random(1,360),
+        rotation = math.random(1, 360),
         groupId = 7,
         groupZoneId = 128,
         releaseIdOnDeath = true,
@@ -368,17 +428,32 @@ end
 xi.hnm_system.spawnBehemoth = function(zone)
     local spawnPoints =
     {
-        [xi.zones.BEHEMOTHS_DOMINION] = {1,2,3,4,5,6,7,8,9,10,11,12},
-        [xi.zone.QUFIM_ISLAND] = {1,2,3,4,5,6,7,8,9,10,11,12},
-        [xi.zone.ROLANBERRY_FIELDS] = {1,2,3,4,5,6,7,8,9,10,11,12},
-        [xi.zone.SAUROMUGUE_CHAMPAIGN] = {1,2,3,4,5,6,7,8,9,10,11,12},
-        [xi.zone.BATALLIA_DOWNS] = {1,2,3,4,5,6,7,8,9,10,11,12}
+        [xi.zones.BEHEMOTHS_DOMINION] =
+        {
+            -277.763, -20.309, 72.189, -255.954, -19.209, 39.293, -209.320, -20.016, 48.118, -271.910, -19.543, 63.326
+        },
+        [xi.zone.QUFIM_ISLAND] =
+        {
+            103.47, -20.97, 136.66, 163.16, -20, 161.87, 180.18, -19, 115.97, 109.82, -19.69, 80.94
+        },
+        [xi.zone.ROLANBERRY_FIELDS] =
+        {
+            191.83, 14.27, 114.65, 304.16, 0.21, 141.77, 284.2, 10.75, 257.18, 160.4, 16.39, 187.8
+        },
+        [xi.zone.SAUROMUGUE_CHAMPAIGN] =
+        {
+            466.02, 17.3, 14.02, 502.72, 16.8, -3.64, 488.57, 15.67, -75.64, 467.18, 16.76, -72.36
+        },
+        [xi.zone.BATALLIA_DOWNS] =
+        {
+            184.8, 8.1, -483.7, 283.18, 8.35, 28.84, -556.05, -16, 80.79, 68.19, 6.22, -441.31
+        }
     }
 
-    local point = math.random(1,4)
+    local point = math.random(1, 4)
 
     if point ~= 1 then
-        for i = 0,2 do
+        for i = 0, 2 do
             point = point + (i * 3)
         end
     end
@@ -389,7 +464,7 @@ xi.hnm_system.spawnBehemoth = function(zone)
         x = spawnPoints[zone:getID()][point],
         y = spawnPoints[zone:getID()][point] + 1,
         z = spawnPoints[zone:getID()][point] + 2,
-        rotation = math.random(1,360),
+        rotation = math.random(1, 360),
         groupId = 9,
         groupZoneId = 127,
         releaseIdOnDeath = true,
@@ -412,17 +487,32 @@ end
 xi.hnm_system.spawnKingBehe = function(zone)
     local spawnPoints =
     {
-        [xi.zones.BEHEMOTHS_DOMINION] = {1,2,3,4,5,6,7,8,9,10,11,12},
-        [xi.zone.QUFIM_ISLAND] = {1,2,3,4,5,6,7,8,9,10,11,12},
-        [xi.zone.ROLANBERRY_FIELDS] = {1,2,3,4,5,6,7,8,9,10,11,12},
-        [xi.zone.SAUROMUGUE_CHAMPAIGN] = {1,2,3,4,5,6,7,8,9,10,11,12},
-        [xi.zone.BATALLIA_DOWNS] = {1,2,3,4,5,6,7,8,9,10,11,12}
+        [xi.zones.BEHEMOTHS_DOMINION] =
+        {
+            -277.763, -20.309, 72.189, -255.954, -19.209, 39.293, -209.320, -20.016, 48.118, -271.910, -19.543, 63.326
+        },
+        [xi.zone.QUFIM_ISLAND] =
+        {
+            103.47, -20.97, 136.66, 163.16, -20, 161.87, 180.18, -19, 115.97, 109.82, -19.69, 80.94
+        },
+        [xi.zone.ROLANBERRY_FIELDS] =
+        {
+            191.83, 14.27, 114.65, 304.16, 0.21, 141.77, 284.2, 10.75, 257.18, 160.4, 16.39, 187.8
+        },
+        [xi.zone.SAUROMUGUE_CHAMPAIGN] =
+        {
+            466.02, 17.3, 14.02, 502.72, 16.8, -3.64, 488.57, 15.67, -75.64, 467.18, 16.76, -72.36
+        },
+        [xi.zone.BATALLIA_DOWNS] =
+        {
+            184.8, 8.1, -483.7, 283.18, 8.35, 28.84, -556.05, -16, 80.79, 68.19, 6.22, -441.31
+        }
     }
 
-    local point = math.random(1,4)
+    local point = math.random(1, 4)
 
     if point ~= 1 then
-        for i = 0,2 do
+        for i = 0, 2 do
             point = point + (i * 3)
         end
     end
@@ -433,7 +523,7 @@ xi.hnm_system.spawnKingBehe = function(zone)
         x = spawnPoints[zone:getID()][point],
         y = spawnPoints[zone:getID()][point] + 1,
         z = spawnPoints[zone:getID()][point] + 2,
-        rotation = math.random(1,360),
+        rotation = math.random(1, 360),
         groupId = 9,
         groupZoneId = 127,
         releaseIdOnDeath = true,

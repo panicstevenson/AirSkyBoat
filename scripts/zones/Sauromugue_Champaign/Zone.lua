@@ -20,6 +20,11 @@ zoneObject.onInitialize = function(zone)
     GetNPCByID(ID.npc.QM2 + math.random(0, 5)):setLocalVar('Quest[2][70]Option', 1) -- Determine which QM is active today for THF AF2
     xi.voidwalker.zoneOnInit(zone)
     xi.horizon.spawnInitialMobs(zone)
+    xi.hnm_system.startup(zone)
+end
+
+zoneObject.onZoneTick = function(zone)
+    xi.hnm_system.checkSpawn(zone)
 end
 
 zoneObject.onZoneIn = function( player, prevZone)
