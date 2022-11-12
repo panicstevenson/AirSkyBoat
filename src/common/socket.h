@@ -232,7 +232,8 @@ struct socket_data
         unsigned char server : 1;
     } flag;
 
-    uint32 client_addr; // remote client address
+    uint32      client_addr; // remote client address
+    std::string mac_addr;    // client mac address
 
     std::string rdata, wdata;
     size_t      rdata_pos;

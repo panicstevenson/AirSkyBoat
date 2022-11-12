@@ -508,10 +508,10 @@ int32 lobbydata_parse(int32 fd)
                     char timeAndDate[128];
                     strftime(timeAndDate, sizeof(timeAndDate), "%Y:%m:%d %H:%M:%S", &convertedTime);
 
-                    fmtQuery = "INSERT INTO account_ip_record(login_time,accid,charid,client_ip)\
-                            VALUES ('%s', %u, %u, '%s');";
+                    fmtQuery = "INSERT INTO account_ip_record(login_time,accid,charid,client_ip,client_mac)\
+                            VALUES ('%s', %u, %u, '%s', '%s');";
 
-                    if (sql->Query(fmtQuery, timeAndDate, sd->accid, charid, ip2str(sd->client_addr)) == SQL_ERROR)
+                    if (sql->Query(fmtQuery, timeAndDate, sd->accid, charid, ip2str(sd->client_addr), sd->mac_addr.c_str()) == SQL_ERROR)
                     {
                         ShowError("lobbyview_parse: Could not write info to account_ip_record.");
                     }
