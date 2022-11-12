@@ -25,7 +25,7 @@ CALL replace_drop('FeiYin', 'Eastern_Shadow', 'valis_bow', 'eurytos_bow');
 CALL replace_drop('South_Gustaberg', 'Leaping_Lizzy', 'bounding_boots', 'leaping_boots');
 CALL replace_drop('Castle_Oztroja', 'Mee_Deggi_the_Punisher', 'ochimusha_kote', 'ochiudos_kote');
 CALL replace_drop('Castle_Oztroja', 'Quu_Domi_the_Gallant', 'sarutobi_kyahan', 'fuma_kyahan');
-CALL replace_drop('Labyrinth_of_Onzozo', 'Lord_of_Onzozo', 'octave_club', 'kraken_club');
+-- CALL replace_drop('Labyrinth_of_Onzozo', 'Lord_of_Onzozo', 'octave_club', 'kraken_club');
 CALL replace_drop('Valkurm_Dunes', 'Valkurm_Emperor', 'empress_hairpin', 'emperor_hairpin');
 CALL replace_drop('Maze_of_Shakhrami', 'Argus', 'peacock_amulet', 'peacock_charm');
 CALL replace_drop('Jugner_Forest', 'King_Arthro', 'velocious_belt', 'speed_belt');
