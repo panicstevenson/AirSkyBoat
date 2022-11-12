@@ -740,6 +740,9 @@ public:
     void     SetBattleStartTime(time_point);
     duration GetBattleTime();
 
+    void   setBattleID(uint16 battleID);
+    uint16 getBattleID();
+
     virtual void Tick(time_point) override;
     virtual void PostTick() override;
 
@@ -793,6 +796,7 @@ private:
 
     uint16     m_battleTarget{ 0 };
     time_point m_battleStartTime;
+    uint16     m_battleID = 0; // Current battle the entity is participating in. Battle ID must match in order for entities to interact with each other.
 
     std::unordered_map<Mod, int16, EnumClassHash>                                                m_modStat;     // массив модификаторов
     std::unordered_map<Mod, int16, EnumClassHash>                                                m_modStatSave; // saved state
