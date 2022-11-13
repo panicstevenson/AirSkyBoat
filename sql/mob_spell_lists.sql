@@ -1769,8 +1769,8 @@ INSERT INTO `mob_spell_lists` VALUES ('Wake_Warder_Wanda',151,240,1,255); -- dro
 
 -- Lord_of_Onzozo (152)
 INSERT INTO `mob_spell_lists` VALUES ('Lord_of_Onzozo',152,201,1,255); -- waterga_iii (1~255)
-INSERT INTO `mob_spell_lists` VALUES ('Lord_of_Onzozo',152,214,1,255); -- flood (1~255)
-INSERT INTO `mob_spell_lists` VALUES ('Lord_of_Onzozo',152,361,1,255); -- blindga (1~255)
+-- INSERT INTO `mob_spell_lists` VALUES ('Lord_of_Onzozo',152,214,1,255); -- flood (1~255)
+-- INSERT INTO `mob_spell_lists` VALUES ('Lord_of_Onzozo',152,361,1,255); -- blindga (1~255)
 
 -- Iratham_HP_50to100 (153)
 INSERT INTO `mob_spell_lists` VALUES ('Iratham_HP_50to100',153,176,1,255); -- firaga_iii (1~255)

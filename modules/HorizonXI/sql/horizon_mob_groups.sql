@@ -201,6 +201,8 @@ UPDATE mob_groups SET minLevel = 60, maxLevel = 60, HP = 45000, MP = 500 WHERE n
 INSERT INTO `mob_groups` VALUES (89,2271,104,'Queen_Crab',0,128,6037,10000,2000,55,55,0,NULL);
 INSERT INTO `mob_groups` VALUES (90,2271,104,'Pawn_Crab',0,128,6037,200,2000,55,55,0,NULL);
 
+--LoO Stuff
+UPDATE mob_groups SET minLevel = 80, maxLevel = 81, HP = 25000, MP = 25000 WHERE name = "Lord_of_Onzozo"  and zoneid = 213;
 -- ----------------------------------
 --     AF Weapon NM Adjustments
 -- ----------------------------------
