@@ -580,7 +580,7 @@ xi.magic.applyResistanceEffect = function(caster, target, spell, params)
         effectRes = effectRes + xi.magic.getEffectResistance(target, effect, false, caster)
     end
 
-    local p = xi.magic.getMagicHitRate(caster, target, skill, element, effectRes, magicaccbonus, skillchainCount)
+    local p = xi.magic.getMagicHitRate(caster, target, skill, element, effectRes, magicaccbonus, skillchainCount, params.hybridHit)
 
     return xi.magic.getMagicResist(p, target, element, effectRes, skillchainCount)
 end
@@ -599,10 +599,6 @@ xi.magic.applyResistanceAddEffect = function(player, target, element, effect, bo
 
     if not element then
         element = xi.magic.ele.NONE
-    end
-
-    if hybridHit == nil then
-        hybridHit = false
     end
 
     local _, skillchainCount = xi.magic.FormMagicBurst(element, target)
@@ -648,7 +644,7 @@ xi.magic.applyAbilityResistance = function(player, target, params)
         effectRes = xi.magic.getEffectResistance(target, params.effect, false, player)
     end
 
-    local p = xi.magic.getMagicHitRate(player, target, params.skillType, params.element, effectRes, params.maccBonus, skillchainCount, hybridHit)
+    local p = xi.magic.getMagicHitRate(player, target, params.skillType, params.element, effectRes, params.maccBonus, skillchainCount, params.hybridHit)
     local resist = xi.magic.getMagicResist(p, target, params.element, effectRes, skillchainCount)
 
     if resist < 0.5 then
@@ -780,12 +776,6 @@ xi.magic.getMagicHitRate = function(caster, target, skillType, element, effectRe
     end
 
     if element ~= xi.magic.ele.NONE then
-        if target:isMob() and target:isNM() then
-            xi.magic.tryBuildResistance(target, xi.magic.resistMod[element], nil, caster)
-        end
-
-        resMod = utils.clamp(target:getMod(xi.magic.resistMod[element]) - 50, 0, 999)
-
         -- Add acc for elemental affinity accuracy and element specific accuracy
         local affinityBonus = AffinityBonusAcc(caster, element)
         local elementBonus = caster:getMod(spellAcc[element])
