@@ -629,14 +629,7 @@ void CMobEntity::Spawn()
         }
     }
 
-    if (getMobMod(MOBMOD_IDLE_DESPAWN))
-    {
-        this->SetDespawnTime(std::chrono::seconds(getMobMod(MOBMOD_IDLE_DESPAWN)));
-    }
-    else
-    {
-        m_DespawnTimer = time_point::min();
-    }
+    m_DespawnTimer = time_point::min();
     luautils::OnMobSpawn(this);
 
     if (getMod(Mod::CLAIMSHIELD) > 0)

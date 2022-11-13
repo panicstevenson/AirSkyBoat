@@ -4,8 +4,6 @@ set(SOURCES
     lobby.h
     login_auth.cpp
     login_auth.h
-    login_conf.cpp
-    login_conf.h
     login_session.cpp
     login_session.h
     login.cpp

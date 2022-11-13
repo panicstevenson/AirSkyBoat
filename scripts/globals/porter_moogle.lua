@@ -90,13 +90,13 @@ end
 -- desc : Finds the key in table t where the value equals i.
 -----------------------------------
 local function find(t, i)
-    for k, v in ipairs(t) do
-        if v == i then
-            return k
-        end
+  for k, v in ipairs(t) do
+    if v == i then
+      return k
     end
+  end
 
-    return nil
+  return nil
 end
 
 -----------------------------------

@@ -15,7 +15,8 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    if not player:hasKeyItem(xi.ki.MYSTIC_ICE) then
+
+    if (player:hasKeyItem(xi.ki.MYSTIC_ICE) == false) then
         player:addKeyItem(xi.ki.MYSTIC_ICE)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, xi.ki.MYSTIC_ICE)
     else

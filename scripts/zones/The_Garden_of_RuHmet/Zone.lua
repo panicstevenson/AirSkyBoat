@@ -113,13 +113,7 @@ zoneObject.onConquestUpdate = function(zone, updatetype)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)
-    local cs = -1
-
-    if
-        player:getXPos() == 0 and
-        player:getYPos() == 0 and
-        player:getZPos() == 0
-    then
+    if (player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0) then
         player:setPos(-351.136, -2.25, -380, 253)
     end
     player:setCharVar("Ru-Hmet-TP", 0)
@@ -130,7 +124,7 @@ zoneObject.onRegionEnter = function(player, region)
         switch (region:GetRegionID()): caseof
         {
             [1] = function (x)
-                if player:getCurrentMission(xi.mission.log_id.COP) == xi.mission.id.cop.DAWN or player:hasCompletedMission(xi.mission.log_id.COP, xi.mission.id.cop.DAWN) or player:hasCompletedMission(xi.mission.log_id.COP, xi.mission.id.cop.THE_LAST_VERSE) then
+                if (player:getCurrentMission(xi.mission.log_id.COP) == xi.mission.id.cop.DAWN or player:hasCompletedMission(xi.mission.log_id.COP, xi.mission.id.cop.DAWN) or player:hasCompletedMission(xi.mission.log_id.COP, xi.mission.id.cop.THE_LAST_VERSE)) then
                     player:startEvent(101)
                 else
                     player:startEvent(155)
@@ -138,7 +132,7 @@ zoneObject.onRegionEnter = function(player, region)
             end, --101
 
             [2] = function (x)
-                if player:hasKeyItem(xi.ki.BRAND_OF_DAWN) and player:hasKeyItem(xi.ki.BRAND_OF_TWILIGHT) then
+                if (player:hasKeyItem(xi.ki.BRAND_OF_DAWN) and player:hasKeyItem(xi.ki.BRAND_OF_TWILIGHT)) then
                     player:startEvent(156)
                 else
                     player:startEvent(183)
@@ -192,7 +186,7 @@ end
 
 zoneObject.onEventUpdate = function(player, csid, option)
     if
-        (csid > 149 and csid < 184) or
+        (csid >149 and csid < 184) or
         csid == 102 or
         csid == 103 or
         csid == 101

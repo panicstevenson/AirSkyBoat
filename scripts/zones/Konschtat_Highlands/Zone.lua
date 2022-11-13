@@ -20,14 +20,10 @@ zoneObject.onInitialize = function(zone)
     xi.voidwalker.zoneOnInit(zone)
 end
 
-zoneObject.onZoneIn = function(player, prevZone)
+zoneObject.onZoneIn = function( player, prevZone)
     local cs = -1
 
-    if
-        player:getXPos() == 0 and
-        player:getYPos() == 0 and
-        player:getZPos() == 0
-    then
+    if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
         player:setPos(521.922, 28.361, 747.85, 45)
     end
 
@@ -54,13 +50,13 @@ end
 zoneObject.onRegionEnter = function( player, region)
 end
 
-zoneObject.onEventUpdate = function(player, csid, option, npc)
+zoneObject.onEventUpdate = function( player, csid, option)
     if csid == 104 then
         quests.rainbow.onEventUpdate(player)
     end
 end
 
-zoneObject.onEventFinish = function(player, csid, option, npc)
+zoneObject.onEventFinish = function( player, csid, option)
 end
 
 zoneObject.onGameHour = function(zone)

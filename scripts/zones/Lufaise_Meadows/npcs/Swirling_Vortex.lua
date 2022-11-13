@@ -4,6 +4,7 @@
 --  Entrance to Valkurm Dunes
 -----------------------------------
 require("scripts/globals/teleports")
+require("scripts/globals/missions")
 -----------------------------------
 local entity = {}
 
@@ -18,9 +19,11 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
-    if csid == 100 and option == 1 then
+
+    if (csid == 100 and option == 1) then
         xi.teleport.to(player, xi.teleport.id.VALKURM_VORTEX)
     end
+
 end
 
 return entity

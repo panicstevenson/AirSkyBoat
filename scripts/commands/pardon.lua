@@ -16,9 +16,9 @@ function onTrigger(player, target)
     end
 
     -- Validate the target..
-    local targ = GetPlayerByName(target)
+    local targ = GetPlayerByName( target )
     if targ == nil then
-        player:PrintToPlayer(string.format("Invalid player '%s' given.", target))
+        player:PrintToPlayer( string.format( "Invalid player '%s' given.", target ) )
         return
     end
 

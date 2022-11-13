@@ -72,7 +72,7 @@ entity.onMobFight = function(mob, target)
 
     -- scripted sequence of weaponskills in order to potentially create the level 4 skillchain cosmic elucidation
     if
-        mob:actionQueueEmpty() and
+        mob:actionQueueEmpty() == true and
         not isBusy
     then
         tenzenFunctions.wsSequence(mob)

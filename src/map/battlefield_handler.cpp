@@ -98,7 +98,7 @@ void CBattlefieldHandler::HandleBattlefields(time_point tick)
         {
             luautils::OnBattlefieldKick(PChar);
             PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_CONFRONTATION, true);
-            m_PZone->updateCharLevelRestriction(PChar);
+            PChar->StatusEffectContainer->DelStatusEffect(EFFECT_LEVEL_RESTRICTION);
         }
         iter = m_orphanedPlayers.erase(iter);
     }

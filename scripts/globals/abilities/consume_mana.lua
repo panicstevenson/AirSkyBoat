@@ -1,11 +1,12 @@
 -----------------------------------
 -- Ability: Consume Mana
--- Description: Converts all MP into damage for the next attack.
+-- Converts all MP into damage for the next attack.
 -- Obtained: Dark Knight Level 55
--- Recast Time: 00:01:00 (or next attack)
--- Duration: 00:01:00
+-- Recast Time: 1:00 (or next attack)
+-- Duration: 1:00
 -----------------------------------
-require("scripts/globals/job_utils/dark_knight")
+require("scripts/globals/settings")
+require("scripts/globals/status")
 -----------------------------------
 local abilityObject = {}
 
@@ -14,7 +15,7 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
-    xi.job_utils.dark_knight.useConsumeMana(player, target, ability)
+   player:addStatusEffect(xi.effect.CONSUME_MANA, 1, 0, 60)
 end
 
 return abilityObject

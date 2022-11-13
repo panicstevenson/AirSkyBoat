@@ -853,33 +853,25 @@ xi.effect =
     PROWESS_WS_DMG           = 787, -- (Unimplemented) 2% per tier.
     PROWESS_KILLER           = 788, -- *flat +4 for now
     -- End GoV Prowess fakery
-    FIELD_SUPPORT_FOOD       = 789, -- Used by Fov/GoV food buff.
-    MARK_OF_SEED             = 790, -- Tracks 30 min timer in ACP mission "Those Who Lurk in Shadows (II)"
-    ALL_MISS                 = 791, -- Indicates a target is unable to be hit by normal melee attacks (formerly TOO_HIGH)
-    SUPER_BUFF               = 792,
-    NINJUTSU_ELE_DEBUFF      = 793,
-    HEALING                  = 794,
-    LEAVEGAME                = 795,
-    HASTE_SAMBA_HASTE        = 796,
-    TELEPORT                 = 797,
-    CHAINBOUND               = 798,
-    SKILLCHAIN               = 799,
-    DYNAMIS                  = 800,
-    MEDITATE                 = 801, -- Dummy effect for SAM Meditate JA
-    ELEMENTALRES_DOWN        = 802, -- Elemental resistance down
-    FULL_SPEED_AHEAD         = 803, -- Helper for quest: Full Speed Ahead!
-    HYSTERIA                 = 804, -- Used for Hysteroanima to stop after readying a weaponskill with no msg.
-    TOMAHAWK                 = 805, -- Silent status effect inflicted by a Warrior using the "Tomahawk" job ability
-    ELEMENTAL_EVASION_DOWN   = 806, -- Used for era+ wyvern breaths.
-    FIRE_EEM_MOD             = 900,
-    ICE_EEM_MOD              = 901,
-    WIND_EEM_MOD             = 902,
-    EARTH_EEM_MOD            = 903,
-    THUNDER_EEM_MOD          = 904,
-    WATER_EEM_MOD            = 905,
-    LIGHT_EEM_MOD            = 906,
-    DARK_EEM_MOD             = 907,
-    -- PLACEHOLDER           = 806, -- Description
+    FIELD_SUPPORT_FOOD      = 789, -- Used by Fov/GoV food buff.
+    MARK_OF_SEED            = 790, -- Tracks 30 min timer in ACP mission "Those Who Lurk in Shadows (II)"
+    ALL_MISS                = 791, -- Indicates a target is unable to be hit by normal melee attacks (formerly TOO_HIGH)
+    SUPER_BUFF              = 792,
+    NINJUTSU_ELE_DEBUFF     = 793,
+    HEALING                 = 794,
+    LEAVEGAME               = 795,
+    HASTE_SAMBA_HASTE       = 796,
+    TELEPORT                = 797,
+    CHAINBOUND              = 798,
+    SKILLCHAIN              = 799,
+    DYNAMIS                 = 800,
+    MEDITATE                = 801, -- Dummy effect for SAM Meditate JA
+    ELEMENTALRES_DOWN       = 802, -- Elemental resistance down
+    FULL_SPEED_AHEAD        = 803, -- Helper for quest: Full Speed Ahead!
+    HYSTERIA                = 804, -- Used for Hysteroanima to stop after readying a weaponskill with no msg.
+    TOMAHAWK                = 805, -- Silent status effect inflicted by a Warrior using the "Tomahawk" job ability
+    ELEMENTAL_EVASION_DOWN  = 806, -- Used for era+ wyvern breaths.
+
     -- 806-1022
     -- PLACEHOLDER             = 1023 -- The client dat file seems to have only this many "slots", results of exceeding that are untested.
 }
@@ -1293,13 +1285,6 @@ xi.mod =
     REPRISAL_BLOCK_BONUS            = 1067, -- Increases block rate while under the effects of Reprisal (multiplicative, not additive)
     REPRISAL_SPIKES_BONUS           = 1068, -- Increases Reprisal spikes damage by percentage (e.g. mod value of 50 will increase spikes damage by 50%)
 
-    -- Dark Knight
-    ARCANE_CIRCLE_POTENCY           = 1069, -- Increases the potency of the Arcane Circle effect (e.g. mod value 2 = +2% Arcana Killer)
-    ENHANCES_BLOOD_WEAPON           = 1070, -- Enhances "Blood Weapon" effect (increases Blood Weapon's duration in seconds)
-    DARK_MAGIC_CAST                 = 1071, -- Reduces Dark Magic Casting Time by percentage (e.g. mod value -10 = -10% cast time)
-    DARK_MAGIC_DURATION             = 1072, -- Increases Dark Magic spell durations by percentage (e.g. mod value 10 = +10% duration)
-    ENHANCES_DARK_SEAL              = 1073, -- Enhances "Dark Seal" effect (Increases Dark Magic spell durations by 10% per Dark Seal merit while Dark Seal active)
-
     -- Dragoon
     WYVERN_LVL_BONUS                = 1043, -- Wyvern: Lv.+ (Increases wyvern's base level above 99)
 
@@ -1375,13 +1360,9 @@ xi.mod =
     STEALTH                         = 358,
     RAPID_SHOT                      = 359,
     CHARM_TIME                      = 360,
-    JUMP_TP_BONUS                   = 361,  -- bonus tp player receives when using jump
-    JUMP_SPIRIT_TP_BONUS            = 285,  -- bonus tp player receives when using jump for spirit jump only
-    JUMP_ATT_BONUS                  = 362,  -- ATT% bonus for all jumps
-    JUMP_SOUL_SPIRIT_ATT_BONUS      = 286,  -- ATT% bonus for Soul & Spirit jump only
-    JUMP_ACC_BONUS                  = 936,  -- accuracy bonus for all jumps
-    JUMP_DOUBLE_ATTACK              = 888,  -- DA% bonus for all jumps
-    HIGH_JUMP_ENMITY_REDUCTION      = 363,  -- for gear that reduces more enmity from high jump
+    JUMP_TP_BONUS                   = 361,
+    JUMP_ATT_BONUS                  = 362,
+    HIGH_JUMP_ENMITY_REDUCTION      = 363,
     REWARD_HP_BONUS                 = 364,
     SNAP_SHOT                       = 365,
 
@@ -1666,7 +1647,7 @@ xi.mod =
     AUGMENTS_AURA_STEAL             = 889, -- 20% chance of 2 effects to be dispelled or stolen per merit level
     AUGMENTS_CONSPIRATOR            = 912, -- Applies Conspirator benefits to player at the top of the hate list
     JUG_LEVEL_RANGE                 = 564, -- Decreases the level range of spawned jug pets. Maxes out at 2.
-    FORCE_JUMP_CRIT                 = 828, -- Force critical hit for all jumps
+    FORCE_JUMP_CRIT                 = 828, -- Critical hit rate bonus for jump and high jump
     QUICK_DRAW_DMG_PERCENT          = 834, -- Percentage increase to QD damage
 
     -- Crafting food effects
@@ -1826,8 +1807,6 @@ xi.mod =
     DARK_EEM                      = 1165, -- Elemental Evasion Multiplier (Known as SDT in common magic accuracy formulas) (out of 100)
     TAME_SUCCESS_RATE             = 1166, -- Tame Success Rate +
     RAMPART_MAGIC_SHIELD          = 1167, -- Rampart Magic Shield
-    CRITHITRATE_SLOT              = 1168, -- CRITHITRATE for slot
-    ATT_SLOT                      = 1169, -- ATT for slot
 
     -- Horizon Specific Mods
     CURE_SPELL_COST               = 1400, -- Sets Cure Cost Reduction (Out of 100)
@@ -2642,7 +2621,6 @@ xi.mobMod =
     NO_LINK             = 69, -- If set, mob cannot link until unset.
     NO_REST             = 70, -- Mob cannot regain hp (e.g. re-burrowing antlions during ENM).
     LEADER              = 71, -- Used for mobs that follow a defined "leader", such as Ul'xzomit mobs.
-    MAGIC_RANGE         = 72, -- magic aggro range
 
     -- ASB Mod Start
     DRAW_IN_INCLUDE_PARTY     = 100, -- This will cause the mob's draw-in to also affect all party and alliance members
@@ -2759,7 +2737,7 @@ xi.jobSpecialAbility =
     -- TRANCE               = 2710,
     -- ELEMENTAL_SFORZO     = 3265,
     -- ELEMENTAL_SFORZO     = 3479,
-    BOLSTER              = 3482,
+     BOLSTER              = 3482,
 }
 xi.jsa = xi.jobSpecialAbility
 
@@ -3036,7 +3014,7 @@ xi.animation =
 {
     NONE                    = 0,
     ATTACK                  = 1,
-    DESPAWN                 = 2,
+    -- Death 2              = 2,
     DEATH                   = 3,
     CHOCOBO                 = 5,
     FISHING                 = 6,
@@ -3114,10 +3092,8 @@ xi.mount =
     RED_RAPTOR     = 31,
     IRON_GIANT     = 32,
     BYAKKO         = 33,
-    NOBLE_CHOCOBO  = 34, -- NOTE: This is currently blank, probably needs additional packets sent
-    IXION          = 35,
     --
-    MOUNT_MAX      = 36,
+    MOUNT_MAX      = 34,
 }
 
 -----------------------------------

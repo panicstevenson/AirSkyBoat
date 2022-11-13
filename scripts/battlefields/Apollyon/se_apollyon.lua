@@ -24,7 +24,6 @@ local content = Limbus:new({
     lossEventParams  = { [5] = 1 },
     name             = "SE_APOLLYON",
     exitLocation     = 1,
-    timeExtension   = 10,
 })
 
 content.paths =
@@ -277,7 +276,7 @@ content.groups =
         setup = function(battlefield, mobs)
             for _, mob in ipairs(mobs) do
                 -- Prevent boss from being targetable until first mob Flying_Spear is killed
-                mob:setBattleID(1)
+                mob:setUntargetable(true)
                 mob:setStatus(xi.status.NORMAL)
                 mob:setMobMod(xi.mobMod.NO_AGGRO, 1)
                 mob:setMobMod(xi.mobMod.NO_LINK, 1)
@@ -300,7 +299,7 @@ content.groups =
             boss:setMod(xi.mod.UDMGPHYS, (8 - count) * -1000)
             if count == 1 then
                 -- Make the boss become targetable after the first kill
-                boss:setBattleID(0)
+                boss:setUntargetable(false)
                 boss:setStatus(xi.status.MOB)
                 boss:setMobMod(xi.mobMod.NO_AGGRO, 0)
                 boss:setMobMod(xi.mobMod.NO_LINK, 0)

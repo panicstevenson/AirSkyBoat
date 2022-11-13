@@ -105,7 +105,7 @@ function actionUtil.parseActionDef(actionDef)
         if door == nil then
             door = actionDef.door
         end
-        if door then
+        if door == true then
             action:openDoor()
         end
     end

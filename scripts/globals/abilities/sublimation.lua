@@ -17,6 +17,7 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
+
     local sublimationComplete = player:getStatusEffect(xi.effect.SUBLIMATION_COMPLETE)
     local sublimationCharging = player:getStatusEffect(xi.effect.SUBLIMATION_ACTIVATED)
     local mp = 0
@@ -25,7 +26,7 @@ abilityObject.onUseAbility = function(player, target, ability)
         mp = sublimationComplete:getPower()
         local maxmp = player:getMaxMP()
         local currmp = player:getMP()
-        if mp + currmp > maxmp then
+        if ( mp + currmp > maxmp ) then
             mp = maxmp - currmp
         end
         player:addMP(mp)
@@ -35,7 +36,7 @@ abilityObject.onUseAbility = function(player, target, ability)
         mp = sublimationCharging:getPower()
         local maxmp = player:getMaxMP()
         local currmp = player:getMP()
-        if mp + currmp > maxmp then
+        if ( mp + currmp > maxmp ) then
             mp = maxmp - currmp
         end
         player:addMP(mp)
@@ -50,7 +51,6 @@ abilityObject.onUseAbility = function(player, target, ability)
             ability:setMsg(xi.msg.basic.JA_NO_EFFECT_2)
         end
     end
-
     return mp
 end
 

@@ -23,7 +23,6 @@ xi = xi or {}
 -- }
 -----------------------------------
 
--- TODO: Use xi.items enum
 local strAppData =
 {
     [xi.zone.DANGRUF_WADI] =
@@ -43,10 +42,10 @@ local strAppData =
             16647, 0.2800, 1, -- rune_axe
             18206, 0.3200, 1, -- rune_chopper
             16408, 0.3600, 1, -- rune_baghnakhs
-            221,   0.4000, 1, -- arcane_flowerpot
+              221, 0.4000, 1, -- arcane_flowerpot
             17333, 0.5200, 6, -- rune_arrow
-            1229,  0.7000, 2, -- adaman_nugget
-            931,   1.0000, 8, -- cermet_chunk
+             1229, 0.7000, 2, -- adaman_nugget
+              931, 1.0000, 8, -- cermet_chunk
         },
     },
     [xi.zone.ORDELLES_CAVES] =
@@ -66,10 +65,10 @@ local strAppData =
             16647, 0.2800, 1, -- rune_axe
             18206, 0.3200, 1, -- rune_chopper
             16408, 0.3600, 1, -- rune_baghnakhs
-            221,   0.4000, 1, -- arcane_flowerpot
+              221, 0.4000, 1, -- arcane_flowerpot
             17333, 0.5200, 6, -- rune_arrow
-            1229,  0.7000, 2, -- adaman_nugget
-            931,   1.0000, 8, -- cermet_chunk
+             1229, 0.7000, 2, -- adaman_nugget
+              931, 1.0000, 8, -- cermet_chunk
         },
     },
     [xi.zone.OUTER_HORUTOTO_RUINS] =
@@ -89,10 +88,10 @@ local strAppData =
             16647, 0.2800, 1, -- rune_axe
             18206, 0.3200, 1, -- rune_chopper
             16408, 0.3600, 1, -- rune_baghnakhs
-            221,   0.4000, 1, -- arcane_flowerpot
+              221, 0.4000, 1, -- arcane_flowerpot
             17333, 0.5200, 6, -- rune_arrow
-            1229,  0.7000, 2, -- adaman_nugget
-            931,   1.0000, 8, -- cermet_chunk
+             1229, 0.7000, 2, -- adaman_nugget
+              931, 1.0000, 8, -- cermet_chunk
         },
     },
     [xi.zone.THE_ELDIEME_NECROPOLIS] =
@@ -112,10 +111,10 @@ local strAppData =
             16647, 0.2800, 1, -- rune_axe
             18206, 0.3200, 1, -- rune_chopper
             16408, 0.3600, 1, -- rune_baghnakhs
-            221,   0.4000, 1, -- arcane_flowerpot
+              221, 0.4000, 1, -- arcane_flowerpot
             17333, 0.5200, 6, -- rune_arrow
-            1229,  0.7000, 2, -- adaman_nugget
-            931,   1.0000, 8, -- cermet_chunk
+             1229, 0.7000, 2, -- adaman_nugget
+              931, 1.0000, 8, -- cermet_chunk
         },
     },
     [xi.zone.GUSGEN_MINES] =
@@ -135,10 +134,10 @@ local strAppData =
             16647, 0.2800, 1, -- rune_axe
             18206, 0.3200, 1, -- rune_chopper
             16408, 0.3600, 1, -- rune_baghnakhs
-            221,   0.4000, 1, -- arcane_flowerpot
+              221, 0.4000, 1, -- arcane_flowerpot
             17333, 0.5200, 6, -- rune_arrow
-            1229,  0.7000, 2, -- adaman_nugget
-            931,   1.0000, 8, -- cermet_chunk
+             1229, 0.7000, 2, -- adaman_nugget
+              931, 1.0000, 8, -- cermet_chunk
         },
     },
     [xi.zone.CRAWLERS_NEST] =
@@ -158,10 +157,10 @@ local strAppData =
             16647, 0.2800, 1, -- rune_axe
             18206, 0.3200, 1, -- rune_chopper
             16408, 0.3600, 1, -- rune_baghnakhs
-            221,   0.4000, 1, -- arcane_flowerpot
+              221, 0.4000, 1, -- arcane_flowerpot
             17333, 0.5200, 6, -- rune_arrow
-            1229,  0.7000, 2, -- adaman_nugget
-            931,   1.0000, 8, -- cermet_chunk
+             1229, 0.7000, 2, -- adaman_nugget
+              931, 1.0000, 8, -- cermet_chunk
         },
     },
     [xi.zone.MAZE_OF_SHAKHRAMI] =
@@ -181,10 +180,10 @@ local strAppData =
             16647, 0.2800, 1, -- rune_axe
             18206, 0.3200, 1, -- rune_chopper
             16408, 0.3600, 1, -- rune_baghnakhs
-            221,   0.4000, 1, -- arcane_flowerpot
+              221, 0.4000, 1, -- arcane_flowerpot
             17333, 0.5200, 6, -- rune_arrow
-            1229,  0.7000, 2, -- adaman_nugget
-            931,   1.0000, 8, -- cermet_chunk
+             1229, 0.7000, 2, -- adaman_nugget
+              931, 1.0000, 8, -- cermet_chunk
         },
     },
     [xi.zone.GARLAIGE_CITADEL] =
@@ -204,10 +203,10 @@ local strAppData =
             16647, 0.2800, 1, -- rune_axe
             18206, 0.3200, 1, -- rune_chopper
             16408, 0.3600, 1, -- rune_baghnakhs
-            221,   0.4000, 1, -- arcane_flowerpot
+              221, 0.4000, 1, -- arcane_flowerpot
             17333, 0.5200, 6, -- rune_arrow
-            1229,  0.7000, 2, -- adaman_nugget
-            931,   1.0000, 8, -- cermet_chunk
+             1229, 0.7000, 2, -- adaman_nugget
+              931, 1.0000, 8, -- cermet_chunk
         },
     },
 }

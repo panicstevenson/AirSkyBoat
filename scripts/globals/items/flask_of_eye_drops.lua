@@ -12,7 +12,8 @@ itemObject.onItemCheck = function(target)
 end
 
 itemObject.onItemUse = function(target)
-    if target:hasStatusEffect(xi.effect.BLINDNESS) then
+
+    if (target:hasStatusEffect(xi.effect.BLINDNESS) == true) then
         target:delStatusEffect(xi.effect.BLINDNESS)
     end
 end

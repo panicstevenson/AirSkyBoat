@@ -11,7 +11,8 @@ require("scripts/globals/job_utils/rune_fencer")
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
-    if player:getAnimation() ~= 1 then
+
+    if (player:getAnimation() ~= 1) then
         return xi.msg.basic.REQUIRES_COMBAT, 0
     end
 
