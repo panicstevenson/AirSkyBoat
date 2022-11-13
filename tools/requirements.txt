@@ -4,4 +4,3 @@ pylint
 pyyaml
 colorama
 zmq
-black

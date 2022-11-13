@@ -12,6 +12,7 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
+
     -- Base Stats
     -- local dINT = (caster:getStat(xi.mod.INT) - target:getStat(xi.mod.INT))
     --Duration Calculation
@@ -25,9 +26,10 @@ spellObject.onSpellCast = function(caster, target, spell)
     local power = 30
 
     --Calculates resist chanve from Reist Blind
-    if math.random(0, 100) >= target:getMod(xi.mod.BLINDRES) then
-        if duration >= 150 then
-            if target:addStatusEffect(xi.effect.BLINDNESS, power, 0, duration) then
+    if (math.random(0, 100) >= target:getMod(xi.mod.BLINDRES)) then
+        if (duration >= 150) then
+
+            if (target:addStatusEffect(xi.effect.BLINDNESS, power, 0, duration)) then
                 spell:setMsg(xi.msg.basic.MAGIC_ENFEEB_IS)
             else
                 spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
@@ -38,7 +40,6 @@ spellObject.onSpellCast = function(caster, target, spell)
     else
         spell:setMsg(xi.msg.basic.MAGIC_RESIST_2)
     end
-
     return xi.effect.BLINDNESS
 end
 

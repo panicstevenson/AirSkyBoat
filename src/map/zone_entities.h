@@ -77,7 +77,7 @@ public:
     bool         CharListEmpty() const;
 
     uint16 GetNewCharTargID();
-    void   AssignDynamicTargIDandLongID(CBaseEntity* PEntity);
+    uint16 GetNewDynamicTargID();
 
     EntityList_t m_allyList;
     EntityList_t m_mobList; // список всех MOBs в зоне

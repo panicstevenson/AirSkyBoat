@@ -527,17 +527,7 @@ void SmallPacket0x00D(map_session_data_t* const PSession, CCharEntity* const PCh
 
         if (PChar->PPet != nullptr)
         {
-            if (auto* PPetEntity = dynamic_cast<CPetEntity*>(PChar->PPet))
-            {
-                if (PPetEntity->shouldPersistThroughZone())
-                {
-                    PChar->setPetZoningInfo();
-                }
-                else
-                {
-                    PChar->resetPetZoningInfo();
-                }
-            }
+            PChar->setPetZoningInfo();
         }
 
         PSession->shuttingDown = 1;
@@ -625,7 +615,7 @@ void SmallPacket0x011(map_session_data_t* const PSession, CCharEntity* const PCh
         }
     }
 
-    PChar->PAI->QueueAction(queueAction_t(4000ms, false, zoneutils::AfterZoneIn));
+    PChar->PAI->QueueAction(queueAction_t(4000ms, false, luautils::AfterZoneIn));
 
     // todo: kill player til theyre dead and bsod
     const char* fmtQuery = "SELECT version_mismatch FROM accounts_sessions WHERE charid = %u";
@@ -909,10 +899,7 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
                 PChar->StatusEffectContainer->DelStatusEffectSilent(EFFECT_MOUNTED);
             }
 
-            if (PChar->animation != ANIMATION_HEALING)
-            {
-                PChar->PAI->Engage(TargID);
-            }
+            PChar->PAI->Engage(TargID);
         }
         break;
         case 0x03: // spellcast
@@ -3741,17 +3728,7 @@ void SmallPacket0x05E(map_session_data_t* const PSession, CCharEntity* const PCh
     // handle pets on zone
     if (PChar->PPet != nullptr)
     {
-        if (auto* PPetEntity = dynamic_cast<CPetEntity*>(PChar->PPet))
-        {
-            if (PPetEntity->shouldPersistThroughZone())
-            {
-                PChar->setPetZoningInfo();
-            }
-            else
-            {
-                PChar->resetPetZoningInfo();
-            }
-        }
+        PChar->setPetZoningInfo();
     }
 
     uint32 zoneLineID    = data.ref<uint32>(0x04);

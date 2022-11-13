@@ -154,8 +154,21 @@ void CZoneEntities::InsertPET(CBaseEntity* PPet)
     TracyZoneScoped;
     if (PPet != nullptr)
     {
-        m_zone->GetZoneEntities()->AssignDynamicTargIDandLongID(PPet);
+        PPet->targid = m_zone->GetZoneEntities()->GetNewDynamicTargID();
+        if (PPet->targid >= 0x900)
+        {
+            ShowError("CZoneEntities::InsertPET : targid is high (03hX), update packets will be ignored", PPet->targid);
+        }
+        m_zone->GetZoneEntities()->dynamicTargIds.insert(PPet->targid);
 
+        PPet->id = 0x1000000 + (m_zone->GetID() << 12) + PPet->targid;
+        // Add 0x100 if targid is >= 0x800 -- observed on retail.
+        if (PPet->targid >= 0x800)
+        {
+            PPet->id += 0x100;
+        }
+
+        PPet->loc.zone          = m_zone;
         m_petList[PPet->targid] = PPet;
 
         for (EntityList_t::const_iterator it = m_charList.begin(); it != m_charList.end(); ++it)
@@ -181,7 +194,23 @@ void CZoneEntities::InsertTRUST(CBaseEntity* PTrust)
     TracyZoneScoped;
     if (PTrust != nullptr)
     {
-        m_zone->GetZoneEntities()->AssignDynamicTargIDandLongID(PTrust);
+        uint16 targid = m_zone->GetZoneEntities()->GetNewDynamicTargID();
+        if (targid >= 0x900)
+        {
+            ShowError("CZoneEntities::InsertTRUST : targid is high (03hX), update packets will be ignored", targid);
+        }
+        m_zone->GetZoneEntities()->dynamicTargIds.insert(targid);
+
+        PTrust->id = 0x1000000 + (m_zone->GetID() << 12) + targid;
+
+        // Add 0x100 if targid is >= 0x800 -- observed on retail.
+        if (targid >= 0x800)
+        {
+            PTrust->id += 0x100;
+        }
+
+        PTrust->targid              = targid;
+        PTrust->loc.zone            = m_zone;
         m_trustList[PTrust->targid] = PTrust;
 
         for (EntityList_t::const_iterator it = m_charList.begin(); it != m_charList.end(); ++it)
@@ -459,12 +488,7 @@ uint16 CZoneEntities::GetNewCharTargID()
     return targid;
 }
 
-// Handles the generation and/or assignment of:
-// - Index (targid)
-// - Current Zone
-// - Global ID (id)
-// - Insertion into the zone's dynamicTargIds list
-void CZoneEntities::AssignDynamicTargIDandLongID(CBaseEntity* PEntity)
+uint16 CZoneEntities::GetNewDynamicTargID()
 {
     // NOTE: 0x0E (entity_update) entity updates are valid for 0 to 1023 and 1792 to 2303
     uint16 targid = 0x700;
@@ -476,26 +500,7 @@ void CZoneEntities::AssignDynamicTargIDandLongID(CBaseEntity* PEntity)
         }
         targid++;
     }
-
-    auto id = 0x1000000 + (m_zone->GetID() << 12) + targid;
-
-    // Add 0x100 if targid is >= 0x800 -- observed on retail.
-    if (targid >= 0x800)
-    {
-        id += 0x100;
-    }
-
-    m_zone->GetZoneEntities()->dynamicTargIds.insert(targid);
-
-    PEntity->targid   = targid;
-    PEntity->id       = id;
-    PEntity->loc.zone = m_zone;
-
-    // NOTE: If the targid is too high, things start to break
-    if (targid >= 0x900)
-    {
-        ShowError("targid is high (03hX), update packets will be ignored!", targid);
-    }
+    return targid;
 }
 
 bool CZoneEntities::CharListEmpty() const

@@ -48,6 +48,15 @@ mission.sections =
 
         [xi.zone.SEALIONS_DEN] =
         {
+            ['_0w0'] =
+            {
+                onTrigger = function(player, npc)
+                    if mission:getVar(player, 'Status') == 0 then
+                        return mission:progressEvent(32)
+                    end
+                end,
+            },
+
             ['Sueleen'] = mission:event(28),
 
             onZoneIn =
@@ -59,8 +68,21 @@ mission.sections =
                 end,
             },
 
+            onEventUpdate =
+            {
+                [32] = function(player, csid, option, npc)
+                    if option == 0 then
+                        player:updateEvent(32, 0, 0, 0, 0, 0, 0, 0)
+                    end
+                end,
+            },
+
             onEventFinish =
             {
+                [32] = function(player, csid, option, npc)
+                    mission:setVar(player, 'Status', 1)
+                end,
+
                 [34] = function(player, csid, option, npc)
                     mission:setVar(player, 'Status', 3)
                     player:setPos(-422.100, 0, -532.092, 220, xi.zone.ALTAIEU)

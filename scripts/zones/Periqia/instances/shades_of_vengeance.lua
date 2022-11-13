@@ -59,7 +59,7 @@ instanceObject.onInstanceFailure = function(instance)
 end
 
 instanceObject.onInstanceProgressUpdate = function(instance, progress)
-    if progress >= 10 and not instance:completed() then
+    if progress >= 10 and instance:completed() == false then
         instance:complete()
     end
 end

@@ -49,11 +49,8 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.REGAIN, 50)
     mob:setMod(xi.mod.REGEN, 25)
     mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_TURN))
-    quadrupedForm(mob)
-end
-
-entity.onMobEngaged = function(mob, target)
     mob:setLocalVar("formTime", os.time() + 120)
+    quadrupedForm(mob)
 end
 
 entity.onMobFight = function(mob, target)
@@ -102,12 +99,6 @@ end
 
 entity.onAdditionalEffect = function(mob, target, damage)
     return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.STUN)
-end
-
-entity.onMobDeath = function(mob, player, optParams)
-    if player then
-        player:addTitle(xi.title.APOLLYON_RAVAGER)
-    end
 end
 
 return entity

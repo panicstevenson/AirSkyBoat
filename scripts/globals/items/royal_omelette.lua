@@ -30,10 +30,7 @@ local itemObject = {}
 
 itemObject.onItemCheck = function(target)
     local result = 0
-    if
-        target:hasStatusEffect(xi.effect.FOOD) or
-        target:hasStatusEffect(xi.effect.FIELD_SUPPORT_FOOD)
-    then
+    if target:hasStatusEffect(xi.effect.FOOD) or target:hasStatusEffect(xi.effect.FIELD_SUPPORT_FOOD) then
         result = xi.msg.basic.IS_FULL
     end
     return result
@@ -44,7 +41,7 @@ itemObject.onItemUse = function(target)
 end
 
 itemObject.onEffectGain = function(target, effect)
-    if target:getRace() == xi.race.ELVAAN_M or target:getRace() == xi.race.ELVAAN_F then
+    if (target:getRace() == xi.race.ELVAAN_M or target:getRace() == xi.race.ELVAAN_F) then
         target:addMod(xi.mod.HP, 20)
         target:addMod(xi.mod.MP, 20)
         target:addMod(xi.mod.STR, 6)
@@ -69,7 +66,7 @@ itemObject.onEffectGain = function(target, effect)
 end
 
 itemObject.onEffectLose = function(target, effect)
-    if target:getRace() == xi.race.ELVAAN_M or target:getRace() == xi.race.ELVAAN_F then
+    if (target:getRace() == xi.race.ELVAAN_M or target:getRace() == xi.race.ELVAAN_F) then
         target:delMod(xi.mod.HP, 20)
         target:delMod(xi.mod.MP, 20)
         target:delMod(xi.mod.STR, 6)

@@ -3,6 +3,7 @@
 -----------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/status")
+
 -----------------------------------
 local abilityObject = {}
 
@@ -12,10 +13,10 @@ end
 
 abilityObject.onUseAbility = function(pet, target, skill, action)
     local effect
-    if target:delStatusEffect(xi.effect.DISEASE) then
+    if (target:delStatusEffect(xi.effect.DISEASE)) then
         skill:setMsg(xi.msg.basic.JA_REMOVE_EFFECT)
         effect = xi.effect.DISEASE
-    elseif target:delStatusEffect(xi.effect.PLAGUE) then
+    elseif (target:delStatusEffect(xi.effect.PLAGUE)) then
         skill:setMsg(xi.msg.basic.JA_REMOVE_EFFECT)
         effect = xi.effect.PLAGUE
     else

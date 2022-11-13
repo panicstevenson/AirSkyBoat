@@ -35,7 +35,7 @@ quest.sections =
                 player:getMainLvl() >= 50
         end,
 
-        [xi.zone.METALWORKS] =
+        [xi.zone.PORT_BASTOK] =
         {
             ['Ayame'] = quest:progressEvent(748),
 
@@ -71,7 +71,7 @@ quest.sections =
             },
         },
 
-        [xi.zone.METALWORKS] =
+        [xi.zone.PORT_BASTOK] =
         {
             ['Ayame'] =
             {

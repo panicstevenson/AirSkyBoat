@@ -176,7 +176,7 @@ local function shadowAbsorb(target)
     return false
 end
 
-local function getMultiAttacks(attacker, target, numHits, wsParams)
+local function getMultiAttacks(attacker, target, numHits)
     local bonusHits = 0
     local multiChances = 1
     local doubleRate = (attacker:getMod(xi.mod.DOUBLE_ATTACK) + attacker:getMerit(xi.merit.DOUBLE_ATTACK_RATE)) / 100
@@ -184,12 +184,6 @@ local function getMultiAttacks(attacker, target, numHits, wsParams)
     local quadRate = attacker:getMod(xi.mod.QUAD_ATTACK) / 100
     local oaThriceRate = attacker:getMod(xi.mod.MYTHIC_OCC_ATT_THRICE) / 100
     local oaTwiceRate = attacker:getMod(xi.mod.MYTHIC_OCC_ATT_TWICE) / 100
-
-    local isJump = wsParams.isJump or false
-
-    if isJump then
-        doubleRate = doubleRate + attacker:getMod(xi.mod.JUMP_DOUBLE_ATTACK)
-    end
 
     -- Add Ambush Augments to Triple Attack
     if attacker:hasTrait(76) and attacker:isBehind(target, 23) then -- TRAIT_AMBUSH
@@ -225,7 +219,7 @@ local function getMultiAttacks(attacker, target, numHits, wsParams)
         end
     end
 
-    if (numHits + bonusHits) > 8 then
+    if (numHits + bonusHits ) > 8 then
         return 8
     end
 
@@ -312,8 +306,8 @@ local function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams, f
         if not shadowAbsorb(target) then
             local critChance = math.random() -- See if we land a critical hit
             criticalHit = (wsParams.canCrit and critChance <= calcParams.critRate) or
-                calcParams.forcedFirstCrit or
-                calcParams.mightyStrikesApplicable
+                          calcParams.forcedFirstCrit or
+                          calcParams.mightyStrikesApplicable
 
             if criticalHit then
                 criticalHit = true
@@ -333,7 +327,7 @@ local function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams, f
                 local magicdmg = finaldmg * ftpHybrid
 
                 wsParams.bonus = calcParams.bonusAcc
-                magicdmg = magicdmg * xi.magic.applyAbilityResistance(attacker, target, wsParams)
+                magicdmg = magicdmg * xi.magic.applyResistanceAbility(attacker, target, wsParams.ele, wsParams)
                 magicdmg = target:magicDmgTaken(magicdmg, wsParams.ele)
 
                 if magicdmg > 0 then
@@ -401,6 +395,7 @@ local modParameters =
     [xi.mod.WS_MND_BONUS] = 'mnd_wsc',
     [xi.mod.WS_CHR_BONUS] = 'chr_wsc',
 }
+
 local function calculateDEXvsAGICritRate(attacker, target)
     -- See reference at https://www.bg-wiki.com/ffxi/Critical_Hit_Rate
     local nativecrit = 0
@@ -584,7 +579,7 @@ xi.weaponskills.calculateRawWSDmg = function(attacker, target, wsID, tp, action,
     calcParams.hitsLanded = 0 -- Reset counter to start tracking additional hits (from WS or Multi-Attacks)
 
     -- Calculate additional hits if a multiHit WS (or we're supposed to get a DA/TA/QA proc from main hit)
-    local numHits = utils.clamp(getMultiAttacks(attacker, target, wsParams.numHits, wsParams), 0, 8)
+    local numHits = utils.clamp(getMultiAttacks(attacker, target, wsParams.numHits), 0, 8)
 
     if wsParams.hybridWS then
         numHits = utils.clamp(numHits, 0, 3)
@@ -667,10 +662,10 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
     calcParams.accStat = attacker:getACC()
     calcParams.melee = true
     calcParams.mustMiss = target:hasStatusEffect(xi.effect.PERFECT_DODGE) or
-        (target:hasStatusEffect(xi.effect.ALL_MISS) and not wsParams.hitsHigh)
+                          (target:hasStatusEffect(xi.effect.ALL_MISS) and not wsParams.hitsHigh)
     calcParams.sneakApplicable = attacker:hasStatusEffect(xi.effect.SNEAK_ATTACK) and
-        (attacker:isBehind(target) or attacker:hasStatusEffect(xi.effect.HIDE) or
-        target:hasStatusEffect(xi.effect.DOUBT))
+                                 (attacker:isBehind(target) or attacker:hasStatusEffect(xi.effect.HIDE) or
+                                 target:hasStatusEffect(xi.effect.DOUBT))
     calcParams.taChar = taChar
     calcParams.ignoredDef = ignoredDef
     calcParams.tp = tp
@@ -728,7 +723,7 @@ xi.weaponskills.doRangedWeaponskill = function(attacker, target, wsID, wsParams,
     -- Determine cratio and ccritratio
     local ignoredDef = 0
 
-    if wsParams.ignoresDef ~= nil and wsParams.ignoresDef then
+    if wsParams.ignoresDef ~= nil and wsParams.ignoresDef == true then
         ignoredDef = xi.weaponskills.calculatedIgnoredDef(tp, target:getStat(xi.mod.DEF), wsParams.ignored100, wsParams.ignored200, wsParams.ignored300)
     end
 
@@ -839,9 +834,9 @@ xi.weaponskills.doMagicWeaponskill = function(attacker, target, wsID, wsParams, 
         end
 
         dmg = attacker:getMainLvl() + 2 + (attacker:getStat(xi.mod.STR) * wsParams.str_wsc + attacker:getStat(xi.mod.DEX) * wsParams.dex_wsc +
-            attacker:getStat(xi.mod.VIT) * wsParams.vit_wsc + attacker:getStat(xi.mod.AGI) * wsParams.agi_wsc +
-            attacker:getStat(xi.mod.INT) * wsParams.int_wsc + attacker:getStat(xi.mod.MND) * wsParams.mnd_wsc +
-            attacker:getStat(xi.mod.CHR) * wsParams.chr_wsc) + fint
+             attacker:getStat(xi.mod.VIT) * wsParams.vit_wsc + attacker:getStat(xi.mod.AGI) * wsParams.agi_wsc +
+             attacker:getStat(xi.mod.INT) * wsParams.int_wsc + attacker:getStat(xi.mod.MND) * wsParams.mnd_wsc +
+             attacker:getStat(xi.mod.CHR) * wsParams.chr_wsc) + fint
 
         -- Applying fTP multiplier
         local ftp = xi.weaponskills.fTP(tp, wsParams.ftp100, wsParams.ftp200, wsParams.ftp300) + bonusfTP
@@ -861,7 +856,7 @@ xi.weaponskills.doMagicWeaponskill = function(attacker, target, wsID, wsParams, 
 
         -- Calculate magical bonuses and reductions
         dmg = xi.magic.addBonusesAbility(attacker, wsParams.element, target, dmg, wsParams)
-        dmg = dmg * xi.magic.applyAbilityResistance(attacker, target, wsParams)
+        dmg = dmg * xi.magic.applyResistanceAbility(attacker, target, wsID, wsParams)
         dmg = target:magicDmgTaken(dmg, wsParams.element)
 
         if dmg < 0 then
@@ -922,6 +917,7 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
                 action:messageID(defender:getID(), xi.msg.basic.SELF_HEAL_SECONDARY)
             end
         end
+
         action:param(defender:getID(), math.abs(finaldmg))
     elseif wsResults.shadowsAbsorbed > 0 then
         action:messageID(defender:getID(), xi.msg.basic.SHADOW_ABSORB)
@@ -945,24 +941,10 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
     end
 
     local targetTPMult = wsParams.targetTPMult or 1
-    local attackerTPMult = wsParams.attackerTPMult or 1
-    local isJump = wsParams.isJump or false
-
-    -- DA/TA/QA/OaT/Oa2-3 etc give full TP return per hit on Jumps
-    if isJump then
-        attackerTPMult = attackerTPMult * (wsResults.tpHitsLanded + wsResults.extraHitsLanded)
-        wsResults.extraHitsLanded = 0
-    end
-
-    finaldmg = defender:takeWeaponskillDamage(attacker, finaldmg, attack.type, attack.damageType, attack.slot, primaryMsg, wsResults.tpHitsLanded * attackerTPMult, (wsResults.extraHitsLanded * 10) + wsResults.bonusTP, targetTPMult)
-    if wsResults.tpHitsLanded + wsResults.extraHitsLanded > 0 then
-        if finaldmg >= 0 then
-            action:param(defender:getID(), math.abs(finaldmg))
-        end
-    end
+    finaldmg = defender:takeWeaponskillDamage(attacker, finaldmg, attack.type, attack.damageType, attack.slot, primaryMsg, wsResults.tpHitsLanded, (wsResults.extraHitsLanded * 10) + wsResults.bonusTP, targetTPMult)
     local enmityEntity = wsResults.taChar or attacker
 
-    if wsParams.overrideCE and wsParams.overrideVE then
+    if (wsParams.overrideCE and wsParams.overrideVE) then
         defender:addEnmity(enmityEntity, wsParams.overrideCE, wsParams.overrideVE)
     else
         local enmityMult = wsParams.enmityMult or 1
@@ -1040,10 +1022,10 @@ xi.weaponskills.fTP = function(tp, ftp1, ftp2, ftp3)
     end
 
     if tp >= 1000 and tp < 2000 then
-        return ftp1 + (((ftp2 - ftp1) / 1000) * (tp - 1000))
+        return ftp1 + ( ((ftp2 - ftp1) / 1000) * (tp - 1000) )
     elseif tp >= 2000 and tp <= 3000 then
         -- generate a straight line between ftp2 and ftp3 and find point @ tp
-        return ftp2 + (((ftp3 - ftp2) / 1000) * (tp - 2000))
+        return ftp2 + ( ((ftp3 - ftp2) / 1000) * (tp - 2000) )
     else
         print("fTP error: TP value is not between 1000-3000!")
     end
@@ -1266,9 +1248,9 @@ xi.weaponskills.handleWSGorgetBelt = function(attacker)
         for i, v in ipairs(elementalGorget) do
             if neck == v then
                 if
-                    xi.magic.doesElementMatchWeaponskill(i, scProp1) or
-                    xi.magic.doesElementMatchWeaponskill(i, scProp2) or
-                    xi.magic.doesElementMatchWeaponskill(i, scProp3)
+                    doesElementMatchWeaponskill(i, scProp1) or
+                    doesElementMatchWeaponskill(i, scProp2) or
+                    doesElementMatchWeaponskill(i, scProp3)
                 then
                     accBonus = accBonus + 10
                     ftpBonus = ftpBonus + 0.1
@@ -1286,9 +1268,9 @@ xi.weaponskills.handleWSGorgetBelt = function(attacker)
         for i, v in ipairs(elementalBelt) do
             if belt == v then
                 if
-                    xi.magic.doesElementMatchWeaponskill(i, scProp1) or
-                    xi.magic.doesElementMatchWeaponskill(i, scProp2) or
-                    xi.magic.doesElementMatchWeaponskill(i, scProp3)
+                    doesElementMatchWeaponskill(i, scProp1) or
+                    doesElementMatchWeaponskill(i, scProp2) or
+                    doesElementMatchWeaponskill(i, scProp3)
                 then
                     accBonus = accBonus + 10
                     ftpBonus = ftpBonus + 0.1

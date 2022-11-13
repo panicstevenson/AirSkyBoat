@@ -18,7 +18,6 @@ import sys
 
 files_to_convert = []
 
-
 def detect_bom(filename, mode):
     with open(filename, "rb") as file:
 
@@ -28,15 +27,15 @@ def detect_bom(filename, mode):
         # The order of these if-statements is important
         # otherwise UTF32 LE may be detected as UTF16 LE as well
         # Comment out your desired configuration
-        if beginning == b"\x00\x00\xfe\xff":
+        if beginning == b'\x00\x00\xfe\xff':
             invalid = "UTF-32 BE: " + filename
-        elif beginning == b"\xff\xfe\x00\x00":
+        elif beginning == b'\xff\xfe\x00\x00':
             invalid = "UTF-32 LE: " + filename
-        elif beginning[0:3] == b"\xef\xbb\xbf" and mode == 0:
+        elif beginning[0:3] == b'\xef\xbb\xbf' and mode == 0:
             invalid = "UTF-8: " + filename
-        elif beginning[0:2] == b"\xff\xfe":
+        elif beginning[0:2] == b'\xff\xfe':
             invalid = "UTF-16 LE: " + filename
-        elif beginning[0:2] == b"\xfe\xff":
+        elif beginning[0:2] == b'\xfe\xff':
             invalid = "UTF-16 BE: " + filename
         elif mode == 1:
             invalid = "Unknown or no BOM: " + filename
@@ -45,7 +44,6 @@ def detect_bom(filename, mode):
             print(invalid)
             files_to_convert.append(filename)
 
-
 def detect_files(target, mode):
     if os.path.isfile(target):
         detect_bom(target, mode)
@@ -53,7 +51,6 @@ def detect_files(target, mode):
         for path, _, files in os.walk(target):
             for file in files:
                 detect_bom(os.path.join(path, file), mode)
-
 
 def main():
     mode = 0
@@ -67,11 +64,11 @@ def main():
         exit(-1)
 
     if len(files_to_convert) > 0:
-        from_enc = "utf-8-sig"
-        to_enc = "utf-8"
+        from_enc = 'utf-8-sig'
+        to_enc = 'utf-8'
         if mode == 1:
-            from_enc = "utf-8"
-            to_enc = "utf-8-sig"
+            from_enc = 'utf-8'
+            to_enc = 'utf-8-sig'
 
         if mode == 0:
             print(f"Removing BOM from {len(files_to_convert)} marked files")
@@ -81,17 +78,14 @@ def main():
         for filename in files_to_convert:
             str = ""
 
-            with open(filename, mode="r", encoding=from_enc) as file:
+            with open(filename, mode='r', encoding=from_enc) as file:
                 str = file.read()
 
-            with open(filename, mode="w", encoding=to_enc) as file:
+            with open(filename, mode='w', encoding=to_enc) as file:
                 file.write(str)
 
         print("Done!")
-        print(
-            "If you're seeing this in CI, you need to run this script locally and push your modified files to your PR!"
-        )
-
+        print("If you're seeing this in CI, you need to run this script locally and push your modified files to your PR!")
 
 if __name__ == "__main__":
     main()

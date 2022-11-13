@@ -10,7 +10,7 @@ require("scripts/globals/mobskills")
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
-    if mob:getAnimationSub() ~= 3 then
+    if (mob:getAnimationSub() ~= 3) then
         return 1
     end
 
@@ -18,6 +18,7 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
+
     local numhits = 2
     local accmod = 1
     local dmgmod = 1
@@ -29,6 +30,7 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
 
     target:takeDamage(dmg, mob, xi.attackType.PHYSICAL, xi.damageType.NONE)
     return dmg
+
 end
 
 return mobskillObject

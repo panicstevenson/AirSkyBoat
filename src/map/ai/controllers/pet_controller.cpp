@@ -42,7 +42,7 @@ void CPetController::Tick(time_point tick)
     TracyZoneScoped;
     TracyZoneIString(PPet->GetName());
 
-    if (PPet->shouldDespawn(tick))
+    if (PPet->isCharmed && tick > PPet->charmTime)
     {
         petutils::DespawnPet(PPet->PMaster);
         return;
@@ -51,7 +51,6 @@ void CPetController::Tick(time_point tick)
     if (PPet->m_PetID <= PETID_DARKSPIRIT && PPet->PMaster && PPet->PMaster->objtype == TYPE_PC && !m_Setup)
     {
         SetSMNCastTime();
-        PPet->m_lastCast = tick;
 
         if (PPet->m_PetID == PETID_LIGHTSPIRIT)
         {
@@ -66,7 +65,7 @@ void CPetController::Tick(time_point tick)
 
 void CPetController::DoRoamTick(time_point tick)
 {
-    if ((PPet->PMaster == nullptr || PPet->PMaster->isDead()) && PPet->isAlive() && PPet->objtype != TYPE_MOB)
+    if ((PPet->PMaster == nullptr || PPet->PMaster->isDead()) && PPet->isAlive())
     {
         PPet->Die();
         return;
@@ -213,12 +212,7 @@ void CPetController::TryIdleSpellCast()
 
                 if (lowestPercent < 0.5f) // 50% HP
                 {
-                    choice = xirand::GetRandomNumber(100);
-
-                    if (choice <= 25)
-                    {
-                        choice = 1;
-                    }
+                    choice = xirand::GetRandomNumber(1, 3);
                 }
 
                 switch (choice)
@@ -361,7 +355,8 @@ void CPetController::SetSpiritSpellTables()
 
 void CPetController::SetSMNCastTime()
 {
-    uint32 castTime = ((48000 + GetSMNSkillReduction()) / 3) + GetDayWeatherBonus();
+    PPet->m_lastCast = std::chrono::system_clock::now();
+    uint32 castTime  = ((48000 + GetSMNSkillReduction()) / 3) + GetDayWeatherBonus();
 
     if (PPet->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_ASTRAL_FLOW))
     {
@@ -569,8 +564,7 @@ bool CPetController::TryDeaggro()
 
     // target is no longer valid, so wipe them from our enmity list
     if (PTarget->isDead() || PTarget->isMounted() || PTarget->loc.zone->GetID() != PPet->loc.zone->GetID() ||
-        PPet->StatusEffectContainer->GetConfrontationEffect() != PTarget->StatusEffectContainer->GetConfrontationEffect() ||
-        PPet->getBattleID() != PTarget->getBattleID())
+        PPet->StatusEffectContainer->GetConfrontationEffect() != PTarget->StatusEffectContainer->GetConfrontationEffect())
     {
         return true;
     }

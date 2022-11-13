@@ -16,7 +16,7 @@ entity.onTrigger = function(player, npc)
 
     if firstStepForwardCompleted and assistChannelCompleted then
         player:startEvent(934)
-    elseif not firstStepForwardCompleted then
+    elseif firstStepForwardCompleted == false then
         player:startEvent(935)
     elseif assistChannelProgress == nil then
         player:startEvent(935, 128)
