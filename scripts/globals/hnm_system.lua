@@ -11,6 +11,7 @@ xi.hnm_system.startup = function(zone)
     local fZone = GetServerVariable("FafnirZone") -- Get Next Zone to Pop in
     local aZone = GetServerVariable("AdamantoiseZone")
     local bZone = GetServerVariable("BehemothZone")
+    local timer = os.time()
 
     local zones =
     {
@@ -30,16 +31,16 @@ xi.hnm_system.startup = function(zone)
     }
 
     -- add 5 minutes if the mob is supposed to spawn isntantly on server startup (Adds crash buffer)
-    if os.time() > fafnogg then
-        fafnogg = os.time() + 300
+    if timer > fafnogg then
+        fafnogg = timer + 300
     end
 
-    if os.time() > adamantoise then
-        adamantoise = os.time() + 300
+    if timer > adamantoise then
+        adamantoise = timer + 300
     end
 
-    if os.time() > behemoth then
-        behemoth = os.time() + 300
+    if timer > behemoth then
+        behemoth = timer + 300
     end
 
     if fZone == 0 then
@@ -192,8 +193,9 @@ xi.hnm_system.checkSpawn = function(zone)
     local bID = zone:getLocalVar("BeheID")
     local hQChange = math.random(1, 100)
     local zoneID = zone:getID()
+    local timer = os.time()
 
-    if zoneID == fZone and os.time() > fafnogg and fID == 0 then
+    if zoneID == fZone and timer > fafnogg and fID == 0 then
         if fDay > 3 and hQChange < ((fDay - 2) * 12) then -- Day # * 12 chance to spawn HQ
             xi.hnm_system.spawnNidhogg(zone)
             zone:setLocalVar("FafID", 1)
@@ -201,7 +203,7 @@ xi.hnm_system.checkSpawn = function(zone)
             xi.hnm_system.spawnFafnir(zone)
             zone:setLocalVar("FafID", 1)
         end
-    elseif zoneID == aZone and os.time() > adamantoise and aID == 0 then
+    elseif zoneID == aZone and timer > adamantoise and aID == 0 then
         if aDay > 3 and hQChange < ((aDay - 2) * 12) then -- Day # * 12 chance to spawn HQ
             xi.hnm_system.spawnAspid(zone)
             zone:setLocalVar("AddyID", 1)
@@ -209,7 +211,7 @@ xi.hnm_system.checkSpawn = function(zone)
             xi.hnm_system.spawnAddy(zone)
             zone:setLocalVar("AddyID", 1)
         end
-    elseif zoneID == bZone and os.time() > behemoth and bID == 0 then
+    elseif zoneID == bZone and timer > behemoth and bID == 0 then
         if bDay > 3 and hQChange < ((bDay - 2) * 12) then -- Day # * 12 chance to spawn HQ
             xi.hnm_system.spawnKingBehe(zone)
             zone:setLocalVar("BeheID", 1)

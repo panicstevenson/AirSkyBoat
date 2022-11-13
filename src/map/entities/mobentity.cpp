@@ -629,7 +629,14 @@ void CMobEntity::Spawn()
         }
     }
 
-    m_DespawnTimer = time_point::min();
+    if (getMobMod(MOBMOD_IDLE_DESPAWN))
+    {
+        this->SetDespawnTime(std::chrono::seconds(getMobMod(MOBMOD_IDLE_DESPAWN)));
+    }
+    else
+    {
+        m_DespawnTimer = time_point::min();
+    }
     luautils::OnMobSpawn(this);
 
     if (getMod(Mod::CLAIMSHIELD) > 0)
@@ -1737,7 +1744,7 @@ void CMobEntity::OnDespawn(CDespawnState& /*unused*/)
 
             if (PMob != nullptr)
             {
-                if (PMob->status == STATUS_TYPE::DISAPPEAR)
+                if (!PMob->m_AllowRespawn)
                 {
                     uint32 hourAdj = std::round(CVanaTime::getInstance()->getHour() + ((PMob->m_RespawnTime / 1000) / 144)); // 2m 24s per Vana Hour
 

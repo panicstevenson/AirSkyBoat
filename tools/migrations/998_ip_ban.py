@@ -1,4 +1,4 @@
-import mysql.connector
+import mariadb
 
 def migration_name():
     return "Adding IP Bans Table"
@@ -24,5 +24,5 @@ def migrate(cur, db):
                     ENGINE=InnoDB;")
         db.commit()
 
-    except mysql.connector.Error as err:
+    except mariadb.Error as err:
         print("Something went wrong: {}".format(err))

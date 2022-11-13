@@ -508,10 +508,10 @@ int32 lobbydata_parse(int32 fd)
                     char timeAndDate[128];
                     strftime(timeAndDate, sizeof(timeAndDate), "%Y:%m:%d %H:%M:%S", &convertedTime);
 
-                    fmtQuery = "INSERT INTO account_ip_record(login_time,accid,charid,client_ip)\
-                            VALUES ('%s', %u, %u, '%s');";
+                    fmtQuery = "INSERT INTO account_ip_record(login_time,accid,charid,client_ip,client_mac)\
+                            VALUES ('%s', %u, %u, '%s', '%s');";
 
-                    if (sql->Query(fmtQuery, timeAndDate, sd->accid, charid, ip2str(sd->client_addr)) == SQL_ERROR)
+                    if (sql->Query(fmtQuery, timeAndDate, sd->accid, charid, ip2str(sd->client_addr), sd->mac_addr.c_str()) == SQL_ERROR)
                     {
                         ShowError("lobbyview_parse: Could not write info to account_ip_record.");
                     }
@@ -875,8 +875,8 @@ int32 lobbyview_parse(int32 fd)
                     }
 
                     // (optional) Check if the name contains any words on the bad word list
-                    auto badWordsList = lua["xi"]["settings"]["login"]["BANNED_WORDS_LIST"].get<sol::table>();
-                    if (badWordsList.valid())
+                    auto loginSettingsTable = lua["xi"]["settings"]["login"].get<sol::table>();
+                    if (auto badWordsList = loginSettingsTable.get_or<sol::table>("BANNED_WORDS_LIST", sol::lua_nil); badWordsList.valid())
                     {
                         auto potentialName = to_upper(nameStr);
                         for (auto entry : badWordsList)
