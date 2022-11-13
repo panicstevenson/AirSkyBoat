@@ -31,8 +31,11 @@ xi.settings.login =
     -- Allow account creation via the loader (true/false)
     ACCOUNT_CREATION = true,
 
+    -- Allow character creation through the lobby (true/false)
+    CHARA_CREATION_ENABLED = true,
+
     -- Allow character deletion through the lobby (true/false)
-    CHARACTER_DELETION = true,
+    CHARACTER_DELETION = false,
 
     -- Number of simultaneous game sessions per IP (0 for no limit)
     LOGIN_LIMIT = 0,

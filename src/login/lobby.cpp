@@ -165,11 +165,25 @@ int32 lobbydata_parse(int32 fd)
                 std::memcpy(ReservePacket + 60, serverName.c_str(), std::clamp<size_t>(serverName.length(), 0, 15));
 
                 // Prepare the character list data..
-                for (int j = 0; j < 16; ++j)
+                bool creationEnabled = settings::get<bool>("login.CHARA_CREATION_ENABLED");
+                if (creationEnabled)
                 {
-                    std::memcpy(CharList + 32 + 140 * j, ReservePacket + 32, 140);
-                    std::memset(CharList + 32 + 140 * j, 0x00, 4);
-                    std::memset(uList + 16 * (j + 1), 0x00, 4);
+                    for (int j = 0; j < 16; ++j)
+                    {
+                        std::memcpy(CharList + 32 + 140 * j, ReservePacket + 32, 140);
+                        std::memset(CharList + 32 + 140 * j, 0x00, 4);
+                        std::memset(uList + 16 * (j + 1), 0x00, 4);
+                    }
+                }
+                else
+                {
+                    // Prepare the character list data..
+                    for (int j = 0; j < sql->NumRows(); ++j)
+                    {
+                        std::memcpy(CharList + 32 + 140 * j, ReservePacket + 32, 140);
+                        std::memset(CharList + 32 + 140 * j, 0x00, 4);
+                        std::memset(uList + 16 * (j + 1), 0x00, 4);
+                    }
                 }
 
                 uList[0] = 0x03;
@@ -678,8 +692,14 @@ int32 lobbyview_parse(int32 fd)
             break;
             case 0x14:
             {
-                if (!settings::get<bool>("login.CHARACTER_DELETION"))
+                std::printf("test1 \n");
+
+                bool deleteChara = settings::get<bool>("login.CHARACTER_DELETION");
+                std::printf("%d \n", deleteChara);
+
+                if (!deleteChara)
                 {
+                    std::printf("test2");
                     int32         sendsize = 0x28;
                     unsigned char MainReservePacket[0x28];
                     LOBBBY_ERROR_MESSAGE(ReservePacket);
