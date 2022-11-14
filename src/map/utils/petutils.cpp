@@ -1236,7 +1236,7 @@ namespace petutils
         }
 
         // Randomize: 0-2 lvls lower, less Monster Gloves(+1/+2) bonus
-        highestLvl -= xirand::GetRandomNumber(3 - std::clamp<int16>(PChar->getMod(Mod::JUG_LEVEL_RANGE), 0, 2));
+        // highestLvl -= xirand::GetRandomNumber(3 - std::clamp<int16>(PChar->getMod(Mod::JUG_LEVEL_RANGE), 0, 2));
 
         PPet->SetMLevel(std::min(PPet->getSpawnLevel(), highestLvl));
         LoadJugStats(PPet, PPetData); // follow monster calcs (w/o SJ)
@@ -2160,15 +2160,17 @@ namespace petutils
         memset(&PPet->m_TraitList, 0, sizeof(PPet->m_TraitList));
         AddTraits(PPet, traits::GetTraits(PPet->GetMJob()), PPet->GetMLevel());
 
-        if (PPet->PMaster && PPet->PMaster->objtype == TYPE_PC && PPet->PMaster->GetMJob() == JOB_DRG)
+        if (PPet->getPetType() == PET_TYPE::WYVERN)
         {
-            auto PChar = static_cast<CCharEntity*>(PPet->PMaster);
-
-            if (PChar->getEquip(SLOT_BODY) != nullptr &&
-                (PChar->getEquip(SLOT_BODY)->getID() == 15100 ||
-                 PChar->getEquip(SLOT_BODY)->getID() == 14513))
+            if (PPet->PMaster && PPet->PMaster->objtype == TYPE_PC && PPet->PMaster->GetMJob() == JOB_DRG)
             {
-                AddTraits(PPet, traits::GetTraits(PPet->GetSJob()), PPet->GetSLevel());
+                auto PChar = static_cast<CCharEntity*>(PPet->PMaster);
+                if (PChar->getEquip(SLOT_BODY) != nullptr &&
+                    (PChar->getEquip(SLOT_BODY)->getID() == 15100 ||
+                     PChar->getEquip(SLOT_BODY)->getID() == 14513))
+                {
+                    AddTraits(PPet, traits::GetTraits(PPet->GetSJob()), PPet->GetSLevel());
+                }
             }
         }
         else
