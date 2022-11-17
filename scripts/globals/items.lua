@@ -2708,6 +2708,7 @@ xi.items =
     PARANA_SHIELD                   = 12298,
     ASPIS                           = 12299,
     TARGE                           = 12300,
+    KITE_SHIELD                     = 12306,
     TOWER_SHIELD                    = 12324,
     MASTER_SHIELD                   = 12344,
     BALANCE_BUCKLER                 = 12349,

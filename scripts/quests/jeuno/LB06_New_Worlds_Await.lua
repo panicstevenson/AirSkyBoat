@@ -60,6 +60,10 @@ quest.sections =
                 [10045] = function(player, csid, option, npc)
                     if option == 4 then
                         npcUtil.giveKeyItem(player, xi.ki.LIMIT_BREAKER)
+
+                        player:changeContainerSize(xi.inv.WARDROBE, 5)
+
+                        player:PrintToPlayer("Your Mog Wardrobe 1 capacity has been increased by 5!", xi.msg.channel.SYSTEM_3, "")
                     end
                 end,
             },

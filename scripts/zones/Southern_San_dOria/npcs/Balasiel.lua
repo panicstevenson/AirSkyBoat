@@ -10,6 +10,7 @@ require("scripts/globals/settings")
 require("scripts/globals/quests")
 require("scripts/globals/status")
 require("scripts/globals/titles")
+require('scripts/globals/npc_util')
 -----------------------------------
 local entity = {}
 
@@ -48,9 +49,9 @@ entity.onTrigger = function(player, npc)
 
         if aSquiresTestII == QUEST_AVAILABLE then
             player:startEvent(625)
-        elseif aSquiresTestII == QUEST_ACCEPTED and not hasStalactiteDew then
+        elseif aSquiresTestII == QUEST_ACCEPTED and not stalactiteDew then
             player:startEvent(630)
-        elseif hasStalactiteDew then
+        elseif stalactiteDew then
             player:startEvent(626)
         else
             player:startEvent(667)
@@ -125,14 +126,15 @@ entity.onEventFinish = function(player, csid, option)
             player:delKeyItem(xi.ki.BOOK_OF_TASKS)
             player:delKeyItem(xi.ki.BOOK_OF_THE_WEST)
             player:delKeyItem(xi.ki.BOOK_OF_THE_EAST)
-            player:addItem(12306)
-            player:messageSpecial(ID.text.ITEM_OBTAINED, 12306) -- Kite Shield
             player:unlockJob(xi.job.PLD)
             player:messageSpecial(ID.text.UNLOCK_PALADIN)
-            player:addFame(xi.quest.fame_area.SANDORIA, 30)
-            player:completeQuest(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.A_KNIGHT_S_TEST)
+            npcUtil.completeQuest(player, xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.A_KNIGHT_S_TEST, {
+                item = xi.items.KITE_SHIELD,
+                fameArea = xi.quest.fame_area.SANDORIA,
+                fame = 50,
+            })
         else
-            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 12306) -- Kite Shield
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, xi.items.KITE_SHIELD)
         end
     elseif csid == 63 then
         player:setCharVar("KnightStalker_Progress", 3)

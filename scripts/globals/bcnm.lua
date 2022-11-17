@@ -1015,12 +1015,12 @@ local function checkReqs(player, npc, bfid, registrant)
 
         [992] = function() -- PM6-4: One to be Feared
             return promathiaMission == xi.mission.id.cop.ONE_TO_BE_FEARED and
-                player:getCharVar('Mission[6][638]Status') == 3
+                player:getCharVar('Mission[6][638]Status') >= 2
         end,
 
         [993] = function() -- PM7-5: The Warrior's Path
             return promathiaMission == xi.mission.id.cop.THE_WARRIORS_PATH and
-                player:getCharVar('Mission[6][748]Status') == 1
+                player:getCharVar('Mission[6][748]Status') >= 0
         end,
 
         [1024] = function() -- PM8-3: When Angels Fall

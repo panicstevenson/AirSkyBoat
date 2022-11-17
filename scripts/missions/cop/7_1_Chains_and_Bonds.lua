@@ -49,6 +49,10 @@ mission.sections =
                 [111] = function(player, csid, option, npc)
                     if npcUtil.giveItem(player, xi.items.DUCAL_GUARDS_RING) then
                         mission:setVar(player, 'Status', 1)
+
+                        player:changeContainerSize(xi.inv.WARDROBE2, 3)
+
+                        return player:PrintToPlayer("Your Mog Wardrobe 2 capacity has been increased by 3!", xi.msg.channel.SYSTEM_3, "")
                     end
                 end,
             },

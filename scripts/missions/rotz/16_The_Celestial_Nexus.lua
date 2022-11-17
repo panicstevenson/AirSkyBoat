@@ -39,6 +39,7 @@ mission.sections =
             {
                 [32001] = function(player, csid, option, npc)
                     if player:getLocalVar('battlefieldWin') == 320 then
+                        player:changeContainerSize(xi.inv.WARDROBE2, 5)
                         mission:complete(player)
                     end
 
