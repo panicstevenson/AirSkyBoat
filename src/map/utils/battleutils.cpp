@@ -7546,7 +7546,7 @@ namespace battleutils
             {
                 PMob->loc.zone->PushPacket(PMob, CHAR_INRANGE, new CChatMessagePacket(static_cast<CCharEntity*>(PBattleEntity), MESSAGE_SYSTEM_3,
                                             fmt::format("{} won {}'s claim out of {} entries!", PBattleEntity->name, PMob->name, lotteryVector.size()), ""));
-                for (int i = 0; i < lotteryVector.size(); i++) {
+                for (int i = 0; i < (int)lotteryVector.size(); i++) {
                     if (lotteryVector[i] != nullptr && lotteryVector[i]->id == PBattleEntity->id)
                     {
                         PMob->loc.zone->PushPacket(PMob, CHAR_INRANGE, new CChatMessagePacket(static_cast<CCharEntity*>(lotteryVector[i]), MESSAGE_SYSTEM_3,

@@ -1254,7 +1254,7 @@ namespace zoneutils
     {
         if (auto* PZone = GetZone(zoneId))
         {
-            if (PZone->GetIP() == 0 || PZone->GetPort() == 0)
+            if (PZone->GetPort() == 0)
             {
                 return false;
             }
