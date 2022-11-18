@@ -20,10 +20,15 @@ zoneObject.onInitialize = function(zone)
 
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
     xi.horizon.spawnInitialMobs(zone)
+    xi.hnm_system.startup(zone)
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
+end
+
+zoneObject.onZoneTick = function(zone)
+    xi.hnm_system.checkSpawn(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)
