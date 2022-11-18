@@ -625,6 +625,8 @@ xi.mobskills.mobFinalAdjustments = function(dmg, mob, skill, target, attackType,
         target:setLocalVar("analyzer_hits", analyzerHits)
     end
 
+    dmg = xi.damage.handleCircleBonuses(mob, target, dmg)
+
     if dmg < 0 then
         return dmg
     end

@@ -309,7 +309,7 @@ m:addOverride("xi.globals.spells.black.absorb-vit.onSpellCast", function(caster,
 end)
 
 m:addOverride("xi.globals.spells.songs.horde_lullaby.onSpellCast", function(caster, target, spell)
-    local duration = math.random(27, 32)
+    local duration = math.random(30, 35)
     -- local pCHR = caster:getStat(xi.mod.CHR)
     -- local mCHR = target:getStat(xi.mod.CHR)
     -- local dCHR = pCHR - mCHR
@@ -344,6 +344,23 @@ m:addOverride("xi.globals.spells.songs.horde_lullaby.onSpellCast", function(cast
     end
 
     return xi.effect.LULLABY
+end)
+
+m:addOverride("xi.globals.spells.white.enlight.onSpellCast", function(caster, target, spell)
+    local magicskill = target:getSkillLevel(xi.skill.DIVINE_MAGIC)
+    local potency = (magicskill / 30) + 10
+
+    if magicskill > 150 then
+        potency = 15 + ((magicskill - 150) / 15)
+    end
+
+    if target:addStatusEffect(xi.effect.ENLIGHT, potency, 3, 180) then
+        spell:setMsg(xi.msg.basic.MAGIC_GAIN_EFFECT)
+    else
+        spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
+    end
+
+    return xi.effect.ENLIGHT
 end)
 
 return m

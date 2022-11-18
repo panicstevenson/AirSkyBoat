@@ -20,7 +20,7 @@ local chakraStatusEffects =
 }
 
 m:addOverride("xi.globals.abilities.boost.onUseAbility", function(player, target, ability)
-    local power = 25 + (0.10 * player:getMod(xi.mod.BOOST_EFFECT))
+    local power = 20 + (0.10 * player:getMod(xi.mod.BOOST_EFFECT))
 
     if player:hasStatusEffect(xi.effect.BOOST) then
         local effect = player:getStatusEffect(xi.effect.BOOST)
@@ -134,6 +134,100 @@ m:addOverride("xi.globals.abilities.holy_circle.onUseAbility", function(player, 
     else
         target:addStatusEffect(xi.effect.HOLY_CIRCLE, power, 0, duration)
     end
+end)
+
+m:addOverride("xi.job_utils.monk.useDodge", function(player, target, ability)
+    local power = 20 + player:getMod(xi.mod.DODGE_EFFECT)
+
+    player:addStatusEffect(xi.effect.DODGE, power, 0, 180)
+end)
+
+m:addOverride("xi.globals.abilities.provoke.onUseAbility", function(user, target, ability)
+    if user:getMainJob() == xi.job.WAR then
+        user:addEnmity(target, 700, 0)
+    end
+end)
+
+m:addOverride("xi.globals.abilities.pets.crimson_howl.onPetAbility", function(target, pet, skill, summoner)
+    local bonusTime = utils.clamp(summoner:getSkillLevel(xi.skill.SUMMONING_MAGIC) - 300, 0, 200)
+    local duration = 180 + bonusTime
+
+    target:addStatusEffect(xi.effect.WARCRY, 12, 0, duration)
+    skill:setMsg(xi.msg.basic.SKILL_GAIN_EFFECT)
+
+    return xi.effect.WARCRY
+end)
+
+m:addOverride("xi.globals.abilities.pets.whispering_wind.onPetAbility", function(target, pet, skill, summoner)
+    local base = 47 + pet:getMainLvl() * 3
+    local tp   = pet:getTP()
+
+    if tp < 1000 then
+        tp = 1000
+    end
+
+    base = base * tp / 1000
+
+    if target:getHP() + base > target:getMaxHP() then
+        base = target:getMaxHP() - target:getHP() --cap it
+    end
+
+    target:delStatusEffect(xi.effect.BLINDNESS)
+    target:delStatusEffect(xi.effect.POISON)
+    target:delStatusEffect(xi.effect.PARALYSIS)
+    target:delStatusEffect(xi.effect.DISEASE)
+    target:delStatusEffect(xi.effect.PETRIFICATION)
+    target:delStatusEffect(xi.effect.SILENCE)
+
+    if math.random() > 0.5 then
+        target:delStatusEffect(xi.effect.SLOW)
+    end
+
+    target:wakeUp()
+    skill:setMsg(xi.msg.basic.SELF_HEAL)
+    target:addHP(base)
+    return base
+end)
+
+m:addOverride("xi.globals.abilities.pets.ecliptic_howl.onPetAbility", function(target, pet, skill, summoner)
+    local bonusTime = utils.clamp(summoner:getSkillLevel(xi.skill.SUMMONING_MAGIC) - 300, 0, 200)
+    local duration = 180 + bonusTime
+    local moon = VanadielMoonPhase()
+    local accuracy = 0
+    local evasion = 0
+
+    if moon > 90 then -- Full Moon
+        accuracy = 21
+        evasion = 6
+    elseif moon > 60 then -- Gibbous Moon
+        accuracy = 25
+        evasion = 5
+    elseif moon > 25 then -- Quarter Moon
+        accuracy = 18
+        evasion = 8
+    elseif moon > 10 then -- Crescent Moon
+        accuracy = 16
+        evasion = 11
+    else -- New Moon
+        accuracy = 15
+        evasion = 15
+    end
+
+    target:delStatusEffect(xi.effect.ACCURACY_BOOST)
+    target:delStatusEffect(xi.effect.EVASION_BOOST)
+    target:addStatusEffect(xi.effect.ACCURACY_BOOST, accuracy, 0, duration)
+    target:addStatusEffect(xi.effect.EVASION_BOOST, evasion, 0, duration)
+    skill:setMsg(xi.msg.basic.NONE)
+    return 0
+end)
+
+m:addOverride("xi.globals.abilities.pets.spring_water.onPetAbility", function(target, pet, skill, summoner)
+    local bonusTime = utils.clamp(summoner:getSkillLevel(xi.skill.SUMMONING_MAGIC) - 300, 0, 200)
+    local duration = 180 + bonusTime
+
+    target:addStatusEffect(xi.effect.REFRESH, 2, 0, duration)
+    skill:setMsg(xi.msg.basic.SKILL_GAIN_EFFECT)
+    return xi.effect.REFRESH
 end)
 
 return m

@@ -753,6 +753,7 @@ enum EFFECT
     EFFECT_WATER_EEM_MOD          = 905,
     EFFECT_LIGHT_EEM_MOD          = 906,
     EFFECT_DARK_EEM_MOD           = 907,
+    EFFECT_TPP_GAIN_DOWN          = 950,
     // EFFECT_PLACEHOLDER           = 806  // Description
     // 806-1022
     // EFFECT_PLACEHOLDER           = 1023 // The client dat file seems to have only this many "slots", results of exceeding that are untested.

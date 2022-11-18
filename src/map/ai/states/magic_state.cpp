@@ -441,6 +441,19 @@ void CMagicState::ApplyEnmity(CBattleEntity* PTarget, int ce, int ve)
         ce = ce * (1.0f + (m_PEntity->StatusEffectContainer->GetStatusEffect(EFFECT_DIVINE_EMBLEM)->GetPower() / 100.0f));
     }
 
+    if (m_PEntity->GetLocalVar("[MAGICBURST]Enmity_Reduction_State") > 0)
+    {
+        m_PEntity->SetLocalVar("[MAGICBURST]Enmity_Reduction_State", 0);
+        ve = floor(ve * 0.65f);
+        ce = floor(ce * 0.65f);
+    }
+
+    if (m_PEntity->objtype == TYPE_PC && static_cast<CCharEntity*>(m_PEntity)->GetMJob() == JOB_RDM && m_PSpell->getSkillType() == SKILL_ENFEEBLING_MAGIC)
+    {
+        ve = floor(ve * 0.70f);
+        ce = floor(ce * 0.70f);
+    }
+
     if (PTarget != nullptr)
     {
         if (PTarget->objtype == TYPE_MOB && PTarget->allegiance != m_PEntity->allegiance)

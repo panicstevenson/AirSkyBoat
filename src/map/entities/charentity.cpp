@@ -1592,6 +1592,11 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             PRecastContainer->Add(RECAST_ABILITY, (recastID == 138 ? 139 : 138), action.recast);
         }
 
+        if (recastID == 94 || recastID == 104) // Bestial Loyalty and Call Beast
+        {
+            PRecastContainer->Add(RECAST_ABILITY, (recastID == 94 ? 104 : 94), 300);
+        }
+
         pushPacket(new CCharRecastPacket(this));
 
         //#TODO: refactor

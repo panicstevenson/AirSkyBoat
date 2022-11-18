@@ -538,24 +538,45 @@ void CAttack::ProcessDamage(bool isCritical, bool isGuarded, bool isKick)
         m_damage += (int32)(m_damage * ((100 + (m_attacker->getMod(Mod::AUGMENTS_TA))) / 100.0f));
     }
 
-    if (m_victim->objtype == TYPE_MOB)
+    if (m_victim->objtype == TYPE_MOB && m_attacker->objtype == TYPE_PC)
     {
         auto* PMob = static_cast<CMobEntity*>(m_victim);
         if (PMob != nullptr && m_attacker->getMod(Mod::DMG_AGAINST_UNDEAD_MULT) != 0 && PMob->m_EcoSystem == ECOSYSTEM::UNDEAD)
         {
-            m_damage *= ((100 + m_attacker->getMod(Mod::DMG_AGAINST_UNDEAD_MULT)) / 100.f);
+            m_damage *= (100 + m_attacker->getMod(Mod::DMG_AGAINST_UNDEAD_MULT)) / 100.f;
         }
         else if (PMob != nullptr && m_attacker->getMod(Mod::DMG_AGAINST_DEMON_MULT) != 0 && PMob->m_EcoSystem == ECOSYSTEM::DEMON)
         {
-            m_damage *= ((100 + m_attacker->getMod(Mod::DMG_AGAINST_DEMON_MULT)) / 100.f);
+            m_damage *= (100 + m_attacker->getMod(Mod::DMG_AGAINST_DEMON_MULT)) / 100.f;
         }
         if (PMob != nullptr && m_attacker->getMod(Mod::DMG_AGAINST_DRAGON_MULT) != 0 && PMob->m_EcoSystem == ECOSYSTEM::DRAGON)
         {
-            m_damage *= ((100 + m_attacker->getMod(Mod::DMG_AGAINST_DRAGON_MULT)) / 100.f);
+            m_damage *= (100 + m_attacker->getMod(Mod::DMG_AGAINST_DRAGON_MULT)) / 100.f;
         }
         if (PMob != nullptr && m_attacker->getMod(Mod::DMG_AGAINST_ARCANA_MULT) != 0 && PMob->m_EcoSystem == ECOSYSTEM::ARCANA)
         {
-            m_damage *= ((100 + m_attacker->getMod(Mod::DMG_AGAINST_ARCANA_MULT)) / 100.f);
+            m_damage *= (100 + m_attacker->getMod(Mod::DMG_AGAINST_ARCANA_MULT)) / 100.f;
+        }
+    }
+
+    if (m_victim->objtype == TYPE_PC && m_attacker->objtype == TYPE_MOB)
+    {
+        auto* PMob = static_cast<CMobEntity*>(m_attacker);
+        if (PMob != nullptr && m_victim->getMod(Mod::UNDEAD_MITIGATION_MULT) != 0 && PMob->m_EcoSystem == ECOSYSTEM::UNDEAD)
+        {
+            m_damage *= (100 - m_victim->getMod(Mod::UNDEAD_MITIGATION_MULT)) / 100.f;
+        }
+        else if (PMob != nullptr && m_victim->getMod(Mod::DEMON_MITIGATION_MULT) != 0 && PMob->m_EcoSystem == ECOSYSTEM::DEMON)
+        {
+            m_damage *= (100 - m_victim->getMod(Mod::DEMON_MITIGATION_MULT)) / 100.f;
+        }
+        if (PMob != nullptr && m_victim->getMod(Mod::DRAGON_MITIGATION_MULT) != 0 && PMob->m_EcoSystem == ECOSYSTEM::DRAGON)
+        {
+            m_damage *= (100 - m_victim->getMod(Mod::DRAGON_MITIGATION_MULT)) / 100.f;
+        }
+        if (PMob != nullptr && m_victim->getMod(Mod::ARCANA_MITIGATION_MULT) != 0 && PMob->m_EcoSystem == ECOSYSTEM::ARCANA)
+        {
+            m_damage *= (100 - m_victim->getMod(Mod::ARCANA_MITIGATION_MULT)) / 100.f;
         }
     }
 

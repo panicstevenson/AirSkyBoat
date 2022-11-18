@@ -1394,12 +1394,6 @@ void SmallPacket0x029(map_session_data_t* const PSession, CCharEntity* const PCh
     {
         return;
     }
-    else if (((ToLocationID == LOC_MOGSATCHEL && FromLocationID == LOC_INVENTORY) ||
-              (FromLocationID == LOC_MOGSATCHEL && ToLocationID == LOC_INVENTORY)) &&
-             !(PItem->getID() >= 512 && PItem->getID() <= 528)) // Anything except linkshells/linkpearls/pearlsacks
-    {
-        return;
-    }
     else if (((ToLocationID == LOC_STORAGE && FromLocationID == LOC_INVENTORY) ||
               (FromLocationID == LOC_STORAGE && ToLocationID == LOC_INVENTORY)) &&
              !charutils::hasStorageAccess(PChar))

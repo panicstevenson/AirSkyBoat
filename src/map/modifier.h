@@ -974,6 +974,7 @@ enum class Mod
     MOBSHIELD_FAKE_SPAWN     = 1412, // Time in ms a mob should be spawned before claim. Used to catch nasty claimbots.
     CLAIMBOT_REPORT_CHECK    = 1413, // Indicates whether claimbot report has gone through.
     MOBSHIELD                = 1414, // Adds Mobshield to a Mob (Claimshield without claim period or enmity update)
+    TPP_GAIN_MOD             = 1415, // Percentage TP modifier for hits. Positive values increase TP returned, negative values decrease TP returned.
 
     // IF YOU ADD ANY NEW MODIFIER HERE, ADD IT IN scripts/globals/status.lua ASWELL!
 

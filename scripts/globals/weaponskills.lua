@@ -903,6 +903,8 @@ end
 xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, primaryMsg, attack, wsResults, action)
     local finaldmg = wsResults.finalDmg
 
+    finaldmg = xi.damage.handleCircleBonuses(attacker, defender, finaldmg)
+
     if wsResults.tpHitsLanded + wsResults.extraHitsLanded > 0 then
         if finaldmg >= 0 then
             if primaryMsg then

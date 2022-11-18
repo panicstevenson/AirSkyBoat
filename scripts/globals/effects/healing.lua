@@ -63,7 +63,7 @@ effectObject.onEffectTick = function(target, effect)
         if not target:hasStatusEffect(xi.effect.DISEASE) and not target:hasStatusEffect(xi.effect.PLAGUE) and not target:hasStatusEffect(xi.effect.CURSE_II) then
             local healHP = 0
             if target:getContinentID() == 1 and target:hasStatusEffect(xi.effect.SIGNET) then
-                healHP = 10 + ((2 * math.floor(target:getMainLvl() / 10)) * 3) + ((2 * (1 + math.floor(target:getMaxHP() / 300))) * (healtime - 2)) + target:getMod(xi.mod.HPHEAL)
+                healHP = 10 + ((1.5 * math.floor(target:getMainLvl() / 10)) * 3) + ((1.5 * (1 + math.floor(target:getMaxHP() / 300))) * (healtime - 2)) + target:getMod(xi.mod.HPHEAL)
             elseif target:getMaster() ~= nil then -- Beastmaster's Stay ability
                 healHP = 10 + (3 * math.floor(target:getMainLvl() / 10)) + (healtime - 2) * (2.5 + math.floor(target:getMaxHP() / 100)) + target:getMod(xi.mod.HPHEAL)
             else

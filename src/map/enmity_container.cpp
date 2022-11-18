@@ -399,6 +399,12 @@ void CEnmityContainer::UpdateEnmityFromAttack(CBattleEntity* PEntity, int32 Dama
         float reduction = (100.f - std::min<int16>(PEntity->getMod(Mod::ENMITY_LOSS_REDUCTION), 100)) / 100.f;
         int32 CE        = (int32)(-1800.f * Damage / PEntity->GetMaxHP() * reduction);
 
+        if (PEntity->GetLocalVar("[MAGICBURST]Enmity_Reduction") > 0)
+        {
+            PEntity->SetLocalVar("[MAGICBURST]Enmity_Reduction", 0);
+            CE *= 0.65;
+        }
+
         enmity_obj->second.CE = std::clamp(enmity_obj->second.CE + CE, 0, EnmityCap);
     }
 }

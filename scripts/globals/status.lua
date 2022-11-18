@@ -879,6 +879,7 @@ xi.effect =
     WATER_EEM_MOD            = 905,
     LIGHT_EEM_MOD            = 906,
     DARK_EEM_MOD             = 907,
+    TPP_GAIN_DOWN            = 950,
     -- PLACEHOLDER           = 806, -- Description
     -- 806-1022
     -- PLACEHOLDER             = 1023 -- The client dat file seems to have only this many "slots", results of exceeding that are untested.
@@ -1845,7 +1846,7 @@ xi.mod =
     MOBSHIELD_FAKE_SPAWN          = 1412, -- Time in ms a mob should be spawned before claim. Used to catch nasty claimbots.
     CLAIMBOT_REPORT_CHECK         = 1413, -- Indicates whether claimbot report has gone through.
     MOBSHIELD                     = 1414, -- Adds Mobshield to a Mob (Claimshield without claim period or enmity update)
-
+    TPP_GAIN_MOD                  = 1415, -- Percentage TP modifier for hits. Positive values increase TP returned, negative values decrease TP returned.
     -- IF YOU ADD ANY NEW MODIFIER HERE, ADD IT IN src/map/modifier.h ASWELL!
 
     -- The spares take care of finding the next ID to use so long as we don't forget to list IDs that have been freed up by refactoring.
