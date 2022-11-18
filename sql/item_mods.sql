@@ -16237,6 +16237,7 @@ INSERT INTO `item_mods` VALUES (13357,21,10); -- LIGHT_RES: 10
 
 -- Judges Earring
 INSERT INTO `item_mods` VALUES (13358,1,20); -- DEF: 20
+INSERT INTO `item_mods` VALUES (13358,169,200); -- MOVE: -12
 
 -- Bloodbead Earring
 INSERT INTO `item_mods` VALUES (13359,2,25); -- HP: 25
