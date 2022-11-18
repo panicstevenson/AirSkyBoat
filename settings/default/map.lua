@@ -259,9 +259,13 @@ xi.settings.map =
 
     -- Horizon Dynamic Level Sync
     LEVEL_SYNC_DYNAMIC_PENALTY   = true, -- Enabling Dynamic Level Sync EXP Penalty (bool) (Default: true (Enabled))
-    LEVEL_SYNC_PENALTY_CAP       = 20, -- Maximum % Of EXP Loss (uint8) (Default: 20% EXP Lost At Max Penalty)
-    LEVEL_SYNC_PENALTY_GRACE_MAX = 10, -- Number of Levels Before EXP Penalty Kicks In (uint8) (Default: 10 Levels Grace)
-    LEVEL_SYNC_PENALTY_RANGE_MAX = 20, -- Number of Levels Before The Player Receives Maximum Penalty (uint8) (Default: 20 Levels To Reach Max (Makes Total Above Sync 30 Levels))
+    LEVEL_SYNC_PENALTY_CAP       = 50,   -- Maximum % Of EXP Loss (uint8) (Default: 20% EXP Lost At Max Penalty)
+    LEVEL_SYNC_PENALTY_GRACE     = 10,   -- Amount of levels until the penalty kicks in. (Default: 10 means it kicks in at 11.)
+    LEVEL_SYNC_PENALTY           = 2.5,  -- % per level lost.
+
+    -- Horizon Capped Zones Penalty
+    LEVEL_RESTRICTION_PENALTY = true,
+    LEVEL_RESTRICTION_GRACE   = 10,
 
     -- Horizon Ability Changes
     HASSO_SEIGAN_SHARED_TIMER    = true, -- Force Hasso and Seigan to share a timer.

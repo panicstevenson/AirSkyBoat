@@ -4563,63 +4563,32 @@ namespace charutils
                         }
                     }
 
-                    if (lua["xi"]["settings"]["map"]["LEVEL_SYNC_DYNAMIC_PENALTY"].get<bool>() == true)
+                    if (lua["xi"]["settings"]["map"]["LEVEL_SYNC_DYNAMIC_PENALTY"].get<bool>() && PMember->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_SYNC))
                     {
-                        float maxPenalty         = lua["xi"]["settings"]["map"]["LEVEL_SYNC_PENALTY_CAP"].get<uint8>() / 100.f; // Maximum % Of XP Penalty
-                        uint8 graceMax           = lua["xi"]["settings"]["map"]["LEVEL_SYNC_PENALTY_GRACE_MAX"].get<uint8>(); // Maximum Grace Level Range Above Sync Without Penalty
-                        uint8 penaltyRangeMax    = lua["xi"]["settings"]["map"]["LEVEL_SYNC_PENALTY_RANGE_MAX"].get<uint8>(); // Maximum Level Sync Range Before Penalty Is Fully Applied
-                        float perLevelPenalty    = maxPenalty / (penaltyRangeMax - graceMax); // Per Level % Decrease in XP
-                        uint8 penaltyStart       = 0;
+                        float maxPenalty         = lua["xi"]["settings"]["map"]["LEVEL_SYNC_PENALTY_CAP"].get<float>() / 100.f;    // Maximum % Of XP Penalty
+                        uint8 levelGrace         = lua["xi"]["settings"]["map"][" LEVEL_SYNC_PENALTY_GRACE"].get<uint8>();         // Maximum Grace Level Range Above Sync Without Penalty
+                        float perLevelPenalty    = lua["xi"]["settings"]["map"]["LEVEL_SYNC_PENALTY"].get<float>();                // Per Level % Decrease in XP
+                        uint8 originalLevel      = PMember->jobs.job[PMember->GetMJob()];                                          // Original Level of the Member
+                        uint8 syncTarget         = PMember->StatusEffectContainer->GetStatusEffect(EFFECT_LEVEL_SYNC)->GetPower(); // Current sync target's level.
 
-                        if (PMember->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_SYNC))
+                        if (std::clamp(originalLevel - syncTarget, 0, 99) > levelGrace) // If Target Level Still Greater Than Penalty Start Apply Penalty
                         {
-                            penaltyStart  = PMember->StatusEffectContainer->GetStatusEffect(EFFECT_LEVEL_SYNC)->GetPower() + graceMax; // Level Where Penalty Starts To Apply
+                            uint8 penaltyScale   = originalLevel - syncTarget;     // Determine How Many Levels Over We Are
+                            float penaltyApplied = perLevelPenalty * penaltyScale; // Determine Total Penalty As Float
+
+                            exp *= std::clamp(1.f - (penaltyApplied / 100.f), 0.f, maxPenalty); // Remove Penalty From EXP
                         }
+                    }
 
-                        uint8 levelTarget = PMember->m_orgLevel; // Original Level of the Member
+                    if (lua["xi"]["settings"]["map"]["LEVEL_RESTRICTION_PENALTY"].get<bool>() && PMember->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_RESTRICTION))
+                    {
+                        uint8 levelGrace       = lua["xi"]["settings"]["map"]["LEVEL_RESTRICTION_GRACE"].get<uint8>();           // Levels above restriction allowed
+                        uint8 restrictionLevel = PMember->StatusEffectContainer->GetStatusEffect(EFFECT_LEVEL_SYNC)->GetPower(); // Level of the restriction
+                        uint8 originalLevel    = PMember->jobs.job[PMember->GetMJob()];                                          // Original Level of the Member
 
-                        if (penaltyStart != 0 && levelTarget > penaltyStart) // If Level > Penalty Level Start
+                        if (std::clamp(originalLevel - restrictionLevel, 0, 99) > levelGrace)
                         {
-                            uint32 recruiter       = PMember->profile.raf[0]; // Recruiter ID
-                            uint32 recruitFriend1  = PMember->profile.raf[1]; // Recruit a Friend ID
-                            uint32 recruitFriend2  = PMember->profile.raf[2]; // Recruit a Friend ID
-                            uint32 recruitFriend3  = PMember->profile.raf[3]; // Recruit a Friend ID
-                            uint32 recruitFriend4  = PMember->profile.raf[4]; // Recruit a Friend ID
-                            uint32 recruitFriend5  = PMember->profile.raf[5]; // Recruit a Friend ID
-                            uint32 recruitFriend6  = PMember->profile.raf[6]; // Recruit a Friend ID
-                            uint32 recruitFriend7  = PMember->profile.raf[7]; // Recruit a Friend ID
-                            uint32 recruitFriend8  = PMember->profile.raf[8]; // Recruit a Friend ID
-                            uint32 recruitFriend9  = PMember->profile.raf[9]; // Recruit a Friend ID
-                            uint32 recruitFriend10 = PMember->profile.raf[10]; // Recruit a Friend ID
-                            uint32 recruitFriend11 = PMember->profile.raf[11]; // Recruit a Friend ID
-                            uint32 recruitFriend12 = PMember->profile.raf[12]; // Recruit a Friend ID
-                            uint32 recruitFriend13 = PMember->profile.raf[13]; // Recruit a Friend ID
-                            uint32 recruitFriend14 = PMember->profile.raf[14]; // Recruit a Friend ID
-
-                            PMember->ForParty([&levelTarget, &recruiter, &recruitFriend1, &recruitFriend2, &recruitFriend3, &recruitFriend4, &recruitFriend5, &recruitFriend6, &recruitFriend7, &recruitFriend8,
-                                               &recruitFriend9, &recruitFriend10, &recruitFriend11, &recruitFriend12, &recruitFriend13, &recruitFriend14, &PMember](CBattleEntity* PBattleFriend)
-                            {
-                                if (PBattleFriend != nullptr)
-                                {
-                                    CCharEntity* PFriend       = static_cast<CCharEntity*>(PBattleFriend);
-                                    uint32 friendId            = PFriend->id; // ID of PFriend
-
-                                    if ((PFriend->getZone() == PMember->getZone()) && (friendId == recruiter || friendId == recruitFriend1 || friendId == recruitFriend2 || friendId == recruitFriend3
-                                        || friendId == recruitFriend4 || friendId == recruitFriend5 || friendId == recruitFriend6 || friendId == recruitFriend7 || friendId == recruitFriend8 || friendId == recruitFriend9
-                                        || friendId == recruitFriend10 || friendId == recruitFriend11 || friendId == recruitFriend12 || friendId == recruitFriend13 || friendId == recruitFriend14) && (PFriend->m_orgLevel < levelTarget)) // Check Zone Is The Same | Check If Player Is Friend | Check If Friend's Level Is Less Than Current Target
-                                    {
-                                        levelTarget = PFriend->m_orgLevel; // If The Above Is True Then Set New Target Level
-                                    }
-                                }
-                            });
-
-                            if (levelTarget > penaltyStart) // If Target Level Still Greater Than Penalty Start Apply Penalty
-                            {
-                                uint8 penaltyLevels  = levelTarget - penaltyStart; // Determine How Many Levels Over We Are
-                                float penaltyApplied = perLevelPenalty * penaltyLevels; // Determine Total Penalty As Float
-
-                                exp -= penaltyApplied; // Remove Penalty From EXP
-                            }
+                            exp *= 0;
                         }
                     }
 
