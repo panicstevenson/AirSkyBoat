@@ -42,6 +42,10 @@ mission.sections =
             {
                 [906] = function(player, csid, option, npc)
                     mission:setVar(player, 'Status', 1)
+
+                    player:changeContainerSize(xi.inv.WARDROBE2, 2)
+
+                    return player:PrintToPlayer("Your Mog Wardrobe 2 capacity has been increased by 2!", xi.msg.channel.SYSTEM_3, "")
                 end,
             },
         },

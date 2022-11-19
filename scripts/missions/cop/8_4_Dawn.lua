@@ -450,7 +450,11 @@ mission.sections =
             {
                 [116] = function(player, csid, option)
                     mission:setVar(player, 'Status', 8)
-                    return player:addTitle(xi.title.BANISHER_OF_EMPTINESS)
+                    player:addTitle(xi.title.BANISHER_OF_EMPTINESS)
+
+                    player:changeContainerSize(xi.inv.WARDROBE2, 5)
+
+                    return player:PrintToPlayer("Your Mog Wardrobe 2 capacity has been increased by 5!", xi.msg.channel.SYSTEM_3, "")
                 end,
             },
         },

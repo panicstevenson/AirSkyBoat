@@ -45,6 +45,9 @@ mission.sections =
                     player:messageSpecial(lufaiseID.text.KI_STOLEN, 0, xi.ki.MYSTERIOUS_AMULET)
                     player:delKeyItem(xi.ki.MYSTERIOUS_AMULET)
                     mission:setVar(player, 'Status', 1)
+                    player:changeContainerSize(xi.inv.WARDROBE2, 5)
+
+                    return player:PrintToPlayer("Your Mog Wardrobe 2 capacity has been increased by 5!", xi.msg.channel.SYSTEM_3, "")
                 end,
             },
         },

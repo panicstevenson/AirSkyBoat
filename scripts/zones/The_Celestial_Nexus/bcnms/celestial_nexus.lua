@@ -31,6 +31,17 @@ battlefieldObject.onBattlefieldLeave = function(player, battlefield, leavecode)
         end
 
         local arg8 = (player:hasCompletedMission(xi.mission.log_id.ZILART, xi.mission.id.zilart.THE_CELESTIAL_NEXUS)) and 1 or 0
+
+        if player:getCharVar("celestialWin") == 0 then
+            player:setCharVar("celestialWin", 1)
+
+            local str = string.format(
+            "Your %s capacity has been increased by %i!",
+            "Mog Wardrobe 2", 5)
+
+            player:PrintToPlayer(str, xi.msg.channel.SYSTEM_3, "")
+        end
+
         player:startEvent(32001, battlefield:getArea(), clearTime, partySize, battlefield:getTimeInside(), 1, battlefield:getLocalVar("[cs]bit"), arg8)
     elseif leavecode == xi.battlefield.leaveCode.LOST then
         player:startEvent(32002)
