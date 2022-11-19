@@ -573,7 +573,7 @@ namespace zoneutils
                     PMob->m_MobSkillList = sql->GetUIntData(73);
 
                     PMob->m_TrueDetection = sql->GetUIntData(74);
-                    PMob->m_Detects       = sql->GetUIntData(75);
+                    PMob->setMobMod(MOBMOD_DETECTION, sql->GetUIntData(75));
 
                     PMob->setMobMod(MOBMOD_CHARMABLE, sql->GetUIntData(76));
 
@@ -600,6 +600,7 @@ namespace zoneutils
         }
 
         // handle mob initialise functions after they're all loaded
+// handle mob initialise functions after they're all loaded
         // clang-format off
         ForEachZone([](CZone* PZone)
         {
@@ -610,12 +611,17 @@ namespace zoneutils
                 luautils::ApplyZoneMixins(PMob);
                 PMob->saveModifiers();
                 PMob->saveMobModifiers();
+            });
+
+            // Spawn mobs after they've all been initialized. Spawning some mobs will spawn other mobs that may not yet be initialized.
+            PZone->ForEachMob([](CMobEntity* PMob)
+            {
                 PMob->m_AllowRespawn = PMob->m_SpawnType == SPAWNTYPE_NORMAL;
 
                 // Setup Vectors and Max Spawn Vars for Multispawn Mobs
                 if (PMob->m_spawnSet > 0) // If I am a multispawn mob
                 {
-                    
+
                     if (PMob->loc.zone->m_MultiSpawnVector.empty()) // If the vector doesn't exist I should make a new one.
                     {
                         PMob->loc.zone->m_MultiSpawnVector.insert(std::make_pair(PMob->m_spawnSet, std::vector<uint32>{})); // Create spawnSet Row, Initialize Empty Vector
@@ -778,6 +784,8 @@ namespace zoneutils
             ShowCritical("Unable to load any zones! Check IP and port params");
             do_final(EXIT_FAILURE);
         }
+
+        ShowInfo(fmt::format("Loading {} zones", zones.size()));
 
         for (auto zone : zones)
         {
@@ -1258,8 +1266,11 @@ namespace zoneutils
             {
                 return false;
             }
+
+            return true;
         }
-        return true;
+
+        return false;
     }
 
     void AfterZoneIn(CBaseEntity* PEntity)

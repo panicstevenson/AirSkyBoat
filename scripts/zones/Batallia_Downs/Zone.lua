@@ -11,7 +11,7 @@ local zoneObject = {}
 
 zoneObject.onChocoboDig = function(player, precheck)
     return xi.chocoboDig.start(player, precheck)
-end
+
 
 -- Used for OOE Chocobo Quest
 -- local function registerRegionAroundNPC(zone, NPCID, zoneID)
@@ -21,10 +21,10 @@ end
 --     local z = npc:getZPos()
 --     local distance = 7
 
---     zone:registerRegion(zoneID,
---         x - distance, y - distance, z - distance,
---         x + distance, y + distance, z + distance)
--- end
+    -- zone:registerTriggerArea(zoneID,
+    --     x - distance, y - distance, z - distance,
+    --     x + distance, y + distance, z + distance)
+end
 
 zoneObject.onInitialize = function(zone)
     UpdateNMSpawnPoint(ID.mob.AHTU)
@@ -86,9 +86,9 @@ zoneObject.onGameDay = function()
     SetServerVariable("[DIG]ZONE105_ITEMS", 0)
 end
 
-zoneObject.onRegionEnter = function(player, region)
+zoneObject.onTriggerAreaEnter = function(player, triggerArea)
     if player:hasStatusEffect(xi.effect.FULL_SPEED_AHEAD) then
-        xi.fsa.onRegionEnter(player, region:GetRegionID())
+        xi.fsa.onTriggerAreaEnter(player, triggerArea:GetTriggerAreaID())
     end
 end
 

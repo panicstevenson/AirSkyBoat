@@ -128,7 +128,7 @@ local spawnPawn = function(mob, zone)
         end,
         onMobSpawn = function(baby2arg, targetArg)
             baby2arg:setSpeed(18)
-            baby2arg:SetAutoAttackEnabled(false)
+            baby2arg:setAutoAttackEnabled(false)
             baby2arg:setMod(xi.mod.INT, 120)
             baby2arg:setMod(xi.mod.MACC, 500)
         end,
