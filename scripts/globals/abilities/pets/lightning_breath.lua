@@ -1,11 +1,7 @@
 -----------------------------------
 -- Lightning Breath
 -----------------------------------
-require("scripts/globals/settings")
-require("scripts/globals/status")
-require("scripts/globals/mobskills")
-require("scripts/globals/ability")
-
+require("scripts/globals/job_utils/dragoon")
 -----------------------------------
 local abilityObject = {}
 

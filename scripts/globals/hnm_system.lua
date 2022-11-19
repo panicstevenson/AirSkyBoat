@@ -501,9 +501,9 @@ xi.hnm_system.spawnAspid = function(zone)
             fafnirArg:setLocalVar("HNMType", 2)
             fafnirArg:setLocalVar("HQ", 1)
             fafnirArg:setLocalVar("[rage]timer", 3600) -- 60 minutes
-            fafnirArg:SetMobAbilityEnabled(true)
-            fafnirArg:SetAutoAttackEnabled(true)
-            fafnirArg:SetMagicCastingEnabled(false) -- will not cast until it goes into shell
+            fafnirArg:setMobAbilityEnabled(true)
+            fafnirArg:setAutoAttackEnabled(true)
+            fafnirArg:setMagicCastingEnabled(false) -- will not cast until it goes into shell
             fafnirArg:setBehaviour(bit.band(fafnirArg:getBehaviour(), bit.bnot(xi.behavior.STANDBACK)))
             fafnirArg:setBehaviour(bit.bor(fafnirArg:getBehaviour(), xi.behavior.NO_TURN))
             fafnirArg:setMobMod(xi.mobMod.DRAW_IN, 1)
@@ -800,9 +800,9 @@ end
 
 xi.hnm_system.intoShell = function(mob)
     mob:setAnimationSub(1)
-    mob:SetMobAbilityEnabled(false)
-    mob:SetAutoAttackEnabled(false)
-    mob:SetMagicCastingEnabled(true)
+    mob:setMobAbilityEnabled(false)
+    mob:setAutoAttackEnabled(false)
+    mob:setMagicCastingEnabled(true)
     mob:setMod(xi.mod.REGEN, 200)
     mob:setMod(xi.mod.UDMGRANGE, -9500)
     mob:setMod(xi.mod.UDMGPHYS, -9500)
@@ -813,9 +813,9 @@ end
 xi.hnm_system.outOfShell = function(mob)
     mob:setTP(3000) -- Immediately TPs coming out of shell
     mob:setAnimationSub(2)
-    mob:SetMobAbilityEnabled(true)
-    mob:SetAutoAttackEnabled(true)
-    mob:SetMagicCastingEnabled(false)
+    mob:setMobAbilityEnabled(true)
+    mob:setAutoAttackEnabled(true)
+    mob:setMagicCastingEnabled(false)
     mob:setMod(xi.mod.REGEN, 0)
     mob:setMod(xi.mod.UDMGRANGE, 0)
     mob:setMod(xi.mod.UDMGPHYS, 0)
