@@ -13,10 +13,10 @@ local m = Module:new("horizon_weaponskills")
 m:addOverride("xi.globals.weaponskills.burning_blade.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 1
-    params.ftp100 = 0.6 params.ftp200 = 0.9 params.ftp300 = 1.2
+    params.ftp100 = 0.7 params.ftp200 = 1.0 params.ftp300 = 1.3
     params.str_wsc = 0.1 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.3 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
     params.element = xi.magic.ele.FIRE
     params.skillType = xi.skill.SWORD
     params.includemab = true
@@ -29,10 +29,10 @@ end)
 m:addOverride("xi.globals.weaponskills.red_lotus_blade.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 1
-    params.ftp100 = 0.6 params.ftp200 = 1.2 params.ftp300 = 1.5
+    params.ftp100 = 0.7 params.ftp200 = 1.3 params.ftp300 = 1.6
     params.str_wsc = 0.1 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.3 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
     params.element = xi.magic.ele.FIRE
     params.skillType = xi.skill.SWORD
     params.includemab = true
@@ -45,10 +45,10 @@ end)
 m:addOverride("xi.globals.weaponskills.shining_blade.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 1
-    params.ftp100 = 0.6 params.ftp200 = 0.9 params.ftp300 = 1.2
+    params.ftp100 = 0.7 params.ftp200 = 1.0 params.ftp300 = 1.2
     params.str_wsc = 0.1 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.3 params.chr_wsc = 0.0
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
     params.element = xi.magic.ele.LIGHT
     params.skillType = xi.skill.SWORD
     params.includemab = true
@@ -61,10 +61,10 @@ end)
 m:addOverride("xi.globals.weaponskills.seraph_blade.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 1
-    params.ftp100 = 0.6 params.ftp200 = 1.2 params.ftp300 = 1.5
+    params.ftp100 = 0.7 params.ftp200 = 1.3 params.ftp300 = 1.5
     params.str_wsc = 0.1 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.3 params.chr_wsc = 0.0
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
     params.element = xi.magic.ele.LIGHT
     params.skillType = xi.skill.SWORD
     params.includemab = true
@@ -83,7 +83,7 @@ m:addOverride("xi.globals.weaponskills.vorpal_blade.onUseWeaponSkill", function(
     params.chr_wsc = 0.0
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
-    params.acc100 = 0.1 params.acc200 = 0.3 params.acc300 = 0.5
+    params.acc100 = 0.85 params.acc200 = 1.0 params.acc300 = 1.15
     params.atk100 = 1.0 params.atk200 = 1.0 params.atk300 = 1.0
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
@@ -100,7 +100,7 @@ m:addOverride("xi.globals.weaponskills.swift_blade.onUseWeaponSkill", function(p
     params.chr_wsc = 0.0
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = true
-    -- Sufficient data for ACC bonus/penalty does not exist; assuming no penalty and 10% increase per 1,000 TP
+    -- Sufficient data for ACC bonus/penalty does not exist assuming no penalty and 10% increase per 1,000 TP
     -- http://wiki.ffo.jp/html/382.html does not list ACC Bonus
     -- https://www.bg-wiki.com/ffxi/Swift_Blade does not list ACC Bonus
     params.acc100 = 1.0 params.acc200 = 1.1 params.acc300 = 1.2 -- TODO: verify -- "Accuracy varies with TP" in retail. All current evidence points to that this modifier is static values, not percentages.
@@ -119,7 +119,7 @@ m:addOverride("xi.globals.weaponskills.savage_blade.onUseWeaponSkill", function(
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
@@ -134,7 +134,7 @@ m:addOverride("xi.globals.weaponskills.gale_axe.onUseWeaponSkill", function(play
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local effectParams = {}
     effectParams.element = xi.magic.ele.WIND
@@ -162,7 +162,7 @@ m:addOverride("xi.globals.weaponskills.avalanche_axe.onUseWeaponSkill", function
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
@@ -177,7 +177,7 @@ m:addOverride("xi.globals.weaponskills.calamity.onUseWeaponSkill", function(play
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
@@ -192,7 +192,7 @@ m:addOverride("xi.globals.weaponskills.mistral_axe.onUseWeaponSkill", function(p
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
@@ -223,7 +223,7 @@ end)
 m:addOverride("xi.globals.weaponskills.blade_teki.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 1
-    params.ftp100 = 0.5 params.ftp200 = 0.75 params.ftp300 = 1
+    params.ftp100 = 0.7 params.ftp200 = 1.0 params.ftp300 = 1.2
     params.str_wsc = 0.3 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.3 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
     params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
@@ -239,7 +239,7 @@ end)
 m:addOverride("xi.globals.weaponskills.blade_to.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 1
-    params.ftp100 = 0.5 params.ftp200 = 0.75 params.ftp300 = 1
+    params.ftp100 = 0.7 params.ftp200 = 1.0 params.ftp300 = 1.2
     params.str_wsc = 0.3 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.3 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
     params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
@@ -260,7 +260,7 @@ m:addOverride("xi.globals.weaponskills.blade_chi.onUseWeaponSkill", function(pla
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
     params.hybridWS = true
     params.element = xi.magic.ele.EARTH
     params.skillType = xi.skill.KATANA
@@ -273,10 +273,10 @@ end)
 m:addOverride("xi.globals.weaponskills.blade_ei.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 1
-    params.ftp100 = 0.5 params.ftp200 = 0.75 params.ftp300 = 1
+    params.ftp100 = 1.0 params.ftp200 = 1.25 params.ftp300 = 1.5
     params.str_wsc = 0.3 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.3 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
     params.element = xi.magic.ele.DARK
     params.skillType = xi.skill.KATANA
     params.includemab = true
@@ -294,7 +294,7 @@ m:addOverride("xi.globals.weaponskills.blade_ten.onUseWeaponSkill", function(pla
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage
@@ -304,15 +304,15 @@ m:addOverride("xi.globals.weaponskills.blade_ku.onUseWeaponSkill", function(play
     local params = {}
     params.numHits = 5
     params.ftp100 = 1.0 params.ftp200 = 1.0 params.ftp300 = 1.0
-    params.str_wsc = 0.3 params.dex_wsc = 0.3 params.vit_wsc = 0.0
+    params.str_wsc = 0.15 params.dex_wsc = 0.15 params.vit_wsc = 0.0
     params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
-    -- Sufficient data for ACC bonus/penalty does not exist; assuming no penalty and 10% increase per 1,000 TP
+    -- Sufficient data for ACC bonus/penalty does not exist assuming no penalty and 10% increase per 1,000 TP
     -- http://wiki.ffo.jp/html/732.html does not list ACC Bonus
     -- https://www.bg-wiki.com/ffxi/Blade:_Ku does not list ACC Bonus
-    params.acc100 = 1.0 params.acc200 = 1.1 params.acc300 = 1.2 -- TODO: verify -- "Accuracy varies with TP" in retail. All current evidence points to that this modifier is static values, not percentages.
+    params.acc100 = 0.85 params.acc200 = 1.0 params.acc300 = 1.15 -- TODO: verify -- "Accuracy varies with TP" in retail. All current evidence points to that this modifier is static values, not percentages.
     params.atk100 = 1.0 params.atk200 = 1.0 params.atk300 = 1.0
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
@@ -327,7 +327,7 @@ m:addOverride("xi.globals.weaponskills.wasp_sting.onUseWeaponSkill", function(pl
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1.5; params.atk200 = 1.5; params.atk300 = 1.5
+    params.atk100 = 1.5 params.atk200 = 1.5 params.atk300 = 1.5
 
     local effectParams = {}
     effectParams.element = xi.magic.ele.WATER
@@ -353,7 +353,7 @@ m:addOverride("xi.globals.weaponskills.gust_slash.onUseWeaponSkill", function(pl
     params.ftp100 = 0.5 params.ftp200 = 0.75 params.ftp300 = 1.0
     params.str_wsc = 0.0 params.dex_wsc = 0.1 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.3 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
     params.element = xi.magic.ele.WIND
     params.skillType = xi.skill.DAGGER
     params.includemab = true
@@ -371,7 +371,7 @@ m:addOverride("xi.globals.weaponskills.energy_drain.onUseWeaponSkill", function(
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local effectParams = {}
     effectParams.element = xi.magic.ele.EARTH
@@ -415,7 +415,7 @@ m:addOverride("xi.globals.weaponskills.shark_bite.onUseWeaponSkill", function(pl
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage
@@ -429,7 +429,7 @@ m:addOverride("xi.globals.weaponskills.evisceration.onUseWeaponSkill", function(
     params.crit100 = 0.1 params.crit200 = 0.3 params.crit300 = 0.5
     params.canCrit = true
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage
@@ -441,7 +441,7 @@ m:addOverride("xi.globals.weaponskills.shining_strike.onUseWeaponSkill", functio
     params.ftp100 = 0.6 params.ftp200 = 1.2 params.ftp300 = 1.5
     params.str_wsc = 0.1 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.3 params.chr_wsc = 0.0
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
     params.element = xi.magic.ele.LIGHT
     params.skillType = xi.skill.CLUB
     params.includemab = true
@@ -457,7 +457,7 @@ m:addOverride("xi.globals.weaponskills.seraph_strike.onUseWeaponSkill", function
     params.ftp100 = 0.75 params.ftp200 = 1.3 params.ftp300 = 1.5
     params.str_wsc = 0.3 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.3 params.chr_wsc = 0.0
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
     params.element = xi.magic.ele.LIGHT
     params.skillType = xi.skill.CLUB
     params.includemab = true
@@ -475,7 +475,7 @@ m:addOverride("xi.globals.weaponskills.brainshaker.onUseWeaponSkill", function(p
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local effectParams = {}
     effectParams.element = xi.magic.ele.LIGHTNING
@@ -533,7 +533,7 @@ m:addOverride("xi.globals.weaponskills.skullbreaker.onUseWeaponSkill", function(
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local effectParams = {}
     effectParams.element = xi.magic.ele.NONE
@@ -565,7 +565,7 @@ m:addOverride("xi.globals.weaponskills.true_strike.onUseWeaponSkill", function(p
     params.crit100 = 1.0 params.crit200 = 1.0 params.crit300 = 1.0
     params.canCrit = true
     params.acc100 = 0.5 params.acc200 = 0.7 params.acc300 = 1 -- TODO: verify -- "Accuracy varies with TP" in retail. All current evidence points to that this modifier is static values, not percentages.
-    params.atk100 = 2; params.atk200 = 2; params.atk300 = 2
+    params.atk100 = 2 params.atk200 = 2 params.atk300 = 2
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage
@@ -579,7 +579,7 @@ m:addOverride("xi.globals.weaponskills.judgment.onUseWeaponSkill", function(play
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage
@@ -593,7 +593,7 @@ m:addOverride("xi.globals.weaponskills.black_halo.onUseWeaponSkill", function(pl
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage
@@ -607,7 +607,7 @@ m:addOverride("xi.globals.weaponskills.one_inch_punch.onUseWeaponSkill", functio
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
     -- Defense ignored is 0%, 25%, 50% as per http://www.bg-wiki.com/bg/One_Inch_Punch
     params.ignoresDef = true
     params.ignored100 = 0.50
@@ -621,12 +621,12 @@ end)
 m:addOverride("xi.globals.weaponskills.howling_fist.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 2
-    params.ftp100 = 2.35 params.ftp200 = 2.75 params.ftp300 = 3
+    params.ftp100 = 2.25 params.ftp200 = 2.50 params.ftp300 = 3.0
     params.str_wsc = 0.5 params.dex_wsc = 0.0 params.vit_wsc = 0.2 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage
@@ -635,12 +635,12 @@ end)
 m:addOverride("xi.globals.weaponskills.dragon_kick.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 1
-    params.ftp100 = 2.25 params.ftp200 = 2.75 params.ftp300 = 3.5
+    params.ftp100 = 2.0 params.ftp200 = 2.75 params.ftp300 = 3.5
     params.str_wsc = 0.5 params.dex_wsc = 0.0 params.vit_wsc = 0.5 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
     params.kick = true -- https://www.bluegartr.com/threads/112776-Dev-Tracker-Findings-Posts-%28NO-DISCUSSION%29?p=6712150&viewfull=1#post6712150
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
@@ -655,7 +655,7 @@ m:addOverride("xi.globals.weaponskills.iron_tempest.onUseWeaponSkill", function(
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage
@@ -669,7 +669,7 @@ m:addOverride("xi.globals.weaponskills.keen_edge.onUseWeaponSkill", function(pla
     params.crit100 = 0.5 params.crit200 = 0.75 params.crit300 = 0.9
     params.canCrit = true
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage
@@ -678,12 +678,12 @@ end)
 m:addOverride("xi.globals.weaponskills.steel_cyclone.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 1
-    params.ftp100 = 1.75 params.ftp200 = 2.25 params.ftp300 = 3
+    params.ftp100 = 1.8 params.ftp200 = 2.5 params.ftp300 = 3.25
     params.str_wsc = 0.5 params.dex_wsc = 0.0 params.vit_wsc = 0.5 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1.66; params.atk200 = 1.66; params.atk300 = 1.6
+    params.atk100 = 1.66 params.atk200 = 1.66 params.atk300 = 1.6
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage
@@ -692,12 +692,12 @@ end)
 m:addOverride("xi.globals.weaponskills.tachi_goten.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 1
-    params.ftp100 = 0.5 params.ftp200 = 0.75 params.ftp300 = 1.0
+    params.ftp100 = 0.7 params.ftp200 = 1.0 params.ftp300 = 1.2
     params.str_wsc = 0.1 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.3 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
     params.hybridWS = true
     params.element = xi.magic.ele.LIGHTNING
     params.skillType = xi.skill.GREAT_KATANA
@@ -710,12 +710,12 @@ end)
 m:addOverride("xi.globals.weaponskills.tachi_kagero.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 1
-    params.ftp100 = 0.5 params.ftp200 = 1.2 params.ftp300 = 1.5
+    params.ftp100 = 0.7 params.ftp200 = 1.2 params.ftp300 = 1.5
     params.str_wsc = 0.1 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.3 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
     params.hybridWS = true
     params.element = xi.magic.ele.FIRE
     params.skillType = xi.skill.GREAT_KATANA
@@ -728,12 +728,12 @@ end)
 m:addOverride("xi.globals.weaponskills.tachi_koki.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 1
-    params.ftp100 = 0.75 params.ftp200 = 1.25 params.ftp300 = 1.75
+    params.ftp100 = 1.0 params.ftp200 = 1.25 params.ftp300 = 1.75
     params.str_wsc = 0.3 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.5 params.chr_wsc = 0.0
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
     params.hybridWS = true
     params.element = xi.magic.ele.LIGHT
     params.skillType = xi.skill.GREAT_KATANA
@@ -751,7 +751,7 @@ m:addOverride("xi.globals.weaponskills.tachi_yukikaze.onUseWeaponSkill", functio
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1.5; params.atk200 = 1.5; params.atk300 = 1.5
+    params.atk100 = 1.5 params.atk200 = 1.5 params.atk300 = 1.5
 
     local effectParams = {}
     effectParams.element = xi.magic.ele.DARK
@@ -779,7 +779,7 @@ m:addOverride("xi.globals.weaponskills.tachi_gekko.onUseWeaponSkill", function(p
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1.75; params.atk200 = 1.75; params.atk300 = 1.75
+    params.atk100 = 1.75 params.atk200 = 1.75 params.atk300 = 1.75
 
     local effectParams = {}
     effectParams.element = xi.magic.ele.WIND
@@ -807,7 +807,7 @@ m:addOverride("xi.globals.weaponskills.tachi_kasha.onUseWeaponSkill", function(p
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1.5; params.atk200 = 1.5; params.atk300 = 1.5
+    params.atk100 = 1.5 params.atk200 = 1.5 params.atk300 = 1.5
 
     local effectParams = {}
     effectParams.element = xi.magic.ele.ICE
@@ -832,10 +832,10 @@ m:addOverride("xi.globals.weaponskills.hard_slash.onUseWeaponSkill", function(pl
     params.numHits = 1
     params.ftp100 = 1.75 params.ftp200 = 2.0 params.ftp300 = 2.25
     params.str_wsc = 0.3 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
-    params.crit100 = 0.0 params.crit200=0.0 params.crit300=0.0
+    params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
-    params.acc100 = 0 params.acc200=0 params.acc300=0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.acc100 = 0 params.acc200 = 0 params.acc300 = 0
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
@@ -847,10 +847,10 @@ m:addOverride("xi.globals.weaponskills.power_slash.onUseWeaponSkill", function(p
     params.numHits = 1
     params.ftp100 = 1.25 params.ftp200 = 1.25 params.ftp300 = 1.25
     params.str_wsc = 0.2 params.dex_wsc = 0.0 params.vit_wsc = 0.2 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
-    params.crit100 = 0.3 params.crit200=0.5 params.crit300=0.7
+    params.crit100 = 0.3 params.crit200 = 0.5 params.crit300 = 0.7
     params.canCrit = true
-    params.acc100 = 0 params.acc200=0 params.acc300=0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.acc100 = 0 params.acc200 = 0 params.acc300 = 0
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage
@@ -860,11 +860,12 @@ m:addOverride("xi.globals.weaponskills.frostbite.onUseWeaponSkill", function(pla
     local params = {}
     params.ftp100 = 1 params.ftp200 = 2 params.ftp300 = 2.5
     params.str_wsc = 0.2 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.2 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
+    params.hybridWS = true
     params.element = xi.magic.ele.ICE
     params.skillType = xi.skill.GREAT_SWORD
     params.includemab = true
 
-    local damage, criticalHit, tpHits, extraHits = doMagicWeaponskill(player, target, wsID, params, tp, action, primary)
+    local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary)
     return tpHits, extraHits, criticalHit, damage
 end)
 
@@ -872,9 +873,9 @@ m:addOverride("xi.globals.weaponskills.freezebite.onUseWeaponSkill", function(pl
     local params = {}
     params.numHits = 2
     params.ftp100 = 0.5 params.ftp200 = 0.75 params.ftp300 = 1
-    params.str_wsc = 0.2 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.3 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
-    params.acc100 = 0 params.acc200=0 params.acc300=0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.str_wsc = 0.1 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.3 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
+    params.acc100 = 0 params.acc200 = 0 params.acc300 = 0
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
     params.element = xi.magic.ele.ICE
     params.skillType = xi.skill.GREAT_SWORD
     params.includemab = true
@@ -887,12 +888,12 @@ end)
 m:addOverride("xi.globals.weaponskills.crescent_moon.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 1
-    params.ftp100 = 2.0 params.ftp200 = 2.5 params.ftp300 = 3.0
+    params.ftp100 = 2.5 params.ftp200 = 3.0 params.ftp300 = 3.25
     params.str_wsc = 0.35 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.2 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
-    params.crit100 = 0.0 params.crit200=0.0 params.crit300=0.0
+    params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
-    params.acc100 = 0 params.acc200=0 params.acc300=0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.acc100 = 0 params.acc200 = 0 params.acc300 = 0
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage
@@ -901,12 +902,12 @@ end)
 m:addOverride("xi.globals.weaponskills.sickle_moon.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 2
-    params.ftp100 = 1.75 params.ftp200 = 2 params.ftp300 = 2.75
+    params.ftp100 = 2.0 params.ftp200 = 2.5 params.ftp300 = 2.75
     params.str_wsc = 0.5 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
-    params.crit100 = 0.0 params.crit200=0.0 params.crit300=0.0
+    params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
-    params.acc100 = 0 params.acc200=0 params.acc300=0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.acc100 = 0 params.acc200 = 0 params.acc300 = 0
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage
@@ -917,10 +918,10 @@ m:addOverride("xi.globals.weaponskills.ground_strike.onUseWeaponSkill", function
     params.numHits = 1
     params.ftp100 = 1.75 params.ftp200 = 2.0 params.ftp300 = 3.0
     params.str_wsc = 0.5 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.5 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
-    params.crit100 = 0.0 params.crit200=0.0 params.crit300=0.0
+    params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
-    params.acc100 = 0 params.acc200=0 params.acc300=0
-    params.atk100 = 1.75; params.atk200 = 1.75; params.atk300 = 1.75
+    params.acc100 = 0 params.acc200 = 0 params.acc300 = 0
+    params.atk100 = 1.75 params.atk200 = 1.75 params.atk300 = 1.75
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage
@@ -931,8 +932,8 @@ m:addOverride("xi.globals.weaponskills.dark_harvest.onUseWeaponSkill", function(
     params.numHits = 1
     params.ftp100 = 0.6 params.ftp200 = 0.9 params.ftp300 = 1.2
     params.str_wsc = 0.1 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.3 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
-    params.acc100 = 0 params.acc200=0 params.acc300=0
-    params.atk100 = 1.00; params.atk200 = 1.00; params.atk300 = 1.00
+    params.acc100 = 0 params.acc200 = 0 params.acc300 = 0
+    params.atk100 = 1.00 params.atk200 = 1.00 params.atk300 = 1.00
     params.element = xi.magic.ele.DARK
     params.skillType = xi.skill.SCYTHE
     params.includemab = true
@@ -947,8 +948,8 @@ m:addOverride("xi.globals.weaponskills.shadow_of_death.onUseWeaponSkill", functi
     params.numHits = 1
     params.ftp100 = 0.6 params.ftp200 = 1.2 params.ftp300 = 1.5
     params.str_wsc = 0.1 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.3 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
-    params.acc100 = 0 params.acc200=0 params.acc300=0
-    params.atk100 = 1.00; params.atk200 = 1.00; params.atk300 = 1.00
+    params.acc100 = 0 params.acc200 = 0 params.acc300 = 0
+    params.atk100 = 1.00 params.atk200 = 1.00 params.atk300 = 1.00
     params.element = xi.magic.ele.DARK
     params.skillType = xi.skill.SCYTHE
     params.includemab = true
@@ -966,13 +967,13 @@ m:addOverride("xi.globals.weaponskills.nightmare_scythe.onUseWeaponSkill", funct
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local effectParams = {}
     effectParams.element = xi.magic.ele.DARK
     effectParams.effect = xi.effect.TERROR
     effectParams.skillType = xi.skill.SCYTHE
-    effectParams.duration = 3
+    effectParams.duration = 6
     effectParams.power = 15
     effectParams.tick = 0
     effectParams.maccBonus = 0
@@ -995,10 +996,10 @@ m:addOverride("xi.globals.weaponskills.vorpal_scythe.onUseWeaponSkill", function
     params.numHits = 1
     params.ftp100 = 1.5 params.ftp200 = 1.5 params.ftp300 = 1.5
     params.str_wsc = 0.35 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
-    params.crit100 = 0.5 params.crit200=0.75 params.crit300=0.9
+    params.crit100 = 0.5 params.crit200 = 0.75 params.crit300 = 0.9
     params.canCrit = true
-    params.acc100 = 0 params.acc200=0 params.acc300=0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.acc100 = 0 params.acc200 = 0 params.acc300 = 0
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage
@@ -1009,10 +1010,10 @@ m:addOverride("xi.globals.weaponskills.guillotine.onUseWeaponSkill", function(pl
     params.numHits = 4
     params.ftp100 = 0.875 params.ftp200 = 0.875 params.ftp300 = 0.875
     params.str_wsc = 0.25 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.25 params.chr_wsc = 0.0
-    params.crit100 = 0.0 params.crit200=0.0 params.crit300=0.0
+    params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
-    params.acc100 = 0 params.acc200=0 params.acc300=0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.acc100 = 0 params.acc200 = 0 params.acc300 = 0
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local effectParams = {}
     effectParams.element = xi.magic.ele.WIND
@@ -1035,12 +1036,12 @@ end)
 m:addOverride("xi.globals.weaponskills.spiral_hell.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 1
-    params.ftp100 = 2.0 params.ftp200 = 2.75 params.ftp300 = 3.25
+    params.ftp100 = 1.8 params.ftp200 = 2.5 params.ftp300 = 3.25
     params.str_wsc = 0.5 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.5 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
-    params.crit100 = 0.0 params.crit200=0.0 params.crit300=0.0
+    params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
-    params.acc100 = 0 params.acc200=0 params.acc300=0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.acc100 = 0 params.acc200 = 0 params.acc300 = 0
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage
@@ -1051,8 +1052,8 @@ m:addOverride("xi.globals.weaponskills.thunder_thrust.onUseWeaponSkill", functio
     params.numHits = 1
     params.ftp100 = 0.5 params.ftp200 = 1.0 params.ftp300 = 1.5
     params.str_wsc = 0.2 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.2 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
-    params.acc100 = 0 params.acc200=0 params.acc300=0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.acc100 = 0 params.acc200 = 0 params.acc300 = 0
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
     params.element = xi.magic.ele.LIGHTNING
     params.skillType = xi.skill.POLEARM
     params.includemab = true
@@ -1067,8 +1068,8 @@ m:addOverride("xi.globals.weaponskills.raiden_thrust.onUseWeaponSkill", function
     params.numHits = 1
     params.ftp100 = 0.6 params.ftp200 = 1.2 params.ftp300 = 1.8
     params.str_wsc = 0.1 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.3 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
-    params.acc100 = 0 params.acc200=0 params.acc300=0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.acc100 = 0 params.acc200 = 0 params.acc300 = 0
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
     params.element = xi.magic.ele.LIGHTNING
     params.skillType = xi.skill.POLEARM
     params.includemab = true
@@ -1086,7 +1087,7 @@ m:addOverride("xi.globals.weaponskills.vorpal_thrust.onUseWeaponSkill", function
     params.crit100 = 0.5 params.crit200 = 0.75 params.crit300 = 0.9
     params.canCrit = true
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage
@@ -1100,7 +1101,7 @@ m:addOverride("xi.globals.weaponskills.skewer.onUseWeaponSkill", function(player
     params.crit100 = 0.1 params.crit200 = 0.25 params.crit300 = 0.4
     params.canCrit = true
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage
@@ -1109,12 +1110,12 @@ end)
 m:addOverride("xi.globals.weaponskills.impulse_drive.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 2
-    params.ftp100 = 1.65 params.ftp200 = 2.5 params.ftp300 = 3.5
+    params.ftp100 = 1.85 params.ftp200 = 2.5 params.ftp300 = 3.5
     params.str_wsc = 0.5 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage
@@ -1168,7 +1169,7 @@ m:addOverride("xi.globals.weaponskills.retribution.onUseWeaponSkill", function(p
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage
@@ -1182,7 +1183,7 @@ m:addOverride("xi.globals.weaponskills.dulling_arrow.onUseWeaponSkill", function
     params.crit100 = 0.1 params.crit200 = 0.3 params.crit300 = 0.5
     params.canCrit = true
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local effectParams = {}
     effectParams.element = xi.magic.ele.NONE
@@ -1210,7 +1211,7 @@ m:addOverride("xi.globals.weaponskills.sidewinder.onUseWeaponSkill", function(pl
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.5 params.acc200 = 0.75 params.acc300 = 1 -- TODO: verify -- "Accuracy varies with TP" in retail. All current evidence points to that this modifier is static values, not percentages.
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doRangedWeaponskill(player, target, wsID, params, tp, action, primary)
     return tpHits, extraHits, criticalHit, damage
@@ -1224,7 +1225,7 @@ m:addOverride("xi.globals.weaponskills.blast_arrow.onUseWeaponSkill", function(p
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 1 params.acc200 = 1 params.acc300 = 1 -- TODO: verify -- "Accuracy varies with TP" in retail. All current evidence points to that this modifier is static values, not percentages.
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
     params.specialDamageType = xi.damageType.BLUNT
 
     local effectParams = {}
@@ -1257,7 +1258,7 @@ m:addOverride("xi.globals.weaponskills.sniper_shot.onUseWeaponSkill", function(p
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local effectParams = {}
     effectParams.element = xi.magic.ele.NONE
@@ -1285,7 +1286,7 @@ m:addOverride("xi.globals.weaponskills.slug_shot.onUseWeaponSkill", function(pla
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.5 params.acc200 = 0.75 params.acc300 = 1 -- TODO: verify -- "Accuracy varies with TP" in retail. All current evidence points to that this modifier is static values, not percentages.
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doRangedWeaponskill(player, target, wsID, params, tp, action, primary)
     return tpHits, extraHits, criticalHit, damage
@@ -1299,7 +1300,7 @@ m:addOverride("xi.globals.weaponskills.blast_shot.onUseWeaponSkill", function(pl
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 1 params.acc200 = 1 params.acc300 = 1 -- TODO: verify -- "Accuracy varies with TP" in retail. All current evidence points to that this modifier is static values, not percentages.
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
     params.specialDamageType = xi.damageType.BLUNT
 
     local effectParams = {}
