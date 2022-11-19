@@ -10,25 +10,19 @@ require("scripts/globals/jobpoints")
 local m = Module:new("horizon_status_effects")
 
 m:addOverride("xi.globals.effects.defender.onEffectGain", function(target, effect)
-    local jpLevel = target:getJobPointLevel(xi.jp.DEFENDER_EFFECT)
-
     target:addMod(xi.mod.DEFP, 25)
     target:addMod(xi.mod.RATTP, -25)
     target:addMod(xi.mod.ATTP, -25)
     target:addMod(xi.mod.ENMITY_LOSS_REDUCTION, - 25)
-
-    -- JP Bonus
-    target:addMod(xi.mod.DEF, jpLevel * 3)
+    target:addMod(xi.mod.SHIELDBLOCKRATE, 10)
 end)
 
 m:addOverride("xi.globals.effects.defender.onEffectLose", function(target, effect)
-    local jpLevel = target:getJobPointLevel(xi.jp.DEFENDER_EFFECT)
-
-    target:delMod(xi.mod.DEF, jpLevel * 3)
     target:delMod(xi.mod.DEFP, 25)
     target:delMod(xi.mod.ATTP, -25)
     target:delMod(xi.mod.RATTP, -25)
     target:delMod(xi.mod.ENMITY_LOSS_REDUCTION, - 25)
+    target:delMod(xi.mod.SHIELDBLOCKRATE, - 10)
 end)
 
 m:addOverride("xi.globals.effects.holy_circle.onEffectGain", function(target, effect)
@@ -108,6 +102,37 @@ m:addOverride("xi.globals.effects.arcane_circle.onEffectLose", function(target, 
         target:delMod(xi.mod.ARCANA_MITIGATION_MULT, 5)
     else
         target:delMod(xi.mod.DMG_AGAINST_ARCANA_MULT, 5)
+    end
+end)
+
+m:addOverride("xi.globals.effects.enlight.onEffectGain", function(target, effect)
+    target:addMod(xi.mod.ENMITY, 10)
+    target:addMod(xi.mod.ENSPELL, xi.magic.element.LIGHT)
+    target:addMod(xi.mod.ENSPELL_DMG, effect:getPower())
+    target:addMod(xi.mod.ACC, effect:getPower())
+end)
+
+m:addOverride("xi.globals.effects.enlight.onEffectTick", function(target, effect)
+    local hitCount = target:getLocalVar("[ENSPELL]HitCount")
+    if hitCount > 0 then
+        local lightEffect_size = effect:getPower()
+        if lightEffect_size > 0 then
+            print("Removing ACC")
+            effect:setPower(lightEffect_size - hitCount)
+            target:delMod(xi.mod.ACC, hitCount)
+            target:delMod(xi.mod.ENSPELL_DMG, hitCount)
+            target:setLocalVar("[ENSPELL]HitCount", 0)
+        end
+    end
+end)
+
+m:addOverride("xi.globals.effects.enlight.onEffectLose", function(target, effect)
+    local lightEffect_size = effect:getPower()
+    target:delMod(xi.mod.ENMITY, 10)
+    target:setMod(xi.mod.ENSPELL_DMG, 0)
+    target:setMod(xi.mod.ENSPELL, 0)
+    if lightEffect_size > 0 then
+        target:delMod(xi.mod.ACC, effect:getPower())
     end
 end)
 

@@ -194,7 +194,7 @@ local pTable =
     [xi.magic.spell.BANISHGA_II ] = { xi.mod.MND,  180,    1,  180, 133 },
     [xi.magic.spell.BANISHGA_III] = { xi.mod.MND,  480,  1.5,  480, 450 }, -- Enemy only. Stats unknown.
     [xi.magic.spell.BANISHGA_IV ] = { xi.mod.MND,  600,  1.5,  600, 600 }, -- Enemy only. Stats unknown.
-    [xi.magic.spell.HOLY        ] = { xi.mod.MND,  125,    1,  125, 150 },
+    [xi.magic.spell.HOLY        ] = { xi.mod.MND,  370,  1.5,  370, 150 },
     [xi.magic.spell.HOLY_II     ] = { xi.mod.MND,  250,    2,  250, 300 },
 }
 
@@ -708,7 +708,11 @@ xi.spells.damage.calculateIfMagicBurst = function(caster, target, spell, spellEl
     local _, skillchainCount = xi.magic.FormMagicBurst(spellElement, target) -- External function. Not present in magic.lua.
 
     if skillchainCount > 0 and target:hasStatusEffect(xi.effect.SKILLCHAIN) then
-        magicBurst = 1.25 + (0.1 * skillchainCount) -- Here we add SDT DAMAGE bonus for magic bursts aswell, once SDT is implemented. https://www.bg-wiki.com/ffxi/Resist#SDT_and_Magic_Bursting
+        if target:isMob() and not target:isNM() then
+            magicBurst = 1.60 + (0.1 * skillchainCount) -- Here we add SDT DAMAGE bonus for magic bursts aswell, once SDT is implemented. https://www.bg-wiki.com/ffxi/Resist#SDT_and_Magic_Bursting
+        else
+            magicBurst = 1.25 + (0.1 * skillchainCount) -- Here we add SDT DAMAGE bonus for magic bursts aswell, once SDT is implemented. https://www.bg-wiki.com/ffxi/Resist#SDT_and_Magic_Bursting
+        end
     end
 
     return magicBurst
@@ -1118,6 +1122,8 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     finalDamage = math.floor(finalDamage * undeadDivinePenalty)
     finalDamage = math.floor(finalDamage * nukeAbsorbOrNullify)
 
+    finalDamage = xi.damage.handleCircleBonuses(caster, target, finalDamage)
+
     if finalDamage > 0 then
         finalDamage = utils.clamp(finalDamage - target:getMod(xi.mod.PHALANX), 0, 99999)
         finalDamage = utils.clamp(utils.oneforall(target, finalDamage), 0, 99999)
@@ -1138,15 +1144,41 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
         -- Handle Afflatus Misery.
         target:handleAfflatusMiseryDamage(finalDamage)
 
+        if target:hasStatusEffect(xi.effect.SKILLCHAIN) and (magicBurst > 1) then -- Gated as this is run per target.
+            if caster:isPC() then
+                caster:setLocalVar("[MAGICBURST]Enmity_Reduction", 1)
+                caster:setLocalVar("[MAGICBURST]Enmity_Reduction_State", 1)
+            end
+        end
+
         -- Handle Enmity.
         target:updateEnmityFromDamage(caster, finalDamage)
 
+        local banishEffects =
+        {
+            [xi.magic.spell.BANISH      ] = 15,
+            [xi.magic.spell.BANISH_II   ] = 25,
+            [xi.magic.spell.BANISH_III  ] = 50,
+            [xi.magic.spell.BANISHGA    ] = 15,
+            [xi.magic.spell.BANISHGA_II ] = 25,
+            [xi.magic.spell.BANISHGA_III] = 50,
+        }
+
+        if finalDamage > 0 and target:isMob() and target:getSystem() == xi.eco.UNDEAD then
+            for spellIndex, value in pairs(banishEffects) do
+                if not target:hasStatusEffect(xi.effect.TPP_GAIN_DOWN) and spellIndex == spellId then
+                    target:addStatusEffectEx(xi.effect.TPP_GAIN_DOWN, xi.effect.NONE, value, 0, math.floor(20 * resist), 0, 0, 0, xi.effectFlag.NO_LOSS_MESSAGE, true)
+                    break
+                end
+            end
+        end
+
         -- Only add TP if the target is a mob and if the spell actually does damage.
         if target:getObjType() ~= xi.objType.PC and finalDamage > 0 then
-            if nukes[spell:getID()] ~= nil then
-                target:addTP(nukes[spell:getID()])
+            if nukes[spell:getID()] ~= nil and resist == 1 then
+                target:addTP(math.floor(nukes[spell:getID()] * ((100 + target:getMod(xi.mod.TPP_GAIN_MOD)) / 100)))
             else
-                target:addTP(100)
+                target:addTP(math.floor(100 * ((100 + target:getMod(xi.mod.TPP_GAIN_MOD)) / 100)))
             end
         end
 

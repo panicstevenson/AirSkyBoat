@@ -3184,12 +3184,22 @@ namespace charutils
             int16  Diff          = MaxSkill - CurSkill / 10;
             double SkillUpChance = Diff / 5.0 + settings::get<double>("map.SKILLUP_CHANCE_MULTIPLIER") * (2.0 - log10(1.0 + CurSkill / 100));
 
+            if (SkillID == SKILL_PARRY || SkillID == SKILL_GUARD || SkillID == SKILL_SHIELD)
+            {
+                if (CurSkill < 175)
+                {
+                    SkillUpChance = 0.25;
+                }
+                else
+                {
+                    Diff          = (CurSkill / (pow((1.0 + CurSkill / 100), 3.0) * 10));
+                    SkillUpChance = Diff / 10.0 + settings::get<double>("map.SKILLUP_CHANCE_MULTIPLIER") * (2.0 - log10(1.0 + (CurSkill - 175) / 100));
+                }
+            }
+
             double random = xirand::GetRandomNumber(1.);
 
-            if (SkillUpChance > 0.5)
-            {
-                SkillUpChance = 0.5;
-            }
+            SkillUpChance = std::clamp(SkillUpChance, 0., 0.5);
 
             // Check for skillup% bonus. https://www.bg-wiki.com/bg/Category:Skill_Up_Food
             // Assuming multiplicative even though rate is already a % because 0.5 + 0.8 would be > 1.

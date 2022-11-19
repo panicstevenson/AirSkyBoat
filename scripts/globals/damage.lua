@@ -73,3 +73,31 @@ xi.damage.returnDamageTakenMod = function(target, attackType)
 
     return utils.clamp(dmgTakenMod, -1, 1000) + 1
 end
+
+xi.damage.handleCircleBonuses = function(attacker, defender, damage)
+    local circleMod =
+    {
+        [xi.eco.UNDEAD] = { offensiveBonus = xi.mod.DMG_AGAINST_UNDEAD_MULT, defensiveBonus = xi.mod.UNDEAD_MITIGATION_MULT },
+        [xi.eco.DEMON] =  { offensiveBonus = xi.mod.DMG_AGAINST_DEMON_MULT , defensiveBonus = xi.mod.DEMON_MITIGATION_MULT  },
+        [xi.eco.DRAGON] = { offensiveBonus = xi.mod.DMG_AGAINST_DRAGON_MULT, defensiveBonus = xi.mod.DRAGON_MITIGATION_MULT },
+        [xi.eco.ARCANA] = { offensiveBonus = xi.mod.DMG_AGAINST_ARCANA_MULT, defensiveBonus = xi.mod.ARCANA_MITIGATION_MULT },
+    }
+
+    if defender:isMob() then
+        for eco, mods in pairs(circleMod) do
+            if defender:getSystem() == eco and attacker:getMod(mods.offensiveBonus) > 0 then
+                return damage * ((100 + attacker:getMod(mods.offensiveBonus)) / 100)
+            end
+        end
+    end
+
+    if defender:isPC() then
+        for eco, mods in pairs(circleMod) do
+            if attacker:getSystem() == eco and defender:getMod(mods.defensiveBonus) > 0 then
+                return damage * ((100 - defender:getMod(mods.defensiveBonus)) / 100)
+            end
+        end
+    end
+
+    return damage
+end

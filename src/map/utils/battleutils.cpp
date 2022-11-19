@@ -1292,6 +1292,7 @@ namespace battleutils
                     Action->additionalEffect = enspell_subeffects[enspell - 1];
                     if (enspell >= ENSPELL_I_LIGHT) // Enlight or Endark
                     {
+                        PAttacker->SetLocalVar("[ENSPELL]HitCount", PAttacker->GetLocalVar("[ENSPELL]HitCount") + 1);
                         Action->addEffectParam = CalculateEnspellDamage(PAttacker, PDefender, 3, enspell);
                     }
                     else
@@ -1786,7 +1787,7 @@ namespace battleutils
         int8   shieldSize    = 3;
         float  blockRate     = 0;
         float  skillModifier = 0;
-        int16  blockRateMod  = PDefender->getMod(Mod::SHIELDBLOCKRATE) + 10;
+        int16  blockRateMod  = PDefender->getMod(Mod::SHIELDBLOCKRATE);
         int16  palisadeMod   = PDefender->getMod(Mod::PALISADE_BLOCK_BONUS);
         float  reprisalMult  = 1.0f;
         auto*  weapon        = dynamic_cast<CItemWeapon*>(PAttacker->m_Weapons[SLOT_MAIN]);
@@ -2283,7 +2284,7 @@ namespace battleutils
                 {
                     baseTp += ((CCharEntity*)PAttacker)->PMeritPoints->GetMeritValue(MERIT_IKISHOTEN, (CCharEntity*)PAttacker);
                 }
-                int16 attackerTp = (tpMultiplier * (baseTp * (1.0f + 0.01f * (float)((PAttacker->getMod(Mod::STORETP) + getStoreTPbonusFromMerit(PAttacker))))));
+                int16 attackerTp = ((tpMultiplier * (baseTp * (1.0f + 0.01f * (float)((PAttacker->getMod(Mod::STORETP) + getStoreTPbonusFromMerit(PAttacker)))))) * ((100 + PAttacker->getMod(Mod::TPP_GAIN_MOD)) / 100.f));
                 PAttacker->addTP(attackerTp);
                 PAttacker->SetLocalVar("[Attack]Tp_Gain", attackerTp);
             }
@@ -2301,13 +2302,15 @@ namespace battleutils
                     PDefender->addTP(
                         (int16)(tpMultiplier * ((baseTp / 3) * sBlowMult *
                                                 (1.0f + 0.01f * (float)((PDefender->getMod(Mod::STORETP) +
-                                                                         getStoreTPbonusFromMerit(PAttacker))))))); // yup store tp counts on hits taken too!
+                                                                         getStoreTPbonusFromMerit(PAttacker)))))) *
+                        ((100 + PDefender->getMod(Mod::TPP_GAIN_MOD)) / 100.f)); // yup store tp counts on hits taken too!
                 }
                 else
                 {
                     uint16 defenderTp = (tpMultiplier *
                                          (std::ceil(PAttacker->GetLocalVar("[Attack]Tp_Gain") * 1.25) * sBlowMult *
-                                          (1.0f + 0.01f * (float)PDefender->getMod(Mod::STORETP)))); // subtle blow also reduces the "+30" on mob tp gain
+                                          (1.0f + 0.01f * (float)PDefender->getMod(Mod::STORETP))) *
+                                         ((100 + PDefender->getMod(Mod::TPP_GAIN_MOD)) / 100.f)); // subtle blow also reduces the "+30" on mob tp gain
                     PDefender->addTP(defenderTp);
                 }
             }
@@ -2433,7 +2436,8 @@ namespace battleutils
             // Calculate TP Return from WS
             {
                 standbyTp = bonusTP + ((int16)((tpMultiplier * baseTp) *
-                                               (1.0f + 0.01f * (float)((PAttacker->getMod(Mod::STORETP) + getStoreTPbonusFromMerit(PAttacker))))));
+                                               (1.0f + 0.01f * (float)((PAttacker->getMod(Mod::STORETP) + getStoreTPbonusFromMerit(PAttacker))))) *
+                                       ((100 + PAttacker->getMod(Mod::TPP_GAIN_MOD)) / 100.f));
             }
 
             // account for attacker's subtle blow which reduces the baseTP gain for the defender
@@ -2447,13 +2451,15 @@ namespace battleutils
                 PDefender->addTP((int16)(tpMultiplier * targetTPMultiplier *
                                          ((baseTp / 3) * sBlowMult *
                                           (1.0f + 0.01f * (float)((PDefender->getMod(Mod::STORETP) +
-                                                                   getStoreTPbonusFromMerit(PAttacker))))))); // yup store tp counts on hits taken too!
+                                                                   getStoreTPbonusFromMerit(PAttacker)))))) *
+                                 ((100 + PDefender->getMod(Mod::TPP_GAIN_MOD)) / 100.f)); // yup store tp counts on hits taken too!
             }
             else
             {
                 PDefender->addTP((int16)(tpMultiplier * targetTPMultiplier *
                                          (std::ceil(baseTp * 1.25) * sBlowMult *
-                                          (1.0f + 0.01f * (float)PDefender->getMod(Mod::STORETP))))); // subtle blow also reduces the "+30" on mob tp gain
+                                          (1.0f + 0.01f * (float)PDefender->getMod(Mod::STORETP)))) *
+                                 ((100 + PDefender->getMod(Mod::TPP_GAIN_MOD)) / 100.f)); // subtle blow also reduces the "+30" on mob tp gain
             }
         }
         else if (PDefender->objtype == TYPE_MOB)
@@ -6842,7 +6848,7 @@ namespace battleutils
                 CCharEntity* PChar = static_cast<CCharEntity*>(PEntity);
                 if (charutils::hasTrait(PChar, TRAIT_OCCULT_ACUMEN))
                 {
-                    return static_cast<int16>(PSpell->getMPCost() * PChar->getMod(Mod::OCCULT_ACUMEN) / 100.f * (1 + (PChar->getMod(Mod::STORETP) / 100.f)));
+                    return static_cast<int16>(PSpell->getMPCost() * PChar->getMod(Mod::OCCULT_ACUMEN) / 100.f * (1 + (PChar->getMod(Mod::STORETP) / 100.f)) * ((100 + PChar->getMod(Mod::TPP_GAIN_MOD)) / 100.f));
                 }
             }
         }
