@@ -275,9 +275,9 @@ bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight)
 
     auto detects         = PMob->getMobMod(MOBMOD_DETECTION);
     auto currentDistance = distance(PTarget->loc.p, PMob->loc.p) + PTarget->getMod(Mod::STEALTH);
-    bool detectSight  = (detects & DETECT_SIGHT) || forceSight;
-    bool hasInvisible = false;
-    bool hasSneak     = false;
+    bool detectSight     = (detects & DETECT_SIGHT) || forceSight;
+    bool hasInvisible    = false;
+    bool hasSneak        = false;
 
     if (!PMob->m_TrueDetection)
     {
@@ -305,7 +305,8 @@ bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight)
     }
 
     if ((detects & DETECT_MAGIC) && currentDistance < PMob->getMobMod(MOBMOD_MAGIC_RANGE) &&
-        PTarget->PAI->IsCurrentState<CMagicState>() && static_cast<CMagicState*>(PTarget->PAI->GetCurrentState())->GetSpell()->hasMPCost())
+        PTarget->PAI->IsCurrentState<CMagicState>() && static_cast<CMagicState*>(PTarget->PAI->GetCurrentState())->GetSpell()->hasMPCost() &&
+        !PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_ARCANE_CIRCLE))
     {
         return CanSeePoint(PTarget->loc.p);
     }
@@ -316,7 +317,7 @@ bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight)
         return false;
     }
 
-    if ((detects & DETECT_LOWHP) && PTarget->GetHPP() < 75)
+    if ((detects & DETECT_LOWHP) && PTarget->GetHPP() < 75 && !PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_HOLY_CIRCLE))
     {
         return CanSeePoint(PTarget->loc.p);
     }

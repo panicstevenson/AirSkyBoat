@@ -158,6 +158,7 @@ namespace luautils
         lua.set_function("VanadielDayElement", &luautils::VanadielDayElement);
         lua.set_function("VanadielMoonPhase", &luautils::VanadielMoonPhase);
         lua.set_function("VanadielMoonDirection", &luautils::VanadielMoonDirection);
+        lua.set_function("VanadielMoonLatentPhase", &luautils::VanadielMoonLatentPhase);
         lua.set_function("VanadielRSERace", &luautils::VanadielRSERace);
         lua.set_function("VanadielRSELocation", &luautils::VanadielRSELocation);
         lua.set_function("SetVanadielTimeOffset", &luautils::SetVanadielTimeOffset);
@@ -1300,6 +1301,12 @@ namespace luautils
     {
         TracyZoneScoped;
         return CVanaTime::getInstance()->getMoonPhase();
+    }
+
+    uint8 VanadielMoonLatentPhase()
+    {
+        TracyZoneScoped;
+        return CVanaTime::getInstance()->getMoonLatentPhase() + 1;
     }
 
     bool SetVanadielTimeOffset(int32 offset)

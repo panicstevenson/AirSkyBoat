@@ -37,6 +37,7 @@ abilityObject.onPetAbility = function(target, pet, skill, summoner)
         accuracy = 15
         evasion = 25
     end
+
     target:delStatusEffect(xi.effect.ACCURACY_BOOST)
     target:delStatusEffect(xi.effect.EVASION_BOOST)
     target:addStatusEffect(xi.effect.ACCURACY_BOOST, accuracy, 0, duration)

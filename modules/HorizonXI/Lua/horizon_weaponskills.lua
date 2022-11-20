@@ -977,15 +977,12 @@ m:addOverride("xi.globals.weaponskills.nightmare_scythe.onUseWeaponSkill", funct
     effectParams.power = 15
     effectParams.tick = 0
     effectParams.maccBonus = 0
+    effectParams.chance = tp - 1000
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
     if damage > 0 and not target:hasStatusEffect(xi.effect.TERROR) then
-        local chance = math.floor(25 * tp/1000)
-        local effectChance = math.random(0, 100)
-        if chance >= effectChance then
-            xi.magic.applyAbilityResistance(player, target, effectParams)
-        end
+        xi.magic.applyAbilityResistance(player, target, effectParams)
     end
 
     return tpHits, extraHits, criticalHit, damage
