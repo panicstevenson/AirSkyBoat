@@ -225,7 +225,7 @@ end
 xi.hnm_system.spawnFafnir = function(zone)
     local spawnPoints =
     {
-        [xi.zones.THE_SANCTUARY_OF_ZITAH] =
+        [xi.zone.THE_SANCTUARY_OF_ZITAH] =
         {
             { x = 607.58, y = -0.12, z = -167.62 },
             { x = 20.19, y = 0.231, z = 97.6 },
@@ -297,7 +297,7 @@ end
 xi.hnm_system.spawnNidhogg = function(zone)
     local spawnPoints =
     {
-        [xi.zones.THE_SANCTUARY_OF_ZITAH] =
+        [xi.zone.THE_SANCTUARY_OF_ZITAH] =
         {
             { x = 607.58, y = -0.12, z = -167.62 },
             { x = 20.19, y = 0.231, z = 97.6 },
