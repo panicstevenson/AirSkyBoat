@@ -70,21 +70,15 @@ xi.hnm_system.startup = function(zone)
         SetServerVariable("AdamantoiseDay", 1)
     end
 
-    for i in pairs(zones) do
-        if i <=  4 then
-            zone:setLocalVar("[HNM]Fafnir", fafnogg)
-            zone:setLocalVar("FafnirDay", fDay)
-            zone:setLocalVar("FafnirZone", fZone)
-        elseif i <= 8 then
-            zone:setLocalVar("[HNM]Adamantoise", adamantoise)
-            zone:setLocalVar("AdamantoiseDay", aDay)
-            zone:setLocalVar("AdamantoiseZone", aZone)
-        else
-            zone:setLocalVar("[HNM]Behemoth", behemoth)
-            zone:setLocalVar("BehemothDay", bDay)
-            zone:setLocalVar("BehemothZone", bZone)
-        end
-    end
+    zone:setLocalVar("[HNM]Fafnir", fafnogg)
+    zone:setLocalVar("FafnirDay", fDay)
+    zone:setLocalVar("FafnirZone", fZone)
+    zone:setLocalVar("[HNM]Adamantoise", adamantoise)
+    zone:setLocalVar("AdamantoiseDay", aDay)
+    zone:setLocalVar("AdamantoiseZone", aZone)
+    zone:setLocalVar("[HNM]Behemoth", behemoth)
+    zone:setLocalVar("BehemothDay", bDay)
+    zone:setLocalVar("BehemothZone", bZone)
 end
 
 xi.hnm_system.onDeath = function(mob)
@@ -114,19 +108,42 @@ xi.hnm_system.onDeath = function(mob)
 
     if mobType == 1 then
         local fzone = zones[math.random(1, 4)]
-        for i = 1, 4 do
-            GetZone(zones[i]):setLocalVar("[HNM]Fafnir", respawn)
-            GetZone(zones[i]):setLocalVar("FafID", 0)
-            if hQ == 1 then
-                GetZone(zones[i]):setLocalVar("FafnirDay", 1)
-            else
-                GetZone(zones[i]):setLocalVar("FafnirDay", fDay + 1)
-            end
-            GetZone(zones[i]):setLocalVar("FafnirZone", fzone)
-        end
-
         SetServerVariable("[HNM]Fafnir", respawn)
         SetServerVariable("FafnirZone", fzone)
+        for i = 1, 4 do
+
+            if hQ == 1 then
+                SendLuaFuncStringToZone(zones[i], string.format([[
+                    local zoneId = %i
+                    local zone = GetZone(zoneId)
+                    local fDay = GetServerVariable("FafnirDay")
+                    local fafnogg = GetServerVariable("[HNM]Fafnir")
+                    local fZone = GetServerVariable("FafnirZone")
+
+                    zone:setLocalVar("[HNM]Fafnir", fafnogg)
+                    zone:setLocalVar("FafID", 0)
+
+                    zone:setLocalVar("FafnirDay", 1)
+                    zone:setLocalVar("FafnirZone", fZone)
+
+                ]], zones[i]))
+            else
+                SendLuaFuncStringToZone(zones[i], string.format([[
+                    local zoneId = %i
+                    local zone = GetZone(zoneId)
+                    local fDay = GetServerVariable("FafnirDay")
+                    local fafnogg = GetServerVariable("[HNM]Fafnir")
+                    local fZone = GetServerVariable("FafnirZone")
+
+                    zone:setLocalVar("[HNM]Fafnir", fafnogg)
+                    zone:setLocalVar("FafID", 0)
+
+                    zone:setLocalVar("FafnirDay", fDay + 1)
+                    zone:setLocalVar("FafnirZone", fZone)
+
+                ]], zones[i]))
+            end
+        end
 
         if hQ == 1 then
             SetServerVariable("FafnirDay", 1)
@@ -135,19 +152,39 @@ xi.hnm_system.onDeath = function(mob)
         end
     elseif mobType == 2 then
         local azone = zones[math.random(5, 8)]
-        for i = 5, 8 do
-            GetZone(zones[i]):setLocalVar("[HNM]Adamantoise", respawn)
-            GetZone(zones[i]):setLocalVar("AddyID", 0)
-            if hQ == 1 then
-                GetZone(zones[i]):setLocalVar("AdamantoiseDay", 1)
-            else
-                GetZone(zones[i]):setLocalVar("AdamantoiseDay", aDay + 1)
-            end
-            GetZone(zones[i]):setLocalVar("AdamantoiseZone", azone)
-        end
-
         SetServerVariable("[HNM]Adamantoise", respawn)
         SetServerVariable("AdamantoiseZone", azone)
+        for i = 5, 8 do
+            if hQ == 1 then
+                SendLuaFuncStringToZone(zones[i], string.format([[
+                    local zoneId = %i
+                    local zone = GetZone(zoneId)
+                    local aDay = GetServerVariable("AdamantoiseDay")
+                    local adamantoise = GetServerVariable("[HNM]Adamantoise")
+                    local aZone = GetServerVariable("AdamantoiseZone")
+
+                    zone:setLocalVar("[HNM]Adamantoise", adamantoise)
+                    zone:setLocalVar("AddyID", 0)
+
+                    zone:setLocalVar("AdamantoiseDay", 1)
+                    zone:setLocalVar("AdamantoiseZone", aZone)
+                ]], zones[i]))
+            else
+                SendLuaFuncStringToZone(zones[i], string.format([[
+                    local zoneId = %i
+                    local zone = GetZone(zoneId)
+                    local aDay = GetServerVariable("AdamantoiseDay")
+                    local adamantoise = GetServerVariable("[HNM]Adamantoise")
+                    local aZone = GetServerVariable("AdamantoiseZone")
+
+                    zone:setLocalVar("[HNM]Adamantoise", adamantoise)
+                    zone:setLocalVar("AddyID", 0)
+
+                    zone:setLocalVar("AdamantoiseDay", aDay + 1)
+                    zone:setLocalVar("AdamantoiseZone", aZone)
+                ]], zones[i]))
+            end
+        end
 
         if hQ == 1 then
             SetServerVariable("AdamantoiseDay", 1)
@@ -156,19 +193,40 @@ xi.hnm_system.onDeath = function(mob)
         end
     else
         local bzone = zones[math.random(9, 13)]
-        for i = 9, 13 do
-            GetZone(zones[i]):setLocalVar("[HNM]Behemoth", respawn)
-            GetZone(zones[i]):setLocalVar("BeheID", 0)
-            if hQ == 1 then
-                GetZone(zones[i]):setLocalVar("BehemothDay", 1)
-            else
-                GetZone(zones[i]):setLocalVar("BehemothDay", bDay + 1)
-            end
-            GetZone(zones[i]):setLocalVar("BehemothZone", bzone)
-        end
-
         SetServerVariable("[HNM]Behemoth", respawn)
         SetServerVariable("BehemothZone", bzone)
+        for i = 9, 13 do
+
+            if hQ == 1 then
+                SendLuaFuncStringToZone(zones[i], string.format([[
+                    local zoneId = %i
+                    local zone = GetZone(zoneId)
+                    local bDay = GetServerVariable("BehemothDay")
+                    local behemoth = GetServerVariable("[HNM]Behemoth")
+                    local bZone = GetServerVariable("BehemothZone")
+
+                    zone:setLocalVar("[HNM]Behemoth", behemoth)
+                    zone:setLocalVar("BeheID", 0)
+
+                    zone:setLocalVar("BehemothDay", 1)
+                    zone:setLocalVar("BehemothZone", bZone)
+                ]], zones[i]))
+            else
+                SendLuaFuncStringToZone(zones[i], string.format([[
+                    local zoneId = %i
+                    local zone = GetZone(zoneId)
+                    local bDay = GetServerVariable("BehemothDay")
+                    local behemoth = GetServerVariable("[HNM]Behemoth")
+                    local bZone = GetServerVariable("BehemothZone")
+
+                    zone:setLocalVar("[HNM]Behemoth", behemoth)
+                    zone:setLocalVar("BeheID", 0)
+
+                    zone:setLocalVar("BehemothDay", bDay + 1)
+                    zone:setLocalVar("BehemothZone", bZone)
+                ]], zones[i]))
+            end
+        end
 
         if hQ == 1 then
             SetServerVariable("BehemothDay", 1)
