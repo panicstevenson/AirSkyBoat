@@ -367,7 +367,7 @@ local loot =
 
         {
             { itemid =     0, droprate = 636 }, -- Nothing
-            { itemid = 12486, droprate = 364 }, -- Emperor Hairpin
+            { itemid = 15224, droprate = 364 }, -- Empress Hairpin
         },
 
         {
@@ -436,6 +436,7 @@ local loot =
             { itemid =   860, droprate = 572 }, -- Behemoth Hide
             { itemid =   883, droprate = 428 }, -- Behemoth Horn
             { itemid = 17108, droprate =  53 }, -- Healing Staff
+            { itemid = 13189, droprate =  59 }, -- Speed Belt
         },
 
         {
@@ -524,7 +525,7 @@ local loot =
     {
         {
             { itemid =     0, droprate = 910 }, -- Nothing
-            { itemid = 13056, droprate =  90 }, -- Peacock Charm
+            { itemid = 15515, droprate =  90 }, -- Peacock Amulet
         },
 
         {

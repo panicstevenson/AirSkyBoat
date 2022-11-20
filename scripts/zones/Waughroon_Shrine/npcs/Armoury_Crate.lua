@@ -316,7 +316,8 @@ local loot =
             { itemid =   683, droprate = 446 }, -- Adaman Chain
             { itemid =   908, droprate = 420 }, -- Adamantoise Shell
             { itemid =  1312, droprate =  71 }, -- Piece Of Angel Skin
-            { itemid = 14080, droprate =  26 }, -- Strider Boots
+            { itemid = 15736, droprate =  50 }, -- Trotter Boots
+            { itemid = 13189, droprate =  50 }, -- Speed Belt
         },
 
         {
@@ -660,7 +661,6 @@ local loot =
             { itemid = 13552, droprate =  55 }, -- Serket Ring
             { itemid = 901,   droprate = 123 }, -- Venomous Claw
             { itemid = 1473,  droprate = 813 }, -- High-quality Scorpion Shell
-            { itemid = 13552, droprate =  55 }, -- Serket Ring
             { itemid = 901,   droprate = 123 }, -- Venomous Claw
         },
 

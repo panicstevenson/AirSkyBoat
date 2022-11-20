@@ -65,7 +65,7 @@ local loot =
 
         {
             { itemid =     0, droprate = 900 }, -- nothing
-            { itemid = 13014, droprate = 100 }, -- leaping_boots
+            { itemid = 15351, droprate = 100 }, -- Bounding Boots
         },
 
         {
