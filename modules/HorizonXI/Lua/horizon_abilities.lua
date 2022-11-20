@@ -142,12 +142,6 @@ m:addOverride("xi.job_utils.monk.useDodge", function(player, target, ability)
     player:addStatusEffect(xi.effect.DODGE, power, 0, 180)
 end)
 
-m:addOverride("xi.globals.abilities.provoke.onUseAbility", function(user, target, ability)
-    if user:getMainJob() == xi.job.WAR then
-        user:addEnmity(target, 700, 0)
-    end
-end)
-
 m:addOverride("xi.globals.abilities.pets.crimson_howl.onPetAbility", function(target, pet, skill, summoner)
     local bonusTime = utils.clamp(summoner:getSkillLevel(xi.skill.SUMMONING_MAGIC) - 300, 0, 200)
     local duration = 180 + bonusTime
@@ -192,26 +186,23 @@ end)
 m:addOverride("xi.globals.abilities.pets.ecliptic_howl.onPetAbility", function(target, pet, skill, summoner)
     local bonusTime = utils.clamp(summoner:getSkillLevel(xi.skill.SUMMONING_MAGIC) - 300, 0, 200)
     local duration = 180 + bonusTime
-    local moon = VanadielMoonPhase()
+    local moon = VanadielMoonLatentPhase()
     local accuracy = 0
     local evasion = 0
+    local moonTable =
+    {
+        { acc = 15, eva = 15 }, -- New Moon
+        { acc = 16, eva = 11 }, -- Waxing Crescent
+        { acc = 18, eva = 8  }, -- First Quarter
+        { acc = 21, eva = 6  }, -- Waxing Gibbous
+        { acc = 21, eva = 6  }, -- Full Moon
+        { acc = 25, eva = 5  }, -- Waning Gibbous
+        { acc = 18, eva = 8  }, -- Last Gibbous
+        { acc = 16, eva = 11 }, -- Waning Crescent
+    }
 
-    if moon > 90 then -- Full Moon
-        accuracy = 21
-        evasion = 6
-    elseif moon > 60 then -- Gibbous Moon
-        accuracy = 25
-        evasion = 5
-    elseif moon > 25 then -- Quarter Moon
-        accuracy = 18
-        evasion = 8
-    elseif moon > 10 then -- Crescent Moon
-        accuracy = 16
-        evasion = 11
-    else -- New Moon
-        accuracy = 15
-        evasion = 15
-    end
+    accuracy = moonTable[moon].acc
+    evasion = moonTable[moon].eva
 
     target:delStatusEffect(xi.effect.ACCURACY_BOOST)
     target:delStatusEffect(xi.effect.EVASION_BOOST)

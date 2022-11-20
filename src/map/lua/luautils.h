@@ -168,21 +168,22 @@ namespace luautils
 
     uint32 JstMidnight();
     uint32 JstWeekday();
-    uint32 VanadielTime();          // Gets the current Vanadiel Time in timestamp format (SE epoch in earth seconds)
-    uint8  VanadielTOTD();          // текущее игровое время суток
-    uint32 VanadielHour();          // текущие Vanadiel часы
-    uint32 VanadielMinute();        // текущие Vanadiel минуты
-    uint32 VanadielDayOfTheYear();  // Gets Integer Value for Day of the Year (Jan 01 = Day 1)
-    uint32 VanadielDayOfTheMonth(); // Gets day of the month (Feb 6 = Day 6)
-    uint32 VanadielDayOfTheWeek();  // Gets day of the week (Fire Earth Water Wind Ice Lightning Light Dark)
-    uint32 VanadielYear();          // Gets the current Vanadiel Year
-    uint32 VanadielMonth();         // Gets the current Vanadiel Month
-    uint32 VanadielUniqueDay();     // Gets the unique day number. (Vanadiel year * 360 + VanadielDayOfTheYear)
-    uint8  VanadielDayElement();    // Gets element of the day (1: fire, 2: ice, 3: wind, 4: earth, 5: thunder, 6: water, 7: light, 8: dark)
-    uint32 VanadielMoonPhase();     // Gets the current Vanadiel Moon Phase
-    uint8  VanadielMoonDirection(); // Gets the current Vanadiel Moon Phasing direction (waxing, waning, neither)
-    uint8  VanadielRSERace();       // Gets the current Race for RSE gear quest
-    uint8  VanadielRSELocation();   // Gets the current Location for RSE gear quest
+    uint32 VanadielTime();            // Gets the current Vanadiel Time in timestamp format (SE epoch in earth seconds)
+    uint8  VanadielTOTD();            // текущее игровое время суток
+    uint32 VanadielHour();            // текущие Vanadiel часы
+    uint32 VanadielMinute();          // текущие Vanadiel минуты
+    uint32 VanadielDayOfTheYear();    // Gets Integer Value for Day of the Year (Jan 01 = Day 1)
+    uint32 VanadielDayOfTheMonth();   // Gets day of the month (Feb 6 = Day 6)
+    uint32 VanadielDayOfTheWeek();    // Gets day of the week (Fire Earth Water Wind Ice Lightning Light Dark)
+    uint32 VanadielYear();            // Gets the current Vanadiel Year
+    uint32 VanadielMonth();           // Gets the current Vanadiel Month
+    uint32 VanadielUniqueDay();       // Gets the unique day number. (Vanadiel year * 360 + VanadielDayOfTheYear)
+    uint8  VanadielDayElement();      // Gets element of the day (1: fire, 2: ice, 3: wind, 4: earth, 5: thunder, 6: water, 7: light, 8: dark)
+    uint32 VanadielMoonPhase();       // Gets the current Vanadiel Moon Phase
+    uint8  VanadielMoonLatentPhase(); // Returns the latent moon phase in Lua format (Starts at 1 instead of 0)
+    uint8  VanadielMoonDirection();   // Gets the current Vanadiel Moon Phasing direction (waxing, waning, neither)
+    uint8  VanadielRSERace();         // Gets the current Race for RSE gear quest
+    uint8  VanadielRSELocation();     // Gets the current Location for RSE gear quest
     bool   SetVanadielTimeOffset(int32 offset);
     bool   IsMoonNew();  // Returns true if the moon is new
     bool   IsMoonFull(); // Returns true if the moon is full

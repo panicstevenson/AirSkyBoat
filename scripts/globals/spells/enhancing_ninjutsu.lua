@@ -50,8 +50,6 @@ xi.spells.enhancing.calculateNinjutsuPower = function(caster, target, spell, spe
         end
 
         if power > 3 then
-            subPower = subPower + 2
-        elseif power > 2 then
             subPower = subPower + 1
         end
     end
