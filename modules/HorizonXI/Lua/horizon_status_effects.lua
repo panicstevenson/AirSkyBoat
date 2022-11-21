@@ -113,17 +113,6 @@ m:addOverride("xi.globals.effects.enlight.onEffectGain", function(target, effect
 end)
 
 m:addOverride("xi.globals.effects.enlight.onEffectTick", function(target, effect)
-    local hitCount = target:getLocalVar("[ENSPELL]HitCount")
-    if hitCount > 0 then
-        local lightEffect_size = effect:getPower()
-        if lightEffect_size > 0 then
-            print("Removing ACC")
-            effect:setPower(lightEffect_size - hitCount)
-            target:delMod(xi.mod.ACC, hitCount)
-            target:delMod(xi.mod.ENSPELL_DMG, hitCount)
-            target:setLocalVar("[ENSPELL]HitCount", 0)
-        end
-    end
 end)
 
 m:addOverride("xi.globals.effects.enlight.onEffectLose", function(target, effect)
