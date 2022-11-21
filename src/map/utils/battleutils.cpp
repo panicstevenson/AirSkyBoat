@@ -1292,8 +1292,14 @@ namespace battleutils
                     Action->additionalEffect = enspell_subeffects[enspell - 1];
                     if (enspell >= ENSPELL_I_LIGHT) // Enlight or Endark
                     {
-                        PAttacker->SetLocalVar("[ENSPELL]HitCount", PAttacker->GetLocalVar("[ENSPELL]HitCount") + 1);
+                        uint8 effectPower      = PAttacker->StatusEffectContainer->GetStatusEffect(EFFECT_ENLIGHT)->GetPower();
                         Action->addEffectParam = CalculateEnspellDamage(PAttacker, PDefender, 3, enspell);
+
+                        if (effectPower > 0)
+                        {
+                            PAttacker->StatusEffectContainer->GetStatusEffect(EFFECT_ENLIGHT)->SetPower(effectPower - 1);
+                            PAttacker->delModifier(Mod::ACC, 1);
+                        }
                     }
                     else
                     {
