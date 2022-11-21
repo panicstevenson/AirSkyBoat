@@ -2103,6 +2103,7 @@ namespace battleutils
                             // If the player blocked with a shield and has shield mastery, add shield mastery TP bonus
                             // unblocked damage (before block but as if affected by stoneskin/phalanx) must be greater than zero
                             PDefender->addTP(PDefender->getMod(Mod::SHIELD_MASTERY_TP));
+                            PDefender->addMP(PDefender->getMod(Mod::SHIELD_MASTERY_TP) / 10);
                         }
                     }
                 }
@@ -7286,11 +7287,11 @@ namespace battleutils
             {
                 correction = 0.65f + ((2.60f * distance) / 100);
             }
-            else if (distance < 7.50f) // <7.5'
+            else if (distance < 7.0f) // <7.5'
             {
                 correction = 0.65f + ((4.66f * distance) / 100);
             }
-            else if (distance <= 10.50f) // Sweet Spot from 7.5' to 10.5'
+            else if (distance <= 11.f) // Sweet Spot from 7' to 11'
             {
                 sweetSpot  = true;
                 correction = 1.00f;
@@ -7346,11 +7347,11 @@ namespace battleutils
             {
                 correction = 0.75 + ((3.33f * distance) / 100);
             }
-            else if (distance < 4.50f) // <4.5'
+            else if (distance < 4.0f) // <4.5'
             {
                 correction = 0.75 + ((5.56f * distance) / 100);
             }
-            else if (distance <= 5.50f) // Sweet spot from 4.5' to 5.5'
+            else if (distance <= 7.f) // Sweet spot from 4' to 7'
             {
                 sweetSpot  = true;
                 correction = 1.00f;

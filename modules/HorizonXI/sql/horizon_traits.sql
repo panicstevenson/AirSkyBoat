@@ -8,9 +8,9 @@ ALTER TABLE `traits`
     ADD COLUMN IF NOT EXISTS `modifier2` smallint(5) UNSIGNED NOT NULL DEFAULT 0 AFTER `value`,
     ADD COLUMN IF NOT EXISTS `value2` smallint(5) UNSIGNED NOT NULL DEFAULT 0 AFTER `modifier2`;
 
-UPDATE `traits` SET `modifier2` = 427, `value2` = 15 WHERE `traitid` = 4 AND `job` = 7 AND `level` = 30; -- PLD Enmity Loss Reduction
-UPDATE `traits` SET `modifier2` = 427, `value2` = 25 WHERE `traitid` = 4 AND `job` = 7 AND `level` = 50; -- PLD Enmity Loss Reduction
-UPDATE `traits` SET `modifier2` = 427, `value2` = 35 WHERE `traitid` = 4 AND `job` = 7 AND `level` = 70; -- PLD Enmity Loss Reduction
+-- UPDATE `traits` SET `modifier2` = 427, `value2` = 15 WHERE `traitid` = 4 AND `job` = 7 AND `level` = 30; -- PLD Enmity Loss Reduction
+-- UPDATE `traits` SET `modifier2` = 427, `value2` = 25 WHERE `traitid` = 4 AND `job` = 7 AND `level` = 50; -- PLD Enmity Loss Reduction
+-- UPDATE `traits` SET `modifier2` = 427, `value2` = 35 WHERE `traitid` = 4 AND `job` = 7 AND `level` = 70; -- PLD Enmity Loss Reduction
 
 UPDATE `traits` SET `level` = 15, `content_tag` = NULL WHERE `traitid` = 24 AND `job` = 3 AND `modifier` = 71 AND `rank` = 1; -- WHM Clear Mind Adjustment
 UPDATE `traits` SET `level` = 35, `content_tag` = NULL WHERE `traitid` = 24 AND `job` = 3 AND `modifier` = 71 AND `rank` = 2; -- WHM Clear Mind Adjustment
