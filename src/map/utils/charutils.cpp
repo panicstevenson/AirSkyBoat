@@ -7334,4 +7334,83 @@ namespace charutils
         }
     }
 
+    uint16 GetRangedAttackMessage(CCharEntity* PChar, float distance)
+    {
+        if (PChar == nullptr)
+        {
+            return 352; // Default back to the normal message
+        }
+
+        uint8           RMainType   = 0;
+        uint8           RMainSub    = 0;
+        CItemEquipment* PRangedSlot = PChar->getEquip(SLOT_RANGED);
+
+        if (PRangedSlot)
+        {
+            RMainType = ((CItemWeapon*)PRangedSlot)->getSkillType();
+            RMainSub  = ((CItemWeapon*)PRangedSlot)->getSubSkillType();
+        }
+
+        bool LongBowCurve  = (RMainType == 25 && RMainSub == 9);                                         // Longbows Only
+        bool CrossBowCurve = ((RMainType == 25 && RMainSub == 0) || (RMainType == 26 && RMainSub == 0)); // Crossbows and Shortbows
+        bool GunCurve      = (RMainType == 26 && RMainSub == 1);                                         // Guns Only
+
+        if (LongBowCurve)
+        {
+            if (distance > 7.f && distance <= 11.f) // Sweet Spot from 7' to 11'
+            {
+                return 577;
+            }
+            else if (distance > 5.f && distance <= 15.f) // Squarely
+            {
+                return 576;
+            }
+            else
+            {
+                return 352;
+            }
+        }
+        else if (CrossBowCurve)
+        {
+            if (distance > 6.f && distance <= 10.f) // Sweet Spot from 5' to 10'
+            {
+                return 577;
+            }
+            else if (distance > 5.f && distance <= 15.f) // Squarely
+            {
+                return 576;
+            }
+            else
+            {
+                return 352;
+            }
+        }
+        else if (GunCurve)
+        {
+            if (distance > 4.f && distance <= 7.f) // Sweet Spot from 5' to 10'
+            {
+                return 577;
+            }
+            else if (distance > 3.f && distance <= 7.5f) // Squarely
+            {
+                return 576;
+            }
+            else
+            {
+                return 352;
+            }
+        }
+        else // Default to Throwing Curve
+        {
+            if (distance <= 1.0f) // Sweet Spot
+            {
+                return 577;
+            }
+            else
+            {
+                return 352;
+            }
+        }
+    }
+
 }; // namespace charutils

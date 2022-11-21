@@ -278,6 +278,7 @@ namespace charutils
     bool   CanUseYell(CCharEntity* PChar);
     bool   IsYellSpamFiltered(CCharEntity* PChar);
     void   ResetCharDigTable(CCharEntity* PChar);
+    uint16 GetRangedAttackMessage(CCharEntity* PChar, float distance);
 
 }; // namespace charutils
 

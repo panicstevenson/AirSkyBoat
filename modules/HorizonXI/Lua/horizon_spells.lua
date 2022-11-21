@@ -237,7 +237,7 @@ m:addOverride("xi.globals.spells.black.absorb-vit.onSpellCast", function(caster,
 end)
 
 m:addOverride("xi.globals.spells.songs.horde_lullaby.onSpellCast", function(caster, target, spell)
-    local duration = math.random(30, 35)
+    local duration = 30
     -- local pCHR = caster:getStat(xi.mod.CHR)
     -- local mCHR = target:getStat(xi.mod.CHR)
     -- local dCHR = pCHR - mCHR

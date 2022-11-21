@@ -194,7 +194,7 @@ local pTable =
     [xi.magic.spell.BANISHGA_II ] = { xi.mod.MND,  180,    1,  180, 133 },
     [xi.magic.spell.BANISHGA_III] = { xi.mod.MND,  480,  1.5,  480, 450 }, -- Enemy only. Stats unknown.
     [xi.magic.spell.BANISHGA_IV ] = { xi.mod.MND,  600,  1.5,  600, 600 }, -- Enemy only. Stats unknown.
-    [xi.magic.spell.HOLY        ] = { xi.mod.MND,  370,  1.5,  370, 150 },
+    [xi.magic.spell.HOLY        ] = { xi.mod.MND,  370,  1.5,  270, 150 },
     [xi.magic.spell.HOLY_II     ] = { xi.mod.MND,  250,    2,  250, 300 },
 }
 
