@@ -15476,6 +15476,106 @@ uint8 CLuaBaseEntity::getMannequinPose(uint16 itemID)
     return 0;
 }
 
+void CLuaBaseEntity::submitContestFish(uint32 score, bool isReplacement)
+{
+    if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
+    {
+        fishingutils::SubmitFish(PChar, score, isReplacement);
+    }
+}
+
+void CLuaBaseEntity::withdrawContestFish()
+{
+    if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
+    {
+        fishingutils::WithdrawFish(PChar);
+    }
+}
+
+bool CLuaBaseEntity::hasContestRewardPending(uint16 contestId)
+{
+    if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
+    {
+        return fishingutils::HasRewardPending(PChar, contestId);
+    }
+
+    return false;
+}
+
+void CLuaBaseEntity::giveContestReward(uint16 contestId)
+{
+    if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
+    {
+        return fishingutils::GiveContestReward(PChar, contestId);
+    }
+}
+
+uint32 CLuaBaseEntity::getContestScore()
+{
+    if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
+    {
+        if (fish_ranking_entry* entry = fishingutils::GetPlayerEntry(PChar))
+        {
+            return entry->score;
+        }
+    }
+
+    return 0;
+}
+
+uint8 CLuaBaseEntity::getContestRank()
+{
+    if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
+    {
+        if (fish_ranking_entry* entry = fishingutils::GetPlayerEntry(PChar))
+        {
+            return entry->contestrank;
+        }
+    }
+
+    return 0;
+}
+
+auto CLuaBaseEntity::getAwardHistory() -> sol::table
+{
+    if (m_PBaseEntity->objtype == TYPE_PC)
+    {
+        sol::table table = lua.create_table();
+        table[1]         = 0;
+        table[2]         = 0;
+        table[3]         = 0;
+        table[4]         = 0;
+
+        const char* Query = "SELECT \
+                         CASE \
+                         WHEN contestrank = 1 then 1 \
+                         WHEN contestrank = 2 then 2 \
+                         WHEN contestrank = 3 then 3 \
+                         WHEN contestrank between 4 and 10 then 4 \
+                         END AS `awardLevel`, \
+                         COUNT(*) AS `count` \
+                         FROM `fishing_contest_entries` \
+                         WHERE name = '%s' \
+                         GROUP BY `awardLevel`;";
+
+        int32 ret = sql->Query(Query, m_PBaseEntity->name.c_str());
+        if (!(ret == SQL_ERROR) && sql->NumRows() > 0)
+        {
+            while (sql->NextRow() == SQL_SUCCESS)
+            {
+                table[sql->GetUIntData(0)] = sql->GetUIntData(1);
+            }
+        }
+        else
+        {
+            ShowError("Unable to retrieve fishing contest award history.");
+        }
+
+        return table;
+    }
+    return sol::lua_nil;
+}
+
 //==========================================================//
 
 void CLuaBaseEntity::Register()
@@ -16287,10 +16387,17 @@ void CLuaBaseEntity::Register()
     // Fishing Data
     SOL_REGISTER("getFishingStats", CLuaBaseEntity::getFishingStats);
     SOL_REGISTER("getFishingCatches", CLuaBaseEntity::getFishingCatches);
+    SOL_REGISTER("hasContestRewardPending", CLuaBaseEntity::hasContestRewardPending);
+    SOL_REGISTER("giveContestReward", CLuaBaseEntity::giveContestReward);
     SOL_REGISTER("setFishCaught", CLuaBaseEntity::setFishCaught);
     SOL_REGISTER("hasCaughtFish", CLuaBaseEntity::hasCaughtFish);
     SOL_REGISTER("clearFishCaught", CLuaBaseEntity::clearFishCaught);
     SOL_REGISTER("clearFishHistory", CLuaBaseEntity::clearFishHistory);
+    SOL_REGISTER("submitContestFish", CLuaBaseEntity::submitContestFish);
+    SOL_REGISTER("getContestScore", CLuaBaseEntity::getContestScore);
+    SOL_REGISTER("getContestRank", CLuaBaseEntity::getContestRank);
+    SOL_REGISTER("withdrawContestFish", CLuaBaseEntity::withdrawContestFish);
+    SOL_REGISTER("getAwardHistory", CLuaBaseEntity::getAwardHistory);
 
     // Mannequins
     SOL_REGISTER("setMannequinPose", CLuaBaseEntity::setMannequinPose);

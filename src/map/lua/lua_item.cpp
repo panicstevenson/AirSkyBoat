@@ -325,6 +325,21 @@ auto CLuaItem::getSoulPlateData() -> sol::table
     return table;
 }
 
+auto CLuaItem::getFishData() -> sol::table
+{
+    if (auto PFish = static_cast<CItemFish*>(m_PLuaItem))
+    {
+        sol::table table = lua.create_table();
+
+        table["length"] = PFish->GetLength();
+        table["weight"] = PFish->GetWeight();
+        table["ranked"] = PFish->IsRanked();
+
+        return table;
+    }
+    return sol::lua_nil;
+}
+
 //==========================================================//
 
 void CLuaItem::Register()
@@ -361,6 +376,7 @@ void CLuaItem::Register()
     SOL_REGISTER("isInstalled", CLuaItem::isInstalled);
     SOL_REGISTER("setSoulPlateData", CLuaItem::setSoulPlateData);
     SOL_REGISTER("getSoulPlateData", CLuaItem::getSoulPlateData);
+    SOL_REGISTER("getFishData", CLuaItem::getFishData);
 }
 
 std::ostream& operator<<(std::ostream& os, const CLuaItem& item)
