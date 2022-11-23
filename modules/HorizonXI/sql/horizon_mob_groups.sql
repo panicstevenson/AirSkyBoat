@@ -4,59 +4,60 @@
 
 LOCK TABLES
     `mob_groups` WRITE;
+-- This will ensure only the non-scripted NMs don't get an respawntime overwritten
+UPDATE `mob_groups` SET `respawntime` = '420' WHERE `zoneid` = 2  AND `respawntime` < 961 AND `spawntype` < 32 -- Carpenters_Landing
+                                                OR `zoneid` = 9   AND `respawntime` < 961 AND `spawntype` < 32  -- PsoXja
+                                                OR `zoneid` = 140 AND `respawntime` < 961 AND `spawntype` < 32  -- Ghelsba_Outpost
+                                                OR `zoneid` = 142 AND `respawntime` < 961 AND `spawntype` < 32  -- Yughott_Grotto
+                                                OR `zoneid` = 143 AND `respawntime` < 961 AND `spawntype` < 32  -- Palborough_Mines
+                                                OR `zoneid` = 145 AND `respawntime` < 961 AND `spawntype` < 32  -- Giddeus
+                                                OR `zoneid` = 153 AND `respawntime` < 961 AND `spawntype` < 32  -- The_Boyahda_Tree
+                                                OR `zoneid` = 154 AND `respawntime` < 961 AND `spawntype` < 32  -- Dragons_Aery
+                                                OR `zoneid` = 166 AND `respawntime` < 961 AND `spawntype` < 32  -- Ranguemont_Pass
+                                                OR `zoneid` = 167 AND `respawntime` < 961 AND `spawntype` < 32  -- Bostaunieux_Oubliette
+                                                OR `zoneid` = 169 AND `respawntime` < 961 AND `spawntype` < 32  -- Toraimarai_Canal
+                                                OR `zoneid` = 172 AND `respawntime` < 961 AND `spawntype` < 32  -- Zeruhn_Mines
+                                                OR `zoneid` = 174 AND `respawntime` < 961 AND `spawntype` < 32  -- Kuftal_Tunnel
+                                                OR `zoneid` = 177 AND `respawntime` < 961 AND `spawntype` < 32  -- VeLugannon_Palace
+                                                OR `zoneid` = 190 AND `respawntime` < 961 AND `spawntype` < 32  -- King_Ranperres_Tomb
+                                                OR `zoneid` = 191 AND `respawntime` < 961 AND `spawntype` < 32  -- Dangruf_Wadi
+                                                OR `zoneid` = 192 AND `respawntime` < 961 AND `spawntype` < 32  -- Inner_Horutoto_Ruins
+                                                OR `zoneid` = 193 AND `respawntime` < 961 AND `spawntype` < 32  -- Ordelles_Caves
+                                                OR `zoneid` = 194 AND `respawntime` < 961 AND `spawntype` < 32  -- Outer_Horutoto_Ruins
+                                                OR `zoneid` = 195 AND `respawntime` < 961 AND `spawntype` < 32  -- The_Eldieme_Necropolis
+                                                OR `zoneid` = 196 AND `respawntime` < 961 AND `spawntype` < 32  -- Gusgen_Mines
+                                                OR `zoneid` = 197 AND `respawntime` < 961 AND `spawntype` < 32  -- Crawlers_Nest
+                                                OR `zoneid` = 198 AND `respawntime` < 961 AND `spawntype` < 32  -- Maze_of_Shakhrami
+                                                OR `zoneid` = 200 AND `respawntime` < 961 AND `spawntype` < 32  -- Garlaige_Citadel
+                                                OR `zoneid` = 204 AND `respawntime` < 961 AND `spawntype` < 32  -- FeiYin
+                                                OR `zoneid` = 205 AND `respawntime` < 961 AND `spawntype` < 32  -- Ifrit's Cauldron
+                                                OR `zoneid` = 208 AND `respawntime` < 961 AND `spawntype` < 32  -- Quicksand_Caves
+                                                OR `zoneid` = 212 AND `respawntime` < 961 AND `spawntype` < 32  -- Gustav_Tunnel
+                                                OR `zoneid` = 213 AND `respawntime` < 961 AND `spawntype` < 32; -- Labyrinth_of_Onzozo
 
-UPDATE `mob_groups` SET `respawntime` = '420' WHERE `zoneid` = 2      -- Carpenters_Landing
-                                             OR `zoneid` = 9      -- PsoXja
-                                             OR `zoneid` = 34     -- Grand_Palace_of_HuXzoi
-                                             OR `zoneid` = 35     -- The_Garden_of_RuHmet
-                                             OR `zoneid` = 153    -- The_Boyahda_Tree
-                                             OR `zoneid` = 154    -- Dragons_Aery
-                                             OR `zoneid` = 166    -- Ranguemont_Pass
-                                             OR `zoneid` = 167    -- Bostaunieux_Oubliette
-                                             OR `zoneid` = 169    -- Toraimarai_Canal
-                                             OR `zoneid` = 172    -- Zeruhn_Mines
-                                             OR `zoneid` = 173    -- Korroloka_Tunnel
-                                             OR `zoneid` = 174    -- Kuftal_Tunnel
-                                             OR `zoneid` = 177    -- VeLugannon_Palace
-                                             OR `zoneid` = 178    -- The_Shrine_of_RuAvitau
-                                             OR `zoneid` = 190    -- King_Ranperres_Tomb
-                                             OR `zoneid` = 191    -- Dangruf_Wadi
-                                             OR `zoneid` = 192    -- Inner_Horutoto_Ruins
-                                             OR `zoneid` = 193    -- Ordelles_Caves
-                                             OR `zoneid` = 194    -- Outer_Horutoto_Ruins
-                                             OR `zoneid` = 195    -- The_Eldieme_Necropolis
-                                             OR `zoneid` = 196    -- Gusgen_Mines
-                                             OR `zoneid` = 197    -- Crawlers_Nest
-                                             OR `zoneid` = 198    -- Maze_of_Shakhrami
-                                             OR `zoneid` = 200    -- Garlaige_Citadel
-                                             OR `zoneid` = 204    -- FeiYin
-                                             OR `zoneid` = 212    -- Gustav_Tunnel
-                                             OR `zoneid` = 213;   -- Labyrinth_of_Onzozo
-
-UPDATE `mob_groups` SET `respawntime` = '960' WHERE `zoneid` = 11     -- Oldton_Movalpolos
-                                             OR `zoneid` = 12     -- Newton_Movalpolos
-                                             OR `zoneid` = 27     -- Phomiuna_Aqueducts
-                                             OR `zoneid` = 28     -- Sacrarium
-                                             OR `zoneid` = 140    -- Ghelsba_Outpost
-                                             OR `zoneid` = 141    -- Fort_Ghelsba
-                                             OR `zoneid` = 142    -- Yughott_Grotto
-                                             OR `zoneid` = 143    -- Palborough_Mines
-                                             OR `zoneid` = 145    -- Giddeus
-                                             OR `zoneid` = 147    -- Beadeaux
-                                             OR `zoneid` = 148    -- Qulun_Dome
-                                             OR `zoneid` = 149    -- Davoi
-                                             OR `zoneid` = 150    -- Monastic_Cavern
-                                             OR `zoneid` = 151    -- Castle_Oztroja
-                                             OR `zoneid` = 152    -- Altar_Room
-                                             OR `zoneid` = 157    -- Middle_Delkfutts_Tower
-                                             OR `zoneid` = 158    -- Upper_Delkfutts_Tower
-                                             OR `zoneid` = 159    -- Temple_of_Uggalepih
-                                             OR `zoneid` = 160    -- Den_of_Rancor
-                                             OR `zoneid` = 161    -- Castle_Zvahl_Baileys
-                                             OR `zoneid` = 162    -- Castle_Zvahl_Keep
-                                             OR `zoneid` = 176    -- Sea_Serpent_Grotto
-                                             OR `zoneid` = 184    -- Lower_Delkfutts_Tower
-                                             OR `zoneid` = 208;   -- Quicksand_Caves
+UPDATE `mob_groups` SET `respawntime` = '960' WHERE `zoneid` = 11 AND `respawntime` < 961 AND `spawntype` < 32  -- Oldton_Movalpolos
+                                                OR `zoneid` = 12  AND `respawntime` < 961 AND `spawntype` < 32  -- Newton_Movalpolos
+                                                OR `zoneid` = 27  AND `respawntime` < 961 AND `spawntype` < 32  -- Phomiuna_Aqueducts
+                                                OR `zoneid` = 28  AND `respawntime` < 961 AND `spawntype` < 32  -- Sacrarium
+                                                OR `zoneid` = 34  AND `respawntime` < 961 AND `spawntype` < 32  -- Grand_Palace_of_HuXzoi
+                                                OR `zoneid` = 35  AND `respawntime` < 961 AND `spawntype` < 32  -- The_Garden_of_RuHmet
+                                                OR `zoneid` = 141 AND `respawntime` < 961 AND `spawntype` < 32  -- Fort_Ghelsba
+                                                OR `zoneid` = 147 AND `respawntime` < 961 AND `spawntype` < 32  -- Beadeaux
+                                                OR `zoneid` = 148 AND `respawntime` < 961 AND `spawntype` < 32  -- Qulun_Dome
+                                                OR `zoneid` = 149 AND `respawntime` < 961 AND `spawntype` < 32  -- Davoi
+                                                OR `zoneid` = 150 AND `respawntime` < 961 AND `spawntype` < 32  -- Monastic_Cavern
+                                                OR `zoneid` = 151 AND `respawntime` < 961 AND `spawntype` < 32  -- Castle_Oztroja
+                                                OR `zoneid` = 152 AND `respawntime` < 961 AND `spawntype` < 32  -- Altar_Room
+                                                OR `zoneid` = 157 AND `respawntime` < 961 AND `spawntype` < 32  -- Middle_Delkfutts_Tower
+                                                OR `zoneid` = 158 AND `respawntime` < 961 AND `spawntype` < 32  -- Upper_Delkfutts_Tower
+                                                OR `zoneid` = 159 AND `respawntime` < 961 AND `spawntype` < 32  -- Temple_of_Uggalepih
+                                                OR `zoneid` = 160 AND `respawntime` < 961 AND `spawntype` < 32  -- Den_of_Rancor
+                                                OR `zoneid` = 161 AND `respawntime` < 961 AND `spawntype` < 32  -- Castle_Zvahl_Baileys
+                                                OR `zoneid` = 162 AND `respawntime` < 961 AND `spawntype` < 32  -- Castle_Zvahl_Keep
+                                                OR `zoneid` = 173 AND `respawntime` < 961 AND `spawntype` < 32  -- Korroloka_Tunnel
+                                                OR `zoneid` = 176 AND `respawntime` < 961 AND `spawntype` < 32  -- Sea_Serpent_Grotto
+                                                OR `zoneid` = 178 AND `respawntime` < 961 AND `spawntype` < 32  -- The_Shrine_of_RuAvitau
+                                                OR `zoneid` = 184 AND `respawntime` < 961 AND `spawntype` < 32; -- Lower_Delkfutts_Tower
 
 -- Adjusting Ghost Levels for Manaburn Camp #1 Latheine
 UPDATE `mob_groups` SET `minLevel` = 18, `maxLevel` = 21 WHERE `groupid` = "33" AND `zoneid` = "102";
@@ -160,19 +161,28 @@ UPDATE `mob_groups` SET `minLevel` = 65, `maxLevel` = 68 WHERE name = "Mourioche
 -- Bostaunieux_Oubliette (Zone 167)
 UPDATE `mob_groups` SET `minLevel` = 57, `maxLevel` = 59 WHERE name = "Werebat" and `zoneid` = 167;
 
+-- Toraimarai Canal (Zone 169)
+UPDATE `mob_groups` SET `respawntime` = 960 WHERE name = "Girtab" and `zoneid` = 169;
+
 -- Korroloka_Tunnel (Zone 173)
 UPDATE `mob_groups` SET `minLevel` = 21, `maxLevel` = 24 WHERE name = "Land_Worm" and `zoneid` = 173;
 UPDATE `mob_groups` SET `minLevel` = 23, `maxLevel` = 25 WHERE name = "Seeker_Bats" and `zoneid` = 173;
+
+-- Kuftal Tunnel (Zone 174)
+UPDATE `mob_groups` SET `respawntime` = 960 WHERE name = "Sand_Lizard" and `zoneid` = 174; -- Amemet PHs
 
 -- Sea_Serpent_Grotto (Zone 176)
 UPDATE `mob_groups` SET `minLevel` = 65, `maxLevel` = 67 WHERE name = "Robber_Crab" and `zoneid` = 176;
 UPDATE `mob_groups` SET `minLevel` = 64, `maxLevel` = 66 WHERE name = "Dire_Bat" and `zoneid` = 176;
 
+-- Ve'Lugannon Palace (Zone 177)
+UPDATE `mob_groups` SET `respawntime` = 960 WHERE name = "Detector" and `zoneid` = 177; -- All detectors
+
 -- The_Shrine_of_RuAvitau (Zone 178)
 UPDATE `mob_groups` SET `minLevel` = 78, `maxLevel` = 80 WHERE name = "Aura_Pot"  and `zoneid` = 178;
 
--- Dangruf_Wadi (Zone 191)
-
+-- Ordelle's Cave (Zone 193)
+UPDATE `mob_groups` SET `respawntime` = 720 WHERE name = "Stroper_Chyme" and `zoneid` = 193;
 
 -- The_Eldieme_Necropolis (Zone 195)
 UPDATE `mob_groups` SET `minLevel` = 41, `maxLevel` = 44 WHERE name = "Lost_Soul_blm"  and `zoneid` = 195;
@@ -201,7 +211,8 @@ UPDATE `mob_groups` SET `minLevel` = 60, `maxLevel` = 60, `HP` = 45000, `MP` = 5
 INSERT INTO `mob_groups` VALUES (89,2271,104,'Queen_Crab',0,128,6037,10000,2000,55,55,0,NULL);
 INSERT INTO `mob_groups` VALUES (90,2271,104,'Pawn_Crab',0,128,6037,200,2000,55,55,0,NULL);
 
---LoO Stuff
+-- LoO Stuff (Zone 213)
+UPDATE `mob_groups` SET `respawntime` = 960 WHERE name = "Flying_Manta" and `zoneid` = 213; -- LoO PH and all mantas
 UPDATE `mob_groups` SET `minLevel` = 80, `maxLevel` = 81, `HP` = 25000, `MP` = 25000 WHERE name = "Lord_of_Onzozo"  and `zoneid` = 213;
 -- ----------------------------------
 --     AF Weapon NM Adjustments
