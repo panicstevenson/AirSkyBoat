@@ -218,41 +218,41 @@ UPDATE `mob_groups` SET `minLevel` = 80, `maxLevel` = 81, `HP` = 25000, `MP` = 2
 --     AF Weapon NM Adjustments
 -- ----------------------------------
 -- WAR
-UPDATE `mob_groups` SET `minLevel` = 40, `maxLevel` = 40, `HP` = 2500 WHERE name = "Barakbok"  and `zoneid` = 149;
-UPDATE `mob_groups` SET `minLevel` = 40, `maxLevel` = 40, `HP` = 3000 WHERE name = "Gavotvut"  and `zoneid` = 149;
+UPDATE `mob_groups` SET `minLevel` = 42, `maxLevel` = 42, `HP` = 2500 WHERE name = "Barakbok"  and `zoneid` = 149;
+UPDATE `mob_groups` SET `minLevel` = 42, `maxLevel` = 42, `HP` = 3000 WHERE name = "Gavotvut"  and `zoneid` = 149;
 
 -- MNK
-UPDATE `mob_groups` SET `minLevel` = 42, `maxLevel` = 42, `HP` = 3400 WHERE name = "Wandering_Ghost"  and `zoneid` = 196;
+UPDATE `mob_groups` SET `minLevel` = 44, `maxLevel` = 44, `HP` = 3400 WHERE name = "Wandering_Ghost"  and `zoneid` = 196;
 
 -- WHM
-UPDATE `mob_groups` SET `minLevel` = 42, `maxLevel` = 42, `HP` = 3600 WHERE name = "Marchelute"  and `zoneid` = 103;
+UPDATE `mob_groups` SET `minLevel` = 44, `maxLevel` = 44, `HP` = 3600 WHERE name = "Marchelute"  and `zoneid` = 103;
 
 -- BLM
-UPDATE `mob_groups` SET `minLevel` = 40, `maxLevel` = 40, `HP` = 3000 WHERE name = "Chaos_Elemental"  and `zoneid` = 112;
+UPDATE `mob_groups` SET `minLevel` = 44, `maxLevel` = 44, `HP` = 3000 WHERE name = "Chaos_Elemental"  and `zoneid` = 112;
 
 -- RDM
-UPDATE `mob_groups` SET `minLevel` = 42, `maxLevel` = 42, `HP` = 3600 WHERE name = "Purpleflash_Brukdok"  and `zoneid` = 149;
+UPDATE `mob_groups` SET `minLevel` = 44, `maxLevel` = 44, `HP` = 3600 WHERE name = "Purpleflash_Brukdok"  and `zoneid` = 149;
 
 -- PLD
-UPDATE `mob_groups` SET `minLevel` = 40, `maxLevel` = 40, `HP` = 3000 WHERE name = "Polevik"  and `zoneid` = 193;
+UPDATE `mob_groups` SET `minLevel` = 44, `maxLevel` = 44, `HP` = 3000 WHERE name = "Polevik"  and `zoneid` = 193;
 
 -- DRK
-UPDATE `mob_groups` SET `minLevel` = 42, `maxLevel` = 42, `HP` = 3600 WHERE name = "Vaa_Huja_the_Erudite"  and `zoneid` = 145;
+UPDATE `mob_groups` SET `minLevel` = 44, `maxLevel` = 44, `HP` = 3600 WHERE name = "Vaa_Huja_the_Erudite"  and `zoneid` = 145;
 
 -- BRD
-UPDATE `mob_groups` SET `minLevel` = 42, `maxLevel` = 42, `HP` = 3400 WHERE name = "Tros"  and `zoneid` = 166;
+UPDATE `mob_groups` SET `minLevel` = 44, `maxLevel` = 44, `HP` = 3400 WHERE name = "Tros"  and `zoneid` = 166;
 
 -- NIN
-UPDATE `mob_groups` SET `minLevel` = 40, `maxLevel` = 40, `HP` = 2600 WHERE name = "Tsuchigumo"  and `zoneid` = 114;
+UPDATE `mob_groups` SET `minLevel` = 44, `maxLevel` = 44, `HP` = 2600 WHERE name = "Tsuchigumo"  and `zoneid` = 114;
 
 -- SAM
-UPDATE `mob_groups` SET `minLevel` = 42, `maxLevel` = 42, `HP` = 4100 WHERE name = "Isonade"  and `zoneid` = 121;
+UPDATE `mob_groups` SET `minLevel` = 44, `maxLevel` = 44, `HP` = 4100 WHERE name = "Isonade"  and `zoneid` = 121;
 
 -- DRG
-UPDATE `mob_groups` SET `minLevel` = 42, `maxLevel` = 42, `HP` = 3800 WHERE name = "Decurio_I-III"  and `zoneid` = 114;
+UPDATE `mob_groups` SET `minLevel` = 44, `maxLevel` = 44, `HP` = 3800 WHERE name = "Decurio_I-III"  and `zoneid` = 114;
 
 -- SMN
-UPDATE `mob_groups` SET `minLevel` = 42, `maxLevel` = 42, `HP` = 3400 WHERE name = "Galgalim"  and `zoneid` = 209;
+UPDATE `mob_groups` SET `minLevel` = 44, `maxLevel` = 44, `HP` = 3400 WHERE name = "Galgalim"  and `zoneid` = 209;
 
 -- --------------------------------------------------------
 -- Horizon Mob Subjob Manager
