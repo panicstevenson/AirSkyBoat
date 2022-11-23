@@ -30,6 +30,7 @@
 #include "time_server.h"
 #include "timetriggers.h"
 #include "transport.h"
+#include "utils/fishingutils.h"
 #include "utils/guildutils.h"
 #include "utils/instanceutils.h"
 #include "utils/moduleutils.h"
@@ -164,6 +165,8 @@ int32 time_server(time_point tick, CTaskMgr::CTask* PTask)
     luautils::OnTimeServerTick();
 
     luautils::ReloadFilewatchList();
+
+    fishingutils::ProgressContest();
 
     moduleutils::OnTimeServerTick();
 

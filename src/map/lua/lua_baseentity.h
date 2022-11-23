@@ -881,6 +881,14 @@ public:
     uint8 getMannequinPose(uint16 itemID);
     void  setMannequinPose(uint16 itemID, uint8 race, uint8 pose);
 
+    void   submitContestFish(uint32 score, bool isReplacement);
+    void   withdrawContestFish();
+    uint32 getContestScore();
+    uint8  getContestRank();
+    bool   hasContestRewardPending(uint16 contestId);
+    void   giveContestReward(uint16 contestId);
+    auto   getAwardHistory() -> sol::table;
+
     static void Register();
 };
 

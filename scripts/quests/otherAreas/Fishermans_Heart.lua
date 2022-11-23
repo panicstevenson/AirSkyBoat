@@ -117,7 +117,7 @@ quest.sections =
             ['Katsunaga'] =
             {
                 onTrigger = function(player, csid, option, npc)
-                    return quest:progressEvent(197, xi.fish.countFish(player:getFishingCatches())) -- Number of fish caught
+                    return quest:progressEvent(197, xi.fishing.countFish(player:getFishingCatches())) -- Number of fish caught
                 end,
             },
 
@@ -127,7 +127,7 @@ quest.sections =
                     if (option == 33554432) then
                         -- "Catching Fish"
                         local fishingStats = player:getFishingStats()
-                        player:updateEvent( { [0] = xi.fish.countFish(player:getFishingCatches()),
+                        player:updateEvent( { [0] = xi.fishing.countFish(player:getFishingCatches()),
                                               [1] = fishingStats["fishLinesCast"],
                                               [2] = fishingStats["fishReeled"],
                                               [3] = fishingStats["fishLongestLength"],

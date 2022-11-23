@@ -3602,6 +3602,7 @@ xi.items =
     MARSS_RING                      = 15548,
     BELLONAS_RING                   = 15549,
     MINERVAS_RING                   = 15550,
+    PELICAN_RING                    = 15554,
     ALBATROSS_RING                  = 15555,
     FIGHTERS_CUISSES_P1             = 15561,
     TEMPLE_HOSE_P1                  = 15562,

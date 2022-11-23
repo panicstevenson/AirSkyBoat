@@ -86,6 +86,8 @@ public:
     void setSoulPlateData(std::string const& name, uint16 mobFamily, uint8 zeni, uint16 skillIndex, uint8 fp);
     auto getSoulPlateData() -> sol::table;
 
+    auto getFishData() -> sol::table;
+
     static void Register();
 };
 

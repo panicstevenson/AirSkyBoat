@@ -115,6 +115,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "packets/delivery_box.h"
 #include "packets/downloading_data.h"
 #include "packets/entity_update.h"
+#include "packets/fishing_rank.h"
 #include "packets/furniture_interact.h"
 #include "packets/guild_menu_buy.h"
 #include "packets/guild_menu_buy_update.h"
@@ -2288,40 +2289,139 @@ void SmallPacket0x042(map_session_data_t* const PSession, CCharEntity* const PCh
 void SmallPacket0x04B(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
-    // uint8   msg_chunk = data.ref<uint8>(0x04); // The current chunk of the message to send (1 = start, 2 = rest of message)
-    // uint8   msg_unknown1 = data.ref<uint8>(0x05); // Unknown always 0
-    // uint8   msg_unknown2 = data.ref<uint8>(0x06); // Unknown always 1
+    uint8  msg_chunk     = data.ref<uint8>(0x04);  // The current chunk of the message to send (1 = start, 2 = rest of message)
+    uint8  msg_type      = data.ref<uint8>(0x06);  // 1 = Server message, 2 = Fishing Rank
     uint8  msg_language  = data.ref<uint8>(0x07);  // Language request id (2 = English, 4 = French)
     uint32 msg_timestamp = data.ref<uint32>(0x08); // The message timestamp being requested
-    // uint32  msg_size_total = data.ref<uint32>(0x0C); // The total length of the requested server message
-    uint32 msg_offset = data.ref<uint32>(0x10); // The offset to start obtaining the server message
-    // uint32  msg_request_len = data.ref<uint32>(0x14); // The total requested size of send to the client
+    // uint32 msg_size_total  = data.ref<uint32>(0x0C); // The total length of the requested server message
+    uint32 msg_offset      = data.ref<uint32>(0x10); // The offset to start obtaining the server message
+    uint32 msg_request_len = data.ref<uint32>(0x14); // The total requested size of send to the client
 
-    if (msg_language == 0x02)
+    if (msg_type == 1) // Standard Server Message
     {
-        std::string login_message = settings::get<std::string>("main.SERVER_MESSAGE");
-        if (settings::get<bool>("main.ENABLE_TRUST_ALTER_EGO_EXTRAVAGANZA_ANNOUNCE"))
+        if (msg_language == 0x02)
         {
-            login_message = login_message + (settings::get<std::string>("main.TRUST_ALTER_EGO_EXTRAVAGANZA_MESSAGE"));
+            std::string login_message = settings::get<std::string>("main.SERVER_MESSAGE");
+            if (settings::get<bool>("main.ENABLE_TRUST_ALTER_EGO_EXTRAVAGANZA_ANNOUNCE"))
+            {
+                login_message = login_message + (settings::get<std::string>("main.TRUST_ALTER_EGO_EXTRAVAGANZA_MESSAGE"));
+            }
+            if (settings::get<bool>("main.ENABLE_TRUST_ALTER_EGO_EXPO_ANNOUNCE"))
+            {
+                login_message = login_message + (settings::get<std::string>("main.TRUST_ALTER_EGO_EXPO_MESSAGE"));
+            }
+            PChar->pushPacket(new CServerMessagePacket(login_message, msg_language, msg_timestamp, msg_offset));
         }
-        if (settings::get<bool>("main.ENABLE_TRUST_ALTER_EGO_EXPO_ANNOUNCE"))
+
+        PChar->pushPacket(new CCharSyncPacket(PChar));
+
+        // todo: kill player til theyre dead and bsod
+        const char* fmtQuery = "SELECT version_mismatch FROM accounts_sessions WHERE charid = %u";
+        int32       ret      = sql->Query(fmtQuery, PChar->id);
+        if (ret != SQL_ERROR && sql->NextRow() == SQL_SUCCESS)
         {
-            login_message = login_message + (settings::get<std::string>("main.TRUST_ALTER_EGO_EXPO_MESSAGE"));
+            if ((bool)sql->GetUIntData(0))
+            {
+                PChar->pushPacket(new CChatMessagePacket(PChar, CHAT_MESSAGE_TYPE::MESSAGE_SYSTEM_1, "Server does not support this client version."));
+            }
         }
-        PChar->pushPacket(new CServerMessagePacket(login_message, msg_language, msg_timestamp, msg_offset));
     }
-
-    PChar->pushPacket(new CCharSyncPacket(PChar));
-
-    // todo: kill player til theyre dead and bsod
-    const char* fmtQuery = "SELECT version_mismatch FROM accounts_sessions WHERE charid = %u";
-    int32       ret      = sql->Query(fmtQuery, PChar->id);
-    if (ret != SQL_ERROR && sql->NextRow() == SQL_SUCCESS)
+    else if (msg_type == 2) // Fish Ranking stuff
     {
-        if ((bool)sql->GetUIntData(0))
+        // The Message Chunk acts as a "sub-type" for the request
+        // 1 = First packet of ranking table
+        // 2 = Subsequent packet of ranking table
+        // 10 = ???
+        // 11 = ??? Prepare to withdraw?
+        // 12 = Response to a fish submission (No ranking or score - both 0) - Before ranking
+        // 13 = Fish Rank Self, including the score and rank (???) following fish submission (How is it ranked??)
+        std::vector<fish_ranking_entry*> entries;
+
+        uint32              realEntries = fishingutils::FishingRankEntryCount();
+        uint32              msg_entries = realEntries + 15; // 15 "SmallFisher" entries
+        fish_ranking_entry* entry       = nullptr;
+        uint8               entryVal    = 0;
+        uint8               blockSize   = sizeof(fish_ranking_entry);
+
+        // Add the "Self" block for 0x1C - Either player data, or empty, depending on the chunk
+        if (msg_chunk != 2)
         {
-            PChar->pushPacket(new CChatMessagePacket(PChar, CHAT_MESSAGE_TYPE::MESSAGE_SYSTEM_1, "Server does not support this client version."));
+            // Client requesting the fish ranking menu header - All empty timestamps
+            // In either case, we need the "Fish Rank Self" block
+            entry = fishingutils::GetPlayerEntry(PChar);
+            if (entry)
+            {
+                // For type 1, include the player's Fish Rank Self packet from the contest.  Otherwise, just use some current info.
+                if (msg_chunk == 1)
+                {
+                    entry->resultcount = msg_entries;
+                }
+                else
+                {
+                    fish_ranking_entry* original = entry;
+                    entry                        = new fish_ranking_entry;
+
+                    strcpy(entry->name, PChar->name.c_str());
+                    entry->mjob        = original->mjob;
+                    entry->sjob        = original->sjob;
+                    entry->mlvl        = original->mlvl;
+                    entry->slvl        = original->slvl;
+                    entry->race        = original->race;
+                    entry->allegiance  = original->allegiance;
+                    entry->fishrank    = original->fishrank;
+                    entry->score       = original->score;
+                    entry->submittime  = original->submittime;
+                    entry->contestrank = original->contestrank;
+                    entry->resultcount = msg_entries;
+                    entry->dataset_a   = original->dataset_a;
+                    entry->dataset_b   = original->dataset_b;
+                }
+                entries.push_back(entry);
+            }
+            else // Get the base data if there's no player data
+            {
+                entry = new fish_ranking_entry;
+                strcpy(entry->name, PChar->name.c_str());
+                entry->mjob        = (uint8)PChar->GetMJob();
+                entry->sjob        = (uint8)PChar->GetSJob();
+                entry->mlvl        = PChar->GetMLevel();
+                entry->slvl        = PChar->GetSLevel();
+                entry->race        = PChar->mainlook.race;
+                entry->allegiance  = (uint8)PChar->allegiance;
+                entry->fishrank    = PChar->RealSkills.rank[SKILLTYPE::SKILL_FISHING];
+                entry->score       = 0;
+                entry->submittime  = CVanaTime::getInstance()->getVanaTime() - 1;
+                entry->contestrank = 0;
+                entry->resultcount = 0;
+                entry->dataset_a   = 0;
+                entry->dataset_b   = 0;
+
+                entries.push_back(entry); // Adds header entry if the player is not ranked
+            }
         }
+        else
+        {
+            entries.push_back(new fish_ranking_entry); // Adds empty entry if this isn't the first packet
+        }
+
+        // Add the next five blocks until we are out of entries
+        if (msg_chunk == 1 || msg_chunk == 2)
+        {
+            while (entries.size() <= (msg_request_len / blockSize))
+            {
+                entry = fishingutils::GetFishRankEntry((msg_offset / blockSize) + entryVal++);
+                if (entry)
+                {
+                    entry->resultcount = msg_entries;
+                    entries.push_back(entry);
+                }
+                else
+                {
+                    entries.push_back(new fish_ranking_entry); // Adds empty entry if the player is not ranked
+                }
+            }
+        }
+        PChar->pushPacket(new CFishingRankPacket(entries, msg_language, msg_timestamp, msg_offset, msg_entries, msg_chunk));
     }
 }
 
@@ -7863,7 +7963,7 @@ void PacketParserInitialize()
     PacketSize[0x03D] = 0x00; PacketParser[0x03D] = &SmallPacket0x03D; // Blacklist Command
     PacketSize[0x041] = 0x00; PacketParser[0x041] = &SmallPacket0x041;
     PacketSize[0x042] = 0x00; PacketParser[0x042] = &SmallPacket0x042;
-    PacketSize[0x04B] = 0x0C; PacketParser[0x04B] = &SmallPacket0x04B;
+    PacketSize[0x04B] = 0x00; PacketParser[0x04B] = &SmallPacket0x04B; // Was 0x0C
     PacketSize[0x04D] = 0x00; PacketParser[0x04D] = &SmallPacket0x04D;
     PacketSize[0x04E] = 0x1E; PacketParser[0x04E] = &SmallPacket0x04E;
     PacketSize[0x050] = 0x04; PacketParser[0x050] = &SmallPacket0x050;

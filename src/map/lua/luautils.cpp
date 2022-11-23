@@ -188,6 +188,11 @@ namespace luautils
         lua.set_function("GetCachedInstanceScript", &luautils::GetCachedInstanceScript);
         lua.set_function("GetItemIDByName", &luautils::GetItemIDByName);
         lua.set_function("SendLuaFuncStringToZone", &luautils::SendLuaFuncStringToZone);
+        lua.set_function("NewFishingContest", &luautils::NewFishingContest);
+        lua.set_function("UpdateContestStatus", &luautils::UpdateContestStatus);
+        lua.set_function("ScoreFishingContest", &luautils::ScoreFishingContest);
+        lua.set_function("GetFishingContest", &luautils::GetFishingContest);
+        lua.set_function("SetContestStartTime", &luautils::SetContestStartTime);
 
         // This binding specifically exists to forcefully crash the server.
         // clang-format off
@@ -5320,6 +5325,49 @@ namespace luautils
         }
 
         return id;
+    }
+
+    // Fishing Utilities
+    void ScoreFishingContest()
+    {
+        fishingutils::ScoreContest();
+    }
+
+    auto GetFishingContest() -> sol::table
+    {
+        sol::table table = lua.create_table();
+
+        table["id"]         = fishingutils::GetContestID();
+        table["status"]     = fishingutils::GetContestStatus();
+        table["criteria"]   = fishingutils::GetContestCriteria();
+        table["measure"]    = fishingutils::GetContestMeasure();
+        table["fishid"]     = fishingutils::GetContestFish();
+        table["starttime"]  = fishingutils::GetContestStartTime();
+        table["changetime"] = fishingutils::GetContestProgressTime();
+
+        return table;
+    }
+
+    void NewFishingContest(sol::table const& table)
+    {
+        TracyZoneScoped;
+
+        uint16 contestId = table.get<uint16>("id");
+        uint8  criteria  = table.get<FISHINGCONTESTCRITERIA>("criteria");
+        uint8  measure   = table.get<FISHINGCONTESTMEASURE>("measure");
+        uint32 fishId    = table.get<uint32>("fishid");
+
+        fishingutils::InitNewContest(contestId, fishId, criteria, measure);
+    }
+
+    void UpdateContestStatus(uint8 status, bool isTest)
+    {
+        fishingutils::SetContestStatus(status, isTest);
+    }
+
+    void SetContestStartTime(uint32 startTime)
+    {
+        fishingutils::SetContestStartTime(startTime);
     }
 
 }; // namespace luautils

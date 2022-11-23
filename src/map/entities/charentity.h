@@ -242,17 +242,6 @@ struct CharHistory_t
     uint32 distanceTravelled = 0;
 };
 
-enum FISHING_HISTORY
-{
-    FISH_CAUGHT = 0,
-    FISH_LINESCAST,
-    FISH_REELED,
-    FISH_LONGEST,
-    FISH_LONGEST_ID,
-    FISH_HEAVIEST,
-    FISH_HEAVIEST_ID,
-};
-
 struct CharFishing_t
 {
     uint32 fishList[6];    // Maps to the index of each fish [0-5]
