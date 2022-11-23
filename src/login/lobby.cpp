@@ -438,7 +438,7 @@ int32 lobbydata_parse(int32 fd)
 
                     if (!loginLimitOK)
                     {
-                        ShowWarning(fmt::format("%s already has %u active session(s), limit is %u", addr, accountsOnIP, loginLimit));
+                        ShowWarning(fmt::format("{} already has {} active session(s), limit is {}", addr, accountsOnIP, loginLimit));
                     }
 
                     if ((isNotMaint && loginLimitOK) || isGM)
