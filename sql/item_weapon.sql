@@ -1463,7 +1463,7 @@ INSERT INTO `item_weapon` VALUES (17825,'honebami',10,0,0,0,0,3,1,420,68,0);
 INSERT INTO `item_weapon` VALUES (17826,'messhikimaru',10,0,0,0,0,2,1,450,76,0);
 INSERT INTO `item_weapon` VALUES (17827,'michishiba',10,0,0,0,0,2,1,420,65,500);
 INSERT INTO `item_weapon` VALUES (17828,'koen',10,0,0,0,0,2,1,463,47,0);
-INSERT INTO `item_weapon` VALUES (17829,'hagun',10,0,0,0,0,2,1,450,75,0);
+INSERT INTO `item_weapon` VALUES (17829,'hagun',10,0,0,0,0,2,1,450,67,0);
 INSERT INTO `item_weapon` VALUES (17830,'wooden_katana',10,0,0,0,0,2,1,450,1,0);
 INSERT INTO `item_weapon` VALUES (17831,'hardwood_katana',10,0,0,0,0,2,1,450,5,0);
 INSERT INTO `item_weapon` VALUES (17832,'shofar_+1',42,0,0,0,0,0,1,240,0,0);
