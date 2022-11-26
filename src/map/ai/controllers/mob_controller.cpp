@@ -200,26 +200,29 @@ void CMobController::TryLink()
         ((CMobEntity*)PMob->PPet)->PEnmityContainer->AddBaseEnmity(PTarget);
     }
 
-    // Handle monster linking if they are close enough
-    if (PMob->PParty != nullptr)
+    if (!PMob->PMaster)
     {
-        for (auto& member : PMob->PParty->members)
+        // Handle monster linking if they are close enough
+        if (PMob->PParty != nullptr)
         {
-            CMobEntity* PPartyMember = dynamic_cast<CMobEntity*>(member);
-            if (!PPartyMember)
+            for (auto& member : PMob->PParty->members)
             {
-                continue;
-            }
-
-            if (PPartyMember->PAI->IsRoaming() && PPartyMember->CanLink(&PMob->loc.p, PMob->getMobMod(MOBMOD_SUPERLINK)))
-            {
-                PPartyMember->PEnmityContainer->AddBaseEnmity(PTarget);
-
-                if (PPartyMember->m_roamFlags & ROAMFLAG_IGNORE)
+                CMobEntity* PPartyMember = dynamic_cast<CMobEntity*>(member);
+                if (!PPartyMember)
                 {
-                    // force into attack action
-                    //#TODO
-                    PPartyMember->PAI->Engage(PTarget->targid);
+                    continue;
+                }
+
+                if (PPartyMember->PAI->IsRoaming() && PPartyMember->CanLink(&PMob->loc.p, PMob->getMobMod(MOBMOD_SUPERLINK)))
+                {
+                    PPartyMember->PEnmityContainer->AddBaseEnmity(PTarget);
+
+                    if (PPartyMember->m_roamFlags & ROAMFLAG_IGNORE)
+                    {
+                        // force into attack action
+                        // #TODO
+                        PPartyMember->PAI->Engage(PTarget->targid);
+                    }
                 }
             }
         }
@@ -672,102 +675,6 @@ void CMobController::DoCombatTick(time_point tick)
         }
     }
 
-    if (PMob && PMob->PMaster && PMob->PMaster->objtype == TYPE_PC)
-    {
-        auto* PPet = static_cast<CPetEntity*>(PMob);
-        if (m_Tick <= PPet->m_lastCast + PPet->m_castCool ||
-            PPet->StatusEffectContainer->HasPreventActionEffect() ||
-            PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE))
-        {
-            Move();
-            return;
-        }
-        else
-        {
-            if ((PPet->m_PetID < PETID_LIGHTSPIRIT || PPet->m_PetID == PETID_DARKSPIRIT) && TryCastSpell())
-            {
-                PPet->m_lastCast = m_Tick;
-                return;
-            }
-            else if (PPet->m_PetID == PETID_LIGHTSPIRIT)
-            {
-                CBattleEntity* PLowest       = nullptr;
-                float          lowestPercent = 100.f;
-                uint8          choice        = xirand::GetRandomNumber(2, 4);
-                uint16         chosenSpell   = static_cast<uint16>(SpellID::Cure);
-
-                // clang-format off
-                PPet->PMaster->ForParty([&](CBattleEntity* PMember)
-                {
-                    if (PMember != nullptr && PPet->PMaster->loc.zone->GetID() == PMember->loc.zone->GetID() && distance(PPet->loc.p, PMember->loc.p) <= 20 &&
-                        !PMember->isDead())
-                    {
-                        float memberPercent = PMember->health.hp / PMember->health.maxhp;
-                        if (PLowest == nullptr ||
-                            (lowestPercent >= memberPercent))
-                        {
-                            PLowest = PMember;
-                            lowestPercent = memberPercent;
-                        }
-                    }
-                });
-                // clang-format on
-
-                if (lowestPercent < 0.5f) // 50% HP
-                {
-                    choice = xirand::GetRandomNumber(100);
-
-                    if (choice <= 20)
-                    {
-                        choice = 1;
-                    }
-                    else if (choice <= 60)
-                    {
-                        choice = 2;
-                    }
-                    else
-                    {
-                        choice = 3;
-                    }
-                }
-
-                switch (choice)
-                {
-                    case 1:
-                        if (PPet->m_healSpells.size() > 0)
-                        {
-                            chosenSpell = xirand::GetRandomElement(PPet->m_healSpells);
-                        }
-                        break;
-                    case 2:
-                        if (PPet->m_buffSpells.size() > 0)
-                        {
-                            chosenSpell = xirand::GetRandomElement(PPet->m_buffSpells);
-                        }
-                        break;
-                    case 3:
-                        if (PPet->m_offensiveSpells.size() > 0)
-                        {
-                            chosenSpell = xirand::GetRandomElement(PPet->m_offensiveSpells);
-                        }
-                        break;
-                }
-
-                if (CanCastSpells())
-                {
-                    CastSpell(static_cast<SpellID>(chosenSpell));
-                }
-
-                if (PPet)
-                {
-                    PPet->m_lastCast = m_Tick;
-                }
-
-                return;
-            }
-        }
-    }
-
     // Try to spellcast (this is done first so things like Chainspell spam is prioritised over TP moves etc.
     if (IsSpecialSkillReady(currentDistance) && TrySpecialSkill())
     {
@@ -1021,6 +928,12 @@ void CMobController::DoRoamTick(time_point tick)
     {
         // don't claim me if I ignore
         PMob->m_OwnerID.clean();
+    }
+
+    if (m_Tick >= m_ResetTick + 10s && PMob->health.tp > 0)
+    {
+        PMob->health.tp -= 100;
+        m_ResetTick = m_Tick;
     }
 
     // skip roaming if waiting

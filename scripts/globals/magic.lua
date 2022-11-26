@@ -790,9 +790,9 @@ xi.magic.getMagicHitRate = function(caster, target, skillType, element, effectRe
         else
             magicacc = utils.getSkillLvl(1, caster:getMainLvl()) + dStatAcc + caster:getMod(xi.mod.MACC)
         end
-    elseif caster:isPC() and skillType == nil then
+    elseif caster:isPC() and skillType and caster:getEquippedItem(xi.slot.MAIN) ~= nil then
         magicacc = dStatAcc + caster:getSkillLevel(caster:getEquippedItem(xi.slot.MAIN):getSkillType()) + caster:getMod(xi.mod.MACC)
-    elseif caster:isPC() and skillType <= xi.skill.STAFF then
+    elseif caster:isPC() and skillType and skillType <= xi.skill.STAFF then
         magicacc = dStatAcc + caster:getSkillLevel(skillType) + caster:getMod(xi.mod.MACC)
     elseif caster:isMob() and skillType == nil then
         magicacc = dStatAcc + utils.getMobSkillLvl(1, caster:getMainLvl()) + caster:getMod(xi.mod.MACC)
@@ -1736,8 +1736,6 @@ end
 xi.magic.doAbsorbSpell = function(caster, target, spell, params)
     local resist = xi.magic.applyResistanceEffect(caster, target, spell, params)
     local isAbsorbTp = params.msg == xi.msg.basic.MAGIC_ABSORB_TP
-    print(params.effect)
-    print(params.bonusEffect)
     local spellTable =
     {
         [true] =
