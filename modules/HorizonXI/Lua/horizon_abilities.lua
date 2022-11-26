@@ -80,14 +80,6 @@ m:addOverride("xi.globals.abilities.chi_blast.onUseAbility", function(player, ta
     return dmg
 end)
 
-m:addOverride("xi.globals.abilities.divine_seal.onAbilityCheck", function(player, target, ability)
-    if player:getMainJob() == xi.job.WHM then
-        ability:setRecast(600)
-    end
-
-    return 0, 0
-end)
-
 m:addOverride("xi.globals.abilities.ancient_circle.onUseAbility", function(player, target, ability)
     local duration = 180 + player:getMod(xi.mod.ANCIENT_CIRCLE_DURATION)
     local jpValue = player:getJobPointLevel(xi.jp.ANCIENT_CIRCLE_EFFECT)

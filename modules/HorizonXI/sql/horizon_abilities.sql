@@ -25,6 +25,7 @@ UPDATE `abilities` SET `level` = 38 WHERE `name` = 'whispering_wind';
 UPDATE `abilities` SET `level` = 54 WHERE `name` = 'ecliptic_growl';
 UPDATE `abilities` SET `level` = 47 WHERE `name` = 'spring_water';
 UPDATE `abilities` SET `level` = 43 WHERE `name` = 'ecliptic_howl';
+UPDATE `abilities` SET `content_tag` = 'COP' WHERE `name` = 'velocity_shot';
 DELETE FROM `abilities` WHERE `name` = 'mijin_gakure';
 
 UNLOCK TABLES;
