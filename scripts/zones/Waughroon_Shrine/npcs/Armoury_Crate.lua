@@ -418,7 +418,7 @@ local loot =
             { itemid = 637, droprate = 1000 }, -- Slime oil
         },
         {
-            { itemid = 13514, droprate = 91 }, -- Archer's Ring
+            { itemid = 15551, droprate = 91 }, -- Shikaree Ring
         },
         {
             { itemid = 14651, droprate = 469 }, -- Mana ring
