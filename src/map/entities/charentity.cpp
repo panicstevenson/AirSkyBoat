@@ -1576,6 +1576,10 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             {
                 PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast / 2);
             }
+            else if (PAbility->getRecastId() == 26 && this->GetMJob() == JOB_WHM)
+            {
+                PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), 600);
+            }
             else
             {
                 PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast);

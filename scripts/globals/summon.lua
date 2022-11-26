@@ -257,7 +257,7 @@ local attackTypeShields =
     [xi.attackType.MAGICAL ] = xi.effect.MAGIC_SHIELD,
 }
 
-xi.summon.avatarFinalAdjustments = function(dmg, mob, skill, target, skilltype, damagetype, shadowbehav)
+xi.summon.avatarFinalAdjustments = function(dmg, mob, skill, target, skilltype, damagetype, shadowbehav, shareEnmity)
     local bpRageTpGain =
     {
         -- 2-Hours
@@ -421,7 +421,10 @@ xi.summon.avatarFinalAdjustments = function(dmg, mob, skill, target, skilltype, 
     if dmg > 0 then
         target:updateEnmityFromDamage(mob, dmg)
         target:handleAfflatusMiseryDamage(dmg)
-        target:updateEnmityFromDamage(mob:getMaster(), dmg * 0.20)
+
+        if shareEnmity then
+            target:updateEnmityFromDamage(mob:getMaster(), dmg * 0.20)
+        end
     end
 
     mob:setTP(0)

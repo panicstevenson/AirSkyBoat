@@ -331,6 +331,13 @@ xi.spells.enhancing.calculateEnhancingFinalPower = function(caster, target, spel
         finalPower = finalPower + caster:getMod(xi.mod.LIGHT_ARTS_REGEN) -- Bonus HP from Light Arts.
         finalPower = finalPower + caster:getMod(xi.mod.REGEN_BONUS)      -- Bonus HP from Job Point Gift.
 
+        if
+            caster:getMainJob() == xi.job.WHM and
+            caster:hasTrait(69) and
+            caster:hasStatusEffect(xi.effect.DIVINE_SEAL)
+        then
+            finalPower = finalPower * 2
+        end
     -- Shell/Shellra
     elseif spellEffect == xi.effect.SHELL then
         if target:getMod(xi.mod.ENHANCES_PROT_SHELL_RCVD) > 0 then
@@ -349,6 +356,9 @@ xi.spells.enhancing.calculateEnhancingFinalPower = function(caster, target, spel
 end
 
 -- Enhancing Spell Duration function.
+-- TODO: Reduce complexity
+-- Disable cyclomatic complexity check for this function:
+-- luacheck: ignore 561
 xi.spells.enhancing.calculateEnhancingDuration = function(caster, target, spell, spellId, spellGroup, spellEffect)
     local spellLevel   = pTable[spellId][3]
     local duration     = pTable[spellId][5]
@@ -397,6 +407,14 @@ xi.spells.enhancing.calculateEnhancingDuration = function(caster, target, spell,
     if spellEffect == xi.effect.REGEN then
         duration = duration + caster:getMod(xi.mod.REGEN_DURATION)
         duration = duration + caster:getJobPointLevel(xi.jp.REGEN_DURATION) * 3
+
+        if
+            caster:getMainJob() == xi.job.WHM and
+            caster:hasTrait(69) and
+            caster:hasStatusEffect(xi.effect.DIVINE_SEAL)
+        then
+            duration = duration * 2
+        end
 
     -- Invisible
     elseif spellEffect == xi.effect.INVISIBLE then

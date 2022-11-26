@@ -125,4 +125,36 @@ m:addOverride("xi.globals.effects.enlight.onEffectLose", function(target, effect
     end
 end)
 
+m:addOverride("xi.globals.effects.perfect_dodge.onEffectGain", function(target, effect)
+    local jpValue = target:getJobPointLevel(xi.jp.PERFECT_DODGE_EFFECT)
+    target:addMod(xi.mod.ACC, 999)
+    target:addMod(xi.mod.RACC, 999)
+    target:addMod(xi.mod.MEVA, jpValue * 3)
+end)
+
+m:addOverride("xi.globals.effects.enlight.onEffectTick", function(target, effect)
+end)
+
+m:addOverride("xi.globals.effects.enlight.onEffectLose", function(target, effect)
+    local jpValue = target:getJobPointLevel(xi.jp.PERFECT_DODGE_EFFECT)
+    target:delMod(xi.mod.ACC, 999)
+    target:delMod(xi.mod.RACC, 999)
+    target:delMod(xi.mod.MEVA, jpValue * 3)
+end)
+
+m:addOverride("xi.globals.effects.camouflage.onEffectGain", function(target, effect)
+    local jpValue = target:getJobPointLevel(xi.jp.CAMOUFLAGE_EFFECT)
+    target:addMod(xi.mod.ENMITY, -25)
+    target:addMod(xi.mod.CRITHITRATE, jpValue)
+end)
+
+m:addOverride("xi.globals.effects.camouflage.onEffectTick", function(target, effect)
+end)
+
+m:addOverride("xi.globals.effects.camouflage.onEffectLose", function(target, effect)
+    local jpValue = target:getJobPointLevel(xi.jp.CAMOUFLAGE_EFFECT)
+    target:delMod(xi.mod.ENMITY, -25)
+    target:delMod(xi.mod.CRITHITRATE, jpValue)
+end)
+
 return m
