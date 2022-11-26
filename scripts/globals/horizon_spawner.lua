@@ -550,7 +550,50 @@ local spawnerFunctions =
         onDeath             = function(mob, playerArg, isKiller) end,
         onDespawn           = function(mob) end,
         mixins = {  },
-     }
+     },
+     ["Skillchain"] =
+     {
+         onSpawn             =
+         function(mob)
+            mob:setMod(xi.mod.UDMGMAGIC, -9500)
+            mob:setMod(xi.mod.UDMGPHYS, -9000)
+
+            mob:addListener('SKILLCHAIN_TAKE', 'SC_Breakdown', function(attacker, mobArg, damage)
+                mobArg:setMod(xi.mod.UDMGMAGIC, 2000)
+                for _, member in ipairs(attacker:getParty()) do
+                    member:PrintToPlayer("The monsters magical defenses has fallen!", xi.msg.channel.NS_SAY)
+                end
+            end)
+
+            mob:addListener('MAGIC_BURST_TAKE', 'MB_Breakdown', function(player, mobArg, dmg)
+                local mobLvl = mobArg:getMainLvl() - 5
+
+                if mobLvl < 0 then
+                    mobLvl = 1
+                end
+
+                local damageCheck = (35 + (-6.07 * mobLvl) + (0.805 * mobLvl^2) + (-0.018 * mobLvl^3) + (0.000147 * mobLvl^4)) * 0.9 -- Formula for expected MB damage per BLM lvl
+
+                if dmg >= damageCheck then
+                    mobArg:setMod(xi.mod.UDMGPHYS, 2000)
+
+                    for _, member in ipairs(player:getParty()) do
+                        member:PrintToPlayer("The monster has become completely vulnerable!", xi.msg.channel.NS_SAY)
+                    end
+                end
+            end)
+         end,
+         onEngaged           = function(mob, target) end,
+         onFight             = function(mob, target) end,
+         onDisengage         = function(mob, target) end,
+         onWeaponskilPrepare = function(mob, target, skill) end,
+         onWeaponskill       = function(mob, target, skill) end,
+         onMagicPrepare      = function(mob, target, spell) end,
+         onRoam              = function(mob) end,
+         onDeath             = function(mob, playerArg, isKiller) end,
+         onDespawn           = function(mob) end,
+         mixins = {  },
+      },
  }
 
 -----------------------------------------------------------

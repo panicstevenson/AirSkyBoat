@@ -1195,6 +1195,10 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
         finalDamage = utils.clamp(utils.stoneskin(target, finalDamage), -99999, 99999)
     end
 
+    if target:hasStatusEffect(xi.effect.SKILLCHAIN) and magicBurst > 1 and finalDamage > 0 then
+        target:triggerListener("MAGIC_BURST_TAKE", caster, target, finalDamage)
+    end
+
     -- Handle Magic Absorb
     if finalDamage < 0 then
         finalDamage = target:addHP(-finalDamage)
