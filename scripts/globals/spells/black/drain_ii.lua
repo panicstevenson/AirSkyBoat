@@ -42,6 +42,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     end
 
     if target:isUndead() then
+        dmg = 0
         spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT) -- No effect
         return dmg
     end
