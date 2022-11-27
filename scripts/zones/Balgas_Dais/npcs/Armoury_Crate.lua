@@ -83,11 +83,11 @@ local loot =
 
         {
             { itemid = 0, droprate = 250 }, -- nothing
-            { itemid = xi.items.FUMA_KYAHAN,      droprate = 100 },
+            { itemid = xi.items.SARUTOBI_KYAHAN,  droprate = 100 },
             { itemid = xi.items.PEACE_RING,       droprate = 200 },
             { itemid = xi.items.ENHANCING_MANTLE, droprate = 200 },
             { itemid = xi.items.MASTER_BELT,      droprate = 150 },
-            { itemid = xi.items.OCHIUDOS_KOTE,    droprate = 100 },
+            { itemid = xi.items.OCHIMUSHA_KOTE,   droprate = 100 },
         },
 
         {
