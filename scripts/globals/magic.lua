@@ -634,14 +634,25 @@ xi.magic.applyResistanceAddEffect = function(player, target, element, effect, bo
 
     local _, skillchainCount = xi.magic.FormMagicBurst(element, target)
 
-    local p = xi.magic.getMagicHitRate(player, target, nil, element, effectRes, bonus, skillchainCount, hybridHit)
-    local resist = xi.magic.getMagicResist(p, target, element, skillchainCount)
+    local p = xi.magic.getMagicHitRate(player, target, nil, element, effectRes, bonus, 0, skillchainCount, hybridHit)
+    local resist = xi.magic.getMagicResist(p, target, element, effectRes, skillchainCount)
 
     if resist < 0.5 then
         resist = 0
     elseif resist < 1 then
         resist = 0.5
     end
+
+    return resist
+end
+
+xi.magic.applySkillchainResistance = function(player, target, element)
+    if not element then
+        element = xi.magic.ele.NONE
+    end
+
+    local p = xi.magic.getMagicHitRate(player, target, nil, element, 0, 0, 0, 0)
+    local resist = xi.magic.getMagicResist(p, target, element, 0, 0)
 
     return resist
 end
@@ -678,10 +689,12 @@ xi.magic.applyAbilityResistance = function(player, target, params)
     local p = xi.magic.getMagicHitRate(player, target, params.skillType, params.element, effectRes, params.maccBonus, skillchainCount, params.hybridHit)
     local resist = xi.magic.getMagicResist(p, target, params.element, effectRes, skillchainCount)
 
-    if resist < 0.5 then
-        resist = 0
-    elseif resist < 1 then
-        resist = 0.5
+    if not params.ignoreStateLock then
+        if resist < 0.5 then
+            resist = 0
+        elseif resist < 1 then
+            resist = 0.5
+        end
     end
 
     if
@@ -794,10 +807,10 @@ xi.magic.getMagicHitRate = function(caster, target, skillType, element, effectRe
         else
             magicacc = utils.getSkillLvl(1, caster:getMainLvl()) + dStatAcc + caster:getMod(xi.mod.MACC)
         end
-    elseif caster:isPC() and skillType and caster:getEquippedItem(xi.slot.MAIN) ~= nil then
-        magicacc = dStatAcc + caster:getSkillLevel(caster:getEquippedItem(xi.slot.MAIN):getSkillType()) + caster:getMod(xi.mod.MACC)
     elseif caster:isPC() and skillType and skillType <= xi.skill.STAFF then
         magicacc = dStatAcc + caster:getSkillLevel(skillType) + caster:getMod(xi.mod.MACC)
+    elseif caster:isPC() and not skillType and caster:getEquippedItem(xi.slot.MAIN) ~= nil then
+        magicacc = dStatAcc + caster:getSkillLevel(caster:getEquippedItem(xi.slot.MAIN):getSkillType()) + caster:getMod(xi.mod.MACC)
     elseif caster:isMob() and skillType == nil then
         magicacc = dStatAcc + utils.getMobSkillLvl(1, caster:getMainLvl()) + caster:getMod(xi.mod.MACC)
     elseif caster:isPet() and skillType == nil then
@@ -1782,4 +1795,71 @@ xi.magic.doAbsorbSpell = function(caster, target, spell, params)
     end
 
     return spellTable[isAbsorbTp].returnVal
+end
+
+xi.magic.getCharmChance = function(charmer, target, includeCharmAffinityAndChanceMods)
+    -- Paranoid check
+    if
+        (not charmer or not target) or                            -- Invalid params
+        not target:isMob() or                                     -- Not a mob
+        target:getMobMod(xi.mobMod.CHARMABLE) == 0 or             -- Not charmable
+        (target:getMaster() ~= nil and target:getMaster():isPC()) -- Someone else's pet
+    then
+        return 0
+    end
+
+    -- Formula:
+    -- ((50% - CharmRes%) - dLvl) * CharmMult. + dCHR + StaffBonus
+    local charmerLevel    = charmer:getMainLvl()
+    local targetLevel     = target:getMainLvl()
+    local charmres        = target:getMod(xi.mod.CHARMRES)
+    local charmChance     = 50 - charmres
+    local charmerBSTLevel = 0
+
+    if charmer:isPC() then
+        charmerBSTLevel = charmer:getJobLevel(xi.job.BST)
+        local charmerBRDLevel = charmer:getJobLevel(xi.job.BRD)
+        -- Maiden's Virelai check
+        if charmer:getMainJob() == xi.job.BST and charmerBRDLevel > charmerBSTLevel then
+            charmerBSTLevel = charmerBRDLevel
+        end
+
+        charmerBSTLevel = math.min(charmerBSTLevel, charmerLevel)
+    else
+        charmerBSTLevel = charmerLevel
+    end
+
+    -- dLvl varies for different level ranges
+    if targetLevel >= 71 then
+        charmChance = charmChance - 10 * (targetLevel - charmerBSTLevel)
+    elseif targetLevel >= 51 then
+        charmChance = charmChance - 5 * (targetLevel - charmerBSTLevel)
+    else
+        charmChance = charmChance - 3 * (targetLevel - charmerBSTLevel)
+    end
+
+    -- Multiplier determined by target's light EEM
+    local eem = target:getMod(xi.mod.LIGHT_EEM)
+    if eem >= 150 then
+        charmChance = charmChance * 1.5
+    elseif eem >= 130 then
+        charmChance = charmChance * 1.4
+    elseif eem >= 115 then
+        charmChance = charmChance * 1.2
+    elseif eem >= 100 then
+        charmChance = charmChance
+    else
+        charmChance = charmChance / 2
+    end
+
+    -- Retail doesn't take Light/Apollo staves into account for Gauge
+    if includeCharmAffinityAndChanceMods then
+        -- NQ elemental staves have 2 affinity, HQ have 3 affinity. Boost is 10/15% respectively so multiply by 5.
+        charmChance = charmChance + (5 * charmer:getMod(xi.mod.LIGHT_AFFINITY_ACC))
+    end
+
+    local dCHR = charmer:getStat(xi.mod.CHR) - target:getStat(xi.mod.CHR)
+    charmChance = charmChance + dCHR;
+
+    return utils.clamp(charmChance, 0, 95);
 end
