@@ -679,8 +679,8 @@ UPDATE mob_groups SET content_tag='VOIDWATCH' WHERE name='Prickly_Sheep' AND gro
 UPDATE mob_groups SET minLevel = 5, maxLevel = 7  WHERE name = "Yagudos_Elemental"  and zoneid = 117;
 UPDATE mob_groups SET minLevel = 7, maxLevel = 10 WHERE name = "Canyon_Rarab"       and zoneid = 117;
 UPDATE mob_groups SET minLevel = 7, maxLevel = 10 WHERE name = "Strolling_Sapling"  and zoneid = 117;
-UPDATE mob_groups SET minLevel = 8, maxLevel = 10 WHERE name = "Killer_Bee"         and zoneid = 117;
 UPDATE mob_groups SET minLevel = 8, maxLevel = 10 WHERE name = "Barghest"           and zoneid = 117;
+UPDATE mob_groups SET minLevel = 8, maxLevel = 10 WHERE name = "Killer_Bee"         and zoneid = 117 and groupid = 9;
 
 -- ------------------------------------------------------------
 -- Buburimu_Peninsula (Zone 118)

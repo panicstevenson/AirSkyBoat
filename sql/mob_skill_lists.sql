@@ -4012,6 +4012,9 @@ INSERT INTO `mob_skill_lists` VALUES ('JailerOfTemperance',4047,1467);
 INSERT INTO `mob_skill_lists` VALUES ('JailerOfTemperance',4047,1468);
 INSERT INTO `mob_skill_lists` VALUES ('JailerOfTemperance',4047,1469);
 
+INSERT INTO `mob_skill_lists` VALUES ('BeeLowLevel',4048,334);
+INSERT INTO `mob_skill_lists` VALUES ('BeeLowLevel',4048,335);
+
 -- End of AirSkyBoat section
 
 -- ------------------------------------------------------------

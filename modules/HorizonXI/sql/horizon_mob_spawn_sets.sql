@@ -1293,7 +1293,7 @@ INSERT INTO `mob_spawn_sets` VALUES (117, 4, 5);
 INSERT INTO `mob_spawn_sets` VALUES (117, 5, 2);
 INSERT INTO `mob_spawn_sets` VALUES (117, 6, 6);
 INSERT INTO `mob_spawn_sets` VALUES (117, 7, 5);
-INSERT INTO `mob_spawn_sets` VALUES (117, 8, 3);
+INSERT INTO `mob_spawn_sets` VALUES (117, 8, 2);
 INSERT INTO `mob_spawn_sets` VALUES (117, 9, 3);
 INSERT INTO `mob_spawn_sets` VALUES (117, 10, 3);
 INSERT INTO `mob_spawn_sets` VALUES (117, 11, 6);

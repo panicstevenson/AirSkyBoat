@@ -24,6 +24,7 @@ zoneObject.onInitialize = function(zone)
 
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
     xi.voidwalker.zoneOnInit(zone)
+    xi.horizon.spawnInitialMobs(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

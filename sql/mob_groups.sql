@@ -8389,6 +8389,10 @@ INSERT INTO `mob_groups` VALUES (47,0,117,'Hachiryu_Armor',0,128,0,0,0,0,0,0);
 INSERT INTO `mob_groups` VALUES (48,0,117,'Omodaka_Armor',0,128,0,0,0,0,0,0);
 INSERT INTO `mob_groups` VALUES (49,4852,117,'Serpopard_Ninlil',0,128,0,0,0,0,0,0);
 INSERT INTO `mob_groups` VALUES (50,6827,117,'Otherworldly_Rimester',0,128,0,0,0,0,0,0);
+INSERT INTO `mob_groups` VALUES (51,20014,117,'Killer_Bee',330,0,1439,0,0,15,19,0);
+INSERT INTO `mob_groups` VALUES (52,1635,117,'Goblin_Ambusher',330,0,1017,0,0,17,20,0);
+INSERT INTO `mob_groups` VALUES (53,1738,117,'Goblin_Tinkerer',330,0,6029,0,0,17,20,0);
+INSERT INTO `mob_groups` VALUES (54,1643,117,'Goblin_Butcher',330,0,6029,0,0,17,20,0);
 
 -- ------------------------------------------------------------
 -- Buburimu_Peninsula (Zone 118)
@@ -8589,7 +8593,7 @@ INSERT INTO `mob_groups` VALUES (32,3485,120,'Sauromugue_Skink',330,0,2935,0,0,2
 INSERT INTO `mob_groups` VALUES (33,5873,120,'Thunderclaw_Thuban',5400,0,3079,4000,0,47,48,0);
 INSERT INTO `mob_groups` VALUES (34,931,120,'Deadly_Dodo',0,32,578,4000,0,39,40,0);
 INSERT INTO `mob_groups` VALUES (35,3912,120,'Thunder_Elemental',330,4,2410,0,0,38,40,0);
-INSERT INTO `mob_groups` VALUES (36,1065,120,'Diving_Beetle',330,0,670,0,0,25,28,0);
+INSERT INTO `mob_groups` VALUES (36,1065,120,'Diving_Beetle',330,0,670,0,0,30,32,0);
 INSERT INTO `mob_groups` VALUES (37,1267,120,'Evil_Weapon',330,0,0,0,0,36,38,0);
 INSERT INTO `mob_groups` VALUES (38,5730,120,'Blighting_Brand',0,32,2994,4900,4900,54,55,0);
 INSERT INTO `mob_groups` VALUES (39,1266,120,'Evil_Spirit',330,1,797,0,0,35,38,0);
@@ -13223,7 +13227,7 @@ INSERT INTO `mob_groups` VALUES (4,3999,208,'Triarius_IV-XIV',0,128,0,0,0,70,70,
 INSERT INTO `mob_groups` VALUES (5,3193,208,'Princeps_IV-XLV',0,128,0,0,0,70,70,0);
 INSERT INTO `mob_groups` VALUES (6,2664,208,'Mimic',0,128,1692,0,0,56,59,0);
 INSERT INTO `mob_groups` VALUES (7,3459,208,'Sand_Spider',960,0,2156,0,0,51,55,0);
-INSERT INTO `mob_groups` VALUES (8,1928,208,'Helm_Beetle',960,0,1299,0,0,51,58,0);
+INSERT INTO `mob_groups` VALUES (8,1928,208,'Helm_Beetle',960,0,1299,0,0,55,59,0);
 INSERT INTO `mob_groups` VALUES (9,175,208,'Antican_Hastatus',960,0,124,0,0,52,59,0);
 INSERT INTO `mob_groups` VALUES (10,182,208,'Antican_Princeps',960,0,131,0,0,52,59,0);
 INSERT INTO `mob_groups` VALUES (11,188,208,'Antican_Signifer',960,0,137,0,0,52,59,0);
@@ -13260,6 +13264,7 @@ INSERT INTO `mob_groups` VALUES (41,3428,208,'Sabotender_Bailarin',0,32,3208,0,0
 INSERT INTO `mob_groups` VALUES (42,6900,208,'Malleator_Maurok',0,128,0,0,0,99,99,0);
 INSERT INTO `mob_groups` VALUES (43,6901,208,'Peon_Pounder',0,128,0,0,0,99,99,0);
 INSERT INTO `mob_groups` VALUES (44,6902,208,'Centurio_XX-I',0,128,0,0,0,99,99,0);
+INSERT INTO `mob_groups` VALUES (45,1928,208,'Helm_Beetle',960,0,1299,0,0,51,54,0);
 
 -- ------------------------------------------------------------
 -- Cloister_of_Tremors (Zone 209)
