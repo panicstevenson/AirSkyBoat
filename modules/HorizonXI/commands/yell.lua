@@ -25,10 +25,11 @@ function onTrigger(player, iAgree)
         return
     end
 
-    player:PrintToPlayer("The /yell command is a privilege subject to the rules found on the HorizonXI website.")
+    player:PrintToPlayer("The /yell command is a privilege subject to the rules found on the HorizonXI website.", 29)
 
     player:PrintToPlayer("Players that fail to follow the /yell rules may have their /yell privilege revoked.", 29)
-    player:PrintToPlayer("Website: ", 29)
+    player:PrintToPlayer("Website: https://horizonxi.com/rules", 29)
+    player:PrintToPlayer("Yells are only able to be sent and read from within cities.", 29)
 
     if muteTime > currentTime then
         player:PrintToPlayer("NOTICE: You are currently muted and unable to use the /yell command.", 29)

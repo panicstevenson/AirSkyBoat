@@ -7286,13 +7286,6 @@ namespace charutils
             return false;
         }
 
-        auto OptedIn = GetCharVar(PChar, "YellOptedIn");
-        if (OptedIn == 0)
-        {
-            // Player didn't opt-in to the rules.
-            return false;
-        }
-
         auto YellMuteTime = GetCharVar(PChar, "YellMuteTime");
         if (YellMuteTime > 0)
         {
@@ -7300,11 +7293,24 @@ namespace charutils
             if (YellMuteTime > CurrentTime)
             {
                 // Player is currently muted.
+                std::string playerYellAccept;
+                playerYellAccept = "You are currently muted from being able to use Yells.";
+                PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_1, playerYellAccept));
                 return false;
             }
 
             // Mute expired.
             SetCharVar(PChar, "YellMuteTime", 0);
+        }
+
+        auto OptedIn = GetCharVar(PChar, "YellOptedIn");
+        if (OptedIn == 0)
+        {
+            // Player didn't opt-in to the rules.
+            std::string playerYellAccept;
+            playerYellAccept = "Type !yell to review our Yell rules and agree to the terms.";
+            PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_1, playerYellAccept));
+            return false;
         }
 
         // Yaaaaaargh!

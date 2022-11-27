@@ -2203,7 +2203,7 @@ INSERT INTO `item_latents` VALUES (17448,13,1,53,1);     -- MND +1 in areas outs
 INSERT INTO `item_latents` VALUES (17449,13,2,53,1);     -- MND +2 in areas outside own nation's control
 
 INSERT INTO `item_latents` VALUES (17451,165,6,47,0);    -- Morgenstern Crit Rate +6% when broken (500 WS points)
-INSERT INTO `item_latents` VALUES (17451,287,13,47,0);   -- Morgenstern DMG+13 when broken (500 WS points)
+INSERT INTO `item_latents` VALUES (17451,287,8,47,0);    -- Morgenstern DMG+8 when broken (500 WS points)
 INSERT INTO `item_latents` VALUES (17456,2,-10,47,0);
 INSERT INTO `item_latents` VALUES (17456,5,-10,47,0);
 INSERT INTO `item_latents` VALUES (17456,18,-10,47,0);
@@ -2651,7 +2651,7 @@ INSERT INTO `item_latents` VALUES (18165,68,10,26,1);    -- Nighttime: Evasion+1
 
 INSERT INTO `item_latents` VALUES (18206,25,5,56,0);     -- Rune Chopper +5 Acc.
 INSERT INTO `item_latents` VALUES (18206,369,-3,56,0);   -- Rune Chopper -3MP/tic
-INSERT INTO `item_latents` VALUES (18206,384,900,56,0);  -- Rune Chopper +9% haste
+INSERT INTO `item_latents` VALUES (18206,384,200,56,0);  -- Rune Chopper +2% haste
 INSERT INTO `item_latents` VALUES (18213,15,15,28,0);    -- Mighty Axe [Element: Fire]+15 on Firesday
 INSERT INTO `item_latents` VALUES (18213,287,10,28,0);   -- Mighty Axe DMG+10 on Firesday
 INSERT INTO `item_latents` VALUES (18217,165,6,47,0);    -- Rampager Crit Rate +6% when broken (500 WS points)

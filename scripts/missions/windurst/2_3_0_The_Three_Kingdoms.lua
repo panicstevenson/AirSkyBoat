@@ -30,6 +30,7 @@ mission.reward =
     gil     = 3000,
     keyItem = xi.ki.ADVENTURERS_CERTIFICATE,
     title   = xi.title.CERTIFIED_ADVENTURER,
+    item    = xi.items.WINDURSTIAN_RING,
 }
 
 local handleAcceptMission = function(player, csid, option, npc)

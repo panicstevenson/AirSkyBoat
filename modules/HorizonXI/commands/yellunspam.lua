@@ -24,8 +24,8 @@ function onTrigger(player, name)
         return
     end
 
-    local result = target:setCharVar("YellSpamTime", 0)
-    if result == nil then
+    target:setCharVar("YellSpamTime", 0)
+    if target == nil then
         player:PrintToPlayer(string.format("!yellunspam: Failed to unmark \"%s\" as spam!", name))
         return
     end

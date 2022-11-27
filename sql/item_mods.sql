@@ -11648,6 +11648,7 @@ INSERT INTO `item_mods` VALUES (12303,22,3); -- DARK_RES: 3
 -- Musketeer Commanders Shield
 INSERT INTO `item_mods` VALUES (12304,1,12); -- DEF: 12
 INSERT INTO `item_mods` VALUES (12304,11,3); -- AGI: 3
+INSERT INTO `item_mods` VALUES (12304,23,5); -- ATT: 5
 
 -- Ice Shield
 INSERT INTO `item_mods` VALUES (12305,1,23);   -- DEF: 23
@@ -31584,6 +31585,10 @@ INSERT INTO `item_mods` VALUES (16439,953,30); -- ITEM_ADDEFFECT_DURATION: 30
 -- Bronze Knuckles +1
 INSERT INTO `item_mods` VALUES (16440,25,3); -- ACC: 3
 
+-- Freesword's Baghnakhs
+INSERT INTO `item_mods` VALUES (17497,25,2); -- ACC: 2
+INSERT INTO `item_mods` VALUES (17497,23,3); -- ATT: 3
+
 -- Fruit Punches
 INSERT INTO `item_mods` VALUES (16443,25,3); -- ACC: 3
 
@@ -31857,6 +31862,9 @@ INSERT INTO `item_mods` VALUES (16515,500,21); -- ITEM_ADDEFFECT_DMG: 21
 INSERT INTO `item_mods` VALUES (16515,501,10); -- ITEM_ADDEFFECT_CHANCE: 10
 INSERT INTO `item_mods` VALUES (16515,950,8);  -- ITEM_ADDEFFECT_ELEMENT: 8
 
+-- Junior Muskteer's Tuck
+INSERT INTO `item_mods` VALUES (16516,5,5);  -- MP: 5
+
 -- Verdun
 INSERT INTO `item_mods` VALUES (16520,5,18);  -- MP: 18
 INSERT INTO `item_mods` VALUES (16520,110,7); -- PARRY: 7
@@ -31975,6 +31983,11 @@ INSERT INTO `item_mods` VALUES (16564,499,1);  -- ITEM_SUBEFFECT: 1
 INSERT INTO `item_mods` VALUES (16564,500,10); -- ITEM_ADDEFFECT_DMG: 10
 INSERT INTO `item_mods` VALUES (16564,501,5);  -- ITEM_ADDEFFECT_CHANCE: 5
 INSERT INTO `item_mods` VALUES (16564,950,1);  -- ITEM_ADDEFFECT_ELEMENT: 1
+
+-- Temple Knight Army Sword
+INSERT INTO `item_mods` VALUES (16571,12,2);  -- INT: 2
+INSERT INTO `item_mods` VALUES (16571,13,2);  -- MND: 2
+INSERT INTO `item_mods` VALUES (16571,10,2);  -- VIT: 2
 
 -- Curtana
 INSERT INTO `item_mods` VALUES (16575,14,7); -- CHR: 7
@@ -32395,8 +32408,7 @@ INSERT INTO `item_mods` VALUES (16765,13,-1); -- MND: -1
 INSERT INTO `item_mods` VALUES (16765,14,-1); -- CHR: -1
 
 -- Paper Knife
-INSERT INTO `item_mods` VALUES (16766,11,2); -- AGI: 2
-INSERT INTO `item_mods` VALUES (16766,14,2); -- CHR: 2
+INSERT INTO `item_mods` VALUES (16766,14,5); -- CHR: 5
 
 -- Triple Dagger
 INSERT INTO `item_mods` VALUES (16767,302,1); -- TRIPLE_ATTACK: 1
@@ -32560,8 +32572,9 @@ INSERT INTO `item_mods` VALUES (16827,950,8);  -- ITEM_ADDEFFECT_ELEMENT: 8
 
 -- Fencing Degen
 INSERT INTO `item_mods` VALUES (16829,5,10); -- MP: 10
-INSERT INTO `item_mods` VALUES (16829,12,1); -- INT: 1
-INSERT INTO `item_mods` VALUES (16829,13,1); -- MND: 1
+INSERT INTO `item_mods` VALUES (16829,12,3); -- INT: 3
+INSERT INTO `item_mods` VALUES (16829,13,3); -- MND: 3
+INSERT INTO `item_mods` VALUES (16829,114,3); -- ENFEEBLE: 3
 
 -- Gluttony Sword
 INSERT INTO `item_mods` VALUES (16830,8,-1);  -- STR: -1
@@ -33249,6 +33262,7 @@ INSERT INTO `item_mods` VALUES (17092,5,10); -- MP: 10
 -- Wise Wizards Staff
 INSERT INTO `item_mods` VALUES (17094,2,10); -- HP: 10
 INSERT INTO `item_mods` VALUES (17094,5,10); -- MP: 10
+INSERT INTO `item_mods` VALUES (17094,71,4); -- MPHEAL: 4
 
 -- Mythic Pole
 INSERT INTO `item_mods` VALUES (17101,22,15); -- DARK_RES: 15
@@ -33409,6 +33423,10 @@ INSERT INTO `item_mods` VALUES (17150,23,5); -- ATT: 5
 
 -- Musketeer Commanders Rod
 INSERT INTO `item_mods` VALUES (17151,2,19); -- HP: 19
+INSERT INTO `item_mods` VALUES (17151,71,4); -- MPHEAL: 4
+
+-- Freesword's Bow
+INSERT INTO `item_mods` VALUES (17159,26,2); -- RACC: 2
 
 -- Arco De Velocidad
 INSERT INTO `item_mods` VALUES (17165,2,10); -- HP: 10
@@ -33503,9 +33521,11 @@ INSERT INTO `item_mods` VALUES (17194,26,10); -- RACC: 10
 
 -- Windurstian Bow
 INSERT INTO `item_mods` VALUES (17195,24,2); -- RATT: 2
+INSERT INTO `item_mods` VALUES (17195,26,2); -- RACC: 2
 
 -- Federation Bow
 INSERT INTO `item_mods` VALUES (17196,24,3); -- RATT: 3
+INSERT INTO `item_mods` VALUES (17196,26,2); -- RACC: 2
 
 -- San Dorian Bow
 INSERT INTO `item_mods` VALUES (17197,26,1); -- RACC: 1
@@ -33691,6 +33711,9 @@ INSERT INTO `item_mods` VALUES (17277,27,-1); -- ENMITY: -1
 
 -- Gold Bullet
 INSERT INTO `item_mods` VALUES (17278,26,5); -- RACC: 5
+
+-- Combat Caster's Boomerang
+INSERT INTO `item_mods` VALUES (17282,11,3); -- AGI: 3
 
 -- Junior Musketeers Chakram
 INSERT INTO `item_mods` VALUES (17283,24,5); -- RATT: 5
@@ -34001,9 +34024,11 @@ INSERT INTO `item_mods` VALUES (17421,6,1); -- MPP: 1
 -- Blessed Hammer
 INSERT INTO `item_mods` VALUES (17422,5,10); -- MP: 10
 INSERT INTO `item_mods` VALUES (17422,13,2); -- MND: 2
+INSERT INTO `item_mods` VALUES (17422,71,3); -- MPHEAL: 3
 
 -- Casting Wand
 INSERT INTO `item_mods` VALUES (17423,5,20); -- MP: 20
+INSERT INTO `item_mods` VALUES (17423,12,5); -- INT: 5
 
 -- Spiked Club
 INSERT INTO `item_mods` VALUES (17424,23,3); -- ATT: 3
@@ -34294,10 +34319,12 @@ INSERT INTO `item_mods` VALUES (17496,23,3); -- ATT: 3
 INSERT INTO `item_mods` VALUES (17496,25,3); -- ACC: 3
 
 -- Windurstian Baghnakhs
-INSERT INTO `item_mods` VALUES (17497,25,1); -- ACC: 1
+INSERT INTO `item_mods` VALUES (17497,25,2); -- ACC: 2
+INSERT INTO `item_mods` VALUES (17497,23,4); -- ATT: 4
 
 -- Federation Baghnakhs
 INSERT INTO `item_mods` VALUES (17498,25,2); -- ACC: 2
+INSERT INTO `item_mods` VALUES (17498,23,5); -- ATT: 5
 
 -- Bastokan Knuckles
 INSERT INTO `item_mods` VALUES (17499,2,2);  -- HP: 2
@@ -34416,7 +34443,8 @@ INSERT INTO `item_mods` VALUES (17531,501,15); -- ITEM_ADDEFFECT_CHANCE: 15
 INSERT INTO `item_mods` VALUES (17531,950,5);  -- ITEM_ADDEFFECT_ELEMENT: 5
 
 -- Kukulcans Staff
-INSERT INTO `item_mods` VALUES (17532,5,20); -- MP: 20
+INSERT INTO `item_mods` VALUES (17532,5,30); -- MP: 30
+INSERT INTO `item_mods` VALUES (17532,71,3);  -- MPHEAL: 3
 
 -- Whale Staff
 INSERT INTO `item_mods` VALUES (17533,2,14);   -- HP: 14
@@ -35118,6 +35146,8 @@ INSERT INTO `item_mods` VALUES (17637,950,3);  -- ITEM_ADDEFFECT_ELEMENT: 3
 INSERT INTO `item_mods` VALUES (17640,9,2); -- DEX: 2
 
 -- Honor Sword
+INSERT INTO `item_mods` VALUES (17643,2,10); -- HP: 10
+INSERT INTO `item_mods` VALUES (17643,5,10); -- MP: 10
 INSERT INTO `item_mods` VALUES (17643,10,2); -- VIT: 2
 INSERT INTO `item_mods` VALUES (17643,13,2); -- MND: 2
 
@@ -35222,6 +35252,12 @@ INSERT INTO `item_mods` VALUES (17665,500,9);  -- ITEM_ADDEFFECT_DMG: 9
 INSERT INTO `item_mods` VALUES (17665,501,10); -- ITEM_ADDEFFECT_CHANCE: 10
 INSERT INTO `item_mods` VALUES (17665,950,1);  -- ITEM_ADDEFFECT_ELEMENT: 1
 
+-- Junior Muskteer's Tuck +1
+INSERT INTO `item_mods` VALUES (17666,5,5);  -- MP: 5
+
+-- Junior Muskteer's Tuck +2
+INSERT INTO `item_mods` VALUES (17667,5,5);  -- MP: 5
+
 -- Firmament +1
 INSERT INTO `item_mods` VALUES (17668,8,4);  -- STR: 4
 INSERT INTO `item_mods` VALUES (17668,10,4); -- VIT: 4
@@ -35231,6 +35267,16 @@ INSERT INTO `item_mods` VALUES (17669,2,75);  -- HP: 75
 INSERT INTO `item_mods` VALUES (17669,5,75);  -- MP: 75
 INSERT INTO `item_mods` VALUES (17669,8,15);  -- STR: 15
 INSERT INTO `item_mods` VALUES (17669,10,15); -- VIT: 15
+
+-- Temple Knight Army Sword +1
+INSERT INTO `item_mods` VALUES (17670,12,2);  -- INT: 2
+INSERT INTO `item_mods` VALUES (17670,13,2);  -- MND: 2
+INSERT INTO `item_mods` VALUES (17670,10,2);  -- VIT: 2
+
+-- Temple Knight Army Sword +2
+INSERT INTO `item_mods` VALUES (17671,12,2);  -- INT: 2
+INSERT INTO `item_mods` VALUES (17671,13,2);  -- MND: 2
+INSERT INTO `item_mods` VALUES (17671,10,2);  -- VIT: 2
 
 -- Bastokan Sword
 INSERT INTO `item_mods` VALUES (17672,23,4); -- ATT: 4
@@ -35596,12 +35642,10 @@ INSERT INTO `item_mods` VALUES (17770,951,10); -- ITEM_ADDEFFECT_STATUS: 10
 INSERT INTO `item_mods` VALUES (17770,953,3);  -- ITEM_ADDEFFECT_DURATION: 3
 
 -- Anju
-INSERT INTO `item_mods` VALUES (17771,8,-1); -- STR: -1
 INSERT INTO `item_mods` VALUES (17771,9,2);  -- DEX: 2
 
 -- Zushio
 INSERT INTO `item_mods` VALUES (17772,8,2);  -- STR: 2
-INSERT INTO `item_mods` VALUES (17772,9,-1); -- DEX: -1
 
 -- Kodachi Of Trials
 INSERT INTO `item_mods` VALUES (17773,2,20);  -- HP: 20
@@ -36528,6 +36572,12 @@ INSERT INTO `item_mods` VALUES (18130,950,5);  -- ITEM_ADDEFFECT_ELEMENT: 5
 -- Zaide
 INSERT INTO `item_mods` VALUES (18131,23,8);  -- ATT: 8
 INSERT INTO `item_mods` VALUES (18131,230,2); -- BEAST_KILLER: 2
+
+-- Combat Caster's Boomerang +1
+INSERT INTO `item_mods` VALUES (18132,11,3); -- AGI: 3
+
+-- Combat Caster's Boomerang +2
+INSERT INTO `item_mods` VALUES (18133,11,3); -- AGI: 3
 
 -- Junior Musketeers Chakram +1
 INSERT INTO `item_mods` VALUES (18134,24,5); -- RATT: 5
@@ -38686,7 +38736,7 @@ INSERT INTO `item_mods` VALUES (18734,30,2); -- MACC: 2
 INSERT INTO `item_mods` VALUES (18735,491,1); -- WALTZ_POTENTCY: 1
 
 -- Temple Knights Arrow
-INSERT INTO `item_mods` VALUES (18738,24,20);   -- RATT: 20
+INSERT INTO `item_mods` VALUES (18738,24,25);   -- RATT: 25
 INSERT INTO `item_mods` VALUES (18738,26,10);   -- RACC: 10
 INSERT INTO `item_mods` VALUES (18738,431,1);   -- ITEM_ADDEFFECT_TYPE: 1
 INSERT INTO `item_mods` VALUES (18738,499,1);   -- ITEM_SUBEFFECT: 1

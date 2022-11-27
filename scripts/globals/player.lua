@@ -81,9 +81,10 @@ xi.player.charCreate = function(player)
     player:addKeyItem(xi.ki.JOB_GESTURE_THIEF)
 
     -- add nation- and race-specific ring
-    if nation == raceInfo.homeNation and not player:hasItem(nationInfo.ring) then
-        player:addItem(nationInfo.ring)
-    end
+    -- Rings are awarded by completing the nation's rank 2 final mission
+    -- if nation == raceInfo.homeNation and not player:hasItem(nationInfo.ring) then
+    --     player:addItem(nationInfo.ring)
+    -- end
 
     -- unlock advanced jobs
     if xi.settings.main.ADVANCED_JOB_LEVEL == 0 then
