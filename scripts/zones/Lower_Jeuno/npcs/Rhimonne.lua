@@ -13,6 +13,7 @@ end
 entity.onTrigger = function(player, npc)
     local stock =
     {
+        17296, 2, --Pebble
         4545, 62, -- Gysahl Greens
         840,   7, -- Chocobo Feather
         17307, 9, -- Dart
