@@ -46,9 +46,9 @@ function onTrigger(player, name)
     end
 
     -- Mute the player.
-    local muteTime = os.time() + math.pow(2, infractions - 1) * 86400 * 7
-    local result = target:setCharVar("YellMuteTime", muteTime)
-    if result == nil then
+    muteTime = os.time() + math.pow(2, infractions - 1) * 86400 * 7
+    target:setCharVar("YellMuteTime", muteTime)
+    if target == nil then
         player:PrintToPlayer(string.format("!yellmute: Failed to yell mute \"%s\"!", name))
         return
     end

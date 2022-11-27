@@ -26,8 +26,8 @@ function onTrigger(player, name)
 
     -- Mark the player as spam for a week.
     local spamTime = os.time() + 86400 * 7
-    local result = target:setCharVar("YellSpamTime", spamTime)
-    if result == nil then
+    target:setCharVar("YellSpamTime", spamTime)
+    if target == nil then
         player:PrintToPlayer(string.format("!yellspam: Failed to mark \"%s\" as spam!", name))
         return
     end

@@ -5444,7 +5444,7 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                 break;
                 case MESSAGE_YELL:
                 {
-                    if (PChar->loc.zone->CanUseMisc(MISC_YELL) && charutils::CanUseYell(PChar))
+                    if (charutils::CanUseYell(PChar) && PChar->loc.zone->CanUseMisc(MISC_YELL))
                     {
                         if (gettick() >= PChar->m_LastYell)
                         {

@@ -30,9 +30,9 @@ function onTrigger(player, name)
 
     -- Mute the player for a very, very long time.
     local muteTime = os.time() + 10 * 366 * 86400;
-    local result = target:setCharVar("YellMuteTime", muteTime)
-    if result == nil then
-        player:PrintToPlayer(string.format("!yellban: Failed to yell mute \"%s\"!", name))
+    target:setCharVar("YellMuteTime", muteTime)
+    if target == nil then
+        player:PrintToPlayer(string.format("!yellban: Failed to yell ban \"%s\"!", name))
         return
     end
 
