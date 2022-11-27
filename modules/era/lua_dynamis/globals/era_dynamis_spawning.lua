@@ -270,21 +270,21 @@ xi.dynamis.normalDynamicSpawn = function(oMob, oMobIndex, target)
         },
         [359] = -- Hydra NM
         {
-            [1]  = { "H. Warrior",     159, 134, 0,    359, 131 }, -- HWAR
-            [2]  = { "H. Monk",        163, 134, 0,    359, 131 }, -- HMNK
-            [3]  = { "H. White Mage",  161, 134, 1,    359, 131 }, -- HWHM
-            [4]  = { "H. Black Mage",  164, 134, 5000, 359, 131 }, -- HBLM
-            [5]  = { "H. Red Mage",    162, 134, 3,    359, 131 }, -- HRDM
-            [6]  = { "H. Thief",       160, 134, 0,    359, 131 }, -- HTHF
-            [7]  = { "H. Paladin",     166, 134, 4,    359, 131 }, -- HPLD
-            [8]  = { "H. Dark Knight", 167, 134, 5,    359, 131 }, -- HDRK
-            [9]  = { "H. Beastmaster", 168, 134, 0,    359, 131 }, -- HBST
-            [10] = { "H. Bard",        170, 134, 6,    359, 131 }, -- HBRD
-            [11] = { "H. Ranger",      171, 134, 0,    359, 131 }, -- HRNG
-            [12] = { "H. Samurai",     172, 134, 0,    359, 131 }, -- HSAM
-            [13] = { "H. Ninja",       173, 134, 7,    359, 131 }, -- HNIN
-            [14] = { "H. Dragoon",     174, 134, 0,    359, 131 }, -- HDRG
-            [15] = { "H. Summoner",    176, 134, 0,    359, 131 }, -- HSMN
+            [1]  = { "H. Warrior",     159, 134, 0,    359, 1155 }, -- HWAR
+            [2]  = { "H. Monk",        160, 134, 0,    359, 1155 }, -- HMNK
+            [3]  = { "H. White Mage",  161, 134, 1,    359, 1155 }, -- HWHM
+            [4]  = { "H. Black Mage",  164, 134, 5000, 359, 1155 }, -- HBLM
+            [5]  = { "H. Red Mage",    162, 134, 3,    359, 1155 }, -- HRDM
+            [6]  = { "H. Thief",       165, 134, 0,    359, 1155 }, -- HTHF
+            [7]  = { "H. Paladin",     166, 134, 4,    359, 1155 }, -- HPLD
+            [8]  = { "H. Dark Knight", 167, 134, 5,    359, 1155 }, -- HDRK
+            [9]  = { "H. Beastmaster", 168, 134, 0,    359, 1155 }, -- HBST
+            [10] = { "H. Bard",        170, 134, 6,    359, 1155 }, -- HBRD
+            [11] = { "H. Ranger",      171, 134, 0,    359, 1155 }, -- HRNG
+            [12] = { "H. Samurai",     172, 134, 0,    359, 1155 }, -- HSAM
+            [13] = { "H. Ninja",       173, 134, 7,    359, 1155 }, -- HNIN
+            [14] = { "H. Dragoon",     174, 134, 0,    359, 1155 }, -- HDRG
+            [15] = { "H. Summoner",    176, 134, 0,    359, 1155 }, -- HSMN
         },
         ["Drops"] =
         {
@@ -1468,16 +1468,19 @@ xi.dynamis.spawnDynamicPet =function(target, oMob, mobJob)
             ["Apocalyptic Beast"] =
             {
                 ["onMobFight"] = { function(mob, target) end },
+                ["onMobRoam"] = { function(mob) end },
                 ["mixins"] = {  require("scripts/mixins/families/avatar"),  },
             },
             ["Dagourmarche"] =
             {
                 ["onMobFight"] = { function(mob, target) end },
+                ["onMobRoam"] = { function(mob) end },
                 ["mixins"] = {  require("scripts/mixins/families/avatar"), },
             },
             ["Normal"] =
             {
                 ["onMobFight"] = { function(mob, target) end },
+                ["onMobRoam"] = { function(mob) end },
                 ["mixins"] = { require("scripts/mixins/families/avatar_persist"), },
             },
         },
@@ -1486,11 +1489,13 @@ xi.dynamis.spawnDynamicPet =function(target, oMob, mobJob)
             ["Dagourmarche"] =
             {
                 ["onMobFight"] = { function(mob, target) end },
+                ["onMobRoam"] = { function(mob) end },
                 ["mixins"] = {   },
             },
             ["Normal"] =
             {
                 ["onMobFight"] = { function(mob, target) end },
+                ["onMobRoam"] = { function(mob) end },
                 ["mixins"] = {   },
             },
         },
@@ -1499,16 +1504,19 @@ xi.dynamis.spawnDynamicPet =function(target, oMob, mobJob)
             ["Apocalyptic Beast"] =
             {
                 ["onMobFight"] = { function(mob, target) xi.dynamis.onFightApocDRG(mob, target) end },
+                ["onMobRoam"] = { function(mob) xi.dynamis.onRoamApocDRG(mob) end },
                 ["mixins"] = {   },
             },
             ["Dagourmarche"] =
             {
                 ["onMobFight"] = { function(mob, target) end },
+                ["onMobRoam"] = { function(mob) end },
                 ["mixins"] = {   },
             },
             ["Normal"] =
             {
                 ["onMobFight"] = { function(mob, target) end },
+                ["onMobRoam"] = { function(mob) end },
                 ["mixins"] = {   },
             },
         },
@@ -1535,7 +1543,8 @@ xi.dynamis.spawnDynamicPet =function(target, oMob, mobJob)
         groupId = nameObj[2],
         groupZoneId = nameObj[3],
         onMobSpawn = function(mob) xi.dynamis.setPetStats(mob) end,
-        onMobFight = petFunctions[mobJob][functionLookup]["onMobFight"],
+        onMobFight = petFunctions[mobJob][functionLookup]["onMobFight"][1],
+        onMobRoam = petFunctions[mobJob][functionLookup]["onMobRoam"][1],
         onMobDeath = function(mob, player, optParams) xi.dynamis.onPetDeath(mob) end,
         onMobDespawn = function (mob) xi.dynamis.mobOnDespawn(mob) end,
         releaseIdOnDeath = true,
@@ -1869,7 +1878,7 @@ end
 
 xi.dynamis.setPetStats = function(mob)
     if mob:getFamily() == 34 then
-        mob:setModelId(math.random(791, 798))
+        mob:setModelId(math.random(793, 798)) -- Ifrit -> Ramuh
     end
     mob:setMobType(xi.mobskills.mobType.BATTLEFIELD)
     mob:addStatusEffect(xi.effect.BATTLEFIELD, 1, 0, 0, true)
@@ -1955,13 +1964,15 @@ xi.dynamis.mobOnDeath = function(mob, player, optParams)
             if zoneID == xi.zone.DYNAMIS_VALKURM then
                 local flies = { 21, 22, 23}
                 if mobIndex == flies[1] or mobIndex == flies[2] or mobIndex == flies[3] then
-                    xi.dynamis.valkQMSpawnCheck(mob, zone, zoneID)
+                    xi.dynamis.nightmareFlyCheck(mob, zone, zoneID)
                 end
             end
         end
+
         if mobIndex ~= 0 and mobIndex ~= nil then
             xi.dynamis.addTimeToDynamis(zone, mobIndex) -- Add Time
         end
+
         mob:setLocalVar("dynamisMobOnDeathTriggered", 1) -- onDeath lua happens once per party member that killed the mob, but we want this to only run once per mob
     end
 
@@ -1987,7 +1998,10 @@ m:addOverride("xi.dynamis.megaBossOnDeath", function(mob, player)
         winQM:setStatus(xi.status.NORMAL) -- Make visible
         mob:setLocalVar("GaveTimeExtension", 1)
     end
-    player:addTitle(xi.dynamis.dynaInfoEra[zoneID].winTitle) -- Give player the title
+
+    if player then
+        player:addTitle(xi.dynamis.dynaInfoEra[zoneID].winTitle) -- Give player the title
+    end
 end)
 
 --------------------------------------------

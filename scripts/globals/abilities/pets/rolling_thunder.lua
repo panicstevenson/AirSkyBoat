@@ -13,9 +13,7 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onPetAbility = function(target, pet, skill, summoner)
-    local bonusTime = utils.clamp(summoner:getSkillLevel(xi.skill.SUMMONING_MAGIC) - 300, 0, 200)
-    local duration = 120 + bonusTime
-
+    local duration = math.min(60 + xi.summon.getSummoningSkillOverCap(pet) * 2, 180)
     local potency = math.floor((0.04 * summoner:getSkillLevel(xi.skill.SUMMONING_MAGIC)) + xi.mobskills.getWeatherDayBonuses(pet, 5))
 
     local typeEffect = xi.effect.ENTHUNDER

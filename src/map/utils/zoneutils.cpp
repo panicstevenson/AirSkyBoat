@@ -134,7 +134,7 @@ namespace zoneutils
         }
     }
 
-    CCharEntity* GetCharByName(int8* name)
+    CCharEntity* GetCharByName(std::string name)
     {
         for (auto PZone : g_PZoneList)
         {
@@ -600,7 +600,6 @@ namespace zoneutils
         }
 
         // handle mob initialise functions after they're all loaded
-// handle mob initialise functions after they're all loaded
         // clang-format off
         ForEachZone([](CZone* PZone)
         {
