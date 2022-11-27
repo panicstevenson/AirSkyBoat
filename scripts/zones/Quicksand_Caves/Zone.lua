@@ -37,6 +37,7 @@ zoneObject.onInitialize = function(zone)
     xi.treasure.initZone(zone)
 
     npcUtil.UpdateNPCSpawnPoint(ID.npc.ANTICAN_TAG_QM, 60, 120, ID.npc.ANTICAN_TAG_POSITIONS, "[POP]Antican_Tag")
+    xi.horizon.spawnInitialMobs(zone)
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype)

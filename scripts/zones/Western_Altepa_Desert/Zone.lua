@@ -21,6 +21,7 @@ zoneObject.onInitialize = function(zone)
     GetMobByID(ID.mob.KING_VINEGARROON):setRespawnTime(math.random(900, 10800))
 
     xi.bmt.updatePeddlestox(xi.zone.YUHTUNGA_JUNGLE, ID.npc.PEDDLESTOX)
+    xi.horizon.spawnInitialMobs(zone)
 end
 
 zoneObject.onGameDay = function()
