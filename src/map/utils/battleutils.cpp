@@ -4319,6 +4319,8 @@ namespace battleutils
             }
         }
 
+        PDefender->PAI->EventHandler.triggerListener("SKILLCHAIN_TAKE", CLuaBaseEntity(PAttacker), CLuaBaseEntity(PDefender), damage);
+
         return damage;
     }
 
