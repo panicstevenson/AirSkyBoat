@@ -554,7 +554,7 @@ INSERT INTO `item_latents` VALUES (13433,160,-2000,2,25);  -- Damage taken -20% 
 -- -------------------------------------------------------
 -- Mercen. Earring
 -- -------------------------------------------------------
-INSERT INTO `item_latents` VALUES (13435,10,2,8,1);      -- VIT+2 when WAR Subjob
+INSERT INTO `item_latents` VALUES (13435,1,5,8,1);      -- Def+5 when WAR Subjob
 
 -- -------------------------------------------------------
 -- Wrestler's Earring
@@ -564,7 +564,7 @@ INSERT INTO `item_latents` VALUES (13436,2,30,8,2);      -- HP+30 when MNK Subjo
 -- -------------------------------------------------------
 -- Healer's Earring
 -- -------------------------------------------------------
-INSERT INTO `item_latents` VALUES (13437,27,-1,8,3);     -- Enmity -1 when WHM subjob
+INSERT INTO `item_latents` VALUES (13437,27,-2,8,3);     -- Enmity -2 when WHM subjob
 
 INSERT INTO `item_latents` VALUES (13438,115,5,8,4);
 INSERT INTO `item_latents` VALUES (13439,71,1,8,5);
@@ -575,20 +575,22 @@ INSERT INTO `item_latents` VALUES (13439,71,1,8,5);
 INSERT INTO `item_latents` VALUES (13557,5,6,53,0);      -- MP +6 in areas inside own nation's control
 INSERT INTO `item_latents` VALUES (13557,9,2,53,0);      -- DEX +2 in areas inside own nation's control
 INSERT INTO `item_latents` VALUES (13557,13,3,53,0);     -- MND +3 in areas inside own nation's control
+INSERT INTO `item_latents` VALUES (13557,23,8,53,0);     -- Attack +8 in areas inside own nation's control
 
 -- -------------------------------------------------------
 -- Gold Musketeer's Ring
 -- -------------------------------------------------------
 INSERT INTO `item_latents` VALUES (13558,1,4,53,0);      -- DEF +4 in areas inside own nation's control
-INSERT INTO `item_latents` VALUES (13558,11,2,53,0);     -- AGI +2 in areas inside own nation's control
 INSERT INTO `item_latents` VALUES (13558,10,2,53,0);     -- VIT +3 in areas inside own nation's control
+INSERT INTO `item_latents` VALUES (13558,25,5,53,0);     -- Acc +5 in areas inside own nation's control
 
 -- -------------------------------------------------------
 -- Patriarch Protector's Ring
 -- -------------------------------------------------------
-INSERT INTO `item_latents` VALUES (13559,2,6,53,0);      -- HP +6 in areas inside own nation's control
-INSERT INTO `item_latents` VALUES (13559,8,2,53,0);      -- STR +2 in areas inside own nation's control
+INSERT INTO `item_latents` VALUES (13559,5,6,53,0);      -- MP +6 in areas inside own nation's control
 INSERT INTO `item_latents` VALUES (13559,12,3,53,0);     -- INT +3 in areas inside own nation's control
+INSERT INTO `item_latents` VALUES (13559,13,3,53,0);     -- MND +3 in areas inside own nation's control
+INSERT INTO `item_latents` VALUES (13559,30,3,53,0);     -- MACC +3 in areas inside own nation's control
 
 -- -------------------------------------------------------
 -- Fire Ring
@@ -670,15 +672,15 @@ INSERT INTO `item_latents` VALUES (13661,29,1,8,3);      -- Magic Defense Bonus 
 INSERT INTO `item_latents` VALUES (13662,71,1,8,4);
 INSERT INTO `item_latents` VALUES (13663,170,2,8,5);
 INSERT INTO `item_latents` VALUES (13664,68,4,8,6);
-INSERT INTO `item_latents` VALUES (13665,231,4,8,7);
-INSERT INTO `item_latents` VALUES (13666,116,5,8,8);
-INSERT INTO `item_latents` VALUES (13667,250,5,8,9);
-INSERT INTO `item_latents` VALUES (13668,244,5,8,10);
+INSERT INTO `item_latents` VALUES (13665,27,3,8,7); -- PLD sub: Enmity +3
+INSERT INTO `item_latents` VALUES (13666,23,5,8,8); -- DRK sub: Attack +5
+INSERT INTO `item_latents` VALUES (13667,391,5,8,9); -- BST sub: Charm +5
+INSERT INTO `item_latents` VALUES (13668,435,1,8,10); -- BRD sub: Paeon +1
 INSERT INTO `item_latents` VALUES (13669,359,5,8,11);
-INSERT INTO `item_latents` VALUES (13670,243,5,8,12);
-INSERT INTO `item_latents` VALUES (13671,247,5,8,13);
+INSERT INTO `item_latents` VALUES (13670,110,5,8,12); -- SAM sub: Parrying Skill +5
+INSERT INTO `item_latents` VALUES (13671,11,3,8,13); -- NIN sub: AGI +3
 INSERT INTO `item_latents` VALUES (13672,23,6,8,14);
-INSERT INTO `item_latents` VALUES (13673,117,5,8,15);
+INSERT INTO `item_latents` VALUES (13673,357,2,8,15); -- SMN sub: BP Delay -2
 
 -- -------------------------------------------------------
 -- Variable Mantle
@@ -1300,13 +1302,14 @@ INSERT INTO `item_latents` VALUES (14725,108,5,25,0);     -- EVA Skill +5 song/r
 -- -------------------------------------------------------
 INSERT INTO `item_latents` VALUES (14726,108,6,25,0);     -- EVA Skill +6 song/roll active
 
-INSERT INTO `item_latents` VALUES (14729,9,2,8,6);
-INSERT INTO `item_latents` VALUES (14730,1,5,8,7);
+INSERT INTO `item_latents` VALUES (14729,165,3,8,6); -- THF sub: Crit +3%
+INSERT INTO `item_latents` VALUES (14730,2,20,8,7); -- PLD sub: HP +20
+INSERT INTO `item_latents` VALUES (14730,5,20,8,7); -- PLD sub: MP +20
 INSERT INTO `item_latents` VALUES (14731,23,5,8,8);
-INSERT INTO `item_latents` VALUES (14732,25,5,8,9);
-INSERT INTO `item_latents` VALUES (14733,68,5,8,10);
+INSERT INTO `item_latents` VALUES (14732,14,2,8,9); -- BST sub: CHR+2
+INSERT INTO `item_latents` VALUES (14733,434,1,8,10); -- BRD sub: Minuet effect +1
 INSERT INTO `item_latents` VALUES (14734,26,3,8,11);
-INSERT INTO `item_latents` VALUES (14735,110,5,8,12);
+INSERT INTO `item_latents` VALUES (14735,306,5,8,12); -- SAM sub: Enhances Zanshin effect
 INSERT INTO `item_latents` VALUES (14736,11,4,8,13);
 INSERT INTO `item_latents` VALUES (14737,384,500,8,14);
 INSERT INTO `item_latents` VALUES (14738,5,30,8,15);
@@ -1562,21 +1565,21 @@ INSERT INTO `item_latents` VALUES (15271,85,5,8,1);      -- Great Axe skill +5 w
 INSERT INTO `item_latents` VALUES (15272,80,5,8,2);      -- Hand-to-Hand skill +5 when MNK Subjob
 
 -- -------------------------------------------------------
--- Mace Belt
+-- Healer's Belt
 -- -------------------------------------------------------
-INSERT INTO `item_latents` VALUES (15273,90,5,8,3);      -- Club skill+5 while WHM subjob
+INSERT INTO `item_latents` VALUES (15273,27,-2,8,3);      -- Enmity -2 while WHM subjob
 
-INSERT INTO `item_latents` VALUES (15274,91,5,8,4);
-INSERT INTO `item_latents` VALUES (15275,82,5,8,5);
-INSERT INTO `item_latents` VALUES (15276,81,5,8,6);
-INSERT INTO `item_latents` VALUES (15277,109,5,8,7);
+INSERT INTO `item_latents` VALUES (15274,12,2,8,4); -- BLM sub: INT +2
+INSERT INTO `item_latents` VALUES (15275,432,3,8,5); -- RDM sub: Enspell +3
+INSERT INTO `item_latents` VALUES (15276,25,3,8,6); -- THF Sub: Acc +3
+INSERT INTO `item_latents` VALUES (15277,485,10,8,7); -- PLD sub: Shield Mastery +10 TP
 INSERT INTO `item_latents` VALUES (15278,86,5,8,8);
 INSERT INTO `item_latents` VALUES (15279,84,5,8,9);
-INSERT INTO `item_latents` VALUES (15280,119,5,8,10);
+INSERT INTO `item_latents` VALUES (15280,438,1,8,10); -- BRD sub: Madrigal Effect +1
 INSERT INTO `item_latents` VALUES (15281,105,5,8,11);
 INSERT INTO `item_latents` VALUES (15282,73,1,8,12);
 INSERT INTO `item_latents` VALUES (15283,259,1,8,13);
-INSERT INTO `item_latents` VALUES (15284,87,5,8,14);
+INSERT INTO `item_latents` VALUES (15284,384,200,8,14); -- DRG Sub: Haste +2%
 INSERT INTO `item_latents` VALUES (15285,346,2,8,15);
 INSERT INTO `item_latents` VALUES (15312,68,2,29,0);
 INSERT INTO `item_latents` VALUES (15314,68,2,29,0);
@@ -1673,28 +1676,28 @@ INSERT INTO `item_latents` VALUES (15532,370,1,56,2);    -- Latent Effect is tri
 -- -------------------------------------------------------
 -- Rajas Ring
 -- -------------------------------------------------------
-INSERT INTO `item_latents` VALUES (15543,8,1,51,45);     -- INT+1 above level 45
-INSERT INTO `item_latents` VALUES (15543,8,1,51,60);     -- INT+1 above level 60
-INSERT INTO `item_latents` VALUES (15543,8,1,51,75);     -- INT+1 above level 75
-INSERT INTO `item_latents` VALUES (15543,9,1,51,45);     -- MND+1 above level 45
-INSERT INTO `item_latents` VALUES (15543,9,1,51,60);     -- MND+1 above level 60
-INSERT INTO `item_latents` VALUES (15543,9,1,51,75);     -- MND+1 above level 75
-
--- -------------------------------------------------------
--- Tamas Ring
--- -------------------------------------------------------
-INSERT INTO `item_latents` VALUES (15544,2,5,51,45);     -- MP+5 above level 45
-INSERT INTO `item_latents` VALUES (15544,2,5,51,60);     -- MP+5 above level 60
-INSERT INTO `item_latents` VALUES (15544,2,5,51,75);     -- MP+5 above level 75
-INSERT INTO `item_latents` VALUES (15544,10,1,51,45);    -- INT+1 above level 45
-INSERT INTO `item_latents` VALUES (15544,10,1,51,60);    -- INT+1 above level 60
-INSERT INTO `item_latents` VALUES (15544,10,1,51,75);    -- INT+1 above level 75
-INSERT INTO `item_latents` VALUES (15544,11,1,51,45);    -- MND+1 above level 45
-INSERT INTO `item_latents` VALUES (15544,11,1,51,60);    -- MND+1 above level 60
-INSERT INTO `item_latents` VALUES (15544,11,1,51,75);    -- MND+1 above level 75
+INSERT INTO `item_latents` VALUES (15543,8,1,51,45);     -- STR+1 above level 45
+INSERT INTO `item_latents` VALUES (15543,8,1,51,60);     -- STR+1 above level 60
+INSERT INTO `item_latents` VALUES (15543,8,1,51,75);     -- STR+1 above level 75
+INSERT INTO `item_latents` VALUES (15543,9,1,51,45);     -- DEX+1 above level 45
+INSERT INTO `item_latents` VALUES (15543,9,1,51,60);     -- DEX+1 above level 60
+INSERT INTO `item_latents` VALUES (15543,9,1,51,75);     -- DEX+1 above level 75
 
 -- -------------------------------------------------------
 -- Sattva Ring
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES (15544,2,5,51,45);     -- HP+5 above level 45
+INSERT INTO `item_latents` VALUES (15544,2,5,51,60);     -- HP+5 above level 60
+INSERT INTO `item_latents` VALUES (15544,2,5,51,75);     -- HP+5 above level 75
+INSERT INTO `item_latents` VALUES (15544,10,1,51,45);    -- VIT+1 above level 45
+INSERT INTO `item_latents` VALUES (15544,10,1,51,60);    -- VIT+1 above level 60
+INSERT INTO `item_latents` VALUES (15544,10,1,51,75);    -- VIT+1 above level 75
+INSERT INTO `item_latents` VALUES (15544,11,1,51,45);    -- AGI+1 above level 45
+INSERT INTO `item_latents` VALUES (15544,11,1,51,60);    -- AGI+1 above level 60
+INSERT INTO `item_latents` VALUES (15544,11,1,51,75);    -- AGI+1 above level 75
+
+-- -------------------------------------------------------
+-- Tamas Ring
 -- -------------------------------------------------------
 INSERT INTO `item_latents` VALUES (15545,5,5,51,45);     -- MP+5 above level 45
 INSERT INTO `item_latents` VALUES (15545,5,5,51,60);     -- MP+5 above level 60

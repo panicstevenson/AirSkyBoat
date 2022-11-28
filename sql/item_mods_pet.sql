@@ -234,6 +234,9 @@ INSERT INTO `item_mods_pet` VALUES (14523,2,16,7); -- Stormwaker - HP: 16
 INSERT INTO `item_mods_pet` VALUES (14523,5,20,4); -- Harlequin - MP: 20
 INSERT INTO `item_mods_pet` VALUES (14523,5,24,7); -- Stormwaker - MP: 24
 
+-- Beastly Earring
+INSERT INTO `item_mods_pet` VALUES (14742,25,10,0); -- All Pets - ACC: 10
+
 -- Ostreger Mitts
 INSERT INTO `item_mods_pet` VALUES (14872,2,10,2); -- Wyvern - HP: 10
 

@@ -4510,7 +4510,7 @@ INSERT INTO `item_equipment` VALUES (14754,'dragon_earring',50,0,4194303,0,0,0,6
 INSERT INTO `item_equipment` VALUES (14755,'refresh_earring',51,0,4194303,0,0,0,6144,0,0);
 INSERT INTO `item_equipment` VALUES (14756,'accurate_earring',52,0,4194303,0,0,0,6144,0,0);
 INSERT INTO `item_equipment` VALUES (14757,'mecurial_earring',20,0,4194303,0,0,0,6144,0,0);
-INSERT INTO `item_equipment` VALUES (14758,'knightly_earring',59,0,64,0,0,0,6144,0,0);
+INSERT INTO `item_equipment` VALUES (14758,'knightly_earring',59,0,192,0,0,0,6144,0,0);
 INSERT INTO `item_equipment` VALUES (14759,'curaga_earring',42,0,68,0,0,0,6144,0,0);
 INSERT INTO `item_equipment` VALUES (14760,'cunning_earring',29,0,4194303,0,0,0,6144,0,0);
 INSERT INTO `item_equipment` VALUES (14761,'elusive_earring',60,0,4194303,0,0,0,6144,0,0);
@@ -5025,10 +5025,10 @@ INSERT INTO `item_equipment` VALUES (15269,'eld._horn_hairpin',30,0,4194303,0,0,
 INSERT INTO `item_equipment` VALUES (15270,'walahra_turban',75,0,4194303,135,0,0,16,0,0);
 INSERT INTO `item_equipment` VALUES (15271,'axe_belt',30,0,4194303,0,0,0,1024,0,0);
 INSERT INTO `item_equipment` VALUES (15272,'cestus_belt',30,0,4194303,0,0,0,1024,0,0);
-INSERT INTO `item_equipment` VALUES (15273,'mace_belt',30,0,4194303,0,0,0,1024,0,0);
-INSERT INTO `item_equipment` VALUES (15274,'staff_belt',30,0,4194303,0,0,0,1024,0,0);
-INSERT INTO `item_equipment` VALUES (15275,'rapier_belt',30,0,4194303,0,0,0,1024,0,0);
-INSERT INTO `item_equipment` VALUES (15276,'dagger_belt',30,0,4194303,0,0,0,1024,0,0);
+INSERT INTO `item_equipment` VALUES (15273,'healers_belt',30,0,4194303,0,0,0,1024,0,0);
+INSERT INTO `item_equipment` VALUES (15274,'wizards_belt',30,0,4194303,0,0,0,1024,0,0);
+INSERT INTO `item_equipment` VALUES (15275,'warlocks_belt',30,0,4194303,0,0,0,1024,0,0);
+INSERT INTO `item_equipment` VALUES (15276,'pilferers_belt',30,0,4194303,0,0,0,1024,0,0);
 INSERT INTO `item_equipment` VALUES (15277,'shield_belt',30,0,4194303,0,0,0,1024,0,0);
 INSERT INTO `item_equipment` VALUES (15278,'scythe_belt',30,0,4194303,0,0,0,1024,0,0);
 INSERT INTO `item_equipment` VALUES (15279,'pick_belt',30,0,4194303,0,0,0,1024,0,0);
@@ -5036,7 +5036,7 @@ INSERT INTO `item_equipment` VALUES (15280,'song_belt',30,0,4194303,0,0,0,1024,0
 INSERT INTO `item_equipment` VALUES (15281,'gun_belt',30,0,4194303,0,0,0,1024,0,0);
 INSERT INTO `item_equipment` VALUES (15282,'katana_obi',30,0,4194303,0,0,0,1024,0,0);
 INSERT INTO `item_equipment` VALUES (15283,'sarashi',30,0,4194303,0,0,0,1024,0,0);
-INSERT INTO `item_equipment` VALUES (15284,'lance_belt',30,0,4194303,0,0,0,1024,0,0);
+INSERT INTO `item_equipment` VALUES (15284,'wyvern_belt',30,0,4194303,0,0,0,1024,0,0);
 INSERT INTO `item_equipment` VALUES (15285,'avatar_belt',30,0,4194303,0,0,0,1024,0,0);
 INSERT INTO `item_equipment` VALUES (15286,'tilt_belt',40,0,4194303,0,0,0,1024,0,0);
 INSERT INTO `item_equipment` VALUES (15287,'mantra_belt',40,0,3851870,0,0,0,1024,0,0);

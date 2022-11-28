@@ -12601,10 +12601,10 @@ INSERT INTO `item_basic` VALUES (15269,0,'eldritch_horn_hairpin','eld._horn_hair
 INSERT INTO `item_basic` VALUES (15270,0,'walahra_turban','walahra_turban',1,63568,0,1,0);
 INSERT INTO `item_basic` VALUES (15271,0,'axe_belt','axe_belt',1,34820,23,0,1945);
 INSERT INTO `item_basic` VALUES (15272,0,'cestus_belt','cestus_belt',1,34820,23,0,1945);
-INSERT INTO `item_basic` VALUES (15273,0,'mace_belt','mace_belt',1,34820,23,0,1945);
-INSERT INTO `item_basic` VALUES (15274,0,'staff_belt','staff_belt',1,34820,23,0,1945);
-INSERT INTO `item_basic` VALUES (15275,0,'rapier_belt','rapier_belt',1,34820,23,0,1350);
-INSERT INTO `item_basic` VALUES (15276,0,'dagger_belt','dagger_belt',1,34820,23,0,1945);
+INSERT INTO `item_basic` VALUES (15273,0,'healers_belt','healers_belt',1,34820,23,0,1945);
+INSERT INTO `item_basic` VALUES (15274,0,'wizards_belt','wizards_belt',1,34820,23,0,1945);
+INSERT INTO `item_basic` VALUES (15275,0,'warlocks_belt','warlocks_belt',1,34820,23,0,1350);
+INSERT INTO `item_basic` VALUES (15276,0,'pilferers_belt','pilferers_belt',1,34820,23,0,1945);
 INSERT INTO `item_basic` VALUES (15277,0,'shield_belt','shield_belt',1,34820,23,0,1377);
 INSERT INTO `item_basic` VALUES (15278,0,'scythe_belt','scythe_belt',1,34820,23,0,1350);
 INSERT INTO `item_basic` VALUES (15279,0,'pick_belt','pick_belt',1,34820,23,0,1380);
@@ -12612,7 +12612,7 @@ INSERT INTO `item_basic` VALUES (15280,0,'song_belt','song_belt',1,34820,23,0,13
 INSERT INTO `item_basic` VALUES (15281,0,'gun_belt','gun_belt',1,34820,23,0,1350);
 INSERT INTO `item_basic` VALUES (15282,0,'katana_obi','katana_obi',1,34820,23,0,1350);
 INSERT INTO `item_basic` VALUES (15283,0,'sarashi','sarashi',1,34820,23,0,1945);
-INSERT INTO `item_basic` VALUES (15284,0,'lance_belt','lance_belt',1,34820,23,0,1380);
+INSERT INTO `item_basic` VALUES (15284,0,'wyvern_belt','wyvern_belt',1,34820,23,0,1380);
 INSERT INTO `item_basic` VALUES (15285,0,'avatar_belt','avatar_belt',1,34820,23,0,1945);
 INSERT INTO `item_basic` VALUES (15286,0,'tilt_belt','tilt_belt',1,34820,23,0,1500);
 INSERT INTO `item_basic` VALUES (15287,0,'mantra_belt','mantra_belt',1,34820,23,0,1500);

@@ -15056,6 +15056,7 @@ INSERT INTO `item_mods` VALUES (13063,68,1);  -- EVA: 1
 INSERT INTO `item_mods` VALUES (13064,1,7);  -- DEF: 7
 INSERT INTO `item_mods` VALUES (13064,2,15); -- HP: 15
 INSERT INTO `item_mods` VALUES (13064,10,1); -- VIT: 1
+INSERT INTO `item_mods` VALUES (13064,25,3); -- ACC: 3
 
 -- Gorget +1
 INSERT INTO `item_mods` VALUES (13065,1,5); -- DEF: 5
@@ -15185,26 +15186,32 @@ INSERT INTO `item_mods` VALUES (13099,5,6); -- MP: 6
 
 -- Republican Mythril Medal
 INSERT INTO `item_mods` VALUES (13100,5,12); -- MP: 12
+INSERT INTO `item_mods` VALUES (13100,12,2); -- MP: 2
 
 -- Green Scarf
 INSERT INTO `item_mods` VALUES (13101,1,1); -- DEF: 1
-INSERT INTO `item_mods` VALUES (13101,2,2); -- HP: 2
+INSERT INTO `item_mods` VALUES (13101,2,5); -- HP: 5
+INSERT INTO `item_mods` VALUES (13101,72,2); -- HPHEAL: 2
 
 -- Paisley Scarf
 INSERT INTO `item_mods` VALUES (13102,1,2); -- DEF: 2
-INSERT INTO `item_mods` VALUES (13102,2,6); -- HP: 6
+INSERT INTO `item_mods` VALUES (13102,2,8); -- HP: 8
+INSERT INTO `item_mods` VALUES (13102,72,3); -- HPHEAL: 3
 
 -- Checkered Scarf
-INSERT INTO `item_mods` VALUES (13103,1,4);  -- DEF: 4
-INSERT INTO `item_mods` VALUES (13103,2,12); -- HP: 12
+INSERT INTO `item_mods` VALUES (13103,2,-12); -- HP: -12
+INSERT INTO `item_mods` VALUES (13103,12,2); -- INT: 2
+INSERT INTO `item_mods` VALUES (13103,71,1); -- MPHEAL: 1
+INSERT INTO `item_mods` VALUES (13103,72,1); -- HPHEAL: 1
 
 -- Royal Squires Collar
-INSERT INTO `item_mods` VALUES (13104,1,3);  -- DEF: 3
-INSERT INTO `item_mods` VALUES (13104,68,1); -- EVA: 1
+INSERT INTO `item_mods` VALUES (13104,25,2); -- Acc: 2
+INSERT INTO `item_mods` VALUES (13104,68,2); -- EVA: 2
 
 -- Temple Knight Army Collar
-INSERT INTO `item_mods` VALUES (13105,1,5);  -- DEF: 5
+INSERT INTO `item_mods` VALUES (13105,1,8);  -- DEF: 8
 INSERT INTO `item_mods` VALUES (13105,13,1); -- MND: 1
+INSERT INTO `item_mods` VALUES (13105,25,3); -- ACC: 3
 INSERT INTO `item_mods` VALUES (13105,68,2); -- EVA: 2
 
 -- Royal Guards Collar
@@ -15214,8 +15221,9 @@ INSERT INTO `item_mods` VALUES (13106,25,4); -- ACC: 4
 
 -- Royal Knight Army Collar
 INSERT INTO `item_mods` VALUES (13107,1,5);  -- DEF: 5
-INSERT INTO `item_mods` VALUES (13107,8,1);  -- STR: 1
-INSERT INTO `item_mods` VALUES (13107,68,2); -- EVA: 2
+INSERT INTO `item_mods` VALUES (13107,8,2);  -- STR: 2
+INSERT INTO `item_mods` VALUES (13107,10,2); -- VIT: 2
+INSERT INTO `item_mods` VALUES (13107,23,2); -- ATT: 2
 
 -- Coral Gorget
 INSERT INTO `item_mods` VALUES (13108,1,5);  -- DEF: 5
@@ -23411,27 +23419,31 @@ INSERT INTO `item_mods` VALUES (14728,5,10); -- MP: 10
 INSERT INTO `item_mods` VALUES (14728,12,2); -- INT: 2
 
 -- Suppanomimi
-INSERT INTO `item_mods` VALUES (14739,11,2);  -- AGI: 2
-INSERT INTO `item_mods` VALUES (14739,82,5);  -- SWORD: 5
-INSERT INTO `item_mods` VALUES (14739,259,5); -- DUAL_WIELD: 5
+INSERT INTO `item_mods` VALUES (14739,9,2);  -- DEX: 2
+INSERT INTO `item_mods` VALUES (14739,81,5); -- DAGGER: 5
+INSERT INTO `item_mods` VALUES (14739,88,5);  -- KATANA: 5
+INSERT INTO `item_mods` VALUES (14739,108,5); -- EVASION: 5
 
 -- Knights Earring
 INSERT INTO `item_mods` VALUES (14740,10,2);  -- VIT: 2
 INSERT INTO `item_mods` VALUES (14740,109,5); -- SHIELD: 5
-INSERT INTO `item_mods` VALUES (14740,111,5); -- DIVINE: 5
+INSERT INTO `item_mods` VALUES (14741,82,5);  -- SWORD: 5
+INSERT INTO `item_mods` VALUES (14741,90,5);  -- CLUB: 5
 
 -- Abyssal Earring
 INSERT INTO `item_mods` VALUES (14741,12,2);  -- INT: 2
+INSERT INTO `item_mods` VALUES (14741,83,5);  -- GSWORD: 5
 INSERT INTO `item_mods` VALUES (14741,86,5);  -- SCYTHE: 5
 INSERT INTO `item_mods` VALUES (14741,116,5); -- DARK: 5
 
 -- Beastly Earring
 INSERT INTO `item_mods` VALUES (14742,14,2); -- CHR: 2
-INSERT INTO `item_mods` VALUES (14742,68,5); -- EVA: 5
 INSERT INTO `item_mods` VALUES (14742,84,5); -- AXE: 5
+INSERT INTO `item_mods` VALUES (14742,87,5); -- POLEARM: 5
 
 -- Bushinomimi
 INSERT INTO `item_mods` VALUES (14743,8,2);   -- STR: 2
+INSERT INTO `item_mods` VALUES (14743,85,5);  -- GAXE: 5
 INSERT INTO `item_mods` VALUES (14743,89,5);  -- GKATANA: 5
 INSERT INTO `item_mods` VALUES (14743,110,5); -- PARRY: 5
 
@@ -23664,6 +23676,7 @@ INSERT INTO `item_mods` VALUES (14814,25,3); -- ACC: 3
 -- Stealth Earring
 INSERT INTO `item_mods` VALUES (14815,118,5); -- NINJUTSU: 5
 INSERT INTO `item_mods` VALUES (14815,244,2); -- SILENCERES: 2
+INSERT INTO `item_mods` VALUES (14815,259,5); -- DUAL_WIELD: 5
 
 -- Armada Mufflers
 INSERT INTO `item_mods` VALUES (14816,1,23);   -- DEF: 23
@@ -27610,13 +27623,15 @@ INSERT INTO `item_mods` VALUES (15543,289,5); -- SUBTLE_BLOW: 5
 INSERT INTO `item_mods` VALUES (15544,2,15); -- HP: 15
 INSERT INTO `item_mods` VALUES (15544,10,2); -- VIT: 2
 INSERT INTO `item_mods` VALUES (15544,11,2); -- AGI: 2
-INSERT INTO `item_mods` VALUES (15544,27,3); -- ENMITY: 3
+INSERT INTO `item_mods` VALUES (15544,27,5); -- ENMITY: 5
+INSERT INTO `item_mods` VALUES (15544,160,-500); -- DMG: -500
 
 -- Tamas Ring
 INSERT INTO `item_mods` VALUES (15545,5,15);  -- MP: 15
 INSERT INTO `item_mods` VALUES (15545,12,2);  -- INT: 2
 INSERT INTO `item_mods` VALUES (15545,13,2);  -- MND: 2
-INSERT INTO `item_mods` VALUES (15545,27,-3); -- ENMITY: -3
+INSERT INTO `item_mods` VALUES (15545,27,-5); -- ENMITY: -5
+INSERT INTO `item_mods` VALUES (15545,30,5);  -- MACC: 5
 
 -- Fasting Ring
 INSERT INTO `item_mods` VALUES (15546,2,-20); -- HP: -20
