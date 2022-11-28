@@ -56,6 +56,8 @@ local trustMemory = function(player)
 end
 
 entity.onTrade = function(player, npc, trade)
+    local rot = npc:getRotPos()
+
     if npcUtil.tradeHas(trade, { { 498, 4 } }) then -- Yagudo Necklace x4
         local mihgosAmigo = player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.MIHGO_S_AMIGO)
 
@@ -64,8 +66,64 @@ entity.onTrade = function(player, npc, trade)
         elseif mihgosAmigo == QUEST_COMPLETED then
             player:startEvent(494, xi.settings.main.GIL_RATE * 200)
         end
+    elseif
+        npcUtil.tradeHas(trade, { { 8889, 1 } }, true) and
+        player:getCharVar("thfsNeck") == 0
+    then
+        player:faceTarget(npc)
+
+        npc:timer(250, function(npcArg)
+            player:PrintToPlayer("This reminds me of a lucky necklace I once crrrafted for myself...", xi.msg.channel.SAY , "Nanaa Mihgo")
+        end)
+
+        npc:timer(750, function(npcArg)
+            player:PrintToPlayer("I could fashion one for you as well if you brrring me the proper materials.", xi.msg.channel.SAY , "Nanaa Mihgo")
+        end)
+
+        npc:timer(1250, function(npcArg)
+            player:PrintToPlayer("Brrring me a set of things to bring you luck. A rrrare bud perhaps...?", xi.msg.channel.SAY , "Nanaa Mihgo")
+        end)
+
+        npc:timer(1750, function(npcArg)
+            player:PrintToPlayer("Also, a special egg, and don't forget the tail of a lucky vermin.", xi.msg.channel.SAY , "Nanaa Mihgo")
+        end)
+
+        npc:timer(2250, function(npcArg)
+            player:PrintToPlayer("Finally a pendant of deep blue color...", xi.msg.channel.SAY , "Nanaa Mihgo")
+        end)
+
+        npc:timer(2750, function(npcArg)
+            npcArg:setRotation(rot)
+            player:setCharVar("thfsNeck", 1)
+            player:confirmTrade()
+        end)
+    elseif
+        npcUtil.tradeHas(trade, { 4600, 4369, 4444, 13086 }, true) and
+        player:getCharVar("thfsNeck") == 1
+    then
+        player:faceTarget(npc)
+
+        npc:timer(250, function(npcArg)
+            player:PrintToPlayer("Ah so it seems you have brrrought me everything.", xi.msg.channel.SAY , "Nanaa Mihgo")
+        end)
+
+        npc:timer(750, function(npcArg)
+            player:PrintToPlayer("This next part is going to take a bit though...", xi.msg.channel.SAY , "Nanaa Mihgo")
+        end)
+
+        npc:timer(1250, function(npcArg)
+            player:PrintToPlayer("I'll leave the necklace for you at my hideout deep in the Horutoto Rrruins.", xi.msg.channel.SAY , "Nanaa Mihgo")
+            player:setCharVar("thfsNeck", 2)
+            player:confirmTrade()
+        end)
+
+        npc:timer(1750, function(npcArg)
+            npcArg:setRotation(rot)
+        end)
     end
 end
+
+--npcUtil.tradeHas(trade, { xi.items.MYTHRIL_PICK, xi.items.MYTHRIL_PICK_HQ }, true, true)
 
 entity.onTrigger = function(player, npc)
     local wildcatWindurst = player:getCharVar("WildcatWindurst")

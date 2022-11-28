@@ -889,6 +889,7 @@ public:
     bool   hasContestRewardPending(uint16 contestId);
     void   giveContestReward(uint16 contestId);
     auto   getAwardHistory() -> sol::table;
+    void   faceTarget(CLuaBaseEntity* npc);
 
     static void Register();
 };

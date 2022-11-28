@@ -46624,23 +46624,24 @@ INSERT INTO `item_mods` VALUES (22301,31,-10); -- MEVA: -10
 -- INSERT INTO `item_mods` VALUES (22301,??,10); -- TODO: MAGIC_CRITHITRATE_II: 10
 
 -- Pummelers Mask +2
-INSERT INTO `item_mods` VALUES (23040,1,123);    -- DEF: 123
-INSERT INTO `item_mods` VALUES (23040,2,57);     -- HP: 57
-INSERT INTO `item_mods` VALUES (23040,8,26);     -- STR: 26
-INSERT INTO `item_mods` VALUES (23040,9,29);     -- DEX: 29
-INSERT INTO `item_mods` VALUES (23040,10,29);    -- VIT: 29
-INSERT INTO `item_mods` VALUES (23040,11,26);    -- AGI: 26
-INSERT INTO `item_mods` VALUES (23040,12,26);    -- INT: 26
-INSERT INTO `item_mods` VALUES (23040,13,26);    -- MND: 26
-INSERT INTO `item_mods` VALUES (23040,14,26);    -- CHR: 26
-INSERT INTO `item_mods` VALUES (23040,25,37);    -- ACC: 37
-INSERT INTO `item_mods` VALUES (23040,27,9);     -- ENMITY: 9
-INSERT INTO `item_mods` VALUES (23040,29,2);     -- MDEF: 2
-INSERT INTO `item_mods` VALUES (23040,31,63);    -- MEVA: 63
-INSERT INTO `item_mods` VALUES (23040,68,46);    -- EVA: 46
-INSERT INTO `item_mods` VALUES (23040,161,-400); -- DMGPHYS: -400
-INSERT INTO `item_mods` VALUES (23040,384,800);  -- HASTE_GEAR: 800
-INSERT INTO `item_mods` VALUES (23040,955,16);   -- AGGRESSOR_DURATION: 16
+INSERT INTO `item_mods` VALUES (23040,303,1); -- TREASURE_HUNTER: 1
+-- INSERT INTO `item_mods` VALUES (23040,1,123);    -- DEF: 123
+-- INSERT INTO `item_mods` VALUES (23040,2,57);     -- HP: 57
+-- INSERT INTO `item_mods` VALUES (23040,8,26);     -- STR: 26
+-- INSERT INTO `item_mods` VALUES (23040,9,29);     -- DEX: 29
+-- INSERT INTO `item_mods` VALUES (23040,10,29);    -- VIT: 29
+-- INSERT INTO `item_mods` VALUES (23040,11,26);    -- AGI: 26
+-- INSERT INTO `item_mods` VALUES (23040,12,26);    -- INT: 26
+-- INSERT INTO `item_mods` VALUES (23040,13,26);    -- MND: 26
+-- INSERT INTO `item_mods` VALUES (23040,14,26);    -- CHR: 26
+-- INSERT INTO `item_mods` VALUES (23040,25,37);    -- ACC: 37
+-- INSERT INTO `item_mods` VALUES (23040,27,9);     -- ENMITY: 9
+-- INSERT INTO `item_mods` VALUES (23040,29,2);     -- MDEF: 2
+-- INSERT INTO `item_mods` VALUES (23040,31,63);    -- MEVA: 63
+-- INSERT INTO `item_mods` VALUES (23040,68,46);    -- EVA: 46
+-- INSERT INTO `item_mods` VALUES (23040,161,-400); -- DMGPHYS: -400
+-- INSERT INTO `item_mods` VALUES (23040,384,800);  -- HASTE_GEAR: 800
+-- INSERT INTO `item_mods` VALUES (23040,955,16);   -- AGGRESSOR_DURATION: 16
 
 -- Anchorites Crown +2
 INSERT INTO `item_mods` VALUES (23041,1,110);   -- DEF: 110

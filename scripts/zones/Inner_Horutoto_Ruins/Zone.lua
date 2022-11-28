@@ -8,6 +8,30 @@ require('scripts/globals/status')
 -----------------------------------
 local zoneObject = {}
 
+local thfsNeckNPC =
+{
+    objtype = xi.objType.NPC,
+    name = "???",
+    look = 2295,
+    x = -27.6832,
+    y = -0.5,
+    z = 19.2311,
+    rotation = 157,
+    widescan = 1,
+    namevis = 0x008,
+    onTrigger = function(player, npc)
+        if player:getCharVar("thfsNeck") == 2 then
+            player:PrintToPlayer("You find a lucky necklace made for you by Nanaa Mihgo.", xi.msg.channel.NS_SAY)
+            player:setCharVar("thfsNeck", 3)
+            player:addItem(xi.items.PUMMELERS_MASK_P2)
+            player:messageSpecial(ID.text.ITEM_OBTAINED, xi.items.PUMMELERS_MASK_P2)
+        else
+            player:PrintToPlayer("You hear a voice whisper from the shadows.", xi.msg.channel.NS_SHOUT)
+            player:PrintToPlayer("I wouldn't suggest taking that, it's not forrr you.", xi.msg.channel.SAY , "Nanaa Mihgo")
+        end
+    end,
+}
+
 zoneObject.onInitialize = function(zone)
     zone:registerTriggerArea(1, -260.7, 0, -30.2, -259.4, 1, -29.1) -- Red
     zone:registerTriggerArea(2, -264.0, 0, -24.7, -262.4, 1, -23.5) -- White
@@ -19,6 +43,7 @@ zoneObject.onInitialize = function(zone)
 
     xi.treasure.initZone(zone)
     xi.horizon.spawnInitialMobs(zone)
+    zone:insertDynamicEntity(thfsNeckNPC)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

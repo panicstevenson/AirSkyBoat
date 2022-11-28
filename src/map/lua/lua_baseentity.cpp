@@ -15690,6 +15690,24 @@ auto CLuaBaseEntity::getAwardHistory() -> sol::table
     return sol::lua_nil;
 }
 
+/************************************************************************
+ *  Function: faceTarget()
+ *  Purpose : forces NPC to face a target
+ ************************************************************************/
+
+void CLuaBaseEntity::faceTarget(CLuaBaseEntity* npc)
+{
+    CBaseEntity* PBaseEntity = npc->GetBaseEntity();
+
+    if (PBaseEntity->objtype == TYPE_NPC)
+    {
+        PBaseEntity->m_TargID       = m_PBaseEntity->targid;
+        PBaseEntity->loc.p.rotation = worldAngle(PBaseEntity->loc.p, m_PBaseEntity->loc.p);
+
+        PBaseEntity->loc.zone->UpdateEntityPacket(PBaseEntity, ENTITY_UPDATE, UPDATE_POS);
+    }
+}
+
 //==========================================================//
 
 void CLuaBaseEntity::Register()
@@ -15698,6 +15716,7 @@ void CLuaBaseEntity::Register()
 
     // Messaging System
     SOL_REGISTER("showText", CLuaBaseEntity::showText);
+    SOL_REGISTER("faceTarget", CLuaBaseEntity::faceTarget);
     SOL_REGISTER("messageText", CLuaBaseEntity::messageText);
     SOL_REGISTER("PrintToPlayer", CLuaBaseEntity::PrintToPlayer);
     SOL_REGISTER("PrintToArea", CLuaBaseEntity::PrintToArea);
