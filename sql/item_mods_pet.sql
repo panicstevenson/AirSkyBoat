@@ -194,6 +194,7 @@ INSERT INTO `item_mods_pet` VALUES (12649,370,1,2); -- Wyvern - REGEN: 1
 
 -- Evokers Doublet
 INSERT INTO `item_mods_pet` VALUES (12650,27,-2,1); -- Avatar - ENMITY: -2
+INSERT INTO `item_mods_pet` VALUES (12650,357,-1,1); -- Avatar - BP_DELAY: -1
 
 -- Drachen Finger Gauntlets
 INSERT INTO `item_mods_pet` VALUES (13974,25,5,2); -- Wyvern - ACC: 5
@@ -340,6 +341,9 @@ INSERT INTO `item_mods_pet` VALUES (16368,25,10,0); -- All Pets - ACC: 10
 
 -- Glyph Axe
 INSERT INTO `item_mods_pet` VALUES (16654,368,10,0); -- All Pets - REGAIN: 10
+
+-- Barbaroi Axe
+INSERT INTO `item_mods_pet` VALUES (16680,25,3,0); -- All Pets - ACC: 3
 
 -- Draconis Lance
 INSERT INTO `item_mods_pet` VALUES (16843,23,10,2); -- Wyvern - ATT: 10

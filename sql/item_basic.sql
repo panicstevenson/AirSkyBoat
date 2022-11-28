@@ -14487,7 +14487,7 @@ INSERT INTO `item_basic` VALUES (17184,0,'assassins_bow','assassins_bow',1,2052,
 INSERT INTO `item_basic` VALUES (17185,0,'siege_bow','siege_bow',1,63572,0,1,0);
 INSERT INTO `item_basic` VALUES (17186,0,'sagittarius_bow','sagittarius_bow',1,2048,13,0,2581);
 INSERT INTO `item_basic` VALUES (17187,0,'eurytos_bow','eurytos_bow',1,2052,13,0,2678);
-INSERT INTO `item_basic` VALUES (17188,0,'sniping_bow','sniping_bow',1,63552,0,1,0);
+INSERT INTO `item_basic` VALUES (17188,0,'hunters_zamburak','hunters_zamburak',1,63552,0,1,0);
 INSERT INTO `item_basic` VALUES (17189,0,'rapid_bow_+1','rapid_bow_+1',1,2080,13,0,4511);
 INSERT INTO `item_basic` VALUES (17190,0,'sarnga','sarnga',1,34820,13,0,2873);
 INSERT INTO `item_basic` VALUES (17191,0,'pharaohs_bow','pharaohs_bow',1,2052,13,0,3068);
@@ -14777,7 +14777,7 @@ INSERT INTO `item_basic` VALUES (17474,0,'grapnel','grapnel',1,63552,0,1,0);
 INSERT INTO `item_basic` VALUES (17475,0,'darksteel_katars_+1','dst._katars_+1',1,2080,1,0,4386);
 INSERT INTO `item_basic` VALUES (17476,0,'cat_baghnakhs_+1','cat_baghnakhs_+1',1,2080,1,0,35);
 INSERT INTO `item_basic` VALUES (17477,0,'bone_patas_+1','bone_patas_+1',1,2080,1,0,1562);
-INSERT INTO `item_basic` VALUES (17478,0,'beat_cesti','beat_cesti',1,63552,0,1,0);
+INSERT INTO `item_basic` VALUES (17478,0,'tekko_kagi','tekko_kagi',1,63552,0,1,0);
 INSERT INTO `item_basic` VALUES (17479,0,'behemoth_cesti_+1','behem._cesti_+1',1,2080,1,0,5203);
 INSERT INTO `item_basic` VALUES (17480,0,'diamond_knuckles_+1','dmd._knuckles_+1',1,2080,1,0,5278);
 INSERT INTO `item_basic` VALUES (17481,0,'kaiser_knuckles','kaiser_knuckles',1,2080,1,0,4461);

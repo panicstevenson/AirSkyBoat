@@ -635,6 +635,11 @@ INSERT INTO `item_latents` VALUES (13572,1,10,26,0);     -- Daytime: DEF +10
 INSERT INTO `item_latents` VALUES (13572,27,3,26,1);     -- Nighttime: Enmity +3
 
 -- -------------------------------------------------------
+-- Black Cotehardie
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES (13574,369,1,5,25);    -- "Refresh" effect while MP under 25
+
+-- -------------------------------------------------------
 -- Cheviot/Umbra Cape (physical damage reduction doubled at night)
 -- -------------------------------------------------------
 INSERT INTO `item_latents` VALUES (13651,161,-500,26,1);
@@ -716,6 +721,21 @@ INSERT INTO `item_latents` VALUES (13693,369,1,13,2);
 INSERT INTO `item_latents` VALUES (13693,369,1,13,19);
 INSERT INTO `item_latents` VALUES (13693,370,1,13,2);
 INSERT INTO `item_latents` VALUES (13693,370,1,13,19);
+
+-- -------------------------------------------------------
+-- Flora Cotehardie
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES (13755,369,1,5,30);    -- "Refresh" effect while MP under 30
+
+-- -------------------------------------------------------
+-- Blue Cotehardie
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES (13775,369,1,5,40);    -- "Refresh" effect while MP under 40
+
+-- -------------------------------------------------------
+-- Blue Cotehardie +1
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES (13776,369,1,5,50);    -- "Refresh" effect while MP under 40
 
 -- -------------------------------------------------------
 -- Carapace Breastplate
@@ -1050,14 +1070,16 @@ INSERT INTO `item_latents` VALUES (14154,24,7,53,0);     -- RATK +7 in areas ins
 -- -------------------------------------------------------
 -- Combat Caster's Shoes +1/+2
 -- -------------------------------------------------------
-INSERT INTO `item_latents` VALUES (14155,11,2,53,0);     -- AGI +2 in areas inside own nation's control
-INSERT INTO `item_latents` VALUES (14156,11,3,53,0);     -- AGI +3 in areas inside own nation's control
+INSERT INTO `item_latents` VALUES (14155,2,5,53,0);      -- HP +5 in areas inside own nation's control
+INSERT INTO `item_latents` VALUES (14155,25,2,53,0);     -- ACC +2 in areas inside own nation's control
+INSERT INTO `item_latents` VALUES (14156,2,10,53,0);     -- HP +10 in areas inside own nation's control
+INSERT INTO `item_latents` VALUES (14156,25,3,53,0);     -- ACC +3 in areas inside own nation's control
 
 -- -------------------------------------------------------
 -- Tactician Magician's Pigaches +1/+2
 -- -------------------------------------------------------
-INSERT INTO `item_latents` VALUES (14157,12,3,53,0);     -- INT +3 in areas inside own nation's control
-INSERT INTO `item_latents` VALUES (14158,12,4,53,0);     -- INT +4 in areas inside own nation's control
+INSERT INTO `item_latents` VALUES (14157,12,2,53,0);     -- INT +2 in areas inside own nation's control
+INSERT INTO `item_latents` VALUES (14158,12,3,53,0);     -- INT +3 in areas inside own nation's control
 
 -- -------------------------------------------------------
 -- Inferno Sabots (+1)
@@ -1112,8 +1134,8 @@ INSERT INTO `item_latents` VALUES (14272,2,12,53,0);     -- HP +12 in areas insi
 -- -------------------------------------------------------
 -- Combat Caster's Slacks +1/+2
 -- -------------------------------------------------------
-INSERT INTO `item_latents` VALUES (14275,5,14,53,0);     -- MP +14 in areas inside own nation's control
-INSERT INTO `item_latents` VALUES (14276,5,16,53,0);     -- MP +16 in areas inside own nation's control
+INSERT INTO `item_latents` VALUES (14275,2,5,53,0);     -- HP +5 in areas inside own nation's control
+INSERT INTO `item_latents` VALUES (14276,2,10,53,0);    -- HP +10 in areas inside own nation's control
 
 -- -------------------------------------------------------
 -- Tactician Magician's Slops +1/+2
@@ -1187,8 +1209,8 @@ INSERT INTO `item_latents` VALUES (14357,1,8,53,0);      -- DEF +8 in areas insi
 -- -------------------------------------------------------
 -- Royal Squire's Robe +1/+2
 -- -------------------------------------------------------
-INSERT INTO `item_latents` VALUES (14358,12,2,53,0);     -- INT +2 in areas inside own nation's control
-INSERT INTO `item_latents` VALUES (14359,12,3,53,0);     -- INT +3 in areas inside own nation's control
+INSERT INTO `item_latents` VALUES (14358,12,3,53,0);     -- INT +3 in areas inside own nation's control
+INSERT INTO `item_latents` VALUES (14359,12,4,53,0);     -- INT +4 in areas inside own nation's control
 
 -- -------------------------------------------------------
 -- Royal Knight's Cloak +1/+2
@@ -1199,8 +1221,8 @@ INSERT INTO `item_latents` VALUES (14361,11,4,53,0);     -- AGI +4 in areas insi
 -- -------------------------------------------------------
 -- Tactician Magician's Coat +1/+2
 -- -------------------------------------------------------
-INSERT INTO `item_latents` VALUES (14362,5,18,53,0);     -- MP +18 in areas inside own nation's control
-INSERT INTO `item_latents` VALUES (14363,5,20,53,0);     -- MP +20 in areas inside own nation's control
+INSERT INTO `item_latents` VALUES (14362,71,1,53,0);     -- hMP +1 in areas inside own nation's control
+INSERT INTO `item_latents` VALUES (14363,71,2,53,0);     -- hMP +2 in areas inside own nation's control
 
 -- -------------------------------------------------------
 -- Rasetsu Samue
@@ -2102,10 +2124,11 @@ INSERT INTO `item_latents` VALUES (16911,287,1,0,92);    -- DMG 29~40, increases
 INSERT INTO `item_latents` VALUES (16912,165,5,59,17);   -- Kitsutsuki - Vs. plantoids: Critical hit rate +5%
 
 -- -------------------------------------------------------
--- Royal Swordsman's Blade +1/+2
+-- Royal Swordsman's Blade NQ/+1/+2
 -- -------------------------------------------------------
-INSERT INTO `item_latents` VALUES (16948,10,2,53,1);     -- VIT +2 in areas outside own nation's control
-INSERT INTO `item_latents` VALUES (16949,10,3,53,1);     -- VIT +3 in areas outside own nation's control
+INSERT INTO `item_latents` VALUES (16601,23,5,53,1);     -- ATT +5 in areas outside own nation's control
+INSERT INTO `item_latents` VALUES (16948,23,6,53,1);     -- ATT +6 in areas outside own nation's control
+INSERT INTO `item_latents` VALUES (16949,23,7,53,1);     -- ATT +7 in areas outside own nation's control
 
 INSERT INTO `item_latents` VALUES (16952,2,-20,47,0);
 INSERT INTO `item_latents` VALUES (16952,16,-10,47,0);
