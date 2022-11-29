@@ -194,6 +194,7 @@ INSERT INTO `item_mods_pet` VALUES (12649,370,1,2); -- Wyvern - REGEN: 1
 
 -- Evokers Doublet
 INSERT INTO `item_mods_pet` VALUES (12650,27,-2,1); -- Avatar - ENMITY: -2
+INSERT INTO `item_mods_pet` VALUES (12650,357,-1,1); -- Avatar - BP_DELAY: -1
 
 -- Drachen Finger Gauntlets
 INSERT INTO `item_mods_pet` VALUES (13974,25,5,2); -- Wyvern - ACC: 5
@@ -232,6 +233,9 @@ INSERT INTO `item_mods_pet` VALUES (14523,2,18,6); -- Sharpshot - HP: 18
 INSERT INTO `item_mods_pet` VALUES (14523,2,16,7); -- Stormwaker - HP: 16
 INSERT INTO `item_mods_pet` VALUES (14523,5,20,4); -- Harlequin - MP: 20
 INSERT INTO `item_mods_pet` VALUES (14523,5,24,7); -- Stormwaker - MP: 24
+
+-- Beastly Earring
+INSERT INTO `item_mods_pet` VALUES (14742,25,10,0); -- All Pets - ACC: 10
 
 -- Ostreger Mitts
 INSERT INTO `item_mods_pet` VALUES (14872,2,10,2); -- Wyvern - HP: 10
@@ -340,6 +344,9 @@ INSERT INTO `item_mods_pet` VALUES (16368,25,10,0); -- All Pets - ACC: 10
 
 -- Glyph Axe
 INSERT INTO `item_mods_pet` VALUES (16654,368,10,0); -- All Pets - REGAIN: 10
+
+-- Barbaroi Axe
+INSERT INTO `item_mods_pet` VALUES (16680,25,3,0); -- All Pets - ACC: 3
 
 -- Draconis Lance
 INSERT INTO `item_mods_pet` VALUES (16843,23,10,2); -- Wyvern - ATT: 10

@@ -127,7 +127,7 @@ INSERT INTO `item_weapon` VALUES (16476,'darksteel_kukri',2,0,0,0,0,1,1,200,22,0
 INSERT INTO `item_weapon` VALUES (16477,'cermet_kukri',2,0,0,0,0,1,1,194,22,0);
 INSERT INTO `item_weapon` VALUES (16478,'poison_kukri',2,0,0,0,0,1,1,206,10,0);
 INSERT INTO `item_weapon` VALUES (16479,'acid_kukri',2,0,0,0,0,1,1,200,14,0);
-INSERT INTO `item_weapon` VALUES (16480,'thiefs_knife',2,0,0,0,0,1,1,194,28,0);
+INSERT INTO `item_weapon` VALUES (16480,'thiefs_knife',2,0,0,0,0,1,2,194,18,0);
 INSERT INTO `item_weapon` VALUES (16481,'yataghan_+1',2,0,0,0,0,1,1,194,36,0);
 INSERT INTO `item_weapon` VALUES (16482,'onion_dagger',2,0,0,0,0,1,1,193,3,0);
 INSERT INTO `item_weapon` VALUES (16483,'onion_knife',2,0,0,0,0,1,1,205,5,0);
@@ -176,7 +176,7 @@ INSERT INTO `item_weapon` VALUES (16525,'hornet_fleuret',3,0,0,0,0,1,1,227,34,0)
 INSERT INTO `item_weapon` VALUES (16526,'schwert',3,0,0,0,0,2,1,221,32,0);
 INSERT INTO `item_weapon` VALUES (16527,'epee',3,0,0,0,0,1,1,221,35,0);
 INSERT INTO `item_weapon` VALUES (16528,'bloody_rapier',3,0,0,0,0,1,1,224,28,0);
-INSERT INTO `item_weapon` VALUES (16529,'musketeers_sword',3,0,0,0,0,1,1,224,26,0);
+INSERT INTO `item_weapon` VALUES (16529,'musketeers_sword',4,0,0,0,0,2,1,480,61,0);
 INSERT INTO `item_weapon` VALUES (16530,'xiphos',3,0,0,0,0,2,1,228,8,0);
 INSERT INTO `item_weapon` VALUES (16531,'brass_xiphos',3,0,0,0,0,2,1,228,12,0);
 INSERT INTO `item_weapon` VALUES (16532,'gladius',3,0,0,0,0,2,1,228,17,0);
@@ -823,7 +823,7 @@ INSERT INTO `item_weapon` VALUES (17184,'assassins_bow',25,0,0,0,0,1,1,330,21,0)
 INSERT INTO `item_weapon` VALUES (17185,'siege_bow',25,0,0,0,0,1,1,540,83,0);
 INSERT INTO `item_weapon` VALUES (17186,'sagittarius_bow',25,0,0,0,0,1,1,330,34,0);
 INSERT INTO `item_weapon` VALUES (17187,'eurytos_bow',25,0,0,0,0,1,1,490,71,0);
-INSERT INTO `item_weapon` VALUES (17188,'sniping_bow',25,0,0,0,0,1,1,360,27,0);
+INSERT INTO `item_weapon` VALUES (17188,'hunters_zamburak',26,0,0,0,0,1,1,288,27,0);
 INSERT INTO `item_weapon` VALUES (17189,'rapid_bow_+1',25,0,0,0,0,1,1,350,38,0);
 INSERT INTO `item_weapon` VALUES (17190,'sarnga',25,0,0,0,0,1,1,720,72,0);
 INSERT INTO `item_weapon` VALUES (17191,'pharaohs_bow',25,0,0,0,0,1,1,360,36,0);
@@ -1113,7 +1113,7 @@ INSERT INTO `item_weapon` VALUES (17474,'grapnel',0,0,0,0,0,0,1,300,3,0);
 INSERT INTO `item_weapon` VALUES (17475,'dst._katars_+1',1,0,0,0,0,4,1,555,14,0);
 INSERT INTO `item_weapon` VALUES (17476,'cat_baghnakhs_+1',1,0,0,0,0,4,1,531,3,0);
 INSERT INTO `item_weapon` VALUES (17477,'bone_patas_+1',1,0,0,0,0,4,1,566,17,0);
-INSERT INTO `item_weapon` VALUES (17478,'beat_cesti',1,0,0,0,0,4,1,528,4,0);
+INSERT INTO `item_weapon` VALUES (17478,'tekko_kagi',1,0,0,0,0,4,1,66,10,0);
 INSERT INTO `item_weapon` VALUES (17479,'behem._cesti_+1',1,0,0,0,0,4,1,520,8,0);
 INSERT INTO `item_weapon` VALUES (17480,'dmd._knuckles_+1',1,0,0,0,0,4,1,566,18,0);
 INSERT INTO `item_weapon` VALUES (17481,'kaiser_knuckles',1,0,0,0,0,4,1,566,20,0);
@@ -1315,8 +1315,8 @@ INSERT INTO `item_weapon` VALUES (17676,'t.m._espadon_+1',3,0,0,0,0,2,1,249,38,0
 INSERT INTO `item_weapon` VALUES (17677,'t.m._espadon_+2',3,0,0,0,0,2,1,241,39,0);
 INSERT INTO `item_weapon` VALUES (17678,'san_dorian_sword',3,0,0,0,0,2,1,222,11,0);
 INSERT INTO `item_weapon` VALUES (17679,'kingdom_sword',3,0,0,0,0,2,1,216,12,0);
-INSERT INTO `item_weapon` VALUES (17680,'msk._sword_+1',3,0,0,0,0,1,1,217,27,0);
-INSERT INTO `item_weapon` VALUES (17681,'msk._sword_+2',3,0,0,0,0,1,1,210,28,0);
+INSERT INTO `item_weapon` VALUES (17680,'msk._sword_+1',4,0,0,0,0,2,1,466,62,0);
+INSERT INTO `item_weapon` VALUES (17681,'msk._sword_+2',4,0,0,0,0,2,1,453,63,0);
 INSERT INTO `item_weapon` VALUES (17682,'sacred_sword',3,0,0,0,0,2,1,225,22,0);
 INSERT INTO `item_weapon` VALUES (17683,'sacred_degen',3,0,0,0,0,1,1,224,24,0);
 INSERT INTO `item_weapon` VALUES (17684,'griffinclaw',3,0,0,0,0,2,1,240,41,0);
