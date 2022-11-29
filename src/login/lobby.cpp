@@ -116,6 +116,8 @@ int32 lobbydata_parse(int32 fd)
 
                 sd->servip = ref<uint32>(buff, 5);
 
+                uint32 accid = sd->accid;
+
                 unsigned char CharList[2500];
                 std::memset(CharList, 0, sizeof(CharList));
                 // Store the reserved numbers.
@@ -127,8 +129,23 @@ int32 lobbydata_parse(int32 fd)
                 CharList[7] = 0x46;
                 CharList[8] = 0x20;
 
+                const char* accQuery = "SELECT client_mac FROM account_ip_record WHERE accid = %u ORDER BY login_time DESC LIMIT 1;";
+                int32       accRet   = sql->Query(accQuery, accid);
+                if (accRet != SQL_ERROR && sql->NumRows() != 0 && sql->NextRow() == SQL_SUCCESS) // Get most recent mac address for the accid.
+                {
+                    if (sql->GetStringData(0) != sd->mac_addr.c_str()) // If it isn't the same as the session go find the correctr accid.
+                    {
+                        const char* checkQuery = "SELECT accid FROM account_ip_record WHERE client_mac = '%s' ORDER BY login_time DESC LIMIT 1;";
+                        int32       checkRet   = sql->Query(checkQuery, sd->mac_addr.c_str());
+                        if (checkRet != SQL_ERROR && sql->NumRows() != 0 && sql->NextRow() == SQL_SUCCESS)
+                        {
+                            accid = sql->GetUIntData(0); // Set the correct accid.
+                        }
+                    }
+                }
+
                 const char* pfmtQuery = "SELECT content_ids FROM accounts WHERE id = %u;";
-                int32       ret       = sql->Query(pfmtQuery, sd->accid);
+                int32       ret       = sql->Query(pfmtQuery, accid);
                 if (ret != SQL_ERROR && sql->NumRows() != 0 && sql->NextRow() == SQL_SUCCESS)
                 {
                     CharList[28] = sql->GetUIntData(0);
