@@ -76,7 +76,16 @@ bool CPlayerController::Engage(uint16 targid)
     {
         if (distance(PChar->loc.p, PTarget->loc.p) < 30)
         {
-            if (m_lastAttackTime + std::chrono::milliseconds(PChar->GetWeaponDelay(false)) < server_clock::now())
+            float engageTimeDivisor = 1.f;
+
+            if (PTarget->objtype == TYPE_MOB)
+            {
+                auto mobId            = static_cast<CMobEntity*>(PTarget)->id;
+                engageTimeDivisor     = PChar->m_prevTargetId != mobId ? settings::get<float>("map.ENGAGE_TIME_REDUCTION") : 1.f;
+                PChar->m_prevTargetId = mobId;
+            }
+
+            if (m_lastAttackTime + std::chrono::milliseconds(std::clamp((int32)std::round(PChar->GetWeaponDelay(false) * engageTimeDivisor), 0, 32667)) < server_clock::now())
             {
                 if (CController::Engage(targid))
                 {

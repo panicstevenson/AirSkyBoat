@@ -3538,21 +3538,21 @@ void SmallPacket0x053(map_session_data_t* const PSession, CCharEntity* const PCh
     uint8 count = data.ref<uint8>(0x04);
     uint8 type  = data.ref<uint8>(0x05);
 
-    if (type == 0 && PChar->getStyleLocked())
+    if (type == 0 && PChar->getStyleLocked()) // /lockstyle off (Turns off Lockstyle)
     {
         charutils::SetStyleLock(PChar, false);
         charutils::SaveCharLook(PChar);
     }
-    else if (type == 1)
+    else if (type == 1) // Login (Also appears on Zone)
     {
         // The client sends this when logging in and zoning.
         PChar->setStyleLocked(true);
     }
-    else if (type == 2)
+    else if (type == 2) // /lockstyle (Gets Status)
     {
         PChar->pushPacket(new CMessageStandardPacket(PChar->getStyleLocked() ? MsgStd::StyleLockIsOn : MsgStd::StyleLockIsOff));
     }
-    else if (type == 3)
+    else if (type == 3) // /lockstyleset # (Sets Lockstyle Set)
     {
         charutils::SetStyleLock(PChar, true);
 
@@ -3567,6 +3567,7 @@ void SmallPacket0x053(map_session_data_t* const PSession, CCharEntity* const PCh
             }
 
             auto* PItem = itemutils::GetItem(itemId);
+
             if (PItem == nullptr || !(PItem->isType(ITEM_WEAPON) || PItem->isType(ITEM_EQUIPMENT)))
             {
                 itemId = 0;
@@ -3576,7 +3577,7 @@ void SmallPacket0x053(map_session_data_t* const PSession, CCharEntity* const PCh
                 itemId = 0;
             }
 
-            PChar->styleItems[equipSlotId] = itemId;
+            PChar->styleItems[equipSlotId] = itemId > 0 ? (charutils::CanLockstyleItem(PItem, PChar, false) ? itemId : 0) : 0;
 
             switch (equipSlotId)
             {
@@ -3597,7 +3598,7 @@ void SmallPacket0x053(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         charutils::SaveCharLook(PChar);
     }
-    else if (type == 4)
+    else if (type == 4) // /lockstyle on (Turns on Lockstyle)
     {
         charutils::SetStyleLock(PChar, true);
         charutils::SaveCharLook(PChar);

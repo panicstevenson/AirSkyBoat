@@ -2163,14 +2163,41 @@ namespace charutils
                 HasItem(PChar, AItem->getID()) && canEquipItemOnAnyJob(PChar, AItem));
     }
 
+    bool CanLockstyleItem(CItem* PItem, CCharEntity* PChar, bool ignoreLevel)
+    {
+        auto* PEquip = dynamic_cast<CItemEquipment*>(PItem);
+
+        if (!PChar || !PEquip)
+        {
+            return false;
+        }
+
+        if (!(PEquip->getJobs() & (1 << (PChar->GetMJob() - 1))))
+        {
+            return false;
+        }
+
+        if (!ignoreLevel && (PEquip->getReqLvl() > PChar->jobs.job[PChar->GetMJob()]))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     void SetStyleLock(CCharEntity* PChar, bool isStyleLocked)
     {
+        if (!PChar)
+        {
+            return;
+        }
+
         if (isStyleLocked)
         {
             for (uint8 i = 0; i < SLOT_LINK1; i++)
             {
                 auto* PItem          = PChar->getEquip((SLOTTYPE)i);
-                PChar->styleItems[i] = (PItem == nullptr) ? 0 : PItem->getID();
+                PChar->styleItems[i] = PItem && CanLockstyleItem(itemutils::GetItem(PItem->getID()), PChar, false) ? PItem->getID() : 0;
             }
             memcpy(&PChar->mainlook, &PChar->look, sizeof(PChar->look));
         }
