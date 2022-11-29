@@ -352,11 +352,13 @@ namespace luautils
     std::string GetItemNameByID(uint16 const& name);
 
     // Fishing Contest Utilities
-    void NewFishingContest(sol::table const& table);
+    void NewFishingContest();
     void UpdateContestStatus(uint8 status, bool isTest = false);
-    void ScoreFishingContest();
-    auto GetFishingContest() -> sol::table;
+    auto GetCurrentFishingContest() -> sol::table;
+    auto GetFishingContest(uint16 contestId = 0) -> sol::table;
     void SetContestStartTime(uint32 startTime);
+    void InitializeFishingContestSystem();
+    void ProgressFishingContest();
 
     template <typename... Targs>
     int32 invokeBattlefieldEvent(uint16 battlefieldId, const std::string& eventName, Targs... args)

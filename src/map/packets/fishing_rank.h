@@ -25,7 +25,7 @@
 #include "common/cbasetypes.h"
 #include "common/mmo.h"
 
-#include "utils/fishingutils.h"
+#include "utils/fishingcontest.h"
 
 #include "basic.h"
 

@@ -2332,7 +2332,7 @@ void SmallPacket0x04B(map_session_data_t* const PSession, CCharEntity* const PCh
         // 13 = Fish Rank Self, including the score and rank (???) following fish submission (How is it ranked??)
         std::vector<fish_ranking_entry*> entries;
 
-        uint32              realEntries = fishingutils::FishingRankEntryCount();
+        uint32              realEntries = fishingcontest::FishingRankEntryCount();
         uint32              msg_entries = realEntries + 15; // 15 "SmallFisher" entries
         fish_ranking_entry* entry       = nullptr;
         uint8               entryVal    = 0;
@@ -2343,7 +2343,7 @@ void SmallPacket0x04B(map_session_data_t* const PSession, CCharEntity* const PCh
         {
             // Client requesting the fish ranking menu header - All empty timestamps
             // In either case, we need the "Fish Rank Self" block
-            entry = fishingutils::GetPlayerEntry(PChar);
+            entry = fishingcontest::GetPlayerEntry(PChar);
             if (entry)
             {
                 // For type 1, include the player's Fish Rank Self packet from the contest.  Otherwise, just use some current info.
@@ -2404,7 +2404,7 @@ void SmallPacket0x04B(map_session_data_t* const PSession, CCharEntity* const PCh
         {
             while (entries.size() <= (msg_request_len / blockSize))
             {
-                entry = fishingutils::GetFishRankEntry((msg_offset / blockSize) + entryVal++);
+                entry = fishingcontest::GetFishRankEntry((msg_offset / blockSize) + entryVal++);
                 if (entry)
                 {
                     entry->resultcount = msg_entries;

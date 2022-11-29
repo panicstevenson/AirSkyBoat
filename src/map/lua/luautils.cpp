@@ -86,6 +86,7 @@
 #include "transport.h"
 #include "utils/battleutils.h"
 #include "utils/charutils.h"
+#include "utils/fishingcontest.h"
 #include "utils/instanceutils.h"
 #include "utils/itemutils.h"
 #include "utils/moduleutils.h"
@@ -112,7 +113,7 @@ namespace luautils
 
         ShowInfo("luautils: Lua initializing");
 
-        // Bind math.randon(...) globally
+        // Bind math.random(...) globally
         // clang-format off
         lua["math"]["random"] =
             sol::overload([]() { return xirand::GetRandomNumber(1.0f); },
@@ -191,9 +192,11 @@ namespace luautils
         lua.set_function("SendLuaFuncStringToZone", &luautils::SendLuaFuncStringToZone);
         lua.set_function("NewFishingContest", &luautils::NewFishingContest);
         lua.set_function("UpdateContestStatus", &luautils::UpdateContestStatus);
-        lua.set_function("ScoreFishingContest", &luautils::ScoreFishingContest);
         lua.set_function("GetFishingContest", &luautils::GetFishingContest);
+        lua.set_function("GetCurrentFishingContest", &luautils::GetCurrentFishingContest);
         lua.set_function("SetContestStartTime", &luautils::SetContestStartTime);
+        lua.set_function("InitializeFishingContestSystem", &luautils::InitializeFishingContestSystem);
+        lua.set_function("ProgressFishingContest", &luautils::ProgressFishingContest);
 
         // This binding specifically exists to forcefully crash the server.
         // clang-format off
@@ -5326,47 +5329,80 @@ namespace luautils
         return id;
     }
 
-    // Fishing Utilities
-    void ScoreFishingContest()
+    auto GetCurrentFishingContest() -> sol::table
     {
-        fishingutils::ScoreContest();
+        return GetFishingContest();
     }
 
-    auto GetFishingContest() -> sol::table
+    auto GetFishingContest(uint16 contestId) -> sol::table
     {
         sol::table table = lua.create_table();
 
-        table["id"]         = fishingutils::GetContestID();
-        table["status"]     = fishingutils::GetContestStatus();
-        table["criteria"]   = fishingutils::GetContestCriteria();
-        table["measure"]    = fishingutils::GetContestMeasure();
-        table["fishid"]     = fishingutils::GetContestFish();
-        table["starttime"]  = fishingutils::GetContestStartTime();
-        table["changetime"] = fishingutils::GetContestProgressTime();
-
+        if (contestId)
+        {
+            const char* Query = "SELECT "
+                                "contestid, " // 0
+                                "status, "    // 1
+                                "criteria, "  // 2
+                                "measure, "   // 3
+                                "fishid, "    // 4
+                                "starttime "  // 5
+                                "FROM `fishing_contest` f "
+                                "WHERE contestid = %u;";
+            int32 ret = sql->Query(Query, contestId);
+            if (ret != SQL_ERROR && sql->NextRow() == SQL_SUCCESS)
+            {
+                table["id"]         = sql->GetUIntData(0);
+                table["status"]     = sql->GetUIntData(1);
+                table["criteria"]   = sql->GetUIntData(2);
+                table["measure"]    = sql->GetUIntData(3);
+                table["fishid"]     = sql->GetUIntData(4);
+                table["starttime"]  = sql->GetUIntData(5);
+                table["changetime"] = 0xFFFFFFFF;
+            }
+            else
+            {
+                return sol::nil;
+            }
+        }
+        else
+        {
+            table["id"]         = fishingcontest::GetContestID();
+            table["status"]     = fishingcontest::GetContestStatus();
+            table["criteria"]   = fishingcontest::GetContestCriteria();
+            table["measure"]    = fishingcontest::GetContestMeasure();
+            table["fishid"]     = fishingcontest::GetContestFish();
+            table["starttime"]  = fishingcontest::GetContestStartTime();
+            table["changetime"] = fishingcontest::GetContestChangeTime();
+        }
         return table;
     }
 
-    void NewFishingContest(sol::table const& table)
+    void NewFishingContest()
     {
-        TracyZoneScoped;
-
-        uint16 contestId = table.get<uint16>("id");
-        uint8  criteria  = table.get<FISHINGCONTESTCRITERIA>("criteria");
-        uint8  measure   = table.get<FISHINGCONTESTMEASURE>("measure");
-        uint32 fishId    = table.get<uint32>("fishid");
-
-        fishingutils::InitNewContest(contestId, fishId, criteria, measure);
+        fishingcontest::InitNewContest();
     }
 
     void UpdateContestStatus(uint8 status, bool isTest)
     {
-        fishingutils::SetContestStatus(status, isTest);
+        fishingcontest::SetContestStatus(status, isTest);
     }
 
     void SetContestStartTime(uint32 startTime)
     {
-        fishingutils::SetContestStartTime(startTime);
+        fishingcontest::SetContestStartTime(startTime);
+    }
+
+    void InitializeFishingContestSystem()
+    {
+        // IMPORTANT: This should only be called on the Zone Init in Selbina
+        // (or whatever zone you want to run the contest from)
+        fishingcontest::InitializeFishingContestSystem();
+    }
+
+    void ProgressFishingContest()
+    {
+        fishingcontest::ProgressContest();
     }
 
     std::string GetItemNameByID(uint16 const& id)
