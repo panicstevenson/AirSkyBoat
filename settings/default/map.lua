@@ -281,4 +281,7 @@ xi.settings.map =
 
     -- Enable/disable keeping jug pets through zoning
     KEEP_JUGPET_THROUGH_ZONING = true,
+
+    -- Engage Time Reduction
+    ENGAGE_TIME_REDUCTION = 0.5; -- Decreases re-engage time(ms) by a percentage. (float)
 }

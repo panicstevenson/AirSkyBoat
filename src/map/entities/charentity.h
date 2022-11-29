@@ -641,7 +641,8 @@ public:
 
     void clearCharVarsWithPrefix(std::string const& prefix);
 
-    bool m_Locked; // Is the player locked in a cutscene
+    bool   m_Locked;       // Is the player locked in a cutscene
+    uint32 m_prevTargetId; // ID of the last target for the player.
 
     CCharEntity();
     ~CCharEntity();

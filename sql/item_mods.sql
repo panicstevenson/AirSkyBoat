@@ -31586,8 +31586,8 @@ INSERT INTO `item_mods` VALUES (16439,953,30); -- ITEM_ADDEFFECT_DURATION: 30
 INSERT INTO `item_mods` VALUES (16440,25,3); -- ACC: 3
 
 -- Freesword's Baghnakhs
-INSERT INTO `item_mods` VALUES (17497,25,2); -- ACC: 2
-INSERT INTO `item_mods` VALUES (17497,23,3); -- ATT: 3
+INSERT INTO `item_mods` VALUES (16442,25,2); -- ACC: 2
+INSERT INTO `item_mods` VALUES (16442,23,3); -- ATT: 3
 
 -- Fruit Punches
 INSERT INTO `item_mods` VALUES (16443,25,3); -- ACC: 3
