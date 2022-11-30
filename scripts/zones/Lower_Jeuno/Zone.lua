@@ -16,8 +16,8 @@ local zoneObject = {}
 zoneObject.onInitialize = function(zone)
     zone:registerTriggerArea(1, 23, 0, -43, 44, 7, -39) -- Inside Tenshodo HQ. TODO: Find out if this is used other than in ZM 17 (not anymore). Remove if not.
     xi.chocobo.initZone(zone)
-    xi.horizon.teleport.handleOPEnable()
-    xi.horizon.teleport.addNPC(zone)
+    hxi.teleport.checkOPEnable()
+    hxi.teleport.addNPC(zone)
     xi.hardcore.setupNPC(zone)
 end
 

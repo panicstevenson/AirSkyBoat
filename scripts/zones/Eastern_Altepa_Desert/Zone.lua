@@ -28,7 +28,8 @@ zoneObject.onInitialize = function(zone)
 
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
     xi.chocobo.initZone(zone)
-    xi.horizon.spawnInitialMobs(zone)
+    hxi.spawner.spawnInitialMobs(zone)
+    hxi.teleport.spawnNMs(zone)
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype)

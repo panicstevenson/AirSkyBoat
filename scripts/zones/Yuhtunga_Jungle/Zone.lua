@@ -26,6 +26,7 @@ zoneObject.onInitialize = function(zone)
     xi.helm.initZone(zone, xi.helm.type.LOGGING)
 
     xi.bmt.updatePeddlestox(xi.zone.YUHTUNGA_JUNGLE, ID.npc.PEDDLESTOX)
+    hxi.teleport.spawnNMs(zone)
 end
 
 zoneObject.onGameDay = function()

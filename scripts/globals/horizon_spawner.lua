@@ -6,12 +6,13 @@ require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/zone")
 
-xi.horizon = {}
+hxi = hxi or { }
+hxi.spawner = hxi.spawner or { }
 
 -----------------------------------------------------------
 --                        Usage                          --
 -----------------------------------------------------------
--- 1. Add xi.horizon.spawnInitialMobs(zone) to the target zone's onInitialize function. (This can be added to a zone even if it doesn't have additional mobs to spawn.)
+-- 1. Add hxi.spawner.spawnInitialMobs(zone) to the target zone's onInitialize function. (This can be added to a zone even if it doesn't have additional mobs to spawn.)
 -- 2. Follow the structure below to add in as many spawns as you want.
 --
 -- Note: You can use any of the pieces from the below table example. Each of these are
@@ -768,15 +769,15 @@ local spawnerFunctions =
 --                    Spawner Code                       --
 -----------------------------------------------------------
 
-xi.horizon.spawnInitialMobs = function(zone)
+hxi.spawner.spawnInitialMobs = function(zone)
     if spawnerMobs[zone:getID()] ~= nil then
         for index, list in pairs(spawnerMobs[zone:getID()]) do
-            xi.horizon.spawnMob(zone, index)
+            hxi.spawner.spawnMob(zone, index)
         end
     end
 end
 
-xi.horizon.spawnMob = function(zone, index)
+hxi.spawner.spawnMob = function(zone, index)
     local table = spawnerMobs[zone:getID()][index]
     if table.enabled ~= false then
         if table.releaseId == nil then

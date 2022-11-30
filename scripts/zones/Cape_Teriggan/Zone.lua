@@ -19,7 +19,7 @@ zoneObject.onInitialize = function(zone)
     DisallowRespawn(kreutzet:getID(), true) -- prevents accidental 'pop' during no wind weather and immediate despawn
 
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
-    xi.hnm_system.startup(zone)
+    hxi.hnm.startup(zone)
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype)
@@ -27,7 +27,7 @@ zoneObject.onConquestUpdate = function(zone, updatetype)
 end
 
 zoneObject.onZoneTick = function(zone)
-    xi.hnm_system.checkSpawn(zone)
+    hxi.hnm.checkSpawn(zone)
 end
 
 zoneObject.onZoneIn = function( player, prevZone)

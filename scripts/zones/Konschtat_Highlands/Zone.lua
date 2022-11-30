@@ -18,7 +18,7 @@ end
 zoneObject.onInitialize = function(zone)
     xi.chocobo.initZone(zone)
     xi.voidwalker.zoneOnInit(zone)
-    xi.horizon.spawnInitialMobs(zone)
+    hxi.spawner.spawnInitialMobs(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

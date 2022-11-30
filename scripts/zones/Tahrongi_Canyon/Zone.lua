@@ -22,7 +22,7 @@ zoneObject.onInitialize = function(zone)
     xi.helm.initZone(zone, xi.helm.type.EXCAVATION)
     xi.chocobo.initZone(zone)
     xi.voidwalker.zoneOnInit(zone)
-    xi.horizon.spawnInitialMobs(zone)
+    hxi.spawner.spawnInitialMobs(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

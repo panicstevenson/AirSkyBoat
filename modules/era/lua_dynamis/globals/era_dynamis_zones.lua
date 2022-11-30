@@ -167,7 +167,7 @@ for _, zoneID in pairs(startingZones) do
             end
         end
         if dynamisZone:getID() == xi.zone.QUFIM_ISLAND then
-            xi.hnm_system.checkSpawn(zone)
+            hxi.hnm.checkSpawn(zone)
         end
     end)
 end

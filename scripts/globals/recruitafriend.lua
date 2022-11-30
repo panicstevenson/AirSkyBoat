@@ -2,7 +2,7 @@
 --        Horizon Recruit a Friend System       --
 --------------------------------------------------
 
-xi.horizon = xi.horizon or {}
+hxi.raf = hxi.raf or {}
 
 local recruiterRewards =
 {
@@ -62,9 +62,9 @@ local recruitRewards =
 
 local timeSort = {30, 60, 90, 120}
 
-xi.horizon.rafOnTrigger = function(player, npc)
+hxi.raf.rafOnTrigger = function(player, npc)
     if player:getCharVar("[RAF]SavedItem") ~= 0 then
-        xi.horizon.rafAddRewards(player, npc, player:getCharVar("[RAF]SavedItem"))
+        hxi.raf.rafAddRewards(player, npc, player:getCharVar("[RAF]SavedItem"))
     elseif player:getPartySize() == 2 then
         local party = player:getParty()
         local timeRedeemed = 0
@@ -77,7 +77,7 @@ xi.horizon.rafOnTrigger = function(player, npc)
             rafMember = party[2]
             timeRedeemd = rafMember:getWorldPassRedeemTime()
         else
-            xi.horizon.rafStandardText(player, npc)
+            hxi.raf.rafStandardText(player, npc)
         end
 
         if timeRedeemed ~= 0 and timeRedeemed ~= nil then
@@ -108,21 +108,21 @@ xi.horizon.rafOnTrigger = function(player, npc)
             if recruiterReward and rafReward then
                 player:PrintToPlayer(string.format("Congratuations on being with %s for %s days! To celebrate your time on HorizonXI you have been given a %s!", rafMember:getName(), timePeriod, recruiterReward[2]), xi.msg.channel.SAY, npc:getName())
                 player:PrintToPlayer("Thanks for playing on HorizonXI!", xi.msg.channel.SAY, npc:getName())
-                xi.horizon.rafAddRewards(player, npc, recruiterReward[1])
+                hxi.raf.rafAddRewards(player, npc, recruiterReward[1])
                 rafMember:PrintToPlayer(string.format("Congratuations on being with %s for %s days! To celebrate your time on HorizonXI you have been given a %s!", player:getName(), timePeriod, rafReward[2]), xi.msg.channel.SAY, npc:getName())
                 rafMember:PrintToPlayer("Thanks for playing on HorizonXI!", xi.msg.channel.SAY, npc:getName())
-                xi.horizon.rafAddRewards(rafMember, npc, rafReward[1])
+                hxi.raf.rafAddRewards(rafMember, npc, rafReward[1])
             else
                 player:PrintToPlayer("Oops! Looks like you haven't waited long enough, check back in a few days to see if you got a new reward!", xi.msg.channel.SAY, npc:getName())
                 rafMember:PrintToPlayer("Oops! Looks like you haven't waited long enough, check back in a few days to see if you got a new reward!", xi.msg.channel.SAY, npc:getName())
             end
         end
     else
-        xi.horizon.rafStandardText(player, npc)
+        hxi.raf.rafStandardText(player, npc)
     end
 end
 
-xi.horizon.rafStandardText = function(player, npc)
+hxi.raf.rafStandardText = function(player, npc)
     player:PrintToPlayer("Hello! If you are interested in recruiting a friend to HorizonXI, you can purchase Gold World Passes on horizonxi.com for 10,000 gil.", xi.msg.channel.SAY, npc:getName())
     player:PrintToPlayer("We are always excited when our adventurers choose to find their friends here, so we provide different rewards for the time you have played together!", xi.msg.channel.SAY, npc:getName())
     player:PrintToPlayer("With a gold world pass, you will be able to get special rewards at 30, 60, 90, and 120 days of playing together.", xi.msg.channel.SAY, npc:getName())
@@ -130,7 +130,7 @@ xi.horizon.rafStandardText = function(player, npc)
     player:PrintToPlayer("If you are in a party with your recruit a friend, you can receive your rewards by talking with me!", xi.msg.channel.SAY, npc:getName())
 end
 
-xi.horizon.rafAddRewards = function(player, npc, rewardId)
+hxi.raf.rafAddRewards = function(player, npc, rewardId)
     if player:getFreeSlotsCount() > 0 then
         player:addItem(rewardId, 1)
         player:messageSpecial(zones[player:getZoneID()].text.ITEM_OBTAINED, rewardId)

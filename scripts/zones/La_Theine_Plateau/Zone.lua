@@ -24,7 +24,7 @@ zoneObject.onInitialize = function(zone)
     laTheineGlobal.moveFallenEgg()
     xi.chocobo.initZone(zone)
     xi.voidwalker.zoneOnInit(zone)
-    xi.horizon.spawnInitialMobs(zone)
+    hxi.spawner.spawnInitialMobs(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)
