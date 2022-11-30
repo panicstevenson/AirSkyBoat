@@ -405,20 +405,18 @@ xi.mobskills.mobMagicalMove = function(mob, target, skill, damage, element, dmgm
 end
 
 xi.mobskills.ftP = function(tp, ftp100, ftp200, ftp300)
-    if (tp < 1000) then
-        tp = 1000
-    end
+    local ftp000 = ftp100 / 2
 
     if (tp >= 1000 and tp < 2000) then
         return ftp100 + ( ((ftp200 - ftp100 ) / 1000) * (tp - 1000) )
     elseif (tp >= 2000 and tp <= 3000) then
         -- generate a straight line between ftp2 and ftp3 and find point @ tp
         return ftp200 + ( ((ftp300 - ftp200) / 1000) * (tp - 2000) )
-    else
-        print("fTP error: TP value is not between 1000-3000!")
+    elseif (tp < 1000) then
+        return ftp000 + (((ftp100 - ftp000) * tp) / 1000) -- Generate TP scaling is TP < 1000 for beastmaster pets
     end
 
-    return 1 -- no ftp mod
+    return (ftp100 / 2) -- fail safe
 end
 
 -- effect = xi.effect.WHATEVER if enfeeble
