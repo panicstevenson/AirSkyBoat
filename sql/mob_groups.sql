@@ -8390,9 +8390,6 @@ INSERT INTO `mob_groups` VALUES (48,0,117,'Omodaka_Armor',0,128,0,0,0,0,0,0);
 INSERT INTO `mob_groups` VALUES (49,4852,117,'Serpopard_Ninlil',0,128,0,0,0,0,0,0);
 INSERT INTO `mob_groups` VALUES (50,6827,117,'Otherworldly_Rimester',0,128,0,0,0,0,0,0);
 INSERT INTO `mob_groups` VALUES (51,20014,117,'Killer_Bee',330,0,1439,0,0,15,19,0);
-INSERT INTO `mob_groups` VALUES (52,1635,117,'Goblin_Ambusher',330,0,1017,0,0,17,20,0);
-INSERT INTO `mob_groups` VALUES (53,1738,117,'Goblin_Tinkerer',330,0,6029,0,0,17,20,0);
-INSERT INTO `mob_groups` VALUES (54,1643,117,'Goblin_Butcher',330,0,6029,0,0,17,20,0);
 
 -- ------------------------------------------------------------
 -- Buburimu_Peninsula (Zone 118)
