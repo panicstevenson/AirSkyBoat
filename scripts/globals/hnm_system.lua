@@ -108,6 +108,11 @@ xi.hnm_system.onDeath = function(mob)
 
     if mobType == 1 then
         local fzone = zones[math.random(1, 4)]
+        if hQ == 1 then
+            SetServerVariable("FafnirDay", 1)
+        else
+            SetServerVariable("FafnirDay", fDay + 1)
+        end
         SetServerVariable("[HNM]Fafnir", respawn)
         SetServerVariable("FafnirZone", fzone)
         for i = 1, 4 do
@@ -138,20 +143,19 @@ xi.hnm_system.onDeath = function(mob)
                     zone:setLocalVar("[HNM]Fafnir", fafnogg)
                     zone:setLocalVar("FafID", 0)
 
-                    zone:setLocalVar("FafnirDay", fDay + 1)
+                    zone:setLocalVar("FafnirDay", fDay)
                     zone:setLocalVar("FafnirZone", fZone)
 
                 ]], zones[i]))
             end
         end
-
-        if hQ == 1 then
-            SetServerVariable("FafnirDay", 1)
-        else
-            SetServerVariable("FafnirDay", fDay + 1)
-        end
     elseif mobType == 2 then
         local azone = zones[math.random(5, 8)]
+        if hQ == 1 then
+            SetServerVariable("AdamantoiseDay", 1)
+        else
+            SetServerVariable("AdamantoiseDay", aDay + 1)
+        end
         SetServerVariable("[HNM]Adamantoise", respawn)
         SetServerVariable("AdamantoiseZone", azone)
         for i = 5, 8 do
@@ -180,19 +184,18 @@ xi.hnm_system.onDeath = function(mob)
                     zone:setLocalVar("[HNM]Adamantoise", adamantoise)
                     zone:setLocalVar("AddyID", 0)
 
-                    zone:setLocalVar("AdamantoiseDay", aDay + 1)
+                    zone:setLocalVar("AdamantoiseDay", aDay)
                     zone:setLocalVar("AdamantoiseZone", aZone)
                 ]], zones[i]))
             end
         end
-
-        if hQ == 1 then
-            SetServerVariable("AdamantoiseDay", 1)
-        else
-            SetServerVariable("AdamantoiseDay", aDay + 1)
-        end
     else
         local bzone = zones[math.random(9, 13)]
+        if hQ == 1 then
+            SetServerVariable("BehemothDay", 1)
+        else
+            SetServerVariable("BehemothDay", bDay + 1)
+        end
         SetServerVariable("[HNM]Behemoth", respawn)
         SetServerVariable("BehemothZone", bzone)
         for i = 9, 13 do
@@ -222,16 +225,10 @@ xi.hnm_system.onDeath = function(mob)
                     zone:setLocalVar("[HNM]Behemoth", behemoth)
                     zone:setLocalVar("BeheID", 0)
 
-                    zone:setLocalVar("BehemothDay", bDay + 1)
+                    zone:setLocalVar("BehemothDay", bDay)
                     zone:setLocalVar("BehemothZone", bZone)
                 ]], zones[i]))
             end
-        end
-
-        if hQ == 1 then
-            SetServerVariable("BehemothDay", 1)
-        else
-            SetServerVariable("BehemothDay", bDay + 1)
         end
     end
 end
