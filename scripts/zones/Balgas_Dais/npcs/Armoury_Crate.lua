@@ -793,6 +793,10 @@ local loot =
             { itemid = xi.items.VIAL_OF_BLACK_BEETLE_BLOOD, droprate =  60 },
             { itemid = xi.items.SQUARE_OF_RAXA,             droprate = 260 },
         },
+        {
+            { itemid =   0,  droprate = 800 }, -- nothing
+            { itemid = 4742, droprate = 200 }, -- scroll of shellra v
+        },
     },
 
     -- Moa Constrictors
