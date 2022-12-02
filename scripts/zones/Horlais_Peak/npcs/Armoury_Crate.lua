@@ -348,6 +348,11 @@ local loot =
             { itemid = 4900, droprate = 280 }, -- thunder_spirit_pact
             { itemid = 4869, droprate =  30 }, -- scroll_of_warp
         },
+
+        {
+            { itemid =     0, droprate = 800 }, -- nothing
+            { itemid = 23045, droprate = 200 }, -- Shepherd's Bonnet
+        },
     },
 
     -- BCNM Dropping Like Flies

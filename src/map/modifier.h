@@ -501,6 +501,7 @@ enum class Mod
     AVATAR_LVL_BONUS          = 1040, // Avatar: Lv.+ (Increases all avatar's base level above 99)
     CARBUNCLE_LVL_BONUS       = 1041, // Carbuncle: Lv.+ (Increases Carbuncle's base level above 99)
     CAIT_SITH_LVL_BONUS       = 1042, // Cait Sith: Lv.+ (Increases Cait Sith's base level above 99)
+    SUMMON_CASTING_TIME       = 1170, // Reduces summoning cast time by seconds provided
 
     // Blue Mage
     BLUE_POINTS          = 309,  // Tracks extra blue points

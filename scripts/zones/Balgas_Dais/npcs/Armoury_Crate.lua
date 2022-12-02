@@ -242,9 +242,10 @@ local loot =
         },
 
         {
-            { itemid = 0, droprate = 500 }, -- nothing
+            { itemid = 0, droprate = 300 }, -- nothing
             { itemid = xi.items.SHEET_OF_BAST_PARCHMENT, droprate =  400 },
             { itemid = xi.items.HI_POTION,               droprate =  100 },
+            { itemid = 23246, droprate = 200 }, -- Shepherd's Hose
         },
 
         {

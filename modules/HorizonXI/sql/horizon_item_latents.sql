@@ -23,6 +23,7 @@ REPLACE INTO `item_latents` (`itemId`, `modId`, `value`, `latentId`, `latentPara
     (13668,435,1,8,10),  -- BRD sub back piece: Paeon +1
     (13670,110,5,8,12),  -- SAM sub back piece: Parrying Skill +5
     (13671,11,3,8,13),  -- NIN sub back piece: AGI +3
+    (13677,361,40,8,14),  -- DRG sub back piece: Jump TP bonus +40
     (13673,357,2,8,15),  -- SMN sub back piece: BP Delay -2
     (13755,369,1,5,30),  -- Flora Cotehardie "Refresh" effect while MP under 30
     (13775,369,1,5,40),  -- Blue Cotehardie "Refresh" effect while MP under 40
@@ -54,6 +55,9 @@ REPLACE INTO `item_latents` (`itemId`, `modId`, `value`, `latentId`, `latentPara
     (16949,23,7,53,1),  -- Royal Swordsman`s Blade +2 ATT +7 in areas outside own nation`s control
     (17617,5,25,70,2),    -- Master Caster's Knife Citizens of Windurst: MP +25
     (17617,23,10,70,2);   -- Master Caster's Knife Citizens of Windurst: Attack +10
+
+INSERT INTO `item_latents` VALUES (12549,427,5,13,57);  -- Koenig Cuirass 5% enmity loss reduction with Defender active
+INSERT INTO `item_latents` VALUES (14370,427,5,13,57);  -- Kaiser Cuirass 5% enmity loss reduction with Defender active
 
 DELETE FROM `item_latents` WHERE `itemID` = 13559 AND `modID` = 2;  -- Patriarch Protector`s Ring Removing HP boost
 DELETE FROM `item_latents` WHERE `itemID` = 13559 AND `modID` = 8;  -- Patriarch Protector`s Ring Removing STR boost

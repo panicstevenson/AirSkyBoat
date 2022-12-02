@@ -2682,8 +2682,8 @@ INSERT INTO `item_latents` VALUES (18084,369,-3,56,0);   -- Rune Halberd -3MP/ti
 
 INSERT INTO `item_latents` VALUES (18091,15,15,28,0);    -- Mighty Lance [Element: Fire]+15 on Firesday
 INSERT INTO `item_latents` VALUES (18091,287,12,28,0);   -- Mighty Lance DMG+12 on Firesday
-INSERT INTO `item_latents` VALUES (18097,165,6,47,0);    -- Gondo-Shizunori Crit Rate +6% when broken (500 WS points)
-INSERT INTO `item_latents` VALUES (18097,287,13,47,0);   -- Gondo-Shizunori DMG+13 when broken (500 WS points)
+INSERT INTO `item_latents` VALUES (18097,165,6,47,0);    -- Perforater Crit Rate +6% when broken (500 WS points)
+INSERT INTO `item_latents` VALUES (18097,287,13,47,0);   -- Perforater DMG+13 when broken (500 WS points)
 
 -- -------------------------------------------------------
 -- Stone-splitter

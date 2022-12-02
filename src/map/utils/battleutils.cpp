@@ -6587,6 +6587,13 @@ namespace battleutils
                 cast          = static_cast<uint32>(cast * (1.0f - (0.03f * jpValue)));
             }
         }
+        else if (PSpell->getSpellGroup() == SPELLGROUP_SUMMONING)
+        {
+            if (PEntity->objtype == TYPE_PC)
+            {
+                cast -= PEntity->getMod(Mod::SUMMON_CASTING_TIME) * 1000;
+            }
+        }
 
         int16 fastCast = std::clamp<int16>(PEntity->getMod(Mod::FASTCAST), -100, 50);
         if (PSpell->getSkillType() == SKILLTYPE::SKILL_ELEMENTAL_MAGIC) // Elemental Celerity reductions
