@@ -3253,7 +3253,7 @@ namespace charutils
             int16  Diff          = MaxSkill - CurSkill / 10;
             double SkillUpChance = Diff / 5.0 + settings::get<double>("map.SKILLUP_CHANCE_MULTIPLIER") * (2.0 - log10(1.0 + CurSkill / 100));
 
-            if (SkillID == SKILL_PARRY || SkillID == SKILL_GUARD || SkillID == SKILL_SHIELD)
+            if (SkillID == SKILL_PARRY || SkillID == SKILL_GUARD || SkillID == SKILL_SHIELD || SkillID == SKILL_EVASION)
             {
                 if (CurSkill < 175)
                 {
