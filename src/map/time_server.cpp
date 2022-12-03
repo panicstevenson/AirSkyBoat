@@ -166,8 +166,6 @@ int32 time_server(time_point tick, CTaskMgr::CTask* PTask)
 
     luautils::ReloadFilewatchList();
 
-    fishingutils::ProgressContest();
-
     moduleutils::OnTimeServerTick();
 
     TracyFrameMark;

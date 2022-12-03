@@ -21,7 +21,7 @@
 
 #include "fishing_rank.h"
 #include "common/socket.h"
-#include "utils/fishingutils.h"
+#include "utils/fishingcontest.h"
 
 #include <cstring>
 
@@ -61,23 +61,12 @@ CFishingRankPacket::CFishingRankPacket(std::vector<fish_ranking_entry*> entries,
         {
             if (offset + blockSize <= 0xFF)
             {
-                // Some oddities with how the race is sent over packets
-                uint8 race = entry->race;
-                if (entry->race >= 2 && entry->race <= 6)
-                {
-                    race = entry->race - 1;
-                }
-                else if (entry->race == 8)
-                {
-                    race = 6;
-                }
-
                 std::memcpy(data + offset, entry->name, (uint8)sizeof(entry->name));
                 ref<uint8>(offset + 0x10)  = entry->mjob;
                 ref<uint8>(offset + 0x11)  = entry->sjob;
                 ref<uint8>(offset + 0x12)  = entry->mlvl;
                 ref<uint8>(offset + 0x13)  = entry->slvl;
-                ref<uint8>(offset + 0x14)  = race;
+                ref<uint8>(offset + 0x14)  = entry->race;
                 ref<uint8>(offset + 0x15)  = 0; // Deliberate padding
                 ref<uint8>(offset + 0x16)  = entry->allegiance;
                 ref<uint8>(offset + 0x17)  = entry->fishrank;
