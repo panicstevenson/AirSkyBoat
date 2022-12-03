@@ -170,8 +170,7 @@ local handleKillMessage = function(mob, string, varString)
 end
 
 hxi.teleport.isOutpostEnabled = function()
-    return
-        utils.ternary(GetVolatileServerVariable('[OP_Warp]Enabled') == 1, true ,GetServerVariable('[OP_Warp]Enabled') == 1) or
+    return utils.ternary(GetVolatileServerVariable('[OP_Warp]Enabled') == 1, true , GetServerVariable('[OP_Warp]Enabled') == 1) or
         xi.settings.main.ENABLE_OP_WARPS or
         hxi.teleport.processKills()
 end
@@ -233,10 +232,9 @@ hxi.teleport.spawnNMs = function(zone)
                     mob:spawn()
                     mob:setClaimable(false)
                     mob:setLocalVar("DAMAGE_NULL", 1)
-                    mob:addMod(xi.mod.REGEN, 15)
                     mob:addMobMod(xi.mobMod.MULTI_HIT, 2)
 
-                    local npc = zone:insertDynamicEntity({
+                    zone:insertDynamicEntity({
                         objtype = xi.objType.NPC,
                         name = "Moogle",
                         look = 82,

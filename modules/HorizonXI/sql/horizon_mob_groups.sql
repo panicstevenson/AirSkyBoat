@@ -255,7 +255,7 @@ UPDATE `mob_groups` SET `minLevel` = 44, `maxLevel` = 44, `HP` = 3800 WHERE name
 UPDATE `mob_groups` SET `minLevel` = 44, `maxLevel` = 44, `HP` = 3400 WHERE name = "Galgalim"  and `zoneid` = 209;
 
 -- Twinkling_Treant
-INSERT INTO `mob_groups` VALUES (2,21000,210,'Twinkling_Treant',0,128,0,260000,0,18,18,0,NULL);
+INSERT INTO `mob_groups` VALUES (2,21000,210,'Twinkling_Treant',0,128,0,100000,0,18,18,0,NULL);
 
 -- --------------------------------------------------------
 -- Horizon Mob Subjob Manager

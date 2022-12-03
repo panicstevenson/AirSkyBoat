@@ -22,6 +22,7 @@ EOF`
 
 global_objects=(
     xi
+    hxi
     ai
     os
     _

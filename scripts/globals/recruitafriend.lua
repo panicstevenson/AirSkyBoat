@@ -8,59 +8,59 @@ local recruiterRewards =
 {
     [30] =
     {
-        [1]  = {1},
-        [2]  = {2},
-        [3]  = {3},
-        [4] = {4},
+        [1]  = { 1 },
+        [2]  = { 2 },
+        [3]  = { 3 },
+        [4]  = { 4 },
     },
     [60] =
     {
-        [1]  = {1},
-        [2]  = {2},
-        [3]  = {3},
-        [4] = {4},
+        [1]  = { 1 },
+        [2]  = { 2 },
+        [3]  = { 3 },
+        [4]  = { 4 },
     },
     [90] =
     {
-        [1]  = {1},
-        [2]  = {2},
-        [3]  = {3},
-        [4] = {4},
+        [1]  = { 1 },
+        [2]  = { 2 },
+        [3]  = { 3 },
+        [4]  = { 4 },
     },
     [120] =
     {
-        [1]  = {1},
-        [2]  = {2},
-        [3]  = {3},
-        [4] = {4},
+        [1]  = { 1 },
+        [2]  = { 2 },
+        [3]  = { 3 },
+        [4]  = { 4 },
     },
     [150] =
     {
-        [1]  = {1},
-        [2]  = {2},
-        [3]  = {3},
-        [4] = {4},
+        [1]  = { 1 },
+        [2]  = { 2 },
+        [3]  = { 3 },
+        [4]  = { 4 },
     },
     [180] =
     {
-        [1]  = {1},
-        [2]  = {2},
-        [3]  = {3},
-        [4] = {4},
+        [1]  = { 1 },
+        [2]  = { 2 },
+        [3]  = { 3 },
+        [4]  = { 4 },
     },
 }
 
 local recruitRewards =
 {
-    [30]  = {1},
-    [60]  = {2},
-    [90]  = {3},
-    [120] = {4},
-    [150] = {5},
-    [180] = {6},
+    [30]  = { 1 },
+    [60]  = { 2 },
+    [90]  = { 3 },
+    [120] = { 4 },
+    [150] = { 5 },
+    [180] = { 6 },
 }
 
-local timeSort = {30, 60, 90, 120}
+local timeSort = { 30, 60, 90, 120 }
 
 hxi.raf.rafOnTrigger = function(player, npc)
     if player:getCharVar("[RAF]SavedItem") ~= 0 then
@@ -75,7 +75,7 @@ hxi.raf.rafOnTrigger = function(player, npc)
 
         if player:getWorldpassId(party[2]:getID()) ~= 0 then
             rafMember = party[2]
-            timeRedeemd = rafMember:getWorldPassRedeemTime()
+            timeRedeemed = rafMember:getWorldPassRedeemTime()
         else
             hxi.raf.rafStandardText(player, npc)
         end
@@ -123,7 +123,7 @@ hxi.raf.rafOnTrigger = function(player, npc)
 end
 
 hxi.raf.rafStandardText = function(player, npc)
-    player:PrintToPlayer("Hello! If you are interested in recruiting a friend to HorizonXI, you can purchase Gold World Passes on horizonxi.com for 10,000 gil.", xi.msg.channel.SAY, npc:getName())
+    player:PrintToPlayer("Hello! If you are interested in recruiting a friend to HorizonXI, you can purchase Gold World Passes on horizonxi.com for 10k gil.", xi.msg.channel.SAY, npc:getName())
     player:PrintToPlayer("We are always excited when our adventurers choose to find their friends here, so we provide different rewards for the time you have played together!", xi.msg.channel.SAY, npc:getName())
     player:PrintToPlayer("With a gold world pass, you will be able to get special rewards at 30, 60, 90, and 120 days of playing together.", xi.msg.channel.SAY, npc:getName())
     player:PrintToPlayer("Another positive of a Gold World Pass is that you will get as much EXP as your lowest Recruit A Friend while level synced!", xi.msg.channel.SAY, npc:getName())
