@@ -468,12 +468,12 @@ xi.eraShops.Taza =
     4699, 15120, -- Scroll of Barpetra
     4700,  9600, -- Scroll of Barvira
     4867, 18720, -- Scroll of Sleep II
-    4769, 19932, -- Scroll of Stone III
-    4779, 22682, -- Scroll of Water III
-    4764, 27744, -- Scroll of Aero III
-    4754, 33306, -- Scroll of Fire III
-    4759, 39368, -- Scroll of Blizzard III
-    4774, 45930, -- Scroll of Thunder III
+    4769, 19932 * 0.4, -- Scroll of Stone III
+    4779, 22682 * 0.4, -- Scroll of Water III
+    4764, 27744 * 0.4, -- Scroll of Aero III
+    4754, 33306 * 0.4, -- Scroll of Fire III
+    4759, 39368 * 0.4, -- Scroll of Blizzard III
+    4774, 45930 * 0.4, -- Scroll of Thunder III
 }
 
 -- Upper Jeuno

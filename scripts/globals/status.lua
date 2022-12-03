@@ -1275,6 +1275,7 @@ xi.mod =
     SPIKES_DMG                      = 344,
     TP_BONUS                        = 345,
     PERPETUATION_REDUCTION          = 346,
+    SUMMON_CASTING_TIME             = 1170, -- Reduces summoning cast time by seconds provided
 
     -- Warrior
     BERSERK_POTENCY                 = 948,  -- Augments "Berserk"/Enhances "Berserk" effect (Conqueror)

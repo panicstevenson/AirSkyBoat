@@ -56,6 +56,24 @@ m:addOverride("xi.globals.abilities.chakra.onUseAbility", function(player, targe
     return recover
 end)
 
+m:addOverride("xi.globals.abilities.call_beast.onUseAbility", function(player, target, ability)
+    xi.pet.spawnPet(player, player:getWeaponSubSkillType(xi.slot.AMMO))
+    player:removeAmmo()
+    -- Briefly put the recastId for READY/SIC (102) into a recast state to
+    -- toggle charges accumulating. 102 is the shared recast id for all jug
+    -- pet abilities and for SIC when using a charmed mob.
+    -- see sql/abilities_charges and sql_abilities
+    player:addRecast(xi.recast.ABILITY, 102, 1)
+
+    -- Horizon Era+ Augments Call Beast Monster Gloves
+    if
+        player:getEquipID(xi.slot.HANDS) == xi.items.MONSTER_GLOVES or
+        player:getEquipID(xi.slot.HANDS) == xi.items.MONSTER_GLOVES_P1
+    then
+        player:getPet():setMod(xi.mod.HASTE_GEAR, 300)
+    end
+end)
+
 m:addOverride("xi.globals.abilities.focus.onUseAbility", function(player, target, ability)
     local power = 20 + player:getMod(xi.mod.FOCUS_EFFECT)
     player:addStatusEffect(xi.effect.FOCUS, power, 0, 180)

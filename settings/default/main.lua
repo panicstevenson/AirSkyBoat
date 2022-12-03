@@ -12,7 +12,7 @@ xi.settings = xi.settings or {}
 xi.settings.main =
 {
     -- Server name (not longer than 15 characters)
-    SERVER_NAME = "Nameless",
+    SERVER_NAME = "HorizonXI",
 
     SERVER_MESSAGE =
         "Please visit https://github.com/AirSkyBoat/AirSkyBoat for the latest information on the project.\n" ..
@@ -181,7 +181,7 @@ xi.settings.main =
     BETWEEN_2DYNA_WAIT_TIME     = 72,       -- Hours before player can re-enter Dynamis. Default is 1 Earthday (24 hours).
     DYNA_MIDNIGHT_RESET         = false,     -- If true, makes the wait time count by number of server midnights instead of full 24 hour intervals
     DYNA_LEVEL_MIN              = 65,       -- Level min for entering in Dynamis
-    TIMELESS_HOURGLASS_COST     = 500000,   -- Refund for the timeless hourglass for Dynamis.
+    TIMELESS_HOURGLASS_COST     = 1000000,   -- Refund for the timeless hourglass for Dynamis.
     PRISMATIC_HOURGLASS_COST    = 50000,    -- Cost of the prismatic hourglass for Dynamis.
     CURRENCY_EXCHANGE_RATE      = 100,      -- X Tier 1 ancient currency -> 1 Tier 2, and so on. Certain values may conflict with shop items. Not designed to exceed 198.
     RELIC_2ND_UPGRADE_WAIT_TIME = 7200,     -- Wait time for 2nd relic upgrade (stage 2 -> stage 3) in seconds. 7200s = 2 hours.
@@ -189,7 +189,7 @@ xi.settings.main =
     FREE_COP_DYNAMIS            = 0,        -- Authorize player to entering inside COP Dynamis without completing COP mission (1 = enable 0 = disable)
 
     -- LIMBUS SETTINGS
-    COSMO_CLEANSE_BASE_COST     = 15000,    -- Base gil cost for a Cosmo Cleanse from Sagheera
+    COSMO_CLEANSE_BASE_COST     = 50000,    -- Base gil cost for a Cosmo Cleanse from Sagheera
 
     -- QUEST/MISSION SPECIFIC SETTINGS
     AF1_QUEST_LEVEL = 40,    -- Minimum level to start AF1 quest

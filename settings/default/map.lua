@@ -277,7 +277,7 @@ xi.settings.map =
     -- Moghouse Thingies
     MH_EXIT_HOMEPOINT  = true, -- Enables A Homepoint Set Prompt On MH Exit
     MH_STORAGE_ACCESS  = 1,    -- 0 = Available Anywhere | 1 = Available Jeuno, Nation | 2 = Available Jeuno, Nation, Aht'Urhgan | 3 = Available Jeuno, Nation, Aht'Urhgan, Adoulin | 4 = Home Nation Only
-    WARDROBE_CITY_ONLY = true, -- true = move gear only in cities | false = move gear anywhere
+    WARDROBE_CITY_ONLY = false, -- true = move gear only in cities | false = move gear anywhere
 
     -- Enable/disable keeping jug pets through zoning
     KEEP_JUGPET_THROUGH_ZONING = true,

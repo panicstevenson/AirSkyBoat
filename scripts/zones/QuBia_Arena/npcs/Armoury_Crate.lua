@@ -558,6 +558,11 @@ local loot =
             { itemid = 700, droprate =  50 }, -- mahogany_log
             { itemid = 738, droprate =  50 }, -- platinum_ore
         },
+
+        {
+            { itemid =     0, droprate = 800 }, -- nothing
+            { itemid = 23112, droprate = 200 }, -- Shepherd's Doublet
+        },
     },
 
     -- BCNM Factory Rejects
@@ -593,6 +598,11 @@ local loot =
             { itemid =    0, droprate = 750 }, -- nothing
             { itemid = 4947, droprate = 125 }, -- scroll_of_utsusemi_ni
             { itemid = 4714, droprate = 125 }, -- scroll_of_phalanx
+        },
+
+        {
+            { itemid =     0, droprate = 800 }, -- nothing
+            { itemid = 23179, droprate = 200 }, -- Shepherd's Bracers
         },
     },
 

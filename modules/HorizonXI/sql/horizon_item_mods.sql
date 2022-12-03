@@ -6,6 +6,50 @@
 
 LOCK TABLE `item_mods` WRITE;
 
+-- Remove all mods from these items due to complete item rework
+DELETE FROM `item_mods` WHERE `itemid` = 18295; -- Remove base stats from Bravura lv 80
+DELETE FROM `item_mods` WHERE `itemid` = 23045; -- Remove base stats from Pillagers +2 gear
+DELETE FROM `item_mods` WHERE `itemid` = 23112; -- Remove base stats from Pillagers +2 gear
+DELETE FROM `item_mods` WHERE `itemid` = 23179; -- Remove base stats from Pillagers +2 gear
+DELETE FROM `item_mods` WHERE `itemid` = 23246; -- Remove base stats from Pillagers +2 gear
+DELETE FROM `item_mods` WHERE `itemid` = 23313; -- Remove base stats from Pillagers +2 gear
+
+-- Remove some stats due to Era+ rework
+DELETE FROM `item_mods` WHERE `itemid` = 12421 and `modid` = 14;  -- Koenig Schaller Remove CHR
+DELETE FROM `item_mods` WHERE `itemid` = 12519 and `modid` = 13;  -- Drachen Armet Remove MND
+DELETE FROM `item_mods` WHERE `itemid` = 12549 and `modid` = 14;  -- Koenig Cuirass Remove CHR
+DELETE FROM `item_mods` WHERE `itemid` = 12645 and `modid` = 10;  -- Chaos Cuirass Remove VIT
+DELETE FROM `item_mods` WHERE `itemid` = 12649 and `modid` = 10;  -- Drachen Mail Remove VIT
+DELETE FROM `item_mods` WHERE `itemid` = 12649 and `modid` = 16;  -- Drachen Mail Remove Ice Res
+DELETE FROM `item_mods` WHERE `itemid` = 12677 and `modid` = 14;  -- Koenig Handschuhs Remove CHR
+DELETE FROM `item_mods` WHERE `itemid` = 12805 and `modid` = 14;  -- Koenig Diechlings Remove CHR
+DELETE FROM `item_mods` WHERE `itemid` = 12933 and `modid` = 14;  -- Koenig Schuhs Remove CHR
+DELETE FROM `item_mods` WHERE `itemid` = 12941 and `modid` = 13;  -- Adaman Sollerets Remove MND
+DELETE FROM `item_mods` WHERE `itemid` = 13103 and `modid` = 1;   -- Checkered Scarf Remove DEF
+DELETE FROM `item_mods` WHERE `itemid` = 13107 and `modid` = 68;  -- Royal Knight Army Collar Remove Eva
+DELETE FROM `item_mods` WHERE `itemid` = 13782 and `modid` = 10;  -- Ninja Chainmail Remove VIT
+DELETE FROM `item_mods` WHERE `itemid` = 13911 and `modid` = 14;  -- Kaiser Schaller Remove CHR
+DELETE FROM `item_mods` WHERE `itemid` = 14175 and `modid` = 13;  -- Armada Sollerets Remove MND
+DELETE FROM `item_mods` WHERE `itemid` = 14370 and `modid` = 14;  -- Kaiser Cuirass Remove CHR
+DELETE FROM `item_mods` WHERE `itemid` = 14742 and `modid` = 68;  -- Beastly Earring Remove EVA
+DELETE FROM `item_mods` WHERE `itemid` = 14740 and `modid` = 111; -- Knights Earring Remove Divine
+DELETE FROM `item_mods` WHERE `itemid` = 14739 and `modid` = 11;  -- Suppanomimi Remove AGI
+DELETE FROM `item_mods` WHERE `itemid` = 14739 and `modid` = 82;  -- Suppanomimi Remove Sword
+DELETE FROM `item_mods` WHERE `itemid` = 14739 and `modid` = 259; -- Suppanomimi Remove Dual Wield
+DELETE FROM `item_mods` WHERE `itemid` = 16766 and `modid` = 11;  -- Paper Knife AGI: 0 (Removing existing stat)
+DELETE FROM `item_mods` WHERE `itemid` = 17771 and `modid` = 8;   -- Anju STR: 0 (Removing existing stat)
+DELETE FROM `item_mods` WHERE `itemid` = 17772 and `modid` = 9;   -- Zushio DEX: -1 (Removing existing stat)
+DELETE FROM `item_mods` WHERE `itemid` = 14283 and `modid` = 14;  -- Kaiser Diechlings Remove CHR
+DELETE FROM `item_mods` WHERE `itemid` = 14163 and `modid` = 14;  -- Kaiser Schuhs Remove CHR
+DELETE FROM `item_mods` WHERE `itemid` = 14097 and `modid` = 11;  -- Beast Gaiters Remove AGI
+DELETE FROM `item_mods` WHERE `itemid` = 14093 and `modid` = 11;  -- Warlocks Boots Remove AGI
+DELETE FROM `item_mods` WHERE `itemid` = 14092 and `modid` = 11;  -- Wizards Sabots Remove AGI
+DELETE FROM `item_mods` WHERE `itemid` = 14091 and `modid` = 11;  -- Healers Duckbills Remove AGI
+DELETE FROM `item_mods` WHERE `itemid` = 14089 and `modid` = 11;  -- Fighters Calligae Remove AGI
+DELETE FROM `item_mods` WHERE `itemid` = 14061 and `modid` = 14;  -- Kaiser Handschuhs Remove CHR
+DELETE FROM `item_mods` WHERE `itemid` = 13971 and `modid` = 9;   -- Hunters Bracers Remove DEX
+DELETE FROM `item_mods` WHERE `itemid` = 16480 and `modid` = 303; -- Thief's Knife Remove Treasure Hunter
+
 REPLACE INTO `item_mods` (`itemid`, `modid`, `value`) VALUES
     (12304, 23, 5), -- Musketeer Commanders Shield ATT: 5
     (12344, 1, 18),    -- Master Shield DEF: 18
@@ -16,6 +60,8 @@ REPLACE INTO `item_mods` (`itemid`, `modid`, `value`) VALUES
     (12514, 9, 2),    -- Rogues Bonnet DEX: 2
     (12517, 13, 3),   -- Beast Helm MND: 3
     (12519, 9, 2),  -- Drachen Armet DEX: 2
+    (12549, 11, 20), -- Koenig Cuirass AGI: 20
+    (12549, 485, 10), -- Koenig Cuirass SHIELD_MASTERY_TP: 10
     (12638, 25, 3), -- Fighters Lorica ACC: 3
     (12640, 5, 25),   -- Healers Briault MP: 25
     (12643, 18, 0),   -- Rogues Vest EARTH_RES: 10
@@ -65,6 +111,10 @@ REPLACE INTO `item_mods` (`itemid`, `modid`, `value`) VALUES
     (13107, 8, 2),  -- Royal Knight Army Collar STR: 2
     (13107, 10, 2), -- Royal Knight Army Collar VIT: 2
     (13107, 23, 2), -- Royal Knight Army Collar ATT: 2
+    (13172, 2, 10), -- Pachamac's Collar HP +10
+    (13172, 5, 10), -- Pachamac's Collar MP +10
+    (13172, 71, 2), -- Pachamac's Collar MPHEAL: 2
+    (13172, 72, 2), -- Pachamac's Collar HPHEAL: 2
     (13719, 12, 1), -- Royal Squires Robe INT: 1
     (13719, 13, 1), -- Royal Squires Robe MND: 1
     (13720, 5, 25),  -- Royal Knights Cloak MP: 25
@@ -84,6 +134,7 @@ REPLACE INTO `item_mods` (`itemid`, `modid`, `value`) VALUES
     (13905, 5, 15), -- Tactician Magicians Hat +1 MP: 15
     (13906, 5, 15), -- Tactician Magicians Hat +2 MP: 15
     (13911, 11, 11), -- Kaiser Schaller AGI: 11
+    (13924, 25, 9),  -- Armada Celata ACC: 8
     (13971, 11, 3),   -- Hunters Bracers AGI: 3
     (14061, 11, 11), -- Kaiser Handschuhs AGI: 11
     (14089, 9, 2),   -- Fighters Calligae DEX: 2
@@ -111,6 +162,9 @@ REPLACE INTO `item_mods` (`itemid`, `modid`, `value`) VALUES
     (14157, 12, 1),  -- Tactician Magicians Pigaches +1 INT: 1
     (14157, 12, 1),  -- Tactician Magicians Pigaches +2 INT: 1
     (14163, 11, 11), -- Kaiser Schuhs AGI: 11
+    (14175, 2, -21),   -- Armada Sollerets HP: -21
+    (14175, 68, -6),   -- Armada Sollerets EVA: -6
+    (14175, 384, 200), -- Armada Sollerets HASTE_GEAR: 200
     (14184, 8, 2),   -- Shura Sune-Ate STR: 2
     (14184, 9, 2),   -- Shura Sune-Ate DEX: 2
     (14185, 8, 3),   -- Shura Sune-Ate +1 STR: 3
@@ -124,6 +178,8 @@ REPLACE INTO `item_mods` (`itemid`, `modid`, `value`) VALUES
     (14276, 23, 5), -- Combat Casters Slacks +2 ATT: 5
     (14283, 11, 11), -- Kaiser Diechlings AGI: 11
     (14283, 518, 5), -- Kaiser Diechlings SHIELDBLOCKRATE: 5
+    (14296, 68, -10),  -- Armada Breeches EVA: -10
+    (14296, 384, 200), -- Armada Breeches HASTE_GEAR: 200
     (14358, 12, 1), -- Royal Squires Robe +1 INT: 1
     (14358, 13, 1), -- Royal Squires Robe +1 MND: 1
     (14359, 12, 1), -- Royal Squires Robe +2 INT: 1
@@ -138,6 +194,8 @@ REPLACE INTO `item_mods` (`itemid`, `modid`, `value`) VALUES
     (14368, 12, 12),  -- Blood Scale Mail INT: 12
     (14368, 13, 12),  -- Blood Scale Mail MND: 12
     (14368, 11, 12),  -- Blood Scale Mail AGI: 12
+    (14370, 11, 21), -- Kaiser Cuirass AGI: 20
+    (14370, 485, 10), -- Kaiser Cuirass SHIELD_MASTERY_TP: 10
     (14739, 9, 2),   -- Suppanomimi DEX: 2
     (14739, 81, 5),  -- Suppanomimi DAGGER: 5
     (14739, 88, 5),  -- Suppanomimi KATANA: 5
@@ -149,10 +207,15 @@ REPLACE INTO `item_mods` (`itemid`, `modid`, `value`) VALUES
     (14742, 87, 5), -- Beastly Earring POLEARM: 5
     (14743, 85, 5),  -- Bushinomimi GAXE: 5
     (14815, 259, 5), -- Stealth Earring DUAL_WIELD: 5
+    (14816, 23, 13),  -- Armada Mufflers ATT: 13
+    (14816, 25, 6),   -- Armada Mufflers ACC: 6
+    (14816, 68, -6),  -- Armada Mufflers EVA: -6
+    (14816, 384, 200), -- Armada Mufflers HASTE_GEAR: 200
     (14821, 25, 5),  -- Shura Kote ACC: 5
     (14821, 23, 10), -- Shura Kote ATT: 10
     (14822, 25, 7),  -- Shura Kote +1 ACC: 7
     (14822, 23, 12), -- Shura Kote +1 ATT: 12
+    (15325, 1040, 1), -- Evoker's Boots Summoning Magic Casting Time -1
     (15544, 27, 5), -- Sattva Ring ENMITY: 5
     (15544, 160, -500), -- Sattva Ring DMG: -500
     (15545, 27, -5), -- Tamas Ring ENMITY: -5
@@ -197,39 +260,16 @@ REPLACE INTO `item_mods` (`itemid`, `modid`, `value`) VALUES
     (17681, 23, 10), -- Musketeers Sword +2 ATT: 10
     (18132, 11, 3), -- Combat Caster`s Boomerang +1 AGI: 3
     (18133, 11, 3), -- Combat Caster`s Boomerang +2 AGI: 3
+    (18295, 2, 10), -- Wyrm Tongue HP: 10
+    (18295, 5, 10), -- Wyrm Tongue MP: 10
+    (18295, 16, 10), -- Wyrm Tongue ICE_RES: 10
+    (18295, 25, 5), -- Wyrm Tongue Accuracy +5
     (23040, 25, 3), -- Nanaa's Lucky Charm Acc: 3
-    (23040, 303, 1); -- Nanaa's Lucky Charm Treasure Hunter: 1
-
-DELETE FROM `item_mods` WHERE `itemid` = 12421 and `modid` = 14;  -- Koenig Schaller Remove CHR
-DELETE FROM `item_mods` WHERE `itemid` = 12519 and `modid` = 13; -- Drachen Armet Remove MND
-DELETE FROM `item_mods` WHERE `itemid` = 12645 and `modid` = 10;  -- Chaos Cuirass Remove VIT
-DELETE FROM `item_mods` WHERE `itemid` = 12649 and `modid` = 10;  -- Drachen Mail Remove VIT
-DELETE FROM `item_mods` WHERE `itemid` = 12649 and `modid` = 16; -- Drachen Mail Remove Ice Res
-DELETE FROM `item_mods` WHERE `itemid` = 12677 and `modid` = 14; -- Koenig Handschuhs Remove CHR
-DELETE FROM `item_mods` WHERE `itemid` = 12805 and `modid` = 14;  -- Koenig Diechlings Remove CHR
-DELETE FROM `item_mods` WHERE `itemid` = 12933 and `modid` = 14; -- Koenig Schuhs Remove CHR
-DELETE FROM `item_mods` WHERE `itemid` = 12941 and `modid` = 13;    -- Adaman Sollerets Remove MND
-DELETE FROM `item_mods` WHERE `itemid` = 13103 and `modid` = 1;  -- Checkered Scarf Remove DEF
-DELETE FROM `item_mods` WHERE `itemid` = 13107 and `modid` = 68; -- Royal Knight Army Collar Remove Eva
-DELETE FROM `item_mods` WHERE `itemid` = 13782 and `modid` = 10;   -- Ninja Chainmail Remove VIT
-DELETE FROM `item_mods` WHERE `itemid` = 13911 and `modid` = 14; -- Kaiser Schaller Remove CHR
-DELETE FROM `item_mods` WHERE `itemid` = 14742 and `modid` = 68; -- Beastly Earring Remove EVA
-DELETE FROM `item_mods` WHERE `itemid` = 14740 and `modid` = 111; -- Knights Earring Remove Divine
-DELETE FROM `item_mods` WHERE `itemid` = 14739 and `modid` = 11; -- Suppanomimi Remove AGI
-DELETE FROM `item_mods` WHERE `itemid` = 14739 and `modid` = 82; -- Suppanomimi Remove Sword
-DELETE FROM `item_mods` WHERE `itemid` = 14739 and `modid` = 259; -- Suppanomimi Remove Dual Wield
-DELETE FROM `item_mods` WHERE `itemid` = 16766 and `modid` = 11; -- Paper Knife AGI: 0 (Removing existing stat)
-DELETE FROM `item_mods` WHERE `itemid` = 17771 and `modid` = 8;  -- Anju STR: 0 (Removing existing stat)
-DELETE FROM `item_mods` WHERE `itemid` = 17772 and `modid` = 9;  -- Zushio DEX: -1 (Removing existing stat)
-DELETE FROM `item_mods` WHERE `itemid` = 14283 and `modid` = 14; -- Kaiser Diechlings Remove CHR
-DELETE FROM `item_mods` WHERE `itemid` = 14163 and `modid` = 14; -- Kaiser Schuhs Remove CHR
-DELETE FROM `item_mods` WHERE `itemid` = 14097 and `modid` = 11;  -- Beast Gaiters Remove AGI
-DELETE FROM `item_mods` WHERE `itemid` = 14093 and `modid` = 11;  -- Warlocks Boots Remove AGI
-DELETE FROM `item_mods` WHERE `itemid` = 14092 and `modid` = 11;  -- Wizards Sabots Remove AGI
-DELETE FROM `item_mods` WHERE `itemid` = 14091 and `modid` = 11;  -- Healers Duckbills Remove AGI
-DELETE FROM `item_mods` WHERE `itemid` = 14089 and `modid` = 11; -- Fighters Calligae Remove AGI
-DELETE FROM `item_mods` WHERE `itemid` = 14061 and `modid` = 14; -- Kaiser Handschuhs Remove CHR
-DELETE FROM `item_mods` WHERE `itemid` = 13971 and `modid` = 9;   -- Hunters Bracers Remove DEX
-DELETE FROM `item_mods` WHERE `itemid` = 16480 and `modid` = 303;   -- Thief's Knife Remove Treasure Hunter
+    (23040, 303, 1), -- Nanaa's Lucky Charm Treasure Hunter: 1
+    (23045, 2, 4), -- Shepherd's Bonnet HP +4
+    (23112, 25, 3), -- Shepherd's Doublet Acc +3
+    (23179, 72, 1), -- Shepherd's Bracers hHP +1
+    (23246, 10, 2), -- Shepherd's Hose VIT +2
+    (23313, 71, 1); -- Shepherd's Boots hMP +1
 
 UNLOCK TABLES;

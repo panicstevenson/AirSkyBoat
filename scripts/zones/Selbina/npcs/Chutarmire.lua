@@ -14,18 +14,18 @@ end
 entity.onTrigger = function(player, npc)
     local stock =
     {
-        4768,  5751,    -- Scroll of Stone II
-        4778,  8100,    -- Scroll of Water II
-        4763, 11970,    -- Scroll of Aero II
-        4753, 16560,    -- Scroll of Fire II
-        4758, 21870,    -- Scroll of Blizzard II
-        4773, 27900,    -- Scroll of Thunder II
-        4797,  1165,    -- Scroll of Stonega
-        4807,  2097,    -- Scroll of Waterga
-        4792,  4147,    -- Scroll of Aeroga
-        4782,  7025,    -- Scroll of Firaga
-        4787, 10710,    -- Scroll of Blizzaga
-        4802, 15120,    -- Scroll of Thundaga
+        4768,  5751 * 0.4,    -- Scroll of Stone II
+        4778,  8100 * 0.4,    -- Scroll of Water II
+        4763, 11970 * 0.4,    -- Scroll of Aero II
+        4753, 16560 * 0.4,    -- Scroll of Fire II
+        4758, 21870 * 0.4,    -- Scroll of Blizzard II
+        4773, 27900 * 0.4,    -- Scroll of Thunder II
+        4797,  1165 * 0.4,    -- Scroll of Stonega
+        4807,  2097 * 0.4,    -- Scroll of Waterga
+        4792,  4147 * 0.4,    -- Scroll of Aeroga
+        4782,  7025 * 0.4,    -- Scroll of Firaga
+        4787, 10710 * 0.4,    -- Scroll of Blizzaga
+        4802, 15120 * 0.4,    -- Scroll of Thundaga
         4829, 22680,    -- Scroll of Poison II
         4839, 12600,    -- Scroll of Bio II
         4833,  4644,    -- Scroll of Poisonga

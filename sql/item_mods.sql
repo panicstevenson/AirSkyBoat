@@ -24407,6 +24407,7 @@ INSERT INTO `item_mods` VALUES (14930,505,5); -- OVERLOAD_THRESH: 5
 
 -- Carbuncles Cuffs
 INSERT INTO `item_mods` VALUES (14931,1,14); -- DEF: 14
+INSERT INTO `item_mods` VALUES (14931,1040,1); -- Summoning Magic Casting Time -1
 
 -- Sipahi Dastana
 INSERT INTO `item_mods` VALUES (14932,1,13); -- DEF: 13
