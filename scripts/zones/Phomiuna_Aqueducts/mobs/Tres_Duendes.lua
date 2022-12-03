@@ -49,7 +49,7 @@ entity.onMobDespawn = function(mob)
     DisallowRespawn(ph, false)
     GetMobByID(ph):setRespawnTime(924)
 
-    xi.mob.nmTODPersist(mob, math.random(75600, 86400)) -- 21 to 24 hours
+    xi.mob.nmTODPersist(mob, (math.random(132, 138) * 600)) -- 22 to 23 hours in 10 minute windows
 end
 
 return entity

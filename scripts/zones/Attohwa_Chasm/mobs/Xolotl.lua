@@ -76,7 +76,7 @@ entity.onMobDespawn = function(mob)
 
     if xolotlDead == 1 then
         UpdateNMSpawnPoint(mob:getID())
-        local respawn = math.random(75600, 86400) -- 21h to 24h
+        local respawn = math.random(132, 138) * 600 -- 22 to 23 hours in 10 minute windows
         mob:setRespawnTime(respawn)
         mob:setLocalVar("xolotlRespawn",(os.time() + respawn))
         DisallowRespawn(ID.mob.XOLOTL, true)

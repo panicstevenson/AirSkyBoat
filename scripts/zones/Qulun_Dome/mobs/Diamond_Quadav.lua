@@ -41,9 +41,9 @@ entity.onMobDespawn = function(mob)
         if os.time() > timeOfDeath and popNow then
             DisallowRespawn(nqID, true)
             DisallowRespawn(hqID, false)
-            xi.mob.nmTODPersist(hqMob, math.random(75600, 86400)) -- 21 to 24 hours
+            xi.mob.nmTODPersist(hqMob, math.random(132, 138) * 600) -- 22 to 23 hours in 10 minute windows
         else
-            xi.mob.nmTODPersist(mob, math.random(75600, 86400)) -- 21 to 24 hours
+            xi.mob.nmTODPersist(mob, math.random(132, 138) * 600) -- 22 to 23 hours in 10 minute windows
             SetServerVariable("[PH]Za_Dha_Adamantking", kills + 1)
         end
     end

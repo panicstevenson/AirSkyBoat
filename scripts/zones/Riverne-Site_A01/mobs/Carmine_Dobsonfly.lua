@@ -34,7 +34,7 @@ entity.onMobDespawn = function(mob)
     end
 
     if allFliesDead then
-        local respawnTime = math.random(75600, 86400)
+        local respawnTime = math.random(132, 138) * 600 -- 22 to 23 hours in 10 minute windows
         for i = ID.mob.CARMINE_DOBSONFLY_OFFSET, ID.mob.CARMINE_DOBSONFLY_OFFSET + 9 do
             DisallowRespawn(i, false)
             xi.mob.nmTODPersist(GetMobByID(i), respawnTime) -- 21 to 24 hours
