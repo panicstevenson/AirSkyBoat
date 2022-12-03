@@ -776,6 +776,11 @@ local loot =
             { itemid = 1110, droprate =  87 }, -- Vial Of Black Beetle Blood
             { itemid = 1132, droprate = 159 }, -- Square Of Raxa
         },
+
+        {
+            { itemid =   0,  droprate = 800 }, -- nothing
+            { itemid = 4742, droprate = 200 }, -- scroll of shellra v
+        },
     },
 }
 

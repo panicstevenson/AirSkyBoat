@@ -824,6 +824,10 @@ local loot =
             { itemid = 1132, droprate = 232 },  -- Square Of Raxa
             { itemid = 1110, droprate = 41 },   -- Vial Of Black Beetle Blood
         },
+        {
+            { itemid =   0,  droprate = 800 }, -- nothing
+            { itemid = 4742, droprate = 200 }, -- scroll of shellra v
+        },
     },
 
     -- KSNM Contaminated Colosseum
@@ -889,6 +893,10 @@ local loot =
             { itemid =  942, droprate = 174 }, -- Philosophers Stone
             { itemid =  844, droprate = 246 }, -- Phoenix Feather
             { itemid = 1132, droprate = 159 }, -- Square Of Raxa
+        },
+        {
+            { itemid =   0,  droprate = 800 }, -- nothing
+            { itemid = 4742, droprate = 200 }, -- scroll of shellra v
         },
     },
 }
