@@ -4625,14 +4625,10 @@ namespace charutils
                         uint8 restrictionLevel = PMember->StatusEffectContainer->GetStatusEffect(EFFECT_LEVEL_SYNC)->GetPower(); // Level of the restriction
                         uint8 originalLevel    = PMember->jobs.job[PMember->GetMJob()];                                          // Original Level of the Member
 
-                        if (std::clamp(originalLevel - restrictionLevel, 0, 99) > levelGrace)
-                        {
-                            exp *= 0;
-                        }
+                        exp = std::clamp(originalLevel - restrictionLevel, 0, 99) > levelGrace ? 0 : exp;
                     }
 
-                    exp = charutils::AddExpBonus(PMember, exp);
-
+                    exp = exp > 0 ? charutils::AddExpBonus(PMember, exp) : 0;
                     charutils::AddExperiencePoints(false, PMember, PMob, (uint32)exp, mobCheck, chainactive);
                 }
             }
