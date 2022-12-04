@@ -890,6 +890,7 @@ public:
     auto   getAvailableContestRewards(uint16 contestId = 0) -> sol::table;
     void   giveContestReward(uint16 contestId);
     auto   getAwardHistory() -> sol::table;
+    void   faceTarget(CLuaBaseEntity* npc);
 
     static void Register();
 };
