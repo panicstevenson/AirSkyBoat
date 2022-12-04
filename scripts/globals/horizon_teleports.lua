@@ -37,26 +37,26 @@ local dialogTableGob =
 {
     notEnabled =
     {
-        text1 = "Due to reports of dangerous monsters attacking adventurers we cannot offer services at this time.",
-        text2 = "We are working with the Duchy of Jeuno to clear monsters from the surrounding area so we can ensure the safety of our adventurers.",
+        text1 = "Big Jeuno guards say we can't be servin' you at this time.",
+        text2 = "The big guard guys say if you be doin' away with them monsters, we can start magicks again.",
     },
     noOPs =
     {
-        text1 = 'Greetings, adventurer. My name is %s. I have been sent by the Specialty Goods Trade Union.',
-        text2 = 'At the previous Conference of Nations, it was decided that the restriction on "regional teleporting" would be lifted, and that cities could now offer teleportation services to various outposts.',
-        text3 = 'We are now authorized to teleport you to any outpost you have previously visited on a supplies quest.',
-        text4 = 'The nominal fee we require varies with the current control of the region.',
+        text1 = 'Psh.. Hey you. My name is %s. I have the bestest secret magicks in town.',
+        text2 = 'Them tarus in Windurst be giving me some secrets, and I have come here to make some gil',
+        text3 = "Them Jeuno folk' be letting me use my magicks for you in return for some fees",
+        text4 = 'It took me long time to learn, so it will cost you extra for certain places.',
         text5 = 'Also, depending on your level, there may be some areas I am not authorized to telepoort you to.',
-        text6 = 'Unfortunately, at this time there is nowhere I can teleport you to. Please come again.',
+        text6 = 'No can tele you now, you will have to come back later.',
     },
-    welcome               = 'Welcome to the regional Teleporation Service!',
-    teleport              = 'Do you wish to teleport for %s gil?',
-    teleportControlled    = "That region is currently under your home country's control. You will require %s gil to teleport.",
-    teleportNotControlled = "That region is currently not under your home country's control. You will require %s gil to teleport.",
-    noteleport            = 'We look forward to seeeing you again!',
-    thanks                = 'Have a wonderful journey!',
-    noGil                 = 'You do not have enough gil. Please come back again.',
-    notAuthorized         = 'However, at this time I am only authorized to teleport citizens of %s.',
+    welcome               = 'Welcome to my magicks service.',
+    teleport              = 'Do you want to go somewhere? It will cost ya',
+    teleportControlled    = "Your nation home done has control of that area. I'll charge %s gil to magicks you.",
+    teleportNotControlled = "Your nation home done has no control of that area. I'll charge %s gil to magicks you.",
+    noteleport            = 'Comes backs soon..',
+    thanks                = 'He He... Thanks for the gils.',
+    noGil                 = 'No has coin? No gets magicks.',
+    notAuthorized         = 'I can no magicks peoples of %s. Jeuno guys say no goes',
 }
 
 local dialogTableTaru =
