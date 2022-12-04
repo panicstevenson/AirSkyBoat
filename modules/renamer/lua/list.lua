@@ -876,5 +876,9 @@ local list =
     {
         { "T. Treant", "Twinkling Treant" }
     },
+    [xi.zone.ROMAEVE] =
+    {
+        { "Luminous Cluste", "Luminous Cluster" },
+    },
 }
 return list
