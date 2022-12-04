@@ -242,9 +242,10 @@ local loot =
         },
 
         {
-            { itemid = 0, droprate = 500 }, -- nothing
+            { itemid = 0, droprate = 300 }, -- nothing
             { itemid = xi.items.SHEET_OF_BAST_PARCHMENT, droprate =  400 },
             { itemid = xi.items.HI_POTION,               droprate =  100 },
+            { itemid = 23246, droprate = 200 }, -- Shepherd's Hose
         },
 
         {
@@ -792,6 +793,10 @@ local loot =
             { itemid = xi.items.PHILOSOPHERS_STONE,         droprate = 200 },
             { itemid = xi.items.VIAL_OF_BLACK_BEETLE_BLOOD, droprate =  60 },
             { itemid = xi.items.SQUARE_OF_RAXA,             droprate = 260 },
+        },
+        {
+            { itemid =   0,  droprate = 800 }, -- nothing
+            { itemid = 4742, droprate = 200 }, -- scroll of shellra v
         },
     },
 

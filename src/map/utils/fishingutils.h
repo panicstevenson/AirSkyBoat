@@ -496,102 +496,6 @@ struct big_fish_stats_t
     }
 };
 
-struct fish_ranking_entry // Courtesy of ZeromusXYZ
-{
-    char   name[16] = { 0 }; // Character Name (16 bytes)
-    uint8  mjob;             // Main Job
-    uint8  sjob;             // Sub job
-    uint8  mlvl;             // Main Level
-    uint8  slvl;             // Sub Level
-    uint8  race;             // Race
-    uint8  padding;          // Padding (Always = 0)
-    uint8  allegiance;       // Allegiance (0-2)
-    uint8  fishrank;         // Fishing Rank (0-10)
-    uint32 score;            // Fish Score
-    uint32 submittime;       // Timestamp of submission
-    uint8  contestrank;      // Contest Ranking
-    uint8  resultcount;      // Contest Rank - This will only be set at the end of a contest, but is part of the packet
-    uint8  dataset_a;        // Number of entries sharing this rank
-    uint8  dataset_b;        // Same as Dataset A?
-    // NOTE:  This struct MUST NOT change size and structure, as the fish ranking packets in packet_system rely on a 36U sized struct.
-
-    fish_ranking_entry()
-    {
-        mjob        = 0;
-        sjob        = 0;
-        mlvl        = 0;
-        slvl        = 0;
-        race        = 0;
-        padding     = 0;
-        allegiance  = 0;
-        fishrank    = 0;
-        score       = 0;
-        submittime  = 0;
-        contestrank = 0;
-        resultcount = 0;
-        dataset_a   = 0;
-        dataset_b   = 0;
-    }
-};
-
-enum FISHINGCONTESTCRITERIA : uint8
-{
-    CONTEST_CRITERIA_SIZE   = 0,
-    CONTEST_CRITERIA_WEIGHT = 1,
-    CONTEST_CRITERIA_BOTH   = 2
-};
-
-enum FISHINGCONTESTMEASURE : uint8
-{
-    CONTEST_MEASURE_GREATEST = 0,
-    CONTEST_MEASURE_SMALLEST = 1
-};
-
-enum FISHINGCONTESTSTATUS : uint8
-{
-    CONTEST_STATUS_CONTESTING = 0,
-    CONTEST_STATUS_OPENING    = 1,
-    CONTEST_STATUS_ACCEPTING  = 2,
-    CONTEST_STATUS_RELEASING  = 3,
-    CONTEST_STATUS_PRESENTING = 4,
-    CONTEST_STATUS_HIATUS     = 5,
-    CONTEST_STATUS_CLOSED     = 6,
-};
-
-enum FISHINGCONTESTINTERVAL : uint32
-{
-    // All time intervals are relative to the BASE start time of the contest, not the previous phase
-    // These intervals indicate how long each phase lasts before being automatically progressed.
-    CONTEST_INTERVAL_CONTESTING = 300,     // 5 minutes
-    CONTEST_INTERVAL_OPENING    = 1800,    // 30 minutes (Prev + 25 mins)
-    CONTEST_INTERVAL_ACCEPTING  = 1211400, // 14 days, 30 minutes (Prev + 14 days)
-    CONTEST_INTERVAL_RELEASING  = 1213200, // 14 days, 1 hour (Prev + 30 mins)
-    CONTEST_INTERVAL_PRESENTING = 2419200, // 28 days (Prev + 13 days, 23 hours)
-    CONTEST_INTERVAL_HIATUS     = 2421300, // 28 days, 35 minutes (Prev + 35 minutes)
-};
-
-struct fishing_contest_t
-{
-    uint16 contestId;
-    uint8  status;
-    uint8  criteria;
-    uint8  measure;
-    uint32 fishId;
-    uint32 startTime;
-    uint32 changeTime;
-
-    fishing_contest_t()
-    {
-        contestId  = 0;
-        status     = 0;
-        criteria   = 0;
-        measure    = 0;
-        fishId     = 0;
-        startTime  = 0xEFFFFFFF; // to allow for changetimes to not overflow
-        changeTime = 0xFFFFFFFF;
-    }
-};
-
 enum FISHPOOLFLAGS : uint32
 {
     FISHPOOL_NONE    = 0x00,
@@ -1109,35 +1013,6 @@ namespace fishingutils
     uint8 GetFishIndex(uint32 fishId);
     void  SetPlayerFishIndex(CCharEntity* PChar, uint32 fishId, bool value);
 
-    // Fish Ranking Contest
-    fish_ranking_entry* GetFishRankEntry(uint8 entry);
-    fish_ranking_entry* GetPlayerEntry(CCharEntity* PChar);
-    uint32              FishingRankEntryCount();
-    void                SubmitFish(CCharEntity* PChar, uint32 score, bool isReplacement);
-    void                WithdrawFish(CCharEntity* PChar);
-    uint32              ScoreFish(CItemFish* PFish, fishing_contest_t* PCon);
-    void                ProgressContest();
-    void                InitNewContest(uint16 contestId, uint32 fishId = 0, uint8 criteria = 0, uint8 measure = 0);
-    void                ScoreContest();
-    void                LoadContestEntries(uint8 contest);
-    void                WriteContestData();
-    void                WriteContestEntryData();
-
-    uint16 GetContestID();
-    uint8  GetContestStatus();
-    uint8  GetContestCriteria();
-    uint8  GetContestMeasure();
-    uint32 GetContestFish();
-    uint32 GetContestStartTime();
-    uint32 GetContestProgressTime();
-    bool   HasRewardPending(CCharEntity* PChar, uint16 contestId);
-    void   SetContestStatus(uint8 newStatus, bool onLoad = false, bool isTest = false);
-    void   SetContestCriteria(uint8 newCriteria);
-    void   SetContestMeasure(uint8 newMeasure);
-    void   SetContestFish(uint32 newFish);
-    void   SetContestStartTime(uint32 startTime);
-    void   GiveContestReward(CCharEntity* PChar, uint16 contestId);
-
     // Initialization
     void LoadFishingMessages();
     void LoadFishingAreas();
@@ -1149,7 +1024,6 @@ namespace fishingutils
     void LoadFishGroups();
     void LoadFishingCatchLists();
     void LoadFishIndex();
-    void LoadCurrentContest();
     void InitializeFishingSystem();
 }; // namespace fishingutils
 

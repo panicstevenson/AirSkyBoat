@@ -191,6 +191,11 @@ local loot =
             { itemid = 1602, droprate = 250 }, -- mannequin_body
             { itemid = 1603, droprate = 250 }, -- mannequin_hands
         },
+
+        {
+            { itemid =     0, droprate = 800 }, -- nothing
+            { itemid = 23313, droprate = 200 }, -- Shepherd's Boots
+        },
     },
 }
 

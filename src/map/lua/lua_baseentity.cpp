@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -155,6 +155,7 @@
 #include "utils/battleutils.h"
 #include "utils/blueutils.h"
 #include "utils/charutils.h"
+#include "utils/fishingcontest.h"
 #include "utils/guildutils.h"
 #include "utils/instanceutils.h"
 #include "utils/itemutils.h"
@@ -15590,11 +15591,11 @@ uint8 CLuaBaseEntity::getMannequinPose(uint16 itemID)
     return 0;
 }
 
-void CLuaBaseEntity::submitContestFish(uint32 score, bool isReplacement)
+void CLuaBaseEntity::submitContestFish(uint32 score)
 {
     if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
     {
-        fishingutils::SubmitFish(PChar, score, isReplacement);
+        fishingcontest::SubmitFish(PChar, score);
     }
 }
 
@@ -15602,7 +15603,7 @@ void CLuaBaseEntity::withdrawContestFish()
 {
     if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
     {
-        fishingutils::WithdrawFish(PChar);
+        fishingcontest::WithdrawFish(PChar);
     }
 }
 
@@ -15610,17 +15611,75 @@ bool CLuaBaseEntity::hasContestRewardPending(uint16 contestId)
 {
     if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
     {
-        return fishingutils::HasRewardPending(PChar, contestId);
+        return fishingcontest::HasRewardPending(PChar, contestId);
     }
 
     return false;
+}
+
+auto CLuaBaseEntity::getAvailableContestRewards(uint16 contestId) -> sol::table
+{
+    if (m_PBaseEntity && m_PBaseEntity->objtype == TYPE_PC)
+    {
+        const char* Query = "";
+        int32       ret;
+
+        if (contestId)
+        {
+            Query = "SELECT e.contestid, e.contestrank "
+                    "FROM fishing_contest_entries e "
+                    "LEFT JOIN fishing_contest_rewards r "
+                    "ON e.name = r.name AND e.contestid = r.contestid "
+                    "LEFT JOIN fishing_contest c "
+                    "ON c.contestid = e.contestid "
+                    "WHERE e.name = '%s' "
+                    "AND e.contestrank BETWEEN 1 AND 20 "
+                    "AND c.status >= 4 "
+                    "AND e.contestid = %u "
+                    "AND r.time IS NULL;";
+            ret   = sql->Query(Query, m_PBaseEntity->name, contestId);
+        }
+        else
+        {
+            Query = "SELECT e.contestid, e.contestrank "
+                    "FROM fishing_contest_entries e "
+                    "LEFT JOIN fishing_contest_rewards r "
+                    "ON e.name = r.name AND e.contestid = r.contestid "
+                    "LEFT JOIN fishing_contest c "
+                    "ON c.contestid = e.contestid "
+                    "WHERE e.name = '%s' "
+                    "AND e.contestrank BETWEEN 1 AND 20 "
+                    "AND c.status >= 4 "
+                    "AND r.time IS NULL;";
+            ret   = sql->Query(Query, m_PBaseEntity->name);
+        }
+
+        if (ret != SQL_ERROR && sql->NumRows() > 0)
+        {
+            auto rewardsTable = lua.create_table();
+
+            while (sql->NextRow() == SQL_SUCCESS)
+            {
+                auto reward = lua.create_table();
+
+                reward["id"]   = sql->GetUIntData(0);
+                reward["rank"] = sql->GetUIntData(1);
+
+                rewardsTable.add(reward);
+            }
+
+            return rewardsTable;
+        }
+    }
+
+    return sol::nil;
 }
 
 void CLuaBaseEntity::giveContestReward(uint16 contestId)
 {
     if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
     {
-        return fishingutils::GiveContestReward(PChar, contestId);
+        return fishingcontest::GiveContestReward(PChar, contestId);
     }
 }
 
@@ -15628,7 +15687,7 @@ uint32 CLuaBaseEntity::getContestScore()
 {
     if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
     {
-        if (fish_ranking_entry* entry = fishingutils::GetPlayerEntry(PChar))
+        if (fish_ranking_entry* entry = fishingcontest::GetPlayerEntry(PChar))
         {
             return entry->score;
         }
@@ -15641,7 +15700,7 @@ uint8 CLuaBaseEntity::getContestRank()
 {
     if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
     {
-        if (fish_ranking_entry* entry = fishingutils::GetPlayerEntry(PChar))
+        if (fish_ranking_entry* entry = fishingcontest::GetPlayerEntry(PChar))
         {
             return entry->contestrank;
         }
@@ -15690,6 +15749,24 @@ auto CLuaBaseEntity::getAwardHistory() -> sol::table
     return sol::lua_nil;
 }
 
+/************************************************************************
+ *  Function: faceTarget()
+ *  Purpose : forces NPC to face a target
+ ************************************************************************/
+
+void CLuaBaseEntity::faceTarget(CLuaBaseEntity* npc)
+{
+    CBaseEntity* PBaseEntity = npc->GetBaseEntity();
+
+    if (PBaseEntity->objtype == TYPE_NPC)
+    {
+        PBaseEntity->m_TargID       = m_PBaseEntity->targid;
+        PBaseEntity->loc.p.rotation = worldAngle(PBaseEntity->loc.p, m_PBaseEntity->loc.p);
+
+        PBaseEntity->loc.zone->UpdateEntityPacket(PBaseEntity, ENTITY_UPDATE, UPDATE_POS);
+    }
+}
+
 //==========================================================//
 
 void CLuaBaseEntity::Register()
@@ -15698,6 +15775,7 @@ void CLuaBaseEntity::Register()
 
     // Messaging System
     SOL_REGISTER("showText", CLuaBaseEntity::showText);
+    SOL_REGISTER("faceTarget", CLuaBaseEntity::faceTarget);
     SOL_REGISTER("messageText", CLuaBaseEntity::messageText);
     SOL_REGISTER("PrintToPlayer", CLuaBaseEntity::PrintToPlayer);
     SOL_REGISTER("PrintToArea", CLuaBaseEntity::PrintToArea);
@@ -16507,17 +16585,20 @@ void CLuaBaseEntity::Register()
     // Fishing Data
     SOL_REGISTER("getFishingStats", CLuaBaseEntity::getFishingStats);
     SOL_REGISTER("getFishingCatches", CLuaBaseEntity::getFishingCatches);
-    SOL_REGISTER("hasContestRewardPending", CLuaBaseEntity::hasContestRewardPending);
-    SOL_REGISTER("giveContestReward", CLuaBaseEntity::giveContestReward);
     SOL_REGISTER("setFishCaught", CLuaBaseEntity::setFishCaught);
     SOL_REGISTER("hasCaughtFish", CLuaBaseEntity::hasCaughtFish);
     SOL_REGISTER("clearFishCaught", CLuaBaseEntity::clearFishCaught);
     SOL_REGISTER("clearFishHistory", CLuaBaseEntity::clearFishHistory);
+
+    // Fishing Contest
     SOL_REGISTER("submitContestFish", CLuaBaseEntity::submitContestFish);
     SOL_REGISTER("getContestScore", CLuaBaseEntity::getContestScore);
     SOL_REGISTER("getContestRank", CLuaBaseEntity::getContestRank);
     SOL_REGISTER("withdrawContestFish", CLuaBaseEntity::withdrawContestFish);
     SOL_REGISTER("getAwardHistory", CLuaBaseEntity::getAwardHistory);
+    SOL_REGISTER("getAvailableContestRewards", CLuaBaseEntity::getAvailableContestRewards);
+    SOL_REGISTER("hasContestRewardPending", CLuaBaseEntity::hasContestRewardPending);
+    SOL_REGISTER("giveContestReward", CLuaBaseEntity::giveContestReward);
 
     // Mannequins
     SOL_REGISTER("setMannequinPose", CLuaBaseEntity::setMannequinPose);

@@ -13,10 +13,15 @@ local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
     SetExplorerMoogles(ID.npc.EXPLORER_MOOGLE)
+    InitializeFishingContestSystem()
 end
 
 zoneObject.onGameHour = function(zone)
     SetServerVariable("Selbina_Deastination", math.random(1, 100))
+end
+
+zoneObject.onZoneTick = function(zone)
+    ProgressFishingContest()
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

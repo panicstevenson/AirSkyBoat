@@ -4625,14 +4625,10 @@ namespace charutils
                         uint8 restrictionLevel = PMember->StatusEffectContainer->GetStatusEffect(EFFECT_LEVEL_SYNC)->GetPower(); // Level of the restriction
                         uint8 originalLevel    = PMember->jobs.job[PMember->GetMJob()];                                          // Original Level of the Member
 
-                        if (std::clamp(originalLevel - restrictionLevel, 0, 99) > levelGrace)
-                        {
-                            exp *= 0;
-                        }
+                        exp = std::clamp(originalLevel - restrictionLevel, 0, 99) > levelGrace ? 0 : exp;
                     }
 
-                    exp = charutils::AddExpBonus(PMember, exp);
-
+                    exp = exp > 0 ? charutils::AddExpBonus(PMember, exp) : 0;
                     charutils::AddExperiencePoints(false, PMember, PMob, (uint32)exp, mobCheck, chainactive);
                 }
             }
@@ -5917,7 +5913,36 @@ namespace charutils
     {
         TracyZoneScoped;
 
-        int32 bonus = 0;
+        int32 bonus  = 0;
+        auto  region = PChar->loc.zone->GetRegionID();
+
+        if (region < REGION_TYPE::WEST_AHT_URHGAN && PChar->StatusEffectContainer->HasStatusEffect(EFFECT_SIGNET))
+        {
+            float newBonus = 0;
+
+            // Exp bonus when above a certain level. 50+ = 5%; 60+ = 7.5%; 70+ = 10%
+            if (PChar->GetMLevel() >= 70)
+            {
+                newBonus = 10;
+            }
+            else if (PChar->GetMLevel() >= 60)
+            {
+                newBonus = 7.5;
+            }
+            else if (PChar->GetMLevel() >= 50)
+            {
+                newBonus = 5;
+            }
+
+            // 5% Exp bonus when current region isn't controlled by player's nation
+            if (PChar->profile.nation != conquest::GetRegionOwner(region))
+            {
+                newBonus += 5;
+            }
+
+            bonus += (int32)std::round((exp * newBonus) / 100.f);
+        }
+
         if (PChar->StatusEffectContainer->GetStatusEffect(EFFECT_DEDICATION) && PChar->loc.zone->GetRegionID() != REGION_TYPE::ABYSSEA)
         {
             CStatusEffect* dedication = PChar->StatusEffectContainer->GetStatusEffect(EFFECT_DEDICATION);

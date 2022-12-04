@@ -23129,8 +23129,6 @@ INSERT INTO `mob_droplist` VALUES (2819,0,0,1000,747,@UNCOMMON);  -- Orichalcum 
 INSERT INTO `mob_droplist` VALUES (2819,0,0,1000,747,@UNCOMMON);  -- Orichalcum Ingot (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (2819,0,0,1000,831,@UNCOMMON);  -- Square Of Shining Cloth (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (2819,0,0,1000,831,@UNCOMMON);  -- Square Of Shining Cloth (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (2819,0,0,1000,4748,@RARE);     -- Scroll Of Raise Iii (Rare, 5%)
-INSERT INTO `mob_droplist` VALUES (2819,0,0,1000,4748,@RARE);     -- Scroll Of Raise Iii (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (2819,0,0,1000,4818,@RARE);     -- Scroll Of Quake (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (2819,0,0,1000,4818,@RARE);     -- Scroll Of Quake (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (2819,1,1,@VCOMMON,1340,334);   -- Neptunal Abjuration Body (Group 1 - 33.4%)
@@ -23139,6 +23137,8 @@ INSERT INTO `mob_droplist` VALUES (2819,1,1,@VCOMMON,1337,333);   -- Wyrmal Abju
 INSERT INTO `mob_droplist` VALUES (2819,1,2,@VCOMMON,1340,334);   -- Neptunal Abjuration Body (Group 2 - 33.4%)
 INSERT INTO `mob_droplist` VALUES (2819,1,2,@VCOMMON,1315,333);   -- Dryadic Abjuration Body (Group 2 - 33.3%)
 INSERT INTO `mob_droplist` VALUES (2819,1,2,@VCOMMON,1337,333);   -- Wyrmal Abjuration Legs (Group 2 - 33.3%)
+INSERT INTO `mob_droplist` VALUES (2819,1,3,@VCOMMON,4742,500);   -- Scroll Of Protectra V (Group 3 - 50%)
+INSERT INTO `mob_droplist` VALUES (2819,1,3,@VCOMMON,4748,500);   -- Scroll Of Raise Iii (Group 3 - 50%)
 
 -- ZoneID: 178 - Mother Globe
 INSERT INTO `mob_droplist` VALUES (2820,0,0,1000,1419,@ALWAYS);  -- Springstone (Always, 100%)

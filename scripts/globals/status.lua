@@ -1275,6 +1275,7 @@ xi.mod =
     SPIKES_DMG                      = 344,
     TP_BONUS                        = 345,
     PERPETUATION_REDUCTION          = 346,
+    SUMMON_CASTING_TIME             = 1170, -- Reduces summoning cast time by seconds provided
 
     -- Warrior
     BERSERK_POTENCY                 = 948,  -- Augments "Berserk"/Enhances "Berserk" effect (Conqueror)
@@ -1943,6 +1944,7 @@ xi.latent =
     VS_ECOSYSTEM             = 59, -- Vs. Specific Ecosystem ID (e.g. Vs. Plantoid: Accuracy+3)
     VS_FAMILY                = 60, -- Vs. Specific Family ID (e.g. Vs. Korrigan: Accuracy+3)
     VS_SUPERFAMILY           = 61, -- Vs. Specific Family ID (e.g. Vs. Mandragora: Accuracy+3)
+    CITIZEN_OF_NATION        = 70, -- Player is a citizen of the provided nation
 }
 
 -----------------------------------

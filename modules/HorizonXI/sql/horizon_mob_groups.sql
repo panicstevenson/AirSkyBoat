@@ -111,6 +111,11 @@ UPDATE `mob_groups` SET `minLevel` = 31, `maxLevel` = 34 WHERE name = "Giant_Spi
 UPDATE `mob_groups` SET `minLevel` = 31, `maxLevel` = 34 WHERE name = "Giant_Spider"  and `zoneid` = 114;
 UPDATE `mob_groups` SET `minLevel` = 38, `maxLevel` = 41 WHERE name = "Desert_Dhalmel"  and `zoneid` = 114;
 
+-- Tahrongi Canyon (Zone 117)
+INSERT INTO `mob_groups` VALUES (52,1635,117,'Goblin_Ambusher',330,0,1017,0,0,17,20,0,NULL);
+INSERT INTO `mob_groups` VALUES (53,1738,117,'Goblin_Tinkerer',330,0,6029,0,0,17,20,0,NULL);
+INSERT INTO `mob_groups` VALUES (54,1643,117,'Goblin_Butcher',330,0,6029,0,0,17,20,0,NULL);
+
 -- Buburimu_Peninsula (Zone 118)
 UPDATE `mob_groups` SET `minLevel` = 22, `maxLevel` = 25 WHERE name = "Snipper" and `zoneid` = 118;
 UPDATE `mob_groups` SET `minLevel` = 25, `maxLevel` = 28 WHERE name = "Shoal_Pugil" and `zoneid` = 118;
