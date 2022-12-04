@@ -207,6 +207,9 @@ xi.settings.map =
     -- Enable/disable level cap of mission battlefields stored in database.
     LV_CAP_MISSION_BCNM = 1,
 
+    -- Prevent players from reentering a battlefield after choosing to run away. Retail allows reentry of battlefields.
+    PREVENT_BATTLEFIELD_REENTRY = true,
+
     -- Max allowed merits points players can hold
     --  10 classic
     --  30 abyssea

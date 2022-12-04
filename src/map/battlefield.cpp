@@ -537,7 +537,15 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
 
         if (PChar->StatusEffectContainer->HasStatusEffectByFlag(EFFECTFLAG_CONFRONTATION))
         {
-            PChar->StatusEffectContainer->GetStatusEffect(EFFECT_BATTLEFIELD)->SetSubPower(0);
+            if (leavecode == BATTLEFIELD_LEAVE_CODE_LOSE || leavecode == BATTLEFIELD_LEAVE_CODE_WIN)
+            {
+                PChar->StatusEffectContainer->GetStatusEffect(EFFECT_BATTLEFIELD)->SetSubPower(0);
+            }
+            else if (settings::get<bool>("map.PREVENT_BATTLEFIELD_REENTRY") && leavecode == BATTLEFIELD_LEAVE_CODE_EXIT)
+            {
+                PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_CONFRONTATION, true);
+                PChar->StatusEffectContainer->DelStatusEffect(EFFECT_LEVEL_RESTRICTION);
+            }
         }
 
         if (PChar->isDead())
