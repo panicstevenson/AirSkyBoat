@@ -256,8 +256,11 @@ public:
     uint8 m_unk1; // (entity_update 0x25)
     uint8 m_unk2; // (entity_update 0x26)
 
-    uint8 m_setMaxSpawns; // spawnSet Maximum Initial Spawns
-    uint8 m_spawnSet;     // spawnSet Mob Belongs To
+    uint8  m_setMaxSpawns; // spawnSet Maximum Initial Spawns
+    uint8  m_spawnSet;     // spawnSet Mob Belongs To
+    uint16 m_pathFindDisengage;
+
+    uint16 m_defaultAttack;
 
     bool m_CallForHelpBlocked;
 

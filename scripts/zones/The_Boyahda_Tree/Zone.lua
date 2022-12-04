@@ -11,6 +11,9 @@ zoneObject.onInitialize = function(zone)
     xi.treasure.initZone(zone)
     xi.horizon.spawnInitialMobs(zone)
     xi.hnm_system.startup(zone)
+
+    -- NM Persistence
+    xi.mob.nmTODPersistCache(zone, ID.mob.ANCIENT_GOOBBUE)
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype)

@@ -11,6 +11,9 @@ zoneObject.onInitialize = function(zone)
     GetMobByID(ID.mob.BUNE):setRespawnTime(math.random(900, 10800))
     xi.horizon.spawnInitialMobs(zone)
     xi.hnm_system.startup(zone)
+
+    -- NM Persistence
+    xi.mob.nmTODPersistCache(zone, ID.mob.BUNE)
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype)

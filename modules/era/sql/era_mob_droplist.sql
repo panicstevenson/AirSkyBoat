@@ -3692,6 +3692,12 @@ INSERT INTO `mob_droplist` VALUES (398,0,0,1000,1236,@ALWAYS);    -- Bag Of Cact
 INSERT INTO `mob_droplist` VALUES (398,0,0,1000,1817,@UNCOMMON);  -- Cactus Arm (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (398,0,0,1000,14128,@RARE);     -- Kung Fu Shoes (Rare, 5%)
 
+-- ZoneID: 153 Old Goobbue
+INSERT INTO `mob_droplist` VALUES (399,0,0,1000,919,@VCOMMON);  -- Clump Of Boyahda Moss (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (399,0,0,1000,1052,@RARE);    -- Boyahda Coffer Key (Rare, 5%)
+INSERT INTO `mob_droplist` VALUES (399,0,0,1000,1181,@RARE);    -- Clump Of Goobbue Humus (Rare, 5%)
+INSERT INTO `mob_droplist` VALUES (399,0,0,1000,1237,@COMMON);  -- Bag Of Tree Cuttings (Common, 15%)
+
 -- ZoneID:   9 - Camazotz
 -- ZoneID:   9 - Vampire Bat
 INSERT INTO `mob_droplist` VALUES (400,0,0,1000,922,@COMMON);   -- Bat Wing (Common, 15%)
@@ -9864,7 +9870,6 @@ INSERT INTO `mob_droplist` VALUES (1200,0,0,1000,959,@RARE);  -- Dahlia (Rare, 5
 -- ZoneID: 121 - Goobbue Gardener
 INSERT INTO `mob_droplist` VALUES (1201,0,0,1000,919,@VCOMMON);   -- Clump Of Boyahda Moss (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (1201,0,0,1000,1237,@UNCOMMON); -- Bag Of Tree Cuttings (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (1201,0,0,1000,1181,@SRARE);    -- Clump Of Goobbue Humus (Super Rare, .5%)
 
 -- ZoneID: 121 - Goobbue Parasite
 -- ZoneID: 212 - Labyrinth Leech
@@ -18385,8 +18390,6 @@ INSERT INTO `mob_droplist` VALUES (2331,0,0,1000,2505,60);  -- Heavy Quadav Back
 INSERT INTO `mob_droplist` VALUES (2332,0,0,1000,1697,@UNCOMMON); -- Piece Of Spruce Lumber (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (2332,0,0,1000,1877,@UNCOMMON); -- Fomor Codex (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (2332,0,0,1000,1620,@RARE);     -- Taurus Horn (Rare, 5%)
-INSERT INTO `mob_droplist` VALUES (2332,2,0,1000,886,0);          -- Demon Skull (Steal)
-INSERT INTO `mob_droplist` VALUES (2332,2,0,1000,902,0);          -- Demon Horn (Steal)
 
 -- ZoneID:  28 - Stegotaur
 INSERT INTO `mob_droplist` VALUES (2333,0,0,1000,1877,@UNCOMMON); -- Fomor Codex (Uncommon, 10%)
@@ -23169,7 +23172,7 @@ INSERT INTO `mob_droplist` VALUES (2823,0,0,1000,1445,@RARE);    -- Freyas Tear 
 INSERT INTO `mob_droplist` VALUES (2824,0,0,1000,644,@VCOMMON); -- Chunk Of Mythril Ore (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (2824,0,0,1000,955,@RARE);    -- Golem Shard (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (2824,0,0,1000,955,@RARE);    -- Golem Shard (Rare, 5%)
-INSERT INTO `mob_droplist` VALUES (2824,0,0,1000,2388,@RARE);   -- Chunk Of Diorite (Rare, 5%)
+INSERT INTO `mob_droplist` VALUES (2824,0,0,1000,2388,@SRARE);   -- Chunk Of Diorite (Super Rare, 0.5%)
 INSERT INTO `mob_droplist` VALUES (2824,0,0,1000,1132,@VRARE);  -- Square Of Raxa (Very Rare, 1%)
 
 -- ZoneID: 143 - Nighu Nestfender
@@ -24345,7 +24348,6 @@ INSERT INTO `mob_droplist` VALUES (3012,0,0,1000,919,@VCOMMON);   -- Clump Of Bo
 INSERT INTO `mob_droplist` VALUES (3012,0,0,1000,1237,@VCOMMON);  -- Bag Of Tree Cuttings (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (3012,0,0,1000,1414,@UNCOMMON); -- Piece Of Wisteria Lumber (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (3012,0,0,1000,1181,@RARE);     -- Clump Of Goobbue Humus (Rare, 5%)
-INSERT INTO `mob_droplist` VALUES (3141,0,0,1000,1264,@SRARE);    -- Clump Of Great Boyahda Moss (Super Rare, .5%)
 INSERT INTO `mob_droplist` VALUES (3012,4,0,1000,919,0);          -- Clump Of Boyahda Moss (Despoil)
 INSERT INTO `mob_droplist` VALUES (3012,4,0,1000,1237,0);         -- Bag Of Tree Cuttings (Despoil)
 

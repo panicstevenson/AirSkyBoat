@@ -111,7 +111,7 @@ bool CMobController::CanPursueTarget(CBattleEntity* PTarget)
         if (!PMob->PAI->PathFind->InWater() && !PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_DEODORIZE) && !PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_HOLY_CIRCLE))
         {
             // certain weather / deodorize will turn on time deaggro
-            return PMob->m_disableScent;
+            return !PMob->m_disableScent;
         }
     }
     return false;
@@ -122,7 +122,7 @@ bool CMobController::CheckHide(CBattleEntity* PTarget)
     TracyZoneScoped;
     if (PTarget->GetMJob() == JOB_THF && PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_HIDE))
     {
-        return !CanPursueTarget(PTarget) && !PMob->m_TrueDetection;
+        return !CanPursueTarget(PTarget) && !PMob->m_TrueDetection && !(PMob->getMobMod(MOBMOD_DETECTION) & DETECT_HEARING);
     }
     return false;
 }
@@ -165,7 +165,7 @@ bool CMobController::CheckDetection(CBattleEntity* PTarget)
         TapDeaggroTime();
     }
 
-    auto additionalDeaggroTime = std::chrono::seconds(settings::get<uint32>("map.MOB_ADDITIONAL_TIME_TO_DEAGGRO"));
+    auto additionalDeaggroTime = PMob->getMobMod(MOBMOD_NO_MOVE) || PMob->m_roamFlags & ROAMFLAG_WORM ? std::chrono::seconds(0) : std::chrono::seconds(settings::get<uint32>("map.MOB_ADDITIONAL_TIME_TO_DEAGGRO"));
     return PMob->CanDeaggro() && (m_Tick >= m_DeaggroTime + 25s + additionalDeaggroTime);
 }
 
@@ -266,7 +266,7 @@ bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight)
 
     float verticalDistance = abs(PMob->loc.p.y - PTarget->loc.p.y);
 
-    if ((PMob->m_Family != 6 || PMob->getMobMod(LEDGE_AGGRO) != 0) && verticalDistance > 8.0f)
+    if ((PMob->m_Family != 6 || PMob->getMobMod(MOBMOD_LEDGE_AGGRO) != 0) && verticalDistance > 8.0f)
     {
         return false;
     }
@@ -290,7 +290,7 @@ bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight)
 
     if (detectSight && !hasInvisible && currentDistance < PMob->getMobMod(MOBMOD_SIGHT_RANGE) && facing(PMob->loc.p, PTarget->loc.p, 64))
     {
-        if (PMob->getMobMod(LEDGE_AGGRO) != 0)
+        if (PMob->getMobMod(MOBMOD_LEDGE_AGGRO) != 0)
         {
             return true;
         }
@@ -467,6 +467,7 @@ bool CMobController::TrySpecialSkill()
 
     if (luautils::OnMobSkillCheck(PAbilityTarget, PMob, PSpecialSkill) == 0)
     {
+        PMob->m_defaultAttack = PSpecialSkill->getID();
         return MobSkill(PAbilityTarget->targid, PSpecialSkill->getID());
     }
 
@@ -558,6 +559,17 @@ bool CMobController::CanCastSpells()
         {
             return false;
         }
+    }
+
+    // Charmed BST pets don't passively cast spells
+    if (PMob->isCharmed && PMob->PMaster != nullptr && PMob->PMaster->objtype == TYPE_PC)
+    {
+        // Can cast spells if BST uses Sic while mob has less than 1000TP
+        if (PMob->GetLocalVar("Sic") != 1)
+        {
+            return false;
+        }
+        PMob->SetLocalVar("Sic", 0);
     }
 
     return IsMagicCastingEnabled();
@@ -930,9 +942,31 @@ void CMobController::DoRoamTick(time_point tick)
         PMob->m_OwnerID.clean();
     }
 
-    if (m_Tick >= m_ResetTick + 10s && PMob->health.tp > 0)
+    if (m_Tick >= m_ResetTick + 10s && (PMob->health.tp > 0 || PMob->CanRest()))
     {
-        PMob->health.tp -= 100;
+        if (PMob->health.tp > 0)
+        {
+            PMob->health.tp -= 100;
+        }
+        // can't rest with poison or disease
+        if (PMob->getMobMod(MOBMOD_NO_REST) == 0)
+        {
+            // recover 10% health
+            if (PMob->Rest(0.1f))
+            {
+                // health updated
+                PMob->updatemask |= UPDATE_HP;
+            }
+            if (PMob->GetHPP() == 100)
+            {
+                // at max health undirty exp
+                PMob->m_HiPCLvl     = 0;
+                PMob->m_HiPartySize = 0;
+                PMob->m_giveExp     = true;
+                PMob->m_ExpPenalty  = 0;
+                PMob->m_UsedSkillIds.clear();
+            }
+        }
         m_ResetTick = m_Tick;
     }
 
@@ -953,48 +987,21 @@ void CMobController::DoRoamTick(time_point tick)
         }
         else if (m_Tick >= m_LastActionTime + std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_ROAM_COOL)))
         {
-            // lets buff up or move around
-            if (PMob->GetCallForHelpFlag())
-            {
-                PMob->SetCallForHelpFlag(false);
-            }
-
-            // can't rest with poison or disease
-            if (PMob->CanRest() && PMob->getMobMod(MOBMOD_NO_REST) == 0)
-            {
-                // recover 10% health
-                if (PMob->Rest(0.1f))
-                {
-                    // health updated
-                    PMob->updatemask |= UPDATE_HP;
-                }
-
-                if (PMob->GetHPP() == 100)
-                {
-                    // at max health undirty exp
-                    PMob->m_HiPCLvl     = 0;
-                    PMob->m_HiPartySize = 0;
-                    PMob->m_giveExp     = true;
-                    PMob->m_ExpPenalty  = 0;
-                    PMob->m_UsedSkillIds.clear();
-                }
-            }
-
             // if I just disengaged check if I should despawn
             if (!PMob->getMobMod(MOBMOD_DONT_ROAM_HOME) && PMob->IsFarFromHome())
             {
-                if (PMob->CanRoamHome() && PMob->PAI->PathFind->PathTo(PMob->m_SpawnPoint))
+                if (PMob->CanRoamHome() && PMob->PAI->PathFind->PathTo(PMob->m_SpawnPoint, PATHFLAG_RUN))
                 {
                     // walk back to spawn if too far away
 
                     // limit total path to just 10 or
                     // else we'll move straight back to spawn
-                    PMob->PAI->PathFind->LimitDistance(10.0f);
+                    PMob->PAI->PathFind->LimitDistance(5.0f);
 
                     FollowRoamPath();
 
                     // move back every 5 seconds
-                    m_LastActionTime = m_Tick - (std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_ROAM_COOL)) + 10s);
+                    m_LastActionTime = m_Tick - (std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_ROAM_COOL)) + 5s);
                 }
                 else if (!(PMob->getMobMod(MOBMOD_NO_DESPAWN) != 0) && !settings::get<bool>("map.MOB_NO_DESPAWN"))
                 {
@@ -1109,7 +1116,7 @@ void CMobController::FollowRoamPath()
             // pet should follow me if roaming
             position_t targetPoint = nearPosition(PMob->loc.p, 2.1f, (float)M_PI);
 
-            PPet->PAI->PathFind->PathTo(targetPoint);
+            PPet->PAI->PathFind->PathTo(targetPoint, PATHFLAG_RUN);
         }
 
         // if I just finished reset my last action time
@@ -1220,19 +1227,14 @@ bool CMobController::Engage(uint16 targid)
         // Don't cast magic or use special ability right away
         if (PMob->getBigMobMod(MOBMOD_MAGIC_DELAY) != 0)
         {
-            m_LastMagicTime =
-                m_Tick - std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_MAGIC_COOL) + xirand::GetRandomNumber(PMob->getBigMobMod(MOBMOD_MAGIC_DELAY)));
-        }
-        else if (PMob->getBigMobMod(MOBMOD_MAGIC_COOL) != 0)
-        {
-            m_LastMagicTime =
-                m_Tick - std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_MAGIC_COOL));
+            m_LastMagicTime = m_Tick - std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_MAGIC_COOL)) +
+                              std::chrono::milliseconds(xirand::GetRandomNumber(PMob->getBigMobMod(MOBMOD_MAGIC_DELAY)));
         }
 
         if (PMob->getBigMobMod(MOBMOD_SPECIAL_DELAY) != 0)
         {
-            m_LastSpecialTime = m_Tick - std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_SPECIAL_COOL) +
-                                                                   xirand::GetRandomNumber(PMob->getBigMobMod(MOBMOD_SPECIAL_DELAY)));
+            m_LastSpecialTime = m_Tick - std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_SPECIAL_COOL)) +
+                                std::chrono::milliseconds(xirand::GetRandomNumber(PMob->getBigMobMod(MOBMOD_SPECIAL_DELAY)));
         }
     }
     return ret;
@@ -1273,6 +1275,11 @@ bool CMobController::CanAggroTarget(CBattleEntity* PTarget)
     }
 
     if (PMob->PAI && (PMob->PAI->IsCurrentState<CClaimShieldState>() || PMob->PAI->IsCurrentState<CMobShieldState>()))
+    {
+        return false;
+    }
+
+    if (PTarget->GetMLevel() > 70 && PMob->m_maxLevel < 61)
     {
         return false;
     }

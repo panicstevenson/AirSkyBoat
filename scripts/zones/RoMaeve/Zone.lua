@@ -60,6 +60,9 @@ zoneObject.onInitialize = function(zone)
     GetNPCByID(ID.npc.BASTOK_7_1_QM):setPos(newPosition.x, newPosition.y, newPosition.z)
     xi.horizon.spawnInitialMobs(zone)
     xi.hnm_system.startup(zone)
+
+    -- NM Persistence
+    xi.mob.nmTODPersistCache(zone, ID.mob.SHIKIGAMI_WEAPON)
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype)

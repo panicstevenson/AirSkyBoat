@@ -27,8 +27,9 @@ zoneObject.onChocoboDig = function(player, precheck)
 end
 
 zoneObject.onInitialize = function(zone)
-    UpdateNMSpawnPoint(ID.mob.AHTU)
-    GetMobByID(ID.mob.AHTU):setRespawnTime(math.random(900, 10800))
+    -- NM Persistence
+    xi.mob.nmTODPersistCache(zone, ID.mob.AHTU)
+    xi.mob.nmTODPersistCache(zone, ID.mob.WEEPING_WILLOW)
 
     -- Prepare everything for Full Speed Ahead! (OOE Quest)
     -- local syrillia   = zone:queryEntitiesByName("Syrillia")[1]
