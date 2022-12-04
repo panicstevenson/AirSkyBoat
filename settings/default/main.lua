@@ -15,8 +15,7 @@ xi.settings.main =
     SERVER_NAME = "HorizonXI",
 
     SERVER_MESSAGE =
-        "Please visit https://github.com/AirSkyBoat/AirSkyBoat for the latest information on the project.\n" ..
-        "Thank you, and we hope you enjoy soaring through the skies.",
+        "A new adventure is just on the horizon! Please visit horizonxi.com for server information and resources.",
 
     -- Setting to lock content more accurately to the expansions defined below.
     -- This generally results in a more accurate presentation of your selected expansions,
@@ -65,7 +64,7 @@ xi.settings.main =
     PL_PENALTY = 1,
 
     -- Land King System
-    LandKingSystem_NQ = 1, -- Default to pop system as loading the module turns off the pop system.
+    LandKingSystem_NQ = 0, -- Default to pop system as loading the module turns off the pop system.
 
     -- Magian Trials
     ENABLE_MAGIAN_TRIALS             = 1,
@@ -79,7 +78,7 @@ xi.settings.main =
     -- Retail droprate = 0.1 (10%) with no other effects active
     -- Set to 0 to disable caskets.
     -- max is clamped to 1.0 (100%)
-    CASKET_DROP_RATE = 0.1,
+    CASKET_DROP_RATE = 0,
 
     -- Abyssea lights
     -- certain mobs that reduces the drop rate automatically depending on the light.
@@ -175,20 +174,20 @@ xi.settings.main =
     DEBUG_GARRISON               = false,  -- If true, garrison will print out debug messages in logs as well as players as smes.
     GARRISON_LOCKOUT             = 1800,   -- Time in seconds before a new garrison can be started (default: 1800)
     GARRISON_TIME_LIMIT          = 1800,   -- Time in seconds before lose ongoing garrison (default: 1800)
-    GARRISON_ONCE_PER_WEEK       = false,  -- Set to false to bypass the limit of one garrison per Conquest Tally Week.
+    GARRISON_ONCE_PER_WEEK       = true,   -- Set to false to bypass the limit of one garrison per Conquest Tally Week.
     GARRISON_PARTY_LIMIT         = 18,     -- Set to max party members you want to do garrison (default: 18).
     GARRISON_NATION_BYPASS       = false,  -- Set to true to bypass the nation requirement.
     GARRISON_RANK                = 2,      -- Set to minumum Nation Rank to start Garrison (default: 2).
 
     -- DYNAMIS SETTINGS
-    BETWEEN_2DYNA_WAIT_TIME     = 72,       -- Hours before player can re-enter Dynamis. Default is 1 Earthday (24 hours).
+    BETWEEN_2DYNA_WAIT_TIME     = 71,       -- Hours before player can re-enter Dynamis. Default is 1 Earthday (24 hours).
     DYNA_MIDNIGHT_RESET         = false,     -- If true, makes the wait time count by number of server midnights instead of full 24 hour intervals
     DYNA_LEVEL_MIN              = 65,       -- Level min for entering in Dynamis
     TIMELESS_HOURGLASS_COST     = 1000000,   -- Refund for the timeless hourglass for Dynamis.
     PRISMATIC_HOURGLASS_COST    = 50000,    -- Cost of the prismatic hourglass for Dynamis.
     CURRENCY_EXCHANGE_RATE      = 100,      -- X Tier 1 ancient currency -> 1 Tier 2, and so on. Certain values may conflict with shop items. Not designed to exceed 198.
-    RELIC_2ND_UPGRADE_WAIT_TIME = 7200,     -- Wait time for 2nd relic upgrade (stage 2 -> stage 3) in seconds. 7200s = 2 hours.
-    RELIC_3RD_UPGRADE_WAIT_TIME = 3600,     -- Wait time for 3rd relic upgrade (stage 3 -> stage 4) in seconds. 3600s = 1 hour.
+    RELIC_2ND_UPGRADE_WAIT_TIME = 604800,     -- Wait time for 2nd relic upgrade (stage 2 -> stage 3) in seconds. 7200s = 2 hours. 604800 = One Earth week
+    RELIC_3RD_UPGRADE_WAIT_TIME = 295200,     -- Wait time for 3rd relic upgrade (stage 3 -> stage 4) in seconds. 3600s = 1 hour. 295200 = 82 Earth hours
     FREE_COP_DYNAMIS            = 0,        -- Authorize player to entering inside COP Dynamis without completing COP mission (1 = enable 0 = disable)
 
     -- LIMBUS SETTINGS
