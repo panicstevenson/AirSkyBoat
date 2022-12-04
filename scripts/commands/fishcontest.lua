@@ -9,7 +9,7 @@ require("scripts/globals/utils")
 
 cmdprops =
 {
-    permission = 4,
+    permission = 1,
     parameters = "sssss"
 }
 
@@ -34,7 +34,6 @@ local function confirmPlayer(player, target)
 end
 
 local function cmdReward(player, subCommand, target, contestId)
-
     -- Check for a subcommand
     if
         not subCommand or
@@ -127,6 +126,11 @@ local function cmdHelp(player, subCommand, option)
 end
 
 local function cmdStage(player, stage, force)
+    if player:getGMLevel() < 4 then
+        error(player, "This command requires GM Level 4.")
+        return
+    end
+
     force = force or ""
     local doForce = string.lower(force) == "force"
     if
@@ -188,6 +192,11 @@ local function cmdTime(player, contest)
 end
 
 local function cmdClose(player, contest, hardClose)
+    if player:getGMLevel() < 4 then
+        error(player, "This command requires GM Level 4.")
+        return
+    end
+
     local isTest = true
     if
         hardClose ~= nil and
@@ -203,6 +212,11 @@ local function cmdClose(player, contest, hardClose)
 end
 
 local function cmdNew(player, contest)
+    if player:getGMLevel() < 4 then
+        error(player, "This command requires GM Level 4.")
+        return
+    end
+
     local defaultStage = xi.fishing.contest.defaultStatus(contest['starttime'])
     if defaultStage < 6 then
         player:PrintToPlayer("Cannot create new contest with another one active.  Close current contest first.", xi.msg.channel.SYSTEM_3)
