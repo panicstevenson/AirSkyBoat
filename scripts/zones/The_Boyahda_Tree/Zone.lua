@@ -9,8 +9,6 @@ local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
     xi.treasure.initZone(zone)
-    xi.hnm_system.startup(zone)
-
     -- NM Persistence
     xi.mob.nmTODPersistCache(zone, ID.mob.ANCIENT_GOOBBUE)
     hxi.spawner.spawnInitialMobs(zone)
