@@ -58,6 +58,10 @@ end
 zoneObject.onInitialize = function(zone)
     local newPosition = npcUtil.pickNewPosition(ID.npc.BASTOK_7_1_QM, ID.npc.BASTOK_7_1_QM_POS, true)
     GetNPCByID(ID.npc.BASTOK_7_1_QM):setPos(newPosition.x, newPosition.y, newPosition.z)
+    xi.hnm_system.startup(zone)
+
+    -- NM Persistence
+    xi.mob.nmTODPersistCache(zone, ID.mob.SHIKIGAMI_WEAPON)
     hxi.spawner.spawnInitialMobs(zone)
     hxi.hnm.startup(zone)
 end

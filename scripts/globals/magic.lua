@@ -83,7 +83,6 @@ local function AffinityBonusDmg(caster, ele)
 end
 
 local function AffinityBonusAcc(caster, ele)
-
     local affinity = caster:getMod(strongAffinityAcc[ele])
     local bonus = 0 + affinity * 10 -- 10 acc per level of affinity
     return bonus
@@ -259,7 +258,6 @@ local function isHelixSpell(spell)
 end
 
 local function calculateMagicBurst(caster, spell, target, params)
-
     local burst = 1.0
     local skillchainburst = 1.0
     local modburst = 1.0
@@ -357,7 +355,6 @@ local function doNuke(caster, target, spell, params)
 end
 
 xi.magic.calculateMagicDamage = function(caster, target, spell, params)
-
     local dINT = caster:getStat(params.attribute) - target:getStat(params.attribute)
     local dmg = params.dmg
 
@@ -564,6 +561,17 @@ end
 
 xi.magic.applyResistance = function(caster, target, spell, params)
     return xi.magic.applyResistanceEffect(caster, target, spell, params)
+end
+
+xi.magic.differentEffect = function(caster, target, spell, params)
+    if
+        target:hasStatusEffect(params.effect) and
+        utils.ternary(target:getStatusEffect(params.effect):getSubPower() > 0, target:getStatusEffect(params.effect):getSubPower(), 3) >= params.tier
+    then
+        return false
+    end
+
+    return true
 end
 
 -- USED FOR Status Effect Enfeebs (blind, slow, para, etc.)
@@ -1259,8 +1267,7 @@ xi.magic.addBonuses = function(caster, spell, target, dmg, params)
             mab = mab + caster:getMerit(xi.merit.NIN_MAGIC_BONUS)
         end
 
-        local mab_crit = caster:getMod(xi.mod.MAGIC_CRITHITRATE)
-        if math.random(1, 100) < mab_crit then
+        if math.random(1, 100) < caster:getMod(xi.mod.MAGIC_CRITHITRATE) then
             mab = mab + (10 + caster:getMod(xi.mod.MAGIC_CRIT_DMG_INCREASE))
         end
 
@@ -1400,9 +1407,7 @@ xi.magic.getElementalDebuffDOT = function(INT)
 end
 
 xi.magic.getElementalDebuffStatDownFromDOT = function(dot)
-    local stat_down = 0
-    stat_down = (dot - 1) * 2 + 5
-    return stat_down
+    return (dot - 1) * 2 + 5
 end
 
 xi.magic.getHelixDuration = function(caster)

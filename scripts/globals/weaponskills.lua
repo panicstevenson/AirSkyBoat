@@ -1,3 +1,4 @@
+-----------------------------------
 -- Contains all common weaponskill calculations including but not limited to:
 -- fSTR
 -- Alpha
@@ -8,6 +9,7 @@
 -- applications of accuracy mods ('Accuracy varies with TP.')
 -- applications of damage mods ('Damage varies with TP.')
 -- performance of the actual WS (rand numbers, etc)
+-----------------------------------
 require("scripts/globals/magicburst")
 require("scripts/globals/magiantrials")
 require("scripts/globals/ability")
@@ -17,6 +19,7 @@ require("scripts/globals/magic")
 require("scripts/globals/utils")
 require("scripts/globals/msg")
 require("scripts/globals/damage")
+-----------------------------------
 
 xi = xi or { }
 xi.weaponskills = xi.weaponskills or { }
@@ -253,7 +256,7 @@ xi.weaponskills.cRangedRatio = function(attacker, defender, params, ignoredDef, 
     return { pdif, pdifcrit }
 end
 
-local function getRangedHitRate(attacker, target, capHitRate, bonus, wsParams, calcParams)
+xi.weaponskills.getRangedHitRate = function(attacker, target, capHitRate, bonus, wsParams, calcParams)
     local accVarryTP = 0
 
     if bonus == nil then
@@ -290,7 +293,7 @@ local function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams, f
         ratio = xi.weaponskills.cRangedRatio(attacker, target, wsParams, calcParams.ignoredDef, calcParams.tp)
         pdif = ratio[1]
         pdifCrit =  ratio[2]
-        calcParams.hitRate = getRangedHitRate(attacker, target, false, 0, wsParams, calcParams)
+        calcParams.hitRate = xi.weaponskills.getRangedHitRate(attacker, target, false, 0, wsParams, calcParams)
     else
         if isSubAttack and calcParams.extraOffhandHit and calcParams.attackInfo.weaponType ~= xi.skill.HAND_TO_HAND then
             ratio = xi.weaponskills.cMeleeRatio(attacker, target, wsParams, calcParams.ignoredDef, calcParams.tp, xi.slot.SUB)
@@ -357,7 +360,6 @@ local function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams, f
                 end
 
                 finaldmg = finaldmg + magicdmg
-
             end
 
             calcParams.hitsLanded = calcParams.hitsLanded + 1
@@ -914,6 +916,7 @@ xi.weaponskills.doMagicWeaponskill = function(attacker, target, wsID, wsParams, 
     end
 
     calcParams.finalDmg = dmg
+    attack.damageType = xi.attackType.MAGICAL
 
     if dmg > 0 then
         attacker:trySkillUp(attack.weaponType, target:getMainLvl())
@@ -971,7 +974,7 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
     elseif attack.attackType == xi.attackType.RANGED then
         finaldmg = xi.damage.applyDamageTaken(defender, finaldmg, xi.attackType.RANGED)
     else
-        finaldmg = xi.damage.applyDamageTaken(defender, finaldmg, xi.attackType.PHYSICAL)
+        finaldmg = xi.damage.applyDamageTaken(defender, finaldmg, utils.ternary(attack.damageType ~= nil, attack.damageType, xi.attackType.PHYSICAL))
     end
 
     local targetTPMult = wsParams.targetTPMult or 1
@@ -1197,37 +1200,47 @@ local function calculateRawfSTR(dSTR, divisor)
 end
 
 -- Given the attacker's str and the mob's vit, fSTR is calculated (for melee WS)
-xi.weaponskills.fSTR = function(atk_str, def_vit, weapon_rank)
+xi.weaponskills.fSTR = function(atk_str, def_vit, weaponRank)
     local dSTR = atk_str - def_vit
     local fSTR = calculateRawfSTR(dSTR, 4)
 
     -- Apply fSTR caps.
-    local lower_cap = weapon_rank * -1
-    if weapon_rank == 0 then
-        lower_cap = -1
+    local lowerCap = weaponRank * -1
+    if weaponRank == 0 then
+        lowerCap = -1
     end
 
-    fSTR = utils.clamp(fSTR, lower_cap, weapon_rank + 8)
+    fSTR = utils.clamp(fSTR, lowerCap, weaponRank + 8)
 
     return fSTR
 end
 
 -- Given the attacker's str and the mob's vit, fSTR2 is calculated (for ranged WS)
-xi.weaponskills.fSTR2 = function(atk_str, def_vit, weapon_rank)
+xi.weaponskills.fSTR2 = function(atk_str, def_vit, weaponRank)
     local dSTR = atk_str - def_vit
     local fSTR2 = calculateRawfSTR(dSTR, 2)
 
     -- Apply fSTR2 caps.
-    local lower_cap = weapon_rank * -2
-    if weapon_rank == 0 then
-        lower_cap = -2
-    elseif weapon_rank == 1 then
-        lower_cap = -3
+    local lowerCap = weaponRank * -2
+    if weaponRank == 0 then
+        lowerCap = -2
+    elseif weaponRank == 1 then
+        lowerCap = -3
     end
 
-    fSTR2 = utils.clamp(fSTR2, lower_cap, (weapon_rank + 8) * 2)
+    fSTR2 = utils.clamp(fSTR2, lowerCap, (weaponRank + 8) * 2)
 
     return fSTR2
+end
+
+xi.weaponskills.generatePdif = function(cratiomin, cratiomax, melee)
+    local pdif = math.random(cratiomin * 1000, cratiomax * 1000) / 1000
+
+    if melee then
+        pdif = pdif * (math.random(100, 105) / 100)
+    end
+
+    return pdif
 end
 
 xi.weaponskills.getStepAnimation = function(skill)

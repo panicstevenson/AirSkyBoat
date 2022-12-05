@@ -244,7 +244,7 @@ INSERT INTO `mob_family_system` VALUES (189,'Orc',106,'Orc',7,'Beastmen',1,40,10
 INSERT INTO `mob_family_system` VALUES (190,'Orc-Warmachine',106,'Orc',7,'Beastmen',1,40,123,100,4,6,4,3,5,1,3,1,2,1,3,1,257,0);
 INSERT INTO `mob_family_system` VALUES (191,'Orobon',107,'Orobon',2,'Aquan',1,40,90,90,1,4,2,4,4,4,4,1,3,1,3,6,2,0);
 INSERT INTO `mob_family_system` VALUES (192,'Peiste',108,'Peiste',14,'Lizard',1,40,90,90,1,3,4,3,6,6,5,1,3,1,3,6,1,0);
-INSERT INTO `mob_family_system` VALUES (193,'Wyvern-Pet',109,'Wyvern',10,'Dragon',0,40,70,90,4,2,3,4,6,3,3,1,3,1,3,0,1,0);
+INSERT INTO `mob_family_system` VALUES (193,'Wyvern-Pet',109,'Wyvern',10,'Dragon',0,40,70,90,2,4,3,4,6,4,3,1,2,1,2,0,1,0);
 INSERT INTO `mob_family_system` VALUES (194,'Phuabo',110,'Phuabo',15,'Luminian',2,70,90,140,1,3,4,1,1,5,4,1,3,1,3,0,2,0);
 INSERT INTO `mob_family_system` VALUES (195,'Pixie',111,'Pixie',18,'Fairy',0,40,90,100,4,6,4,5,5,1,3,1,3,1,3,3,1,0);
 INSERT INTO `mob_family_system` VALUES (196,'Poroggo',112,'frog-toad',7,'Beastmen',0,40,70,140,5,5,5,1,1,6,3,1,3,1,3,6,2,0);
@@ -416,7 +416,7 @@ INSERT INTO `mob_family_system` VALUES (363,'Automaton_Harlequin',10,'Automaton'
 INSERT INTO `mob_family_system` VALUES (364,'Automaton_Valoredge',10,'Automaton',0,'Unclassified',0,40,155,0,6,5,6,4,4,5,5,1,1,1,1,0,2,0);
 INSERT INTO `mob_family_system` VALUES (365,'Automaton_Sharpshot',10,'Automaton',0,'Unclassified',0,40,115,0,4,5,4,6,5,5,6,1,1,1,1,0,2,0);
 INSERT INTO `mob_family_system` VALUES (366,'Automaton_Stormwaker',10,'Automaton',0,'Unclassified',0,40,90,110,5,5,5,4,5,6,5,1,1,1,1,0,2,0);
-INSERT INTO `mob_family_system` VALUES (367,'Doll-Faust',53,'Doll',3,'Arcana',1,80,108,90,1,3,3,5,6,6,5,1,3,1,3,2,33,0);
+INSERT INTO `mob_family_system` VALUES (367,'Doll-Faust',53,'Doll',3,'Arcana',1,80,108,90,1,3,3,5,6,6,5,1,3,1,3,2,289,0);
 INSERT INTO `mob_family_system` VALUES (368,'Doll-Despot',53,'Doll',3,'Arcana',1,45,108,90,1,3,3,5,6,6,5,1,3,1,3,2,33,0);
 INSERT INTO `mob_family_system` VALUES (369,'Leech',95,'Leech',1,'Amorph',1,40,90,90,4,4,5,4,3,4,4,1,3,1,3,6,258,1);
 INSERT INTO `mob_family_system` VALUES (371,'Marid',101,'Marid',6,'Beast',2,40,150,90,3,5,1,6,3,3,4,1,3,1,3,4,257,0);

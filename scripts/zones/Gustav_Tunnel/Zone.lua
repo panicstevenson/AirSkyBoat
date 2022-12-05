@@ -9,6 +9,10 @@ local zoneObject = {}
 zoneObject.onInitialize = function(zone)
     UpdateNMSpawnPoint(ID.mob.BUNE)
     GetMobByID(ID.mob.BUNE):setRespawnTime(math.random(900, 10800))
+    xi.hnm_system.startup(zone)
+
+    -- NM Persistence
+    xi.mob.nmTODPersistCache(zone, ID.mob.BUNE)
     hxi.spawner.spawnInitialMobs(zone)
     hxi.hnm.startup(zone)
 end

@@ -126,7 +126,7 @@ namespace charutils
     void   CheckUnarmedWeapon(CCharEntity* PChar);
     bool   CanLockstyleItem(CItem* PItem, CCharEntity* PChar, bool ignoreLevel = false);
     void   SetStyleLock(CCharEntity* PChar, bool isStyleLocked);
-    void   UpdateWeaponStyle(CCharEntity* PChar, uint8 equipSlotID, CItemWeapon* PItem);
+    void   UpdateWeaponStyle(CCharEntity* PChar, uint8 equipSlotID, CItemEquipment* PItem);
     void   UpdateArmorStyle(CCharEntity* PChar, uint8 equipSlotID);
     void   AddItemToRecycleBin(CCharEntity* PChar, uint32 container, uint8 slotID, uint8 quantity);
     void   EmptyRecycleBin(CCharEntity* PChar);

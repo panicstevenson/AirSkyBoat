@@ -10,7 +10,7 @@ local entity = {}
 
 local cryptonberrySpecials =
 {
-    [xi.job.NIN] = xi.jsa.MIJIN_GAKURE,
+    [xi.job.SMN] = xi.jsa.ASTRAL_FLOW,
     [xi.job.BLM] = xi.jsa.MANAFONT,
     [xi.job.THF] = xi.jsa.PERFECT_DODGE,
 }

@@ -3,6 +3,7 @@
 -----------------------------------
 local ID = require('scripts/zones/Lower_Jeuno/IDs')
 local lowerJeunoGlobal = require('scripts/zones/Lower_Jeuno/globals')
+require('scripts/globals/events/starlight_celebrations')
 require('scripts/globals/conquest')
 require('scripts/globals/keyitems')
 require('scripts/globals/missions')
@@ -105,7 +106,6 @@ zoneObject.onGameHour = function(zone)
             npc:setPos(xi.path.first(lowerJeunoGlobal.lampPath))
             npc:pathThrough(lowerJeunoGlobal.lampPath, bit.bor(xi.path.flag.PATROL, xi.path.flag.WALLHACK))
         end
-
     end
 end
 
