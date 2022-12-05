@@ -33,7 +33,7 @@ zoneObject.onInitialize = function(zone)
     GetMobByID(ID.mob.GRAND_DUKE_BATYM):setRespawnTime(math.random(900, 10800))
 
     xi.treasure.initZone(zone)
-    xi.horizon.spawnInitialMobs(zone)
+    hxi.spawner.spawnInitialMobs(zone)
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype)

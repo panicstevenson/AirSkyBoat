@@ -8,7 +8,7 @@ require('scripts/globals/zone')
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
-    xi.hnm_system.startup(zone)
+    hxi.hnm.startup(zone)
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype)
@@ -30,7 +30,7 @@ zoneObject.onZoneIn = function(player, prevZone)
 end
 
 zoneObject.onZoneTick = function(zone)
-    xi.hnm_system.checkSpawn(zone)
+    hxi.hnm.checkSpawn(zone)
 end
 
 zoneObject.onRegionEnter = function(player, region)

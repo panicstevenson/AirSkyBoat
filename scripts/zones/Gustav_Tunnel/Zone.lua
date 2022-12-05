@@ -9,8 +9,8 @@ local zoneObject = {}
 zoneObject.onInitialize = function(zone)
     UpdateNMSpawnPoint(ID.mob.BUNE)
     GetMobByID(ID.mob.BUNE):setRespawnTime(math.random(900, 10800))
-    xi.horizon.spawnInitialMobs(zone)
-    xi.hnm_system.startup(zone)
+    hxi.spawner.spawnInitialMobs(zone)
+    hxi.hnm.startup(zone)
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype)
@@ -18,7 +18,7 @@ zoneObject.onConquestUpdate = function(zone, updatetype)
 end
 
 zoneObject.onZoneTick = function(zone)
-    xi.hnm_system.checkSpawn(zone)
+    hxi.hnm.checkSpawn(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

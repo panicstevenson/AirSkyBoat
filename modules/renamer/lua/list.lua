@@ -828,5 +828,53 @@ local list =
     {
         { "Stygian Pugil", "Demonic Pugil" },
     },
+    [xi.zone.WEST_SARUTABARUTA] =
+    {
+        { "T. Treant", "Twinkling Treant" }
+    },
+    [xi.zone.EAST_SARUTABARUTA] =
+    {
+        { "T. Treant", "Twinkling Treant" }
+    },
+    [xi.zone.WEST_RONFAURE] =
+    {
+        { "T. Treant", "Twinkling Treant" }
+    },
+    [xi.zone.EAST_RONFAURE] =
+    {
+        { "T. Treant", "Twinkling Treant" }
+    },
+    [xi.zone.SOUTH_GUSTABERG] =
+    {
+        { "T. Treant", "Twinkling Treant" }
+    },
+    [xi.zone.NORTH_GUSTABERG] =
+    {
+        { "T. Treant", "Twinkling Treant" }
+    },
+    [xi.zone.JUGNER_FOREST] =
+    {
+        { "T. Treant", "Twinkling Treant" }
+    },
+    [xi.zone.MERIPHATAUD_MOUNTAINS] =
+    {
+        { "T. Treant", "Twinkling Treant" }
+    },
+    [xi.zone.PASHHOW_MARSHLANDS] =
+    {
+        { "T. Treant", "Twinkling Treant" }
+    },
+    [xi.zone.YUHTUNGA_JUNGLE] =
+    {
+        { "T. Treant", "Twinkling Treant" }
+    },
+    [xi.zone.BEAUCEDINE_GLACIER] =
+    {
+        { "T. Treant", "Twinkling Treant" }
+    },
+    [xi.zone.EASTERN_ALTEPA_DESERT] =
+    {
+        { "T. Treant", "Twinkling Treant" }
+    },
 }
 return list

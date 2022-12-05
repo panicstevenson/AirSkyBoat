@@ -11,7 +11,7 @@ zoneObject.onInitialize = function(zone)
     xi.mob.nmTODPersistCache(zone, ID.mob.DREXERION_THE_CONDEMNED)
     xi.mob.nmTODPersistCache(zone, ID.mob.PHANDURON_THE_CONDEMNED)
     xi.mob.nmTODPersistCache(zone, ID.mob.BLOODSUCKER)
-    xi.horizon.spawnInitialMobs(zone)
+    hxi.spawner.spawnInitialMobs(zone)
 
     -- Trapdoor triggers
     zone:registerTriggerArea(1,  -66,  -2, -136, -64,  2, -134)

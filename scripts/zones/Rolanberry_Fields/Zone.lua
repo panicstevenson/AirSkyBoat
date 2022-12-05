@@ -18,11 +18,12 @@ zoneObject.onInitialize = function(zone)
     UpdateNMSpawnPoint(ID.mob.SIMURGH)
     GetMobByID(ID.mob.SIMURGH):setRespawnTime(math.random(900, 7200))
     xi.voidwalker.zoneOnInit(zone)
-    xi.hnm_system.startup(zone)
+    hxi.teleport.spawnNMs(zone)
+    hxi.hnm.startup(zone)
 end
 
 zoneObject.onZoneTick = function(zone)
-    xi.hnm_system.checkSpawn(zone)
+    hxi.hnm.checkSpawn(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

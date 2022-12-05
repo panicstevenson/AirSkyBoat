@@ -31,7 +31,8 @@ zoneObject.onInitialize = function(zone)
         end
     end
 
-    xi.horizon.spawnInitialMobs(zone)
+    hxi.spawner.spawnInitialMobs(zone)
+    hxi.teleport.spawnNMs(zone)
 end
 
 zoneObject.onZoneTick = function(zone)
