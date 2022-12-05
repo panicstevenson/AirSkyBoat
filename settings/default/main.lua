@@ -198,7 +198,7 @@ xi.settings.main =
     AF1_QUEST_LEVEL     = 40,               -- Minimum level to start AF1 quest
     AF2_QUEST_LEVEL     = 50,               -- Minimum level to start AF2 quest
     AF3_QUEST_LEVEL     = 50,               -- Minimum level to start AF3 quest
-    ERA_CHOCOBOS_WOUNDS = true,             -- Era Chocobos Wounds wait times that requires waiting a full Vana'Diel day, set to false to have it be every Vana'Diel hour.
+    ERA_CHOCOBOS_WOUNDS = false,            -- Era Chocobos Wounds wait times that requires waiting a full Vana'Diel day, set to false to have it be every Vana'Diel hour.
     OLDSCHOOL_G1        = true,             -- Set to true to require farming Exoray Mold, Bombd Coal, and Ancient Papyrus drops instead of allowing key item method.
     OLDSCHOOL_G2        = true,             -- Set true to require the NMs for "Atop the Highest Mountains" be dead to get KI like before SE changed it.
     FRIGICITE_TIME      = 30,               -- When OLDSCHOOL_G2 is enabled, this is the time (in seconds) you have from killing Boreal NMs to click the "???" target.
@@ -239,7 +239,7 @@ xi.settings.main =
     DIG_FATIGUE_SKILL_UP         = false, -- Allows for skilling up while at fatigue.
 
     -- MISC
-    ERA_CHOCOBO_ZONE_DISMOUNT    = true, -- If true, forces players to dismount a chocobo before entering a city or dungeon.
+    ERA_CHOCOBO_ZONE_DISMOUNT    = false, -- If true, forces players to dismount a chocobo before entering a city or dungeon.
     RIVERNE_PORTERS              = 120,  -- Time in seconds that Unstable Displacements in Cape Riverne stay open after trading a scale.
     LANTERNS_STAY_LIT            = 1200, -- time in seconds that lanterns in the Den of Rancor stay lit.
     ENABLE_COP_ZONE_CAP          = 1,    -- Enable or disable lvl cap
