@@ -132,8 +132,8 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
 (17580158, 0,  'Jelly',                    'Jelly',                    21,  -96.815,   -37.447,   22.391,    215 ),
 (17580159, 0,  'Jelly',                    'Jelly',                    21,  159.668,   -39.000,   86.451,    65  ),
 (17580160, 0,  'Jelly',                    'Jelly',                    21,  161.231,   -39.000,   41.253,    43  ),
--- (17580161, 0,  'Mauthe_Doog',              'Mauthe Doog',              27,  146.461,   -39.421,   59.776,    133 ),
--- (17580162, 0,  'Mauthe_Doog',              'Mauthe Doog',              27,  174.960,   -39.565,   95.392,    240 ),
+(17580161, 0,  'Mauthe_Doog',              'Mauthe Doog',              27,  0,         0,         0,         0   ), -- Zerod for ERA+
+(17580162, 0,  'Mauthe_Doog',              'Mauthe Doog',              27,  0,         0,         0,         0   ), -- Zerod for ERA+
 (17580163, 0,  'Ore_Eater',                'Ore Eater',                16,  152.120,   -39.000,   89.983,    151 ),
 (17580164, 0,  'Ore_Eater',                'Ore Eater',                16,  154.639,   -38.787,   46.519,    163 ),
 (17580165, 0,  'Ore_Eater',                'Ore Eater',                16,  155.263,   -38.614,   66.978,    147 ),

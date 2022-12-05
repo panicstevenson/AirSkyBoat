@@ -178,8 +178,8 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
 (17629356, 0,  'Helm_Beetle',              'Helm Beetle',              8,   165.14,    -8.465,    -178.918,  0   ),
 (17629357, 0,  'Helm_Beetle',              'Helm Beetle',              8,   138.888,   -6.11,     -147.311,  61  ),
 (17629358, 0,  'Helm_Beetle',              'Helm Beetle',              8,   134.582,   -4.475,    -139.823,  134 ),
--- (17629359, 0,  'Antican_Hastatus',         'Antican Hastatus',         9,   97.876,    -0.198,    -121.604,  55  ),
--- (17629360, 0,  'Antican_Princeps',         'Antican Princeps',         10,  94.189,    -0.249,    -105.408,  165 ),
+(17629359, 0,  'Antican_Hastatus',         'Antican Hastatus',         9,   0,         0,         0,         0   ), -- Zero for Era+
+(17629360, 0,  'Antican_Princeps',         'Antican Princeps',         10,  0,         0,         0,         0   ), -- Zero for Era+
 (17629361, 0,  'Antican_Signifer',         'Antican Signifer',         11,  55.61,     0.00,      -102.76,   90  ),
 (17629362, 0,  'Antican_Hastatus',         'Antican Hastatus',         9,   85.314,    -0.195,    -112.24,   166 ),
 (17629363, 0,  'Antican_Princeps',         'Antican Princeps',         10,  83.266,    -0.183,    -139.019,  79  ),

@@ -13269,7 +13269,6 @@ INSERT INTO `mob_groups` VALUES (41,3428,208,'Sabotender_Bailarin',0,32,3208,0,0
 INSERT INTO `mob_groups` VALUES (42,6900,208,'Malleator_Maurok',0,128,0,0,0,99,99,0);
 INSERT INTO `mob_groups` VALUES (43,6901,208,'Peon_Pounder',0,128,0,0,0,99,99,0);
 INSERT INTO `mob_groups` VALUES (44,6902,208,'Centurio_XX-I',0,128,0,0,0,99,99,0);
-INSERT INTO `mob_groups` VALUES (45,1928,208,'Helm_Beetle',960,0,1299,0,0,51,54,0);
 
 -- ------------------------------------------------------------
 -- Cloister_of_Tremors (Zone 209)

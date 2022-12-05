@@ -389,7 +389,7 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
 (17404287, 0, 'Elder_Goobbue',            'Elder Goobbue',            18,  -128.4,    8.638,     -235.8,    48  ),
 (17404288, 0, 'Elder_Goobbue',            'Elder Goobbue',            18,  -107.8,    8.249,     -247.84,   246 ),
 (17404289, 0, 'Elder_Goobbue',            'Elder Goobbue',            18,  -107.2,    8.429,     -229.11,   49  ),
-(17404290, 0, 'Ancient_Goobbue',          'Ancient Goobbue',          28,  0,         0,         0,         0   ),
+(17404290, 0, 'Ancient_Goobbue',          'Ancient Goobbue',          28,  237,       9.767,     -281.7,    40  ),
 (17404291, 0, 'Darter',                   'Darter',                   23,  -217.862,  9.958,     -265.589,  119 ),
 (17404292, 0, 'Boyahda_Sapling',          'Boyahda Sapling',          29,  -195,      11.553,    20.129,    124 ),
 (17404293, 0, 'Boyahda_Sapling',          'Boyahda Sapling',          29,  -222,      14.38,     25.724,    223 ),
