@@ -19,11 +19,12 @@ zoneObject.onInitialize = function(zone)
     xi.mob.nmTODPersistCache(zone, ID.mob.SIMURGH)
 
     xi.voidwalker.zoneOnInit(zone)
-    xi.hnm_system.startup(zone)
+    hxi.teleport.spawnNMs(zone)
+    hxi.hnm.startup(zone)
 end
 
 zoneObject.onZoneTick = function(zone)
-    xi.hnm_system.checkSpawn(zone)
+    hxi.hnm.checkSpawn(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

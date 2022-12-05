@@ -15,7 +15,7 @@ zoneObject.onInitialize = function(zone)
     xi.mob.nmTODPersistCache(zone, ID.mob.KREUTZET)
 
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
-    xi.hnm_system.startup(zone)
+    hxi.hnm.startup(zone)
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype)
@@ -23,7 +23,7 @@ zoneObject.onConquestUpdate = function(zone, updatetype)
 end
 
 zoneObject.onZoneTick = function(zone)
-    xi.hnm_system.checkSpawn(zone)
+    hxi.hnm.checkSpawn(zone)
 end
 
 zoneObject.onZoneIn = function( player, prevZone)

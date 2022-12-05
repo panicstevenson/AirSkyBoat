@@ -21,7 +21,7 @@ zoneObject.onInitialize = function(zone)
     xi.mob.nmTODPersistCache(zone, ID.mob.KING_VINEGARROON)
 
     xi.bmt.updatePeddlestox(xi.zone.YUHTUNGA_JUNGLE, ID.npc.PEDDLESTOX)
-    xi.horizon.spawnInitialMobs(zone)
+    hxi.spawner.spawnInitialMobs(zone)
 end
 
 zoneObject.onGameDay = function()

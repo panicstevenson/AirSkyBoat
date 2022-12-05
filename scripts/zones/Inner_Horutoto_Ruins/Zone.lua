@@ -42,7 +42,7 @@ zoneObject.onInitialize = function(zone)
     xi.mob.nmTODPersistCache(zone, ID.mob.MALTHA)
 
     xi.treasure.initZone(zone)
-    xi.horizon.spawnInitialMobs(zone)
+    hxi.spawner.spawnInitialMobs(zone)
     zone:insertDynamicEntity(thfsNeckNPC)
 end
 

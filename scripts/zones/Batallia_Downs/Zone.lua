@@ -12,7 +12,6 @@ local zoneObject = {}
 zoneObject.onChocoboDig = function(player, precheck)
     return xi.chocoboDig.start(player, precheck)
 
-
 -- Used for OOE Chocobo Quest
 -- local function registerRegionAroundNPC(zone, NPCID, zoneID)
 --     local npc = GetNPCByID(NPCID)
@@ -46,11 +45,12 @@ zoneObject.onInitialize = function(zone)
     -- registerRegionAroundNPC(zone, ID.npc.SYRILLIA, 9)
 
     xi.voidwalker.zoneOnInit(zone)
-    xi.hnm_system.startup(zone)
+    hxi.teleport.spawnNMs(zone)
+    hxi.hnm.startup(zone)
 end
 
 zoneObject.onZoneTick = function(zone)
-    xi.hnm_system.checkSpawn(zone)
+    hxi.hnm.checkSpawn(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

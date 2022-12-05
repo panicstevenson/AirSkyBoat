@@ -14,7 +14,7 @@ zoneObject.onInitialize = function(zone)
 
     xi.treasure.initZone(zone)
     xi.helm.initZone(zone, xi.helm.type.MINING)
-    xi.horizon.spawnInitialMobs(zone)
+    hxi.spawner.spawnInitialMobs(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

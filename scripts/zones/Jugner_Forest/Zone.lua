@@ -34,6 +34,8 @@ zoneObject.onInitialize = function(zone)
 
     -- VOIDWALKER
     xi.voidwalker.zoneOnInit(zone)
+
+    hxi.teleport.spawnNMs(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

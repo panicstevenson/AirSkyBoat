@@ -16,6 +16,8 @@ zoneObject.onInitialize = function(zone)
 
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
     xi.voidwalker.zoneOnInit(zone)
+
+    hxi.teleport.spawnNMs(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

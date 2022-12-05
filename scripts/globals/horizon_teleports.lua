@@ -3,9 +3,8 @@ require("scripts/globals/conquest")
 require("scripts/globals/settings")
 require("settings/main")
 
-xi = xi or { }
-xi.horizon = xi.horizon or { }
-xi.horizon.teleport = xi.horizon.teleport or { }
+hxi = hxi or { }
+hxi.teleport = hxi.teleport or { }
 
 local dialogTableOrg =
 {
@@ -37,26 +36,27 @@ local dialogTableGob =
 {
     notEnabled =
     {
-        text1 = "Due to reports of dangerous monsters attacking adventurers we cannot offer services at this time.",
-        text2 = "We are working with the Duchy of Jeuno to clear monsters from the surrounding area so we can ensure the safety of our adventurers.",
+        text1 = "Big Jeuno guards say we can't be servin' you at this time.",
+        text2 = "The big guard guys say if you be doin' away with them monsters, we can start magicks again.",
     },
+    tooLow = "If you want a teleport, go find yourself here in Jeuno then I'll consider.",
     noOPs =
     {
-        text1 = 'Greetings, adventurer. My name is %s. I have been sent by the Specialty Goods Trade Union.',
-        text2 = 'At the previous Conference of Nations, it was decided that the restriction on "regional teleporting" would be lifted, and that cities could now offer teleportation services to various outposts.',
-        text3 = 'We are now authorized to teleport you to any outpost you have previously visited on a supplies quest.',
-        text4 = 'The nominal fee we require varies with the current control of the region.',
+        text1 = 'Psh.. Hey you. My name is %s. I have the bestest secret magicks in town.',
+        text2 = 'Them tarus in Windurst be giving me some secrets, and I have come here to make some gil',
+        text3 = "Them Jeuno folk' be letting me use my magicks for you in return for some fees",
+        text4 = 'It took me long time to learn, so it will cost you extra for certain places.',
         text5 = 'Also, depending on your level, there may be some areas I am not authorized to telepoort you to.',
-        text6 = 'Unfortunately, at this time there is nowhere I can teleport you to. Please come again.',
+        text6 = 'No can tele you now, you will have to come back later.',
     },
-    welcome               = 'Welcome to the regional Teleporation Service!',
-    teleport              = 'Do you wish to teleport for %s gil?',
-    teleportControlled    = "That region is currently under your home country's control. You will require %s gil to teleport.",
-    teleportNotControlled = "That region is currently not under your home country's control. You will require %s gil to teleport.",
-    noteleport            = 'We look forward to seeeing you again!',
-    thanks                = 'Have a wonderful journey!',
-    noGil                 = 'You do not have enough gil. Please come back again.',
-    notAuthorized         = 'However, at this time I am only authorized to teleport citizens of %s.',
+    welcome               = 'Welcome to my magicks service.',
+    teleport              = 'Do you want to go somewhere? It will cost ya',
+    teleportControlled    = "Your nation home done has control of that area. I'll charge %s gil to magicks you.",
+    teleportNotControlled = "Your nation home done has no control of that area. I'll charge %s gil to magicks you.",
+    noteleport            = 'Comes backs soon..',
+    thanks                = 'He He... Thanks for the gils.',
+    noGil                 = 'No has coin? No gets magicks.',
+    notAuthorized         = 'I can no magicks peoples of %s. Jeuno guys say no goes',
 }
 
 local dialogTableTaru =
@@ -124,36 +124,165 @@ local outpostOptions =
 
 local enableOPWarps =
 {
-    '[OP_Warp]Unlock_Mob_Batallia',
-    '[OP_Warp]Unlock_Mob_Rolanberry',
-    '[OP_Warp]Unlock_Mob_Sauromague',
+    { ID = xi.zone.WEST_SARUTABARUTA,     string = "West Sarutabaruta",     killVar = '[OP_Warp]Saru_1'  },
+    { ID = xi.zone.EAST_SARUTABARUTA,     string = "East Sarutabaruta",     killVar = '[OP_Warp]Saru_2'  },
+    { ID = xi.zone.SOUTH_GUSTABERG,       string = "South Gustaberg",       killVar = '[OP_Warp]Gusta_1' },
+    { ID = xi.zone.NORTH_GUSTABERG,       string = "North Gustaberg",       killVar = '[OP_Warp]Gusta_2' },
+    { ID = xi.zone.WEST_RONFAURE,         string = "West Ronfaure",         killVar = '[OP_Warp]Ron_1'   },
+    { ID = xi.zone.EAST_RONFAURE,         string = "East Ronfaure",         killVar = '[OP_Warp]Ron_2'   },
+    { ID = xi.zone.JUGNER_FOREST,         string = "Jugner Forest",         killVar = '[OP_Warp]Jug_1'   },
+    { ID = xi.zone.MERIPHATAUD_MOUNTAINS, string = "Meriphataud Mountains", killVar = '[OP_Warp]Merph_1' },
+    { ID = xi.zone.PASHHOW_MARSHLANDS,    string = "Pashow Marshlands",     killVar = '[OP_Warp]Pash_1'  },
+    { ID = xi.zone.YUHTUNGA_JUNGLE,       string = "Yuhtunga Jungle",       killVar = '[OP_Warp]Yuht_1'  },
+    { ID = xi.zone.BEAUCEDINE_GLACIER,    string = "Beaucedine Glacier",    killVar = '[OP_Warp]Beauc_1' },
+    { ID = xi.zone.EASTERN_ALTEPA_DESERT, string = "Eastern Altepa Desert", killVar = '[OP_Warp]Altep_1' },
 }
 
-xi.horizon.teleport.checkOPEnable = function()
+local nmInformation =
+{
+    [xi.zone.WEST_SARUTABARUTA    ] = { mob = { x = 33.3175,   y = -1.0981,  z = -299.7995 }, npc = { x = 131.7015,  y = -0.5343,  z = -303.4812, rot = 105 } },
+    [xi.zone.EAST_SARUTABARUTA    ] = { mob = { x = -18.7612,  y = -5.1375,  z = -444.3516 }, npc = { x = -100.3674, y = -5.0000,  z = -530.9963, rot = 239 } },
+    [xi.zone.SOUTH_GUSTABERG      ] = { mob = { x = 354.9310,  y = 0.0000,   z = -280.5334 }, npc = { x = 277.4321,  y = 0.2846,   z = -211.5396, rot = 101 } },
+    [xi.zone.NORTH_GUSTABERG      ] = { mob = { x = 659.3683,  y = -1.1951,  z = 423.6087  }, npc = { x = 647.1167,  y = -0.4908,  z = 331.9160,  rot = 245 } },
+    [xi.zone.WEST_RONFAURE        ] = { mob = { x = -80.3467,  y = -49.8711, z = 154.9168  }, npc = { x = -154.1909, y = -59.9531, z = 262.1125,  rot = 96  } },
+    [xi.zone.EAST_RONFAURE        ] = { mob = { x = 246.2749,  y = -50.1826, z = 262.9442  }, npc = { x = 97.8416,   y = -59.9542, z = 246.5332,  rot = 29  } },
+    [xi.zone.JUGNER_FOREST        ] = { mob = { x = 87.3120,   y = 0.4215,   z = -167.4852 }, npc = { x = 67.0161,   y = 0.4000,   z = -11.9137,  rot = 191 } },
+    [xi.zone.MERIPHATAUD_MOUNTAINS] = { mob = { x = -276.1199, y = 16.4596,  z = 547.3623  }, npc = { x = -300.2154, y = 17.2139,  z = 425.6126,  rot = 94  } },
+    [xi.zone.PASHHOW_MARSHLANDS   ] = { mob = { x = 308.4476,  y = 25.0000,  z = 398.6894  }, npc = { x = 476.3608,  y = 24.6500,  z = 418.9649,  rot = 163 } },
+    [xi.zone.YUHTUNGA_JUNGLE      ] = { mob = { x = -222.8690, y = 0.3458,   z = 369.4553  }, npc = { x = -231.7470, y = 0.0000,   z = 469.4241,  rot = 201 } },
+    [xi.zone.BEAUCEDINE_GLACIER   ] = { mob = { x = 113.4453,  y = -59.8734, z = -39.7302  }, npc = { x = -29.8652,  y = -59.9276, z = -113.7092, rot = 163 } },
+    [xi.zone.EASTERN_ALTEPA_DESERT] = { mob = { x = -244.1881, y = 0.7810,   z = -56.2261  }, npc = { x = -268.4526, y = 8.3963,   z = -244.8563, rot = 186 } },
+}
+
+local handleEnableMessage = function(mob)
+    SetVolatileServerVariable('[OP_Warp]Enabled', 1)
+    local players = mob:getZone():getPlayers()
+    local player = players[1]
+    player:PrintToArea("Attention adventurers! The monsters threatening your fellow adventurers have been slain.", xi.msg.channel.LINKSHELL, 0, "Kam'lanaut") -- Sends announcement via ZMQ to all processes and zones
+    player:PrintToArea("Per the agreement set by the Conference of Nations, the regional teleport service shall now commence operations.", xi.msg.channel.LINKSHELL, 0, "Kam'lanaut") -- Sends announcement via ZMQ to all processes and zones
+end
+
+local handleKillMessage = function(mob, string, varString)
+    SetVolatileServerVariable(varString, 1)
+    local players = mob:getZone():getPlayers()
+    local player = players[1]
+    player:PrintToArea(string.format("A Twinkling Treant has been slain by a group of adventurers in %s.", string), xi.msg.channel.NS_LINKSHELL3, 0, "") -- Sends announcement via ZMQ to all processes and zones
+end
+
+hxi.teleport.isOutpostEnabled = function()
+    return utils.ternary(GetVolatileServerVariable('[OP_Warp]Enabled') == 1, true , GetServerVariable('[OP_Warp]Enabled') == 1) or
+        xi.settings.main.ENABLE_OP_WARPS or
+        hxi.teleport.processKills()
+end
+
+hxi.teleport.isNMKilled = function(var)
+    return (GetVolatileServerVariable(var) and GetVolatileServerVariable(var) == 1) or GetServerVariable(var) == 1
+end
+
+hxi.teleport.isFirstEnable = function()
+    return utils.ternary(GetVolatileServerVariable('[OP_Warp]First_Enable') == 0, GetServerVariable('[OP_Warp]First_Enable') == 0, false)
+end
+
+hxi.teleport.processKills = function()
     local killCount = 0
 
-    for _, var in pairs(enableOPWarps) do
-        if GetServerVariable(var) == 1 then
-            killCount = killCount + 1
-        end
+    for _, zoneTable in pairs(enableOPWarps) do
+        killCount = utils.ternary(hxi.teleport.isNMKilled(zoneTable.killVar), killCount + 1, killCount)
     end
 
-    if killCount == 3 then
-        SetServerVariable('[OP_Warp]Enabled', 1)
-        xi.horizon.teleport.handleOPEnable()
+    return killCount == #enableOPWarps
+end
+
+hxi.teleport.checkOPEnable = function(mob)
+    if hxi.teleport.isOutpostEnabled() then
+        for _, zoneId in pairs(xi.zone) do
+            SendLuaFuncStringToZone(zoneId, string.format([[
+                SetVolatileServerVariable('[OP_Warp]Enabled', 1)
+            ]], zoneId))
+        end
+
+        if mob and hxi.teleport.isFirstEnable() then
+            SetServerVariable('[OP_Warp]Enabled', 1)
+            handleEnableMessage(mob)
+        end
     end
 end
 
-xi.horizon.teleport.handleOPEnable = function()
-    if GetServerVariable('[OP_Warp]Enabled') == 1 or xi.settings.main.ENABLE_OP_WARPS then
-        local zoneIds = { xi.zone.METALWORKS, xi.zone.NORTHERN_SAN_DORIA, xi.zone.PORT_WINDURST, xi.zone.LOWER_JEUNO }
-        for _, zoneId in pairs(zoneIds) do
-            GetZone(zoneId):setLocalVar("[OP_Warp]Enabled", 1)
+hxi.teleport.spawnNMs = function(zone)
+    local enableVar = GetServerVariable('[OP_Warp]Enabled') == 1
+    if not enableVar then
+        for _, zoneTable in pairs(enableOPWarps) do
+            if zoneTable.ID == zone:getID() then
+                if GetServerVariable(zoneTable.killVar) == 0 then
+                    local mob = zone:insertDynamicEntity({
+                        objtype = xi.objType.MOB,
+                        name = "T. Treant",
+                        x = nmInformation[zone:getID()].mob.x,
+                        y = nmInformation[zone:getID()].mob.y,
+                        z = nmInformation[zone:getID()].mob.z,
+                        rotation = 0,
+                        groupId = 2,
+                        groupZoneId = 210,
+                        look = 389,
+                        onMobDisengage = function(mob) mob:setHP(mob:getMaxHP()) end,
+                        onMobDeath = function(mob, player, optParams) hxi.teleport.handleNMDeath(mob, player) end,
+                        releaseIdOnDeath = true,
+                    })
+                    mob:setSpawn(nmInformation[zone:getID()].mob.x, nmInformation[zone:getID()].mob.y, nmInformation[zone:getID()].mob.z, 0)
+                    mob:spawn()
+                    mob:setClaimable(false)
+                    mob:setLocalVar("DAMAGE_NULL", 1)
+                    mob:addMobMod(xi.mobMod.MULTI_HIT, 2)
+
+                    zone:insertDynamicEntity({
+                        objtype = xi.objType.NPC,
+                        name = "Moogle",
+                        look = 82,
+                        x = nmInformation[zone:getID()].npc.x,
+                        y = nmInformation[zone:getID()].npc.y,
+                        z = nmInformation[zone:getID()].npc.z,
+                        rotation = nmInformation[zone:getID()].npc.rot,
+                        widescan = 1,
+                        onTrigger =
+                        function(player, npc)
+                            if player:getLocalVar("[OP_Warp]Explanation") == 0 and not hxi.teleport.isNMKilled(zoneTable.killVar) then
+                                player:PrintToPlayer("Kupo! There are some scary treants walking around the world threatening adventurers!", 0, "Moogle")
+                                player:PrintToPlayer("The council of nations is requesting your help kupo! Would you be willing to lend your sword kupo?", 0, "Moogle")
+                                player:setLocalVar("[OP_Warp]Explanation", 1)
+                            elseif hxi.teleport.isNMKilled(zoneTable.killVar) then
+                                player:PrintToPlayer("Congratulations Kupo! This area has been freed from the treant that threatened the safety of your fellow adventurers!", 0, "Moogle")
+                            else
+                                player:PrintToPlayer("Kupo! Your fellow adventurers need help slaying the treant!", 0, "Moogle")
+                            end
+                        end
+                    })
+                end
+                break
+            end
         end
     end
 end
 
-xi.horizon.teleport.triggerOPWarp = function(player, npc)
+hxi.teleport.handleNMDeath = function(mob, player)
+    if mob:getLocalVar("deathTriggered") == 0 then
+        mob:setLocalVar("deathTriggered", 1)
+
+        local zone = mob:getZone()
+
+        for _, zoneTable in pairs(enableOPWarps) do
+            if zone:getID() == zoneTable.ID then
+                if not hxi.teleport.isNMKilled(zoneTable.killVar) then
+                    SetServerVariable(zoneTable.killVar, 1)
+                    handleKillMessage(mob, zoneTable.string, zoneTable.killVar)
+                    hxi.teleport.checkOPEnable(mob)
+                    break
+                end
+            end
+        end
+    end
+end
+
+hxi.teleport.triggerOPWarp = function(player, npc)
     local dialogTable = dialogTableOrg
     local npcNation = npcTable[player:getZoneID()].nation
     local zoneId = player:getZoneID()
@@ -187,7 +316,7 @@ xi.horizon.teleport.triggerOPWarp = function(player, npc)
         return
     end
 
-    if player:getZone():getLocalVar('[OP_Warp]Enabled') == 1 then
+    if not hxi.teleport.isOutpostEnabled() then
         player:timer(250, function(playerArg)
             playerArg:PrintToPlayer(dialogTable.notEnabled.text1, 0, name)
         end)
@@ -196,6 +325,11 @@ xi.horizon.teleport.triggerOPWarp = function(player, npc)
             playerArg:PrintToPlayer(dialogTable.notEnabled.text2, 0, name)
         end)
 
+        return
+    end
+
+    if zoneId == xi.zone.LOWER_JEUNO and player:getRank(player:getNation()) < 5 then
+        player:PrintToPlayer(dialogTable.tooLow, 0, name)
         return
     end
 
@@ -237,7 +371,7 @@ xi.horizon.teleport.triggerOPWarp = function(player, npc)
         return
     end
 
-    local pagesTable = xi.horizon.teleport.createRegionMenus(player, availableWarps)
+    local pagesTable = hxi.teleport.createRegionMenus(player, availableWarps)
     teleportMenu.options = pagesTable[1]
 
     player:timer(50, function(playerArg)
@@ -245,7 +379,7 @@ xi.horizon.teleport.triggerOPWarp = function(player, npc)
     end)
 end
 
-xi.horizon.teleport.createRegionMenus = function(player, availableWarps)
+hxi.teleport.createRegionMenus = function(player, availableWarps)
     local warpIndex = 1
     local pagesNeeded = math.ceil(#availableWarps / 3)
     local pagesTable =
@@ -281,7 +415,7 @@ xi.horizon.teleport.createRegionMenus = function(player, availableWarps)
                 {
                     outpostOptions[region].optionString,
                     function(playerArg)
-                        xi.horizon.teleport.sendPriceMenu(playerArg, region)
+                        hxi.teleport.sendPriceMenu(playerArg, region)
                     end
                 }
 
@@ -323,7 +457,7 @@ xi.horizon.teleport.createRegionMenus = function(player, availableWarps)
     return pagesTable
 end
 
-xi.horizon.teleport.sendPriceMenu = function(player, region)
+hxi.teleport.sendPriceMenu = function(player, region)
     local price = outpostOptions[region].feeOrg
     local dialogTable = dialogTableOrg
     local name = npcTable[player:getZoneID()].name
@@ -353,7 +487,7 @@ xi.horizon.teleport.sendPriceMenu = function(player, region)
         {
             "Yes",
             function(playerArg)
-                xi.horizon.teleport.handleOPWarp(playerArg, region)
+                hxi.teleport.handleOPWarp(playerArg, region)
             end
         },
         {
@@ -375,7 +509,7 @@ xi.horizon.teleport.sendPriceMenu = function(player, region)
     end
 end
 
-xi.horizon.teleport.handleOPWarp = function(player, region)
+hxi.teleport.handleOPWarp = function(player, region)
     local dialogTable = dialogTableOrg
     local cost = outpostOptions[region].feeOrg
     local npc = GetNPCByID(player:getLocalVar('[OP_Warp]npcId'))
@@ -400,7 +534,7 @@ xi.horizon.teleport.handleOPWarp = function(player, region)
     end
 end
 
-xi.horizon.teleport.addNPC = function(zone)
+hxi.teleport.addNPC = function(zone)
     local dynamicTable =
     {
         [xi.zone.LOWER_JEUNO] =
@@ -414,14 +548,14 @@ xi.horizon.teleport.addNPC = function(zone)
             rotation = 157,
             widescan = 1,
             onTrigger = function(player, npc)
-                xi.horizon.teleport.triggerOPWarp(player, npc)
+                hxi.teleport.triggerOPWarp(player, npc)
             end,
         },
     }
     zone:insertDynamicEntity(dynamicTable[zone:getID()])
 end
 
-xi.horizon.teleport.triggerTaruWarp = function(player, npc)
+hxi.teleport.triggerTaruWarp = function(player, npc)
     local taru = taruTable[player:getZoneID()]
     local warpMenu =
     {

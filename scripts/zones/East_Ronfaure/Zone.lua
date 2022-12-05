@@ -27,6 +27,8 @@ zoneObject.onInitialize = function(zone)
     if xi.events.starlightCelebration.isStarlightEnabled ~= 0 then
         xi.events.starlightCelebration.applyStarlightDecorations(zone:getID())
     end
+
+    hxi.teleport.spawnNMs(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

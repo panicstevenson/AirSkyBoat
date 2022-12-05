@@ -16,7 +16,7 @@ zoneObject.onInitialize = function(zone)
     xi.mob.nmTODPersistCache(zone, ID.mob.CAPRICIOUS_CASSIE)
 
     xi.treasure.initZone(zone)
-    xi.horizon.spawnInitialMobs(zone)
+    hxi.spawner.spawnInitialMobs(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

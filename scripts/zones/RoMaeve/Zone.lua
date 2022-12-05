@@ -58,11 +58,12 @@ end
 zoneObject.onInitialize = function(zone)
     local newPosition = npcUtil.pickNewPosition(ID.npc.BASTOK_7_1_QM, ID.npc.BASTOK_7_1_QM_POS, true)
     GetNPCByID(ID.npc.BASTOK_7_1_QM):setPos(newPosition.x, newPosition.y, newPosition.z)
-    xi.horizon.spawnInitialMobs(zone)
     xi.hnm_system.startup(zone)
 
     -- NM Persistence
     xi.mob.nmTODPersistCache(zone, ID.mob.SHIKIGAMI_WEAPON)
+    hxi.spawner.spawnInitialMobs(zone)
+    hxi.hnm.startup(zone)
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype)
@@ -70,7 +71,7 @@ zoneObject.onConquestUpdate = function(zone, updatetype)
 end
 
 zoneObject.onZoneTick = function(zone)
-    xi.hnm_system.checkSpawn(zone)
+    hxi.hnm.checkSpawn(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

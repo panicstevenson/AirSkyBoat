@@ -27,7 +27,7 @@ zoneObject.onInitialize = function(zone)
 
     -- Treasure Initiation
     xi.treasure.initZone(zone)
-    xi.horizon.spawnInitialMobs(zone)
+    hxi.spawner.spawnInitialMobs(zone)
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype)
