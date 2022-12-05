@@ -336,19 +336,19 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
 (17264970, 15, 'Scavenging_Hound',         'Scavenging Hound',         7,   618.193,   -28.552,   659.152,   108 ),
 (17264971, 0,  'Will-o-the-Wisp',          'Will-o\'-the-Wisp',        6,   0,         0,         0,         0   ),
 (17264972, 0,  'Patripatan',               'Patripatan',               37,  627.027,   -25.215,   635.342,   223 ),
--- (17264973, 0,  'Wandering_Sapling',        'Wandering Sapling',        1,   169.384,   -8.582,    570.604,   238 ),
--- (17264974, 0,  'Wandering_Sapling',        'Wandering Sapling',        1,   158.786,   -7.767,    579.767,   216 ),
--- (17264975, 0,  'Wandering_Sapling',        'Wandering Sapling',        1,   158.056,   -7.718,    576.63,    202 ),
--- (17264976, 0,  'Wandering_Sapling',        'Wandering Sapling',        1,   156.139,   -8.459,    562.949,   8   ),
+(17264973, 0,  'Wandering_Sapling',        'Wandering Sapling',        1,   0,         0,         0,         0   ), -- Zero for Era+
+(17264974, 0,  'Wandering_Sapling',        'Wandering Sapling',        1,   0,         0,         0,         0   ), -- Zero for Era+
+(17264975, 0,  'Wandering_Sapling',        'Wandering Sapling',        1,   0,         0,         0,         0   ), -- Zero for Era+
+(17264976, 0,  'Wandering_Sapling',        'Wandering Sapling',        1,   0,         0,         0,         0   ), -- Zero for Era+
 (17264977, 0,  'Crane_Fly',                'Crane Fly',                33,  329.173,   -9.935,    489.727,   168 ),
 (17264978, 0,  'Crane_Fly',                'Crane Fly',                33,  346.509,   -0.223,    517.921,   137 ),
--- (17264979, 0,  'Crane_Fly',                'Crane Fly',                33,  165.935,   -8.578,    577.599,   37  ),
--- (17264980, 0,  'Crane_Fly',                'Crane Fly',                33,  139.373,   -8.234,    564.894,   54  ),
+(17264979, 0,  'Crane_Fly',                'Crane Fly',                33,  0,         0,         0,         0   ), -- Zero for Era+
+(17264980, 0,  'Crane_Fly',                'Crane Fly',                33,  0,         0,         0,         0   ), -- Zero for Era+
 (17264981, 0,  'Hill_Lizard',              'Hill Lizard',              3,   290.276,   -7.933,    437.629,   187 ),
--- (17264982, 0,  'Hill_Lizard',              'Hill Lizard',              3,   151.046,   -8.712,    577.269,   4   ),
--- (17264983, 0,  'Hill_Lizard',              'Hill Lizard',              3,   150.161,   -8.853,    576.638,   77  ),
--- (17264984, 0,  'Hill_Lizard',              'Hill Lizard',              3,   148.198,   -8.349,    591.631,   248 ),
--- (17264985, 0,  'Hill_Lizard',              'Hill Lizard',              3,   124.206,   -8.743,    560.209,   10  ),
+(17264982, 0,  'Hill_Lizard',              'Hill Lizard',              3,   0,         0,         0,         0   ), -- Zero for Era+
+(17264983, 0,  'Hill_Lizard',              'Hill Lizard',              3,   0,         0,         0,         0   ), -- Zero for Era+
+(17264984, 0,  'Hill_Lizard',              'Hill Lizard',              3,   0,         0,         0,         0   ), -- Zero for Era+
+(17264985, 0,  'Hill_Lizard',              'Hill Lizard',              3,   0,         0,         0,         0   ), -- Zero for Era+
 (17264986, 0,  'Hill_Lizard',              'Hill Lizard',              3,   361.979,   -5.113,    500.725,   63  ),
 (17264987, 0,  'Hill_Lizard',              'Hill Lizard',              3,   320.859,   -6.986,    490.15,    87  ),
 (17264988, 0,  'Will-o-the-Wisp',          'Will-o\'-the-Wisp',        6,   0,         0,         0,         0   ),
@@ -388,12 +388,12 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
 (17265022, 16, 'Goblin_Butcher',           'Goblin Butcher',           16,  -34.311,   1.556,     453.186,   90  ),
 (17265023, 16, 'Zombie',                   'Zombie',                   17,  284.592,   -5.849,    461.535,   151 ),
 (17265024, 16, 'Zombie',                   'Zombie',                   18,  283.775,   -1.304,    477.239,   165 ),
--- (17265025, 0,  'Wandering_Sapling',        'Wandering Sapling',        1,   -258.37,   15.48,     587.668,   49  ),
--- (17265026, 0,  'Wandering_Sapling',        'Wandering Sapling',        1,   -277.017,  15.5,      563.135,   73  ),
--- (17265027, 0,  'Wandering_Sapling',        'Wandering Sapling',        1,   -245.322,  15.629,    597.264,   96  ),
+(17265025, 0,  'Wandering_Sapling',        'Wandering Sapling',        1,   0,         0,         0,         0   ), -- Zero for Era+
+(17265026, 0,  'Wandering_Sapling',        'Wandering Sapling',        1,   0,         0,         0,         0   ), -- Zero for Era+
+(17265027, 0,  'Wandering_Sapling',        'Wandering Sapling',        1,   0,         0,         0,         0   ), -- Zero for Era+
 (17265028, 0,  'Crane_Fly',                'Crane Fly',                33,  -136.28,   5.872,     544.538,   108 ),
--- (17265029, 0,  'Crane_Fly',                'Crane Fly',                33,  -230.177,  14.609,    590.011,   166 ),
--- (17265030, 0,  'Crane_Fly',                'Crane Fly',                33,  -256.047,  15.434,    583.87,    157 ),
+(17265029, 0,  'Crane_Fly',                'Crane Fly',                33,  0,         0,         0,         0   ), -- Zero for Era+
+(17265030, 0,  'Crane_Fly',                'Crane Fly',                33,  0,         0,         0,         0   ), -- Zero for Era+
 (17265031, 0,  'Wandering_Sapling',        'Wandering Sapling',        1,   -330.784,  4.753,     327.399,   127 ),
 (17265032, 0,  'Wandering_Sapling',        'Wandering Sapling',        1,   -115.2,    7.574,     395.408,   6   ),
 (17265033, 0,  'Wandering_Sapling',        'Wandering Sapling',        1,   -138.165,  4.414,     376.046,   90  ),
@@ -414,13 +414,13 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
 (17265048, 0,  'Hill_Lizard',              'Hill Lizard',              3,   -410.486,  1.585,     326.62,    127 ),
 (17265049, 0,  'Hill_Lizard',              'Hill Lizard',              3,   -355.852,  6.993,     394.653,   213 ),
 (17265050, 0,  'Hill_Lizard',              'Hill Lizard',              3,   -387.566,  -2.642,    309.662,   32  ),
--- (17265051, 0,  'Wandering_Sapling',        'Wandering Sapling',        1,   -472.703,  15.843,    557.776,   205 ),
--- (17265052, 0,  'Wandering_Sapling',        'Wandering Sapling',        1,   -443.173,  22.139,    550.736,   52  ),
--- (17265053, 0,  'Wandering_Sapling',        'Wandering Sapling',        1,   -478.685,  15.559,    486.595,   59  ),
--- (17265054, 0,  'Wandering_Sapling',        'Wandering Sapling',        1,   -445.186,  22.267,    533.891,   157 ),
+(17265051, 0,  'Wandering_Sapling',        'Wandering Sapling',        1,   0,         0,         0,         0   ), -- Zero for Era+
+(17265052, 0,  'Wandering_Sapling',        'Wandering Sapling',        1,   0,         0,         0,         0   ), -- Zero for Era+
+(17265053, 0,  'Wandering_Sapling',        'Wandering Sapling',        1,   0,         0,         0,         0   ), -- Zero for Era+
+(17265054, 0,  'Wandering_Sapling',        'Wandering Sapling',        1,   0,         0,         0,         0   ), -- Zero for Era+
 (17265055, 0,  'Crane_Fly',                'Crane Fly',                33,  -312.219,  15.459,    501.457,   228 ),
--- (17265056, 0,  'Crane_Fly',                'Crane Fly',                33,  -464.664,  16.662,    512.236,   92  ),
--- (17265057, 0,  'Crane_Fly',                'Crane Fly',                33,  -431.456,  23.966,    523.206,   160 ),
+(17265056, 0,  'Crane_Fly',                'Crane Fly',                33,  0,         0,         0,         0   ), -- Zero for Era+
+(17265057, 0,  'Crane_Fly',                'Crane Fly',                33,  0,         0,         0,         0   ), -- Zero for Era+
 (17265058, 0,  'Hill_Lizard',              'Hill Lizard',              3,   -416.049,  8.65,      437.694,   43  ),
 (17265059, 0,  'Hill_Lizard',              'Hill Lizard',              3,   -350.463,  15.916,    489.288,   86  ),
 (17265060, 0,  'Hill_Lizard',              'Hill Lizard',              3,   -408.688,  17.713,    482.793,   107 ),

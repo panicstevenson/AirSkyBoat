@@ -211,7 +211,7 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
 (17596621, 0,  'Vault_Weapon',             'Vault Weapon',             31,  -333.575,  18.002,    183.081,   20  ),
 (17596622, 0,  'Wraith',                   'Wraith',                   25,  124.213,   -0.012,    72.559,    127 ),
 (17596623, 0,  'Fallen_Major',             'Fallen Major',             32,  182.157,   -0.012,    29.941,    127 ),
-(17596624, 0,  'Fallen_Major',             'Fallen Major',             32,  -147.24,   19.19,     191.21,   105 ),
+(17596624, 0,  'Fallen_Major',             'Fallen Major',             32,  -147.24,   19.19,     191.21,    105 ),
 (17596625, 0,  'Fallen_Mage',              'Fallen Mage',              33,  -154.477,  19.14,     312.259,   171 ),
 (17596626, 0,  'Fallen_Mage',              'Fallen Mage',              33,  153.345,   -0.012,    18.278,    123 ),
 (17596627, 0,  'Wraith',                   'Wraith',                   25,  143.409,   -0.012,    52.118,    14  ),
@@ -322,5 +322,4 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
 (17596732, 0,  'Roly-Poly',                'Roly-Poly',                44,  -140,      -0.5,      180,       61  ),
 (17596733, 0,  'Mephitas',                 'Mephitas',                 48,  -167.889,  18.75,     321.51,    238 ),
 (17596734, 0,  'Mephitas',                 'Mephitas',                 48,  -361.299,  18.5,      283.13,    19  ),
-(17596735, 0,  'Mephitas',                 'Mephitas',                 48,  -260.17,   18.869,    233.899,   197 ),
-(17596834, 0,  'Wanzo-Unzozo',             'Wanzo-Unzozo',             49,  -381.1,    -12,       398,       1   );
+(17596735, 0,  'Mephitas',                 'Mephitas',                 48,  -260.17,   18.869,    233.899,   197 );

@@ -78,7 +78,7 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (17256520, 19, 'Canyon_Crawler',           'Canyon Crawler',           10,  6.035,     -8.612,    -117.369,  203 ),
     (17256521, 19, 'Canyon_Crawler',           'Canyon Crawler',           10,  16.316,    -3.115,    -107.272,  44  ),
     (17256522, 19, 'Canyon_Crawler',           'Canyon Crawler',           10,  -1.528,    -10.355,   -131.672,  6   ),
-    -- (17256523, 4,  'Goblin_Thug',              'Goblin Thug',              11,  188.388,   -21.003,   -146.954,  148 ),
+    (17256523, 4,  'Goblin_Thug',              'Goblin Thug',              11,  0,         0,         0,         0   ), -- Zero for Era+
     (17256524, 4,  'Goblin_Ambusher',          'Goblin Ambusher',          12,  79.304,    -16.197,   -184.718,  76  ),
     (17256525, 4,  'Goblin_Weaver',            'Goblin Weaver',            13,  -57.234,   -16.994,   -146.229,  229 ),
     (17256526, 4,  'Goblin_Tinkerer',          'Goblin Tinkerer',          14,  -88.293,   -11.17,    -99.619,   141 ),
