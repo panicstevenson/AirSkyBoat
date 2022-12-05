@@ -98,7 +98,7 @@ m:addOverride("xi.globals.weaponskills.swift_blade.onUseWeaponSkill", function(p
     params.str_wsc = 0.3 params.dex_wsc = 0.0 params.vit_wsc = 0.0
     params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.3
     params.chr_wsc = 0.0
-    params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
+    params.crit100 = 0.15 params.crit200 = 0.3 params.crit300 = 0.5
     params.canCrit = true
     -- Sufficient data for ACC bonus/penalty does not exist assuming no penalty and 10% increase per 1,000 TP
     -- http://wiki.ffo.jp/html/382.html does not list ACC Bonus
@@ -163,6 +163,23 @@ m:addOverride("xi.globals.weaponskills.avalanche_axe.onUseWeaponSkill", function
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
     params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
+
+    local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+
+    return tpHits, extraHits, criticalHit, damage
+end)
+
+m:addOverride("xi.globals.weaponskills.rampage.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
+    local params = {}
+    params.numHits = 5
+    params.ftp100 = 0.5 params.ftp200 = 0.5 params.ftp300 = 0.5
+    params.str_wsc = 0.3 params.dex_wsc = 0.0 params.vit_wsc = 0.0
+    params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.0
+    params.chr_wsc = 0.0
+    params.crit100 = 0.15 params.crit200 = 0.30 params.crit300 = 0.50
+    params.canCrit = true
+    params.acc100 = 1.0 params.acc200 = 1.0 params.acc300 = 1.0
+    params.atk100 = 1.0 params.atk200 = 1.0 params.atk300 = 1.0
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
@@ -284,6 +301,24 @@ m:addOverride("xi.globals.weaponskills.blade_ei.onUseWeaponSkill", function(play
 
     local damage, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary)
     return tpHits, extraHits, false, damage
+end)
+
+m:addOverride("xi.globals.weaponskills.blade_jin.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
+    print("enter")
+    local params = {}
+    params.numHits = 3
+    params.ftp100 = 1.0 params.ftp200 = 1.0 params.ftp300 = 1.0
+    params.str_wsc = 0.3 params.dex_wsc = 0.3 params.vit_wsc = 0.0
+    params.agi_wsc = 0.0 params.int_wsc = 0.0 params.mnd_wsc = 0.0
+    params.chr_wsc = 0.0
+    params.crit100 = 0.15 params.crit200 = 0.3 params.crit300 = 0.5
+    params.canCrit = true
+    params.acc100 = 1.0 params.acc200 = 1.0 params.acc300 = 1.0
+    params.atk100 = 1.0 params.atk200 = 1.0 params.atk300 = 1.0
+
+    local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+
+    return tpHits, extraHits, criticalHit, damage
 end)
 
 m:addOverride("xi.globals.weaponskills.blade_ten.onUseWeaponSkill", function(player, target, wsID, tp, primary, action, taChar)
