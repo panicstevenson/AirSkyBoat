@@ -9,7 +9,7 @@ local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
-    xi.hnm_system.startup(zone)
+    hxi.hnm.startup(zone)
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype)

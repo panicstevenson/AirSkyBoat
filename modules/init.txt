@@ -70,6 +70,8 @@ renamer
 HorizonXI/Lua
 HorizonXI/commands
 HorizonXI/sql
+clustering/horizon_zone_settings.sql
 #-----------------------
 #		Custom
-#----------------------
+#-----------------------
+#custom/sql/starlight_celebrations.sql

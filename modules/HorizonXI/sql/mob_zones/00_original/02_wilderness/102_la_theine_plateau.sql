@@ -332,12 +332,12 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
 (17195334, 0,  'Gale_Bats',                'Gale Bats',                19,  -173.423,  23.963,    -448.46,   21  ),
 (17195335, 0,  'Acro_Bat',                 'Acro Bat',                 20,  -183.437,  22.508,    -430.468,  67  ),
 (17195336, 19, 'Wolf_Zombie',              'Wolf Zombie',              21,  13.071,    23.678,    -294.623,  160 ),
--- (17195337, 0,  'Rock_Eater',               'Rock Eater',               14,  82.512,    31.446,    -562.119,  161 ),
+(17195337, 0,  'Rock_Eater',               'Rock Eater',               14,  0,         0,         0,         0   ), -- Zero for Era+
 (17195338, 0,  'Rock_Eater',               'Rock Eater',               14,  -104.479,  24.123,    -482.882,  109 ),
 (17195339, 0,  'Rock_Eater',               'Rock Eater',               14,  -48.62,    24.349,    -464.895,  66  ),
 (17195340, 20, 'Mad_Sheep',                'Mad Sheep',                15,  49.81,     23.926,    -363.464,  48  ),
 (17195341, 20, 'Mad_Sheep',                'Mad Sheep',                15,  -71.722,   23.985,    -505.879,  14  ),
--- (17195342, 20, 'Mad_Sheep',                'Mad Sheep',                15,  92.585,    31.743,    -567.141,  144 ),
+(17195342, 20, 'Mad_Sheep',                'Mad Sheep',                15,  0,         0,         0,         0   ), -- Zero for Era+
 (17195343, 0,  'Gale_Bats',                'Gale Bats',                19,  -32.558,   22.438,    -505.21,   4   ),
 (17195344, 0,  'Gale_Bats',                'Gale Bats',                19,  31.08,     23.602,    -443.789,  121 ),
 (17195345, 0,  'Acro_Bat',                 'Acro Bat',                 20,  30.601,    24.95,     -415.654,  186 ),
@@ -435,8 +435,8 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
 (17195437, 0,  'Grass_Funguar',            'Grass Funguar',            32,  451.96,    23.478,    -366.345,  120 ),
 (17195438, 0,  'Gale_Bats',                'Gale Bats',                19,  480.029,   23.38,     -396.428,  34  ),
 (17195439, 0,  'Acro_Bat',                 'Acro Bat',                 20,  407.722,   24.001,    -499.552,  107 ),
--- (17195440, 0,  'Thickshell',               'Thickshell',               34,  418.11,    24.35,     -558.345,  5   ),
--- (17195441, 0,  'Thickshell',               'Thickshell',               34,  401.023,   24.521,    -544.587,  169 ),
+(17195440, 0,  'Thickshell',               'Thickshell',               34,  0,         0,         0,         0   ), -- Zero for Era+
+(17195441, 0,  'Thickshell',               'Thickshell',               34,  0,         0,         0,         0   ), -- Zero for Era+
 (17195442, 0,  'Goblin_Fisher',            'Goblin Fisher',            35,  402.607,   23.627,    -528.482,  197 ),
 (17195443, 0,  'Water_Elemental',          'Water Elemental',          36,  424.593,   24.337,    -559.655,  5   ),
 (17195444, 0,  'Rock_Eater',               'Rock Eater',               14,  308.879,   23.619,    -483.653,  160 ),

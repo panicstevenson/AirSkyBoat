@@ -10,7 +10,7 @@ local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
     xi.promyvion.initZone(zone)
-    xi.horizon.spawnInitialMobs(zone)
+    hxi.spawner.spawnInitialMobs(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

@@ -1,7 +1,7 @@
-xi = xi or {}
-xi.hnm_system = xi.hnm_system or {}
+hxi = hxi or { }
+hxi.hnm = hxi.hnm or { }
 
-xi.hnm_system.startup = function(zone)
+hxi.hnm.startup = function(zone)
     local fafnogg = GetServerVariable("[HNM]Fafnir") -- Get Pop Time
     local adamantoise = GetServerVariable("[HNM]Adamantoise") -- Get Pop Time
     local behemoth = GetServerVariable("[HNM]Behemoth") -- Get Pop Time
@@ -81,7 +81,7 @@ xi.hnm_system.startup = function(zone)
     zone:setLocalVar("BehemothZone", bZone)
 end
 
-xi.hnm_system.onDeath = function(mob)
+hxi.hnm.onDeath = function(mob)
     local mobType = mob:getLocalVar("HNMType")
     local hQ = mob:getLocalVar("HQ")
     local fDay = GetServerVariable("FafnirDay")
@@ -233,7 +233,7 @@ xi.hnm_system.onDeath = function(mob)
     end
 end
 
-xi.hnm_system.checkSpawn = function(zone)
+hxi.hnm.checkSpawn = function(zone)
     local fafnogg = zone:getLocalVar("[HNM]Fafnir")
     local fDay  = zone:getLocalVar("FafnirDay")
     local fZone = zone:getLocalVar("FafnirZone")
@@ -252,32 +252,32 @@ xi.hnm_system.checkSpawn = function(zone)
 
     if zoneID == fZone and timer > fafnogg and fID == 0 then
         if fDay > 3 and hQChange < ((fDay - 2) * 12) then -- Day # * 12 chance to spawn HQ
-            xi.hnm_system.spawnNidhogg(zone)
+            hxi.hnm.spawnNidhogg(zone)
             zone:setLocalVar("FafID", 1)
         else
-            xi.hnm_system.spawnFafnir(zone)
+            hxi.hnm.spawnFafnir(zone)
             zone:setLocalVar("FafID", 1)
         end
     elseif zoneID == aZone and timer > adamantoise and aID == 0 then
         if aDay > 3 and hQChange < ((aDay - 2) * 12) then -- Day # * 12 chance to spawn HQ
-            xi.hnm_system.spawnAspid(zone)
+            hxi.hnm.spawnAspid(zone)
             zone:setLocalVar("AddyID", 1)
         else
-            xi.hnm_system.spawnAddy(zone)
+            hxi.hnm.spawnAddy(zone)
             zone:setLocalVar("AddyID", 1)
         end
     elseif zoneID == bZone and timer > behemoth and bID == 0 then
         if bDay > 3 and hQChange < ((bDay - 2) * 12) then -- Day # * 12 chance to spawn HQ
-            xi.hnm_system.spawnKingBehe(zone)
+            hxi.hnm.spawnKingBehe(zone)
             zone:setLocalVar("BeheID", 1)
         else
-            xi.hnm_system.spawnBehemoth(zone)
+            hxi.hnm.spawnBehemoth(zone)
             zone:setLocalVar("BeheID", 1)
         end
     end
 end
 
-xi.hnm_system.spawnFafnir = function(zone)
+hxi.hnm.spawnFafnir = function(zone)
     local spawnPoints =
     {
         [xi.zone.THE_SANCTUARY_OF_ZITAH] =
@@ -324,7 +324,7 @@ xi.hnm_system.spawnFafnir = function(zone)
         releaseIdOnDeath = true,
         widescan = 0,
         onMobDeath = function(fafnirArg, playerArg, isKiller)
-            xi.hnm_system.onDeath(fafnirArg)
+            hxi.hnm.onDeath(fafnirArg)
             playerArg:addTitle(xi.title.FAFNIR_SLAYER)
         end,
         onMobSpawn = function(fafnirArg)
@@ -349,7 +349,7 @@ xi.hnm_system.spawnFafnir = function(zone)
     end
 end
 
-xi.hnm_system.spawnNidhogg = function(zone)
+hxi.hnm.spawnNidhogg = function(zone)
     local spawnPoints =
     {
         [xi.zone.THE_SANCTUARY_OF_ZITAH] =
@@ -396,7 +396,7 @@ xi.hnm_system.spawnNidhogg = function(zone)
         releaseIdOnDeath = true,
         widescan = 0,
         onMobDeath = function(fafnirArg, playerArg, isKiller)
-            xi.hnm_system.onDeath(fafnirArg)
+            hxi.hnm.onDeath(fafnirArg)
         end,
         onMobSpawn = function(fafnirArg)
             fafnirArg:setLocalVar("HNMType", 1)
@@ -434,7 +434,7 @@ xi.hnm_system.spawnNidhogg = function(zone)
     end
 end
 
-xi.hnm_system.spawnAddy = function(zone)
+hxi.hnm.spawnAddy = function(zone)
     local spawnPoints =
     {
         [xi.zone.VALLEY_OF_SORROWS] =
@@ -481,7 +481,7 @@ xi.hnm_system.spawnAddy = function(zone)
         releaseIdOnDeath = true,
         widescan = 0,
         onMobDeath = function(fafnirArg, playerArg, isKiller)
-            xi.hnm_system.onDeath(fafnirArg)
+            hxi.hnm.onDeath(fafnirArg)
             playerArg:addTitle(xi.title.TORTOISE_TORTURER)
         end,
         onMobSpawn = function(fafnirArg)
@@ -501,7 +501,7 @@ xi.hnm_system.spawnAddy = function(zone)
     end
 end
 
-xi.hnm_system.spawnAspid = function(zone)
+hxi.hnm.spawnAspid = function(zone)
     local spawnPoints =
     {
         [xi.zone.VALLEY_OF_SORROWS] =
@@ -548,7 +548,7 @@ xi.hnm_system.spawnAspid = function(zone)
         releaseIdOnDeath = true,
         widescan = 0,
         onMobDeath = function(fafnirArg, playerArg, isKiller)
-            xi.hnm_system.onDeath(fafnirArg)
+            hxi.hnm.onDeath(fafnirArg)
             playerArg:addTitle(xi.title.ASPIDOCHELONE_SINKER)
             fafnirArg:removeListener("ASPID_TAKE_DAMAGE")
         end,
@@ -584,7 +584,7 @@ xi.hnm_system.spawnAspid = function(zone)
                         changeHP = mobArg:getHP() - (mobArg:getHP() * .05)
                         mobArg:setLocalVar("changeHP", changeHP)
                         mobArg:setLocalVar("waitTime", os.time() + 2)
-                        xi.hnm_system.outOfShell(mobArg)
+                        hxi.hnm.outOfShell(mobArg)
                     end
                 elseif os.time() > waitTime then
                     fafnirArg:setLocalVar("DamageTaken", damageTaken)
@@ -599,14 +599,14 @@ xi.hnm_system.spawnAspid = function(zone)
                 fafnirArg:setLocalVar("DamageTaken", 0)
                 fafnirArg:setAnimationSub(1)
                 fafnirArg:setLocalVar("waitTime", os.time() + 2)
-                xi.hnm_system.intoShell(fafnirArg)
+                hxi.hnm.intoShell(fafnirArg)
             elseif fafnirArg:getHPP() == 100 and fafnirArg:getAnimationSub() == 1 and os.time() > waitTime then
                 fafnirArg:setLocalVar("DamageTaken", 0)
                 fafnirArg:setAnimationSub(2)
                 changeHP = fafnirArg:getHP() - (fafnirArg:getHP() * .05)
                 fafnirArg:setLocalVar("changeHP", changeHP)
                 fafnirArg:setLocalVar("waitTime", os.time() + 2)
-                xi.hnm_system.outOfShell(fafnirArg)
+                hxi.hnm.outOfShell(fafnirArg)
             end
         end,
         mixins = { require("scripts/mixins/rage") }
@@ -621,7 +621,7 @@ xi.hnm_system.spawnAspid = function(zone)
     end
 end
 
-xi.hnm_system.spawnBehemoth = function(zone)
+hxi.hnm.spawnBehemoth = function(zone)
     local spawnPoints =
     {
         [xi.zone.BEHEMOTHS_DOMINION] =
@@ -675,7 +675,7 @@ xi.hnm_system.spawnBehemoth = function(zone)
         releaseIdOnDeath = true,
         widescan = 0,
         onMobDeath = function(fafnirArg, playerArg, isKiller)
-            xi.hnm_system.onDeath(fafnirArg)
+            hxi.hnm.onDeath(fafnirArg)
             playerArg:addTitle(xi.title.BEHEMOTHS_BANE)
         end,
         onMobSpawn = function(fafnirArg)
@@ -728,7 +728,7 @@ xi.hnm_system.spawnBehemoth = function(zone)
     end
 end
 
-xi.hnm_system.spawnKingBehe = function(zone)
+hxi.hnm.spawnKingBehe = function(zone)
     local spawnPoints =
     {
         [xi.zone.BEHEMOTHS_DOMINION] =
@@ -782,7 +782,7 @@ xi.hnm_system.spawnKingBehe = function(zone)
         releaseIdOnDeath = true,
         widescan = 0,
         onMobDeath = function(fafnirArg, playerArg, isKiller)
-            xi.hnm_system.onDeath(fafnirArg)
+            hxi.hnm.onDeath(fafnirArg)
             playerArg:addTitle(xi.title.BEHEMOTH_DETHRONER)
         end,
         onMobSpawn = function(fafnirArg)
@@ -853,7 +853,7 @@ xi.hnm_system.spawnKingBehe = function(zone)
     end
 end
 
-xi.hnm_system.intoShell = function(mob)
+hxi.hnm.intoShell = function(mob)
     mob:setAnimationSub(1)
     mob:setMobAbilityEnabled(false)
     mob:setAutoAttackEnabled(false)
@@ -865,7 +865,7 @@ xi.hnm_system.intoShell = function(mob)
     mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_TURN))
 end
 
-xi.hnm_system.outOfShell = function(mob)
+hxi.hnm.outOfShell = function(mob)
     mob:setTP(3000) -- Immediately TPs coming out of shell
     mob:setAnimationSub(2)
     mob:setMobAbilityEnabled(true)

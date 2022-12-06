@@ -13,7 +13,7 @@ zoneObject.onInitialize = function(zone)
 --    GetMobByID(ID.mob.COVETAR):setRespawnTime(math.random(3600, 21600))
 
     xi.promyvion.initZone(zone)
-    xi.horizon.spawnInitialMobs(zone)
+    hxi.spawner.spawnInitialMobs(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

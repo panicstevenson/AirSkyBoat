@@ -13,7 +13,7 @@ zoneObject.onInitialize = function(zone)
 
     ph:setLocalVar("timeToGrow", os.time() + math.random(86400, 259200)) -- 1 to 3 days
     ph:setLocalVar("phIndex", phIndex)
-    xi.horizon.spawnInitialMobs(zone)
+    hxi.spawner.spawnInitialMobs(zone)
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype)

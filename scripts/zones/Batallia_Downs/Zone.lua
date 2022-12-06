@@ -12,7 +12,6 @@ local zoneObject = {}
 zoneObject.onChocoboDig = function(player, precheck)
     return xi.chocoboDig.start(player, precheck)
 
-
 -- Used for OOE Chocobo Quest
 -- local function registerRegionAroundNPC(zone, NPCID, zoneID)
 --     local npc = GetNPCByID(NPCID)
@@ -27,8 +26,9 @@ zoneObject.onChocoboDig = function(player, precheck)
 end
 
 zoneObject.onInitialize = function(zone)
-    UpdateNMSpawnPoint(ID.mob.AHTU)
-    GetMobByID(ID.mob.AHTU):setRespawnTime(math.random(900, 10800))
+    -- NM Persistence
+    xi.mob.nmTODPersistCache(zone, ID.mob.AHTU)
+    xi.mob.nmTODPersistCache(zone, ID.mob.WEEPING_WILLOW)
 
     -- Prepare everything for Full Speed Ahead! (OOE Quest)
     -- local syrillia   = zone:queryEntitiesByName("Syrillia")[1]
@@ -45,11 +45,12 @@ zoneObject.onInitialize = function(zone)
     -- registerRegionAroundNPC(zone, ID.npc.SYRILLIA, 9)
 
     xi.voidwalker.zoneOnInit(zone)
-    xi.hnm_system.startup(zone)
+    hxi.teleport.spawnNMs(zone)
+    hxi.hnm.startup(zone)
 end
 
 zoneObject.onZoneTick = function(zone)
-    xi.hnm_system.checkSpawn(zone)
+    hxi.hnm.checkSpawn(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

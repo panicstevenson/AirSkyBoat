@@ -3,6 +3,7 @@
 -----------------------------------
 local ID = require('scripts/zones/Lower_Jeuno/IDs')
 local lowerJeunoGlobal = require('scripts/zones/Lower_Jeuno/globals')
+require('scripts/globals/events/starlight_celebrations')
 require('scripts/globals/conquest')
 require('scripts/globals/keyitems')
 require('scripts/globals/missions')
@@ -16,8 +17,8 @@ local zoneObject = {}
 zoneObject.onInitialize = function(zone)
     zone:registerTriggerArea(1, 23, 0, -43, 44, 7, -39) -- Inside Tenshodo HQ. TODO: Find out if this is used other than in ZM 17 (not anymore). Remove if not.
     xi.chocobo.initZone(zone)
-    xi.horizon.teleport.handleOPEnable()
-    xi.horizon.teleport.addNPC(zone)
+    hxi.teleport.checkOPEnable()
+    hxi.teleport.addNPC(zone)
     xi.hardcore.setupNPC(zone)
 end
 
@@ -105,7 +106,6 @@ zoneObject.onGameHour = function(zone)
             npc:setPos(xi.path.first(lowerJeunoGlobal.lampPath))
             npc:pathThrough(lowerJeunoGlobal.lampPath, bit.bor(xi.path.flag.PATROL, xi.path.flag.WALLHACK))
         end
-
     end
 end
 

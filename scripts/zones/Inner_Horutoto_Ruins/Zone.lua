@@ -42,7 +42,7 @@ zoneObject.onInitialize = function(zone)
     xi.mob.nmTODPersistCache(zone, ID.mob.MALTHA)
 
     xi.treasure.initZone(zone)
-    xi.horizon.spawnInitialMobs(zone)
+    hxi.spawner.spawnInitialMobs(zone)
     zone:insertDynamicEntity(thfsNeckNPC)
 end
 
@@ -77,7 +77,7 @@ zoneObject.onTriggerAreaEnter = function(player, triggerArea)
 
     switch (triggerArea:GetTriggerAreaID()): caseof
     {
-        [1] = function (x)  -- Red Circle
+        [1] = function()  -- Red Circle
             if player:getMainJob() == xi.job.RDM and triggerArea:AddCount(1) == 1 then
                 red:setAnimation(xi.anim.OPEN_DOOR)
                 red:entityAnimationPacket("smin")
@@ -91,7 +91,7 @@ zoneObject.onTriggerAreaEnter = function(player, triggerArea)
             end
         end,
 
-        [2] = function (x)  -- White Circle
+        [2] = function()  -- White Circle
             if player:getMainJob() == xi.job.WHM and triggerArea:AddCount(1) == 1 then
                 white:setAnimation(xi.anim.OPEN_DOOR)
                 white:entityAnimationPacket("smin")
@@ -105,7 +105,7 @@ zoneObject.onTriggerAreaEnter = function(player, triggerArea)
             end
         end,
 
-        [3] = function (x)  -- Black Circle
+        [3] = function()  -- Black Circle
             if player:getMainJob() == xi.job.BLM and triggerArea:AddCount(1) == 1 then
                 black:setAnimation(xi.anim.OPEN_DOOR)
                 black:entityAnimationPacket("smin")
@@ -119,7 +119,7 @@ zoneObject.onTriggerAreaEnter = function(player, triggerArea)
             end
         end,
 
-        [4] = function (x)  -- Teleport at H-6
+        [4] = function()  -- Teleport at H-6
             player:startEvent(47)
         end,
     }
@@ -133,21 +133,21 @@ zoneObject.onTriggerAreaLeave = function(player, triggerArea)
 
     switch (triggerArea:GetTriggerAreaID()): caseof
     {
-        [1] = function (x)  -- Red Circle
+        [1] = function()  -- Red Circle
             if player:getMainJob() == xi.job.RDM and triggerArea:DelCount(1) == 0 then
                 red:setAnimation(xi.anim.CLOSE_DOOR)
                 red:entityAnimationPacket("kmin")
             end
         end,
 
-        [2] = function (x)  -- White Circle
+        [2] = function()  -- White Circle
             if player:getMainJob() == xi.job.WHM and triggerArea:DelCount(1) == 0 then
                 white:setAnimation(xi.anim.CLOSE_DOOR)
                 white:entityAnimationPacket("kmin")
             end
         end,
 
-        [3] = function (x)  -- Black Circle
+        [3] = function()  -- Black Circle
             if player:getMainJob() == xi.job.BLM and triggerArea:DelCount(1) == 0 then
                 black:setAnimation(xi.anim.CLOSE_DOOR)
                 black:entityAnimationPacket("kmin")

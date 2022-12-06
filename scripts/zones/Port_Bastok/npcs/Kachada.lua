@@ -8,7 +8,7 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    xi.horizon.rafOnTrigger(player, npc)
+    hxi.raf.rafOnTrigger(player, npc)
 end
 
 entity.onEventUpdate = function(player, csid, option)

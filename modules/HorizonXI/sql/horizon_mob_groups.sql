@@ -159,7 +159,7 @@ UPDATE `mob_groups` SET `minLevel` = 46, `maxLevel` = 49 WHERE name = "Master_Co
 
 -- The_Boyahda_Tree (Zone 153)
 UPDATE `mob_groups` SET `minLevel` = 63, `maxLevel` = 66 WHERE name = "Moss_Eater" and `zoneid` = 153;
-UPDATE `mob_groups` SET `minLevel` = 62, `maxLevel` = 65 WHERE name = "Robber_Crab" and `zoneid` = 153;
+UPDATE `mob_groups` SET `minLevel` = 62, `maxLevel` = 65, `respawntime` = 960 WHERE name = "Robber_Crab" and `zoneid` = 153;
 UPDATE `mob_groups` SET `minLevel` = 64, `maxLevel` = 67 WHERE name = "Knight_Crawler" and `zoneid` = 153;
 UPDATE `mob_groups` SET `minLevel` = 65, `maxLevel` = 68 WHERE name = "Mourioche" and `zoneid` = 153;
 
@@ -206,6 +206,7 @@ UPDATE `mob_groups` SET `minLevel` = 61, `maxLevel` = 64 WHERE name = "Old_Opo-o
 -- Quicksand_Caves (Zone 208)
 UPDATE `mob_groups` SET `minLevel` = 51, `maxLevel` = 53 WHERE name = "Helm_Beetle"  and `zoneid` = 208;
 UPDATE `mob_groups` SET `minLevel` = 52, `maxLevel` = 54 WHERE name = "Sand_Spider"  and `zoneid` = 208;
+INSERT INTO `mob_groups` VALUES (45,1928,208,'Helm_Beetle',960,0,1299,0,0,51,54,0,NULL);
 
 -- Gustav_Tunnel (Zone 212)
 UPDATE `mob_groups` SET `minLevel` = 45, `maxLevel` = 48 WHERE name = "Hell_Bat"  and `zoneid` = 212;
@@ -258,6 +259,9 @@ UPDATE `mob_groups` SET `minLevel` = 44, `maxLevel` = 44, `HP` = 3800 WHERE name
 
 -- SMN
 UPDATE `mob_groups` SET `minLevel` = 44, `maxLevel` = 44, `HP` = 3400 WHERE name = "Galgalim"  and `zoneid` = 209;
+
+-- Twinkling_Treant
+INSERT INTO `mob_groups` VALUES (2,21000,210,'Twinkling_Treant',0,128,0,100000,0,18,18,0,NULL);
 
 -- --------------------------------------------------------
 -- Horizon Mob Subjob Manager

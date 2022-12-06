@@ -267,6 +267,7 @@ public:
     bool   checkNameFlags(uint32 flags); // this is check and not get because it tests for a flag, it doesn't return all flags
     uint16 getModelId();
     void   setModelId(uint16 modelId, sol::object const& slotObj);
+    void   updateLook();
     void   restoreNpcLook();
     void   setCostume(uint16 costume);
     uint16 getCostume();
@@ -643,8 +644,9 @@ public:
     bool   addBardSong(CLuaBaseEntity* PEntity, uint16 effectID, uint16 power, uint16 tick,
                        uint16 duration, uint16 subID, uint16 subPower, uint16 tier); // Adds bard song effect
 
-    void charm(CLuaBaseEntity const* target); // applies charm on target
-    void uncharm();                           // removes charm on target
+    void charm(CLuaBaseEntity const* target);                          // applies charm on target
+    void charmDuration(CLuaBaseEntity const* target, uint32 duration); // applies charm on target for duration
+    void uncharm();                                                    // removes charm on target
 
     uint8 addBurden(uint8 element, uint8 burden);
     uint8 getOverloadChance(uint8 element);

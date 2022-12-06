@@ -5,6 +5,7 @@
     "C_Cpp.intelliSenseEngineFallback": "Enabled",
 
     "editor.bracketPairColorization.enabled": true,
+    "editor.inlayHints.enabled": "offUnlessPressed",
     "editor.renderWhitespace": "all",
     "editor.renderControlCharacters": true,
     "editor.trimAutoWhitespace": true,
@@ -409,7 +410,8 @@
         "GetPlayerIDAnywhere",
         "SendToJailOffline",
         "IsZoneActive",
-        "GetContainerFilenamesList"
+        "GetContainerFilenamesList",
+        "hxi"
     ],
     "Lua.diagnostics.disable": [
         "lowercase-global"

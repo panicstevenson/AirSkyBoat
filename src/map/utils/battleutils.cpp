@@ -1549,6 +1549,11 @@ namespace battleutils
 
             acc = std::max({ archery_acc, marksmanship_acc, throwing_acc });
         }
+        else
+        {
+            acc = PAttacker->RACC(SKILL_AUTOMATON_RANGED, distance(PAttacker->loc.p, PDefender->loc.p));
+        }
+
         // Check for Yonin evasion bonus while in front of target
         if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_YONIN) && infront(PDefender->loc.p, PAttacker->loc.p, 64))
         {
@@ -2974,7 +2979,12 @@ namespace battleutils
             {
                 if (attackerLvl > defenderLvl)
                 {
-                    cRatio = cRatio + correction; // Match other format
+                    cRatio = cRatio + correction; // Sets level correction for all mobs and pets
+
+                    if ((attackerType == TYPE_PET) && (charutils::CheckMob(attackerLvl, defenderLvl) == EMobDifficulty::TooWeak)) // Checks if the mob is too weak and if its a pet
+                    {
+                        cRatio = std::clamp(cRatio, 0.f, 2.f);
+                    }
                 }
             }
         }
@@ -3535,23 +3545,6 @@ namespace battleutils
             num += 1;
         }
 
-        // hasso occasionally triggers Zanshin after landing a normal attack, only active while Samurai is set as Main
-        if (PEntity->GetMJob() == JOB_SAM)
-        {
-            if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_HASSO))
-            {
-                uint16 zanshin = PEntity->getMod(Mod::ZANSHIN);
-                if (PEntity->objtype == TYPE_PC)
-                {
-                    zanshin += ((CCharEntity*)PEntity)->PMeritPoints->GetMeritValue(MERIT_ZASHIN_ATTACK_RATE, (CCharEntity*)PEntity);
-                }
-
-                if (xirand::GetRandomNumber(100) < (zanshin / 4))
-                {
-                    num++;
-                }
-            }
-        }
         return std::min<uint8>(num, 8);
     }
 
@@ -5424,7 +5417,10 @@ namespace battleutils
         damage       = (int32)(damage * resist);
 
         resist = 1.0f + PDefender->getMod(Mod::DMGBREATH) / 10000.f + PDefender->getMod(Mod::DMG) / 10000.f;
-        resist = std::clamp(resist, 0.5f, 1.5f); // assuming if its floored at .5f its capped at 1.5f but who's stacking +dmgtaken equip anyway???
+        resist = std::max(resist, 0.5f); // assuming if its floored at .5f its capped at 1.5f but who's stacking +dmgtaken equip anyway???
+
+        resist += PDefender->getMod(Mod::UDMG) + PDefender->getMod(Mod::UDMGBREATH) / 10000.f;
+        resist = std::max(resist, 0.f);
         damage = (int32)(damage * resist);
 
         if (xirand::GetRandomNumber(100) < PDefender->getMod(Mod::ABSORB_DMG_CHANCE))
@@ -5474,6 +5470,9 @@ namespace battleutils
 
         resist += PDefender->getMod(Mod::DMGMAGIC_II) / 10000.f;
         resist = std::max(resist, 0.125f); // Total cap with MDT-% II included is 87.5%
+
+        resist += PDefender->getMod(Mod::UDMG) + PDefender->getMod(Mod::UDMGMAGIC) / 10000.f;
+        resist = std::max(resist, 0.f);
         damage = (int32)(damage * resist);
 
         if (damage > 0 && PDefender->objtype == TYPE_PET && PDefender->getMod(Mod::AUTO_STEAM_JACKET) > 1)
@@ -5521,6 +5520,10 @@ namespace battleutils
         resist = 1.f + PDefender->getMod(Mod::DMGPHYS) / 10000.f + PDefender->getMod(Mod::DMG) / 10000.f;
         resist = std::max(resist, 0.5f);                        // PDT caps at -50%
         resist += PDefender->getMod(Mod::DMGPHYS_II) / 10000.f; // Add Burtgang reduction after 50% cap. Extends cap to -68%
+        resist = std::max(resist, 0.32f);                       // Total cap with MDT-% II included is 87.5%
+
+        resist += PDefender->getMod(Mod::UDMG) + PDefender->getMod(Mod::UDMGPHYS) / 10000.f;
+        resist = std::max(resist, 0.f);
         damage = (int32)(damage * resist);
 
         if (damage > 0 && PDefender->objtype == TYPE_PET && PDefender->getMod(Mod::AUTO_STEAM_JACKET) > 0)
@@ -5567,6 +5570,9 @@ namespace battleutils
 
         resist = 1.0f + PDefender->getMod(Mod::DMGRANGE) / 10000.f + PDefender->getMod(Mod::DMG) / 10000.f;
         resist = std::max(resist, 0.5f);
+
+        resist += PDefender->getMod(Mod::UDMG) + PDefender->getMod(Mod::UDMGRANGE) / 10000.f;
+        resist = std::max(resist, 0.f);
         damage = (int32)(damage * resist);
 
         if (damage > 0 && PDefender->objtype == TYPE_PET && PDefender->getMod(Mod::AUTO_STEAM_JACKET) > 0)
@@ -6109,7 +6115,7 @@ namespace battleutils
         // Snap nearEntity to a guaranteed valid position
         if (PMob->loc.zone->m_navMesh)
         {
-            PMob->loc.zone->m_navMesh->snapToValidPosition(nearEntity);
+            PMob->loc.zone->m_navMesh->snapToValidPosition(nearEntity, pos.y, true);
         }
 
         // Move the target a little higher, just in case

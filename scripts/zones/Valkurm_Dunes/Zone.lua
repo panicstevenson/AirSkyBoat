@@ -31,7 +31,8 @@ zoneObject.onInitialize = function(zone)
         end
     end
 
-    xi.horizon.spawnInitialMobs(zone)
+    hxi.spawner.spawnInitialMobs(zone)
+    hxi.teleport.spawnNMs(zone)
 end
 
 zoneObject.onZoneTick = function(zone)
@@ -94,6 +95,7 @@ zoneObject.onGameHour = function(zone)
         if VanadielHour() == 5 then
             qm2:setStatus(xi.status.DISAPPEAR)
         end
+
         if VanadielHour() == 18 then
             qm2:setStatus(xi.status.NORMAL)
         end

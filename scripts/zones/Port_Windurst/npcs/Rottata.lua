@@ -10,7 +10,7 @@ require("scripts/globals/horizon_teleports")
 local entity = {}
 
 entity.onTrigger = function(player, npc)
-    xi.horizon.teleport.triggerOPWarp(player, npc)
+    hxi.teleport.triggerOPWarp(player, npc)
 end
 
 entity.onEventUpdate = function(player, csid, option)
