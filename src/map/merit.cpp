@@ -118,9 +118,9 @@ static const MeritCategoryInfo_t meritCatInfo[] = {
     */
     { 2, 8, 0 },   // MCATEGORY_HP_MP       catNumber 00
     { 7, 5, 1 },   // MCATEGORY_ATTRIBUTES  catNumber 01
-    { 19, 20, 2 }, // MCATEGORY_COMBAT      catNumber 02
-    { 14, 16, 4 }, // MCATEGORY_MAGIC       catNumber 03
-    { 5, 8, 5 },   // MCATEGORY_OTHERS      catNumber 04
+    { 19, 12, 2 }, // MCATEGORY_COMBAT      catNumber 02
+    { 14, 8, 4 },  // MCATEGORY_MAGIC       catNumber 03
+    { 5, 4, 5 },   // MCATEGORY_OTHERS      catNumber 04
 
     { 5, 10, 6 }, // MCATEGORY_WAR_1       catNumber 05
     { 5, 10, 6 }, // MCATEGORY_MNK_1       catNumber 06
