@@ -21,6 +21,7 @@ zoneObject.onInitialize = function(zone)
     xi.helm.initZone(zone, xi.helm.type.HARVESTING)
     xi.voidwalker.zoneOnInit(zone)
 
+    hxi.spawner.spawnInitialMobs(zone)
     hxi.teleport.spawnNMs(zone)
 end
 

@@ -9,6 +9,24 @@ require("scripts/globals/mobs")
 -----------------------------------
 local entity = {}
 
+entity.onMobSpawn = function(mob)
+    local sapling =
+    {
+        17211698,
+        17211701,
+        17211697,
+        17211710,
+        17211700,
+        17211711
+    }
+
+    for i in pairs(sapling) do
+        if mob:getID() == sapling[i] then
+            mob:setRespawnTime(300)
+        end
+    end
+end
+
 entity.onMobDeath = function(mob, player, optParams)
     xi.regime.checkRegime(player, mob, 18, 2, xi.regime.type.FIELDS)
 end

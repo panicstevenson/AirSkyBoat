@@ -9,6 +9,12 @@ require("scripts/globals/mobs")
 -----------------------------------
 local entity = {}
 
+entity.onMobSpawn = function(mob)
+    if mob:getID() == 17252656 then
+        mob:setRespawnTime(300)
+    end
+end
+
 entity.onMobDeath = function(mob, player, optParams)
     xi.regime.checkRegime(player, mob, 92, 2, xi.regime.type.FIELDS)
     xi.regime.checkRegime(player, mob, 93, 2, xi.regime.type.FIELDS)
