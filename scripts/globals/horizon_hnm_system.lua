@@ -1,3 +1,10 @@
+-----------------------------------
+-- ID Requires for ??? removal
+-----------------------------------
+local dragonsAeryID   = require("scripts/zones/Dragons_Aery/IDs")
+local valleySorrowsID = require("scripts/zones/Valley_of_Sorrows/IDs")
+local behemothDomID   = require("scripts/zones/Behemoths_Dominion/IDs")
+
 hxi = hxi or { }
 hxi.hnm = hxi.hnm or { }
 
@@ -79,6 +86,10 @@ hxi.hnm.startup = function(zone)
     zone:setLocalVar("[HNM]Behemoth", behemoth)
     zone:setLocalVar("BehemothDay", bDay)
     zone:setLocalVar("BehemothZone", bZone)
+
+    GetNPCByID(behemothDomID.npc.BEHEMOTH_QM):setStatus(xi.status.DISAPPEAR)
+    GetNPCByID(dragonsAeryID.npc.FAFNIR_QM):setStatus(xi.status.DISAPPEAR)
+    GetNPCByID(valleySorrowsID.npc.ADAMANTOISE_QM):setStatus(xi.status.DISAPPEAR)
 end
 
 hxi.hnm.onDeath = function(mob)
@@ -333,6 +344,7 @@ hxi.hnm.spawnFafnir = function(zone)
             fafnirArg:setMobMod(xi.mobMod.DRAW_IN_CUSTOM_RANGE, 20)
             fafnirArg:setMobMod(xi.mobMod.DRAW_IN_FRONT, 1)
             fafnirArg:setLocalVar("[rage]timer", 3600) -- 60 minutes
+            mob:setMod(xi.mod.ATT, 489)
         end,
         mixins =
         {
@@ -402,6 +414,9 @@ hxi.hnm.spawnNidhogg = function(zone)
             fafnirArg:setLocalVar("HNMType", 1)
             fafnirArg:setLocalVar("HQ", 1)
             fafnirArg:setLocalVar("[rage]timer", 3600) -- 60 minutes
+            mob:setMod(xi.mod.ATT, 499)
+            mob:setMod(xi.mod.ACC, 444)
+            mob:setMod(xi.mod.EVA, 341)
             fafnirArg:setMobMod(xi.mobMod.DRAW_IN, 1)
             fafnirArg:setMobMod(xi.mobMod.DRAW_IN_CUSTOM_RANGE, 20)
             fafnirArg:setMobMod(xi.mobMod.DRAW_IN_FRONT, 1)
@@ -488,6 +503,9 @@ hxi.hnm.spawnAddy = function(zone)
             fafnirArg:setLocalVar("HNMType", 2)
             fafnirArg:setLocalVar("[rage]timer", 1800) -- 30 minutes
             fafnirArg:setMod(xi.mod.DMGMAGIC, -3500)
+            mob:setMobLevel(70)
+            mob:setMod(xi.mod.DEF, 4120)
+            mob:setMod(xi.mod.ATT, 493)
         end,
         mixins = { require("scripts/mixins/rage") }
     })
@@ -550,7 +568,6 @@ hxi.hnm.spawnAspid = function(zone)
         onMobDeath = function(fafnirArg, playerArg, isKiller)
             hxi.hnm.onDeath(fafnirArg)
             playerArg:addTitle(xi.title.ASPIDOCHELONE_SINKER)
-            fafnirArg:removeListener("ASPID_TAKE_DAMAGE")
         end,
         onMobSpawn = function(fafnirArg)
             fafnirArg:setLocalVar("HNMType", 2)
@@ -566,47 +583,34 @@ hxi.hnm.spawnAspid = function(zone)
             fafnirArg:setMod(xi.mod.DMGMAGIC, -3000)
             fafnirArg:setMod(xi.mod.DOUBLE_ATTACK, 20)
             fafnirArg:setMod(xi.mod.CURSERES, 100)
+            fafnirArg:setMod(xi.mod.DEF, 702)
+            fafnirArg:setMod(xi.mod.ATT, 446)
+            fafnirArg:setMod(xi.mod.EVA, 325)
 
-            local changeHP = fafnirArg:getHP() - (fafnirArg:getHP() * .05)
-            fafnirArg:setLocalVar("changeHP", changeHP)
-            fafnirArg:setLocalVar("DamageTaken", 0)
+            fafnirArg:setLocalVar("dmgToChange", fafnirArg:getHP() - 1000)
             fafnirArg:setAnimationSub(2)
 
-            -- Forced out of shell after taking 2000 damage
-            fafnirArg:addListener("TAKE_DAMAGE", "ASPID_TAKE_DAMAGE", function(mobArg, amount, attacker, attackType, damageType)
-                local damageTaken = mobArg:getLocalVar("DamageTaken")
-                local waitTime = mobArg:getLocalVar("waitTime")
-                damageTaken = damageTaken + amount
-                if damageTaken > 2000 then
-                    mobArg:setLocalVar("DamageTaken", 0)
-                    if mobArg:getAnimationSub() == 1 and os.time() > waitTime then
-                        mobArg:setAnimationSub(2)
-                        changeHP = mobArg:getHP() - (mobArg:getHP() * .05)
-                        mobArg:setLocalVar("changeHP", changeHP)
-                        mobArg:setLocalVar("waitTime", os.time() + 2)
-                        hxi.hnm.outOfShell(mobArg)
-                    end
-                elseif os.time() > waitTime then
-                    fafnirArg:setLocalVar("DamageTaken", damageTaken)
-                end
-            end)
+            hxi.hnm.intoShell(fafnirArg)
+            hxi.hnm.outOfShell(fafnirArg)
         end,
         onMobFight = function(fafnirArg, target)
-            local changeHP = fafnirArg:getLocalVar("changeHP")
-            local waitTime = fafnirArg:getLocalVar("waitTime")
+            local changeHP = fafnirArg:getLocalVar("dmgToChange")
 
-            if fafnirArg:getHP() < changeHP and fafnirArg:getAnimationSub() == 2 and os.time() > waitTime then
-                fafnirArg:setLocalVar("DamageTaken", 0)
-                fafnirArg:setAnimationSub(1)
-                fafnirArg:setLocalVar("waitTime", os.time() + 2)
-                hxi.hnm.intoShell(fafnirArg)
-            elseif fafnirArg:getHPP() == 100 and fafnirArg:getAnimationSub() == 1 and os.time() > waitTime then
-                fafnirArg:setLocalVar("DamageTaken", 0)
-                fafnirArg:setAnimationSub(2)
-                changeHP = fafnirArg:getHP() - (fafnirArg:getHP() * .05)
-                fafnirArg:setLocalVar("changeHP", changeHP)
-                fafnirArg:setLocalVar("waitTime", os.time() + 2)
+            if -- In shell
+                fafnirArg:getAnimationSub() == 1 and
+                (os.time() > fafnirArg:getLocalVar("changeTime") or fafnirArg:getHPP(fafnirArg) == 100)
+            then
                 hxi.hnm.outOfShell(fafnirArg)
+            end
+
+            if fafnirArg:getHP(fafnirArg) <= changeHP then
+                if (fafnirArg:getAnimationSub() == 1) then -- In shell
+                    fafnirArg:setLocalVar("dmgToChange", fafnirArg:getHP() - 1000)
+                    hxi.hnm.outOfShell(fafnirArg)
+                elseif (fafnirArg:getAnimationSub() == 2) then -- Out of shell
+                    hxi.hnm.intoShell(fafnirArg)
+                    fafnirArg:setLocalVar("dmgToChange", fafnirArg:getHP() - 1000)
+                end
             end
         end,
         mixins = { require("scripts/mixins/rage") }
@@ -680,11 +684,12 @@ hxi.hnm.spawnBehemoth = function(zone)
         end,
         onMobSpawn = function(fafnirArg)
             fafnirArg:setLocalVar("HNMType", 3)
-            fafnirArg:setLocalVar("[rage]timer", 1800) -- 30 minutes
-            fafnirArg:addMod(xi.mod.SLEEPRES, 90)
-            fafnirArg:setMod(xi.mod.TRIPLE_ATTACK, 5)
-            fafnirArg:setMod(xi.mod.MDEF, 20)
-            fafnirArg:addMod(xi.mod.EVA, 50)
+            mob:setLocalVar("[rage]timer", 1800) -- 30 minutes
+            mob:addMod(xi.mod.SLEEPRES, 90)
+            mob:setMod(xi.mod.TRIPLE_ATTACK, 5)
+            mob:setMod(xi.mod.MDEF, 20)
+            mob:setMod(xi.mod.EVA, 315)
+            mob:setMod(xi.mod.ATT, 256)
             if fafnirArg:getZoneID() ~= xi.zone.BEHEMOTHS_DOMINION then
                 fafnirArg:setMobMod(xi.mobMod.DRAW_IN, 1)
                 fafnirArg:setMobMod(xi.mobMod.DRAW_IN_CUSTOM_RANGE, 33)
@@ -719,7 +724,7 @@ hxi.hnm.spawnBehemoth = function(zone)
         mixins = { require("scripts/mixins/rage") }
     })
 
-    fafnir:setDropID()
+    fafnir:setDropID(251)
     fafnir:setSpawn(spawnPoints[zone:getID()][point].x, spawnPoints[zone:getID()][point].y, spawnPoints[zone:getID()][point].z, math.random(1, 255))
     fafnir:spawn()
 
@@ -790,9 +795,9 @@ hxi.hnm.spawnKingBehe = function(zone)
             fafnirArg:setLocalVar("HQ", 1)
             fafnirArg:setLocalVar("[rage]timer", 3600) -- 60 minutes
             fafnirArg:setMod(xi.mod.MDEF, 20)
-            fafnirArg:addMod(xi.mod.ATT, 150)
-            fafnirArg:addMod(xi.mod.DEF, 200)
-            fafnirArg:addMod(xi.mod.EVA, 110)
+            fafnirArg:setMod(xi.mod.ATT, 516)
+            fafnirArg:setMod(xi.mod.DEF, 500)
+            fafnirArg:setMod(xi.mod.EVA, 400)
             fafnirArg:addMod(xi.mod.GRAVITYRESBUILD, 30)
             fafnirArg:setMod(xi.mod.TRIPLE_ATTACK, 5)
             fafnirArg:setLocalVar("delay", os.time() + math.random(20, 25))
@@ -863,6 +868,7 @@ hxi.hnm.intoShell = function(mob)
     mob:setMod(xi.mod.UDMGPHYS, -9500)
     mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.STANDBACK))
     mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_TURN))
+    mob:setLocalVar("changeTime", os.time() + 90)
 end
 
 hxi.hnm.outOfShell = function(mob)
