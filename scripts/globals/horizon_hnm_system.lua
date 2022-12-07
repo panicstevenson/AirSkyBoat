@@ -344,7 +344,7 @@ hxi.hnm.spawnFafnir = function(zone)
             fafnirArg:setMobMod(xi.mobMod.DRAW_IN_CUSTOM_RANGE, 20)
             fafnirArg:setMobMod(xi.mobMod.DRAW_IN_FRONT, 1)
             fafnirArg:setLocalVar("[rage]timer", 3600) -- 60 minutes
-            mob:setMod(xi.mod.ATT, 489)
+            fafnirArg:setMod(xi.mod.ATT, 489)
         end,
         mixins =
         {
@@ -414,9 +414,9 @@ hxi.hnm.spawnNidhogg = function(zone)
             fafnirArg:setLocalVar("HNMType", 1)
             fafnirArg:setLocalVar("HQ", 1)
             fafnirArg:setLocalVar("[rage]timer", 3600) -- 60 minutes
-            mob:setMod(xi.mod.ATT, 499)
-            mob:setMod(xi.mod.ACC, 444)
-            mob:setMod(xi.mod.EVA, 341)
+            fafnirArg:setMod(xi.mod.ATT, 499)
+            fafnirArg:setMod(xi.mod.ACC, 444)
+            fafnirArg:setMod(xi.mod.EVA, 341)
             fafnirArg:setMobMod(xi.mobMod.DRAW_IN, 1)
             fafnirArg:setMobMod(xi.mobMod.DRAW_IN_CUSTOM_RANGE, 20)
             fafnirArg:setMobMod(xi.mobMod.DRAW_IN_FRONT, 1)
@@ -503,9 +503,9 @@ hxi.hnm.spawnAddy = function(zone)
             fafnirArg:setLocalVar("HNMType", 2)
             fafnirArg:setLocalVar("[rage]timer", 1800) -- 30 minutes
             fafnirArg:setMod(xi.mod.DMGMAGIC, -3500)
-            mob:setMobLevel(70)
-            mob:setMod(xi.mod.DEF, 4120)
-            mob:setMod(xi.mod.ATT, 493)
+            fafnirArg:setMobLevel(70)
+            fafnirArg:setMod(xi.mod.DEF, 4120)
+            fafnirArg:setMod(xi.mod.ATT, 493)
         end,
         mixins = { require("scripts/mixins/rage") }
     })
@@ -684,12 +684,12 @@ hxi.hnm.spawnBehemoth = function(zone)
         end,
         onMobSpawn = function(fafnirArg)
             fafnirArg:setLocalVar("HNMType", 3)
-            mob:setLocalVar("[rage]timer", 1800) -- 30 minutes
-            mob:addMod(xi.mod.SLEEPRES, 90)
-            mob:setMod(xi.mod.TRIPLE_ATTACK, 5)
-            mob:setMod(xi.mod.MDEF, 20)
-            mob:setMod(xi.mod.EVA, 315)
-            mob:setMod(xi.mod.ATT, 256)
+            fafnirArg:setLocalVar("[rage]timer", 1800) -- 30 minutes
+            fafnirArg:addMod(xi.mod.SLEEPRES, 90)
+            fafnirArg:setMod(xi.mod.TRIPLE_ATTACK, 5)
+            fafnirArg:setMod(xi.mod.MDEF, 20)
+            fafnirArg:setMod(xi.mod.EVA, 315)
+            fafnirArg:setMod(xi.mod.ATT, 256)
             if fafnirArg:getZoneID() ~= xi.zone.BEHEMOTHS_DOMINION then
                 fafnirArg:setMobMod(xi.mobMod.DRAW_IN, 1)
                 fafnirArg:setMobMod(xi.mobMod.DRAW_IN_CUSTOM_RANGE, 33)
