@@ -1,6 +1,7 @@
 -----------------------------------
 -- ID Requires for ??? removal
 -----------------------------------
+require("scripts/globals/zone")
 local dragonsAeryID   = require("scripts/zones/Dragons_Aery/IDs")
 local valleySorrowsID = require("scripts/zones/Valley_of_Sorrows/IDs")
 local behemothDomID   = require("scripts/zones/Behemoths_Dominion/IDs")
