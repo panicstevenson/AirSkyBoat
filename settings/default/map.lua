@@ -75,7 +75,7 @@ xi.settings.map =
     LEVEL_SYNC_ENABLE = true,
 
     -- Disables ability to equip higher level gear when level cap/sync effect is on player.
-    DISABLE_GEAR_SCALING = false,
+    DISABLE_GEAR_SCALING = true,
 
     -- Weaponskill point base (before skillchain) for breaking latent - whole numbers only. retail is 1.
     WS_POINTS_BASE = 1,
