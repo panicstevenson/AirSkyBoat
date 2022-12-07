@@ -44,9 +44,9 @@ entity.onMobDespawn = function(mob)
         if os.time() > timeOfDeath and popNow then
             DisallowRespawn(nqId, true)
             DisallowRespawn(hqId, false)
-            xi.mob.nmTODPersist(GetMobByID(hqId), math.random(75600, 86400))
+            xi.mob.nmTODPersist(GetMobByID(hqId), math.random(132, 138) * 600) -- 22 to 23 hours in 10 minute windows
         else
-            xi.mob.nmTODPersist(GetMobByID(nqId), math.random(75600, 86400))
+            xi.mob.nmTODPersist(GetMobByID(nqId), math.random(132, 138) * 600) -- 22 to 23 hours in 10 minute windows
             SetServerVariable("[PH]Overlord_Bakgodek", kills + 1)
         end
     end

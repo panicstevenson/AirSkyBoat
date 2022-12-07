@@ -23,7 +23,7 @@ end
 entity.onMobDespawn = function(mob)
     -- Set Harvesman's spawnpoint and respawn time (21-24 hours)
     UpdateNMSpawnPoint(mob:getID())
-    mob:setRespawnTime(math.random(75600, 86400))
+    mob:setRespawnTime(math.random(132, 138) * 600) -- 22 to 23 hours in 10 minute windows
 end
 
 return entity

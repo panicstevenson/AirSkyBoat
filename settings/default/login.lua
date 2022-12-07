@@ -32,7 +32,7 @@ xi.settings.login =
     ACCOUNT_CREATION = true,
 
     -- Allow character creation through the lobby (true/false)
-    CHARA_CREATION_ENABLED = true,
+    CHARA_CREATION_ENABLED = false,
 
     -- Allow character deletion through the lobby (true/false)
     CHARACTER_DELETION = false,

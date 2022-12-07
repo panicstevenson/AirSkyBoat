@@ -115,6 +115,7 @@ REPLACE INTO `item_mods` (`itemid`, `modid`, `value`) VALUES
     (13172, 5, 10), -- Pachamac's Collar MP +10
     (13172, 71, 2), -- Pachamac's Collar MPHEAL: 2
     (13172, 72, 2), -- Pachamac's Collar HPHEAL: 2
+    (13189, 384, 500), -- Speed Belt HASTE_GEAR: 500
     (13719, 12, 1), -- Royal Squires Robe INT: 1
     (13719, 13, 1), -- Royal Squires Robe MND: 1
     (13720, 5, 25),  -- Royal Knights Cloak MP: 25
@@ -220,6 +221,7 @@ REPLACE INTO `item_mods` (`itemid`, `modid`, `value`) VALUES
     (15544, 160, -500), -- Sattva Ring DMG: -500
     (15545, 27, -5), -- Tamas Ring ENMITY: -5
     (15545, 30, 5),  -- Tamas Ring MACC: 5
+    (15899, 384, 500), -- Velocious Belt HASTE_GEAR: 500
     (16442, 25, 2), -- Freesword`s Baghnakhs ACC: 2
     (16442, 23, 3), -- Freesword`s Baghnakhs ATT: 3
     (16516, 5, 5),  -- Junior Muskteer`s Tuck MP: 5
