@@ -16,7 +16,6 @@ xi.tutorial.onTrigger = function(player, npc, npc_event_offset, nation_offset)
     if stage == 0 then
         player:startEvent(npc_event_offset + 17)
     else
-        local mLevel = player:getMainLvl()
         if stage == 1 then
             player:startEvent(npc_event_offset)
         elseif stage == 2 then
@@ -106,7 +105,7 @@ xi.tutorial.onEventFinish = function(player, csid, option, npc_event_offset, nat
         end
     elseif csid == (npc_event_offset + 8) then
         npcUtil.giveKeyItem(player, xi.ki.CONQUEST_PROMOTION_VOUCHER)
-        player:setCharVar("TutorialProgress", 7)
+        player:setCharVar("TutorialProgress", 0)
     -- elseif csid == (npc_event_offset + 10) then
     --     if npcUtil.giveItem(player, xi.items.RAISING_EARRING) then
     --         player:setCharVar("TutorialProgress", 8)

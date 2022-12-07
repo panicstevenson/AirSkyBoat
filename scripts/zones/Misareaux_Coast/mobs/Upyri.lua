@@ -22,7 +22,7 @@ entity.onMobWeaponSkill = function(target, mob, skill)
     if hour < 4 or hour >= 18 and skill:getID() == 1401 then
         local tpCount = mob:getLocalVar("tpCount")
 
-        tpCount = tpCount +1
+        tpCount = tpCount + 1
         mob:setLocalVar("tpCount", tpCount)
 
         if tpCount > 1 and chance >= 5 then
