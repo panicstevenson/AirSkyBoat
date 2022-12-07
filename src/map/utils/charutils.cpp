@@ -4662,7 +4662,7 @@ namespace charutils
                     if (lua["xi"]["settings"]["map"]["LEVEL_RESTRICTION_PENALTY"].get<bool>() && PMember->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_RESTRICTION))
                     {
                         uint8 levelGrace       = lua["xi"]["settings"]["map"]["LEVEL_RESTRICTION_GRACE"].get<uint8>();           // Levels above restriction allowed
-                        uint8 restrictionLevel = PMember->StatusEffectContainer->GetStatusEffect(EFFECT_LEVEL_SYNC)->GetPower(); // Level of the restriction
+                        uint8 restrictionLevel = PMember->StatusEffectContainer->GetStatusEffect(EFFECT_LEVEL_RESTRICTION)->GetPower(); // Level of the restriction
                         uint8 originalLevel    = PMember->jobs.job[PMember->GetMJob()];                                          // Original Level of the Member
 
                         exp = std::clamp(originalLevel - restrictionLevel, 0, 99) > levelGrace ? 0 : exp;

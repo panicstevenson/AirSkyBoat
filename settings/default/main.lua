@@ -171,7 +171,7 @@ xi.settings.main =
     NM_LOTTERY_COOLDOWN = 1.0,
 
 	-- GARRISON SETTINGS
-    ENABLE_GARRISON              = false,  -- If true, enables garrison functionality
+    ENABLE_GARRISON              = true,  -- If true, enables garrison functionality
     DEBUG_GARRISON               = false,  -- If true, garrison will print out debug messages in logs as well as players as smes.
     GARRISON_LOCKOUT             = 1800,   -- Time in seconds before a new garrison can be started (default: 1800)
     GARRISON_TIME_LIMIT          = 1800,   -- Time in seconds before lose ongoing garrison (default: 1800)
