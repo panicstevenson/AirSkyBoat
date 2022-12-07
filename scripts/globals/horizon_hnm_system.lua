@@ -1,7 +1,6 @@
 -----------------------------------
 -- ID Requires for ??? removal
 -----------------------------------
-require("scripts/globals/zone")
 local dragonsAeryID   = require("scripts/zones/Dragons_Aery/IDs")
 local valleySorrowsID = require("scripts/zones/Valley_of_Sorrows/IDs")
 local behemothDomID   = require("scripts/zones/Behemoths_Dominion/IDs")
@@ -88,9 +87,13 @@ hxi.hnm.startup = function(zone)
     zone:setLocalVar("BehemothDay", bDay)
     zone:setLocalVar("BehemothZone", bZone)
 
-    GetNPCByID(behemothDomID.npc.BEHEMOTH_QM):setStatus(xi.status.DISAPPEAR)
-    GetNPCByID(dragonsAeryID.npc.FAFNIR_QM):setStatus(xi.status.DISAPPEAR)
-    GetNPCByID(valleySorrowsID.npc.ADAMANTOISE_QM):setStatus(xi.status.DISAPPEAR)
+    if zone == xi.zone.BEHEMOTHS_DOMINION then
+        GetNPCByID(behemothDomID.npc.BEHEMOTH_QM):setStatus(xi.status.DISAPPEAR)
+    elseif zone == xi.zone.DRAGONS_AERY then
+        GetNPCByID(dragonsAeryID.npc.FAFNIR_QM):setStatus(xi.status.DISAPPEAR)
+    elseif zone == xi.zone.VALLEY_OF_SORROWS then
+        GetNPCByID(valleySorrowsID.npc.ADAMANTOISE_QM):setStatus(xi.status.DISAPPEAR)
+    end
 end
 
 hxi.hnm.onDeath = function(mob)
