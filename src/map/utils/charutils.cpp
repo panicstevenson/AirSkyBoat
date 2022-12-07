@@ -4645,7 +4645,7 @@ namespace charutils
                     if (lua["xi"]["settings"]["map"]["LEVEL_SYNC_DYNAMIC_PENALTY"].get<bool>() && PMember->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_SYNC))
                     {
                         float maxPenalty         = lua["xi"]["settings"]["map"]["LEVEL_SYNC_PENALTY_CAP"].get<float>() / 100.f;    // Maximum % Of XP Penalty
-                        uint8 levelGrace         = lua["xi"]["settings"]["map"][" LEVEL_SYNC_PENALTY_GRACE"].get<uint8>();         // Maximum Grace Level Range Above Sync Without Penalty
+                        uint8 levelGrace         = lua["xi"]["settings"]["map"]["LEVEL_SYNC_PENALTY_GRACE"].get<uint8>();         // Maximum Grace Level Range Above Sync Without Penalty
                         float perLevelPenalty    = lua["xi"]["settings"]["map"]["LEVEL_SYNC_PENALTY"].get<float>();                // Per Level % Decrease in XP
                         uint8 originalLevel      = PMember->jobs.job[PMember->GetMJob()];                                          // Original Level of the Member
                         uint8 syncTarget         = PMember->StatusEffectContainer->GetStatusEffect(EFFECT_LEVEL_SYNC)->GetPower(); // Current sync target's level.
