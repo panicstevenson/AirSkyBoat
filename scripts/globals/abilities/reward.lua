@@ -11,6 +11,18 @@ require("scripts/globals/status")
 -----------------------------------
 local abilityObject = {}
 
+-- Brings healing to Abyssea levels
+-- Intentionally using a separate format for merge reasons
+local horizonRewardMapping =
+{
+    [20]  = 50,
+    [50]  = 180,
+    [100] = 300,
+    [150] = 530,
+    [300] = 750,
+    [350] = 900,
+}
+
 abilityObject.onAbilityCheck = function(player, target, ability)
     local pet = player:getPet()
 
@@ -60,32 +72,32 @@ abilityObject.onUseAbility = function(player, target, ability, action)
     -- TODO: Create lookup table for these switches
     switch (rangeObj) : caseof {
         [17016] = function (x) -- pet food alpha biscuit
-            minimumHealing = 20
+            minimumHealing = horizonRewardMapping[20]
             regenAmount    = 1
             totalHealing   = math.floor(minimumHealing + 2 * (playerMnd - 10))
         end,
         [17017] = function (x) -- pet food beta biscuit
-            minimumHealing = 50
+            minimumHealing = horizonRewardMapping[50]
             regenAmount    = 3
             totalHealing   = math.floor(minimumHealing + 1 * (playerMnd - 33))
         end,
         [17018] = function (x) -- pet food gamma biscuit
-            minimumHealing = 100
+            minimumHealing = horizonRewardMapping[100]
             regenAmount    = 5
             totalHealing   = math.floor(minimumHealing + 1 * (playerMnd - 35)) -- TO BE VERIFIED.
         end,
         [17019] = function (x) -- pet food delta biscuit
-            minimumHealing = 150
+            minimumHealing = horizonRewardMapping[150]
             regenAmount    = 8
             totalHealing   = math.floor(minimumHealing + 2 * (playerMnd - 40)) -- TO BE VERIFIED.
         end,
         [17020] = function (x) -- pet food epsilon biscuit
-            minimumHealing = 300
+            minimumHealing = horizonRewardMapping[300]
             regenAmount    = 11
             totalHealing   = math.floor(minimumHealing + 2 * (playerMnd - 45))
         end,
         [17021] = function (x) -- pet food zeta biscuit
-            minimumHealing = 350
+            minimumHealing = horizonRewardMapping[350]
             regenAmount    = 14
             totalHealing   = math.floor(minimumHealing + 3 * (playerMnd - 45))
         end,
