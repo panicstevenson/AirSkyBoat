@@ -79,10 +79,12 @@ REPLACE INTO `item_weapon` (`itemId`, `name`, `skill`, `subskill`, `ilvl_skill`,
     (17976,'windurstian_knife',2,0,0,0,0,1,1,185,13,0),
     (17977,'federation_knife',2,0,0,0,0,1,1,180,14,0),
     (18097,'perforater',8,0,0,0,0,1,1,492,76,500),
+    (18271,'onion_greatsword',6,0,0,0,0,2,1,504,14,0),
     (18295,'wyrm_tongue',8,0,0,0,0,1,1,510,96,0),
     (18391,'sacred_mace',11,0,0,0,0,3,1,300,28,0),
     (18392,'sacred_maul',11,0,0,0,0,3,1,324,31,0),
     (18404,'ramuhs_mace',11,0,0,0,0,3,1,310,43,0),
+    (18638,'rusty_greatsword',6,0,0,0,0,2,1,504,15,0),
     (18738,'t.k._arrow',25,0,0,0,0,0,1,120,38,0);
 
 UNLOCK TABLES;

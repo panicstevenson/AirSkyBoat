@@ -27,6 +27,7 @@ entity.onTrigger = function(player, npc)
         16536,  7128, 3,    -- Iron Sword
         16517,  9201, 3,    -- Degen
         16551,   698, 3,    -- Sapara
+        18638,   110, 3,    -- Rusty Greataxe
     }
 
     player:showText(npc, ID.text.SUGANDHI_SHOP_DIALOG)
