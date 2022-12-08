@@ -103,8 +103,38 @@ end
 
 xi.hardcore.announceDeath = function(player)
     local playerLvlRewards = player:getCharVar("harcoreLvlRewards")
+    local playtime = tostring(player:getPlaytime() / 3600)
+    local name = player:getName()
+    local lvl = tostring(player:getMainLvl())
+    local jobs =
+    {
+        'WAR',
+        'MNK',
+        'WHM',
+        'BLM',
+        'RDM',
+        'THF',
+        'PLD',
+        'DRK',
+        'BST',
+        'BRD',
+        'RNG',
+        'SAM',
+        'NIN',
+        'DRG',
+        'SMN',
+        'BLU',
+        'COR',
+        'PUP',
+        'DNC',
+        'SCH',
+        'GEO',
+        'RUN'
+    }
+    local job = jobs[player:getMainJob()]
     if playerLvlRewards >= 51 then
         -- turn this into death announcement
+        player:PrintToArea(name .. " has fallen as a hardcore adventurer. While playing as: " .. lvl .. job .. "With a playtime of: " .. playtime .. " hours.", xi.msg.channel.NS_SHOUT, xi.msg.area.SYSTEM)
         player:PrintToPlayer("You have fallen as a hardcore adventurer..", xi.msg.channel.NS_SAY)
     else
         player:PrintToPlayer("You have fallen as a hardcore adventurer..", xi.msg.channel.NS_SAY)
@@ -316,7 +346,7 @@ xi.hardcore.giveRewards = function(player)
 
     local levelRewardItems =
     {
-        1, 25735, 1, 1, 1, 26958, 15213, 28540, 1, 1, 1, 1, 1, 26944
+        20571, 25735, 28188, 28324, 27783, 26958, 15213, 28540, 21967, 21509, 26729, 26944, 1, 1
     }
 
     local levelRewardTiers =
@@ -325,7 +355,7 @@ xi.hardcore.giveRewards = function(player)
     }
 
     if player:getCharVar("hardcoreLvlRewardAvail") == 1 then
-        --player:setCharVar("hardcoreLvlRewardAvail", 0)
+        player:setCharVar("hardcoreLvlRewardAvail", 0)
         for i in pairs(levelRewardTiers) do
             if lvlRewardsTier == levelRewardTiers[i] then
                 rewardTier = count
@@ -343,6 +373,6 @@ xi.hardcore.giveRewards = function(player)
             player:messageSpecial(zones[player:getZoneID()].text.ITEM_OBTAINED, levelRewardItems[rewardTier])
         end
 
-        --player:setCharVar("rewardsAvail", 0)
+        player:setCharVar("rewardsAvail", 0)
     end
 end

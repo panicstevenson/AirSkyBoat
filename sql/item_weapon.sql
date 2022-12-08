@@ -3559,7 +3559,7 @@ INSERT INTO `item_weapon` VALUES (20564,'twashtar',2,0,242,242,228,1,1,176,89,0)
 INSERT INTO `item_weapon` VALUES (20568,'wind_knife_+1',2,0,0,0,0,1,1,189,2,0);
 INSERT INTO `item_weapon` VALUES (20569,'esikuva',2,0,0,0,0,1,1,180,1,0);
 INSERT INTO `item_weapon` VALUES (20570,'norgish_dagger',2,0,0,0,0,1,1,180,1,0);
-INSERT INTO `item_weapon` VALUES (20571,'infiltrator',2,0,0,0,0,1,1,180,1,0);
+INSERT INTO `item_weapon` VALUES (20571,'infiltrator',2,0,0,0,0,1,1,999,1,0);
 INSERT INTO `item_weapon` VALUES (20573,'aern_dagger',2,0,0,0,0,1,1,180,1,0);       -- Aern Dagger: DMG:1 Delay:180
 INSERT INTO `item_weapon` VALUES (20574,'aern_dagger_ii',2,0,0,0,0,1,1,180,1,0);    -- Aern Dagger II: DMG:1 Delay:180
 INSERT INTO `item_weapon` VALUES (20576,'qutrub_knife',2,0,0,0,0,1,1,180,1,0);      -- Qutrub Knife: DMG:1 Delay:180
