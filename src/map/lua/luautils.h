@@ -359,6 +359,7 @@ namespace luautils
     auto GetCurrentFishingContest() -> sol::table;
     auto GetFishingContest(uint16 contestId = 0) -> sol::table;
     void SetContestStartTime(uint32 startTime);
+    void SetContestFish(uint32 fishId);
     void InitializeFishingContestSystem();
     void ProgressFishingContest();
 

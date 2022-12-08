@@ -176,7 +176,7 @@ xi.fishing.fish =
     { id = 5963, size = "Small", name = "senroh_sardine"      , realname = "Senroh Sardine"     , tag = "SOA"     },
     { id = 5993, size = "Small", name = "senroh_frog"         , realname = "Senroh Frog"        , tag = "SOA"     },
     { id = 5995, size = "Large", name = "malicious_perch"     , realname = "Malicious Perch"    , tag = "ROV"     },
-    { id = 5997, size = "Large", name = "shen"                , realname = "Shen"               , tag = "COP"     },
+    { id = 5997, size = "Large", name = "shen"                , realname = "Shen"               , tag = "SOA"     },
     { id = 6001, size = "Small", name = "clotflagration"      , realname = "Clotflagration"     , tag = "ROV"     },
     { id = 6144, size = "Small", name = "frigorifish"         , realname = "Frigorifish"        , tag = "ROV"     },
     { id = 6145, size = "Small", name = "dwarf_remora"        , realname = "Dwarf Remora"       , tag = "SOA"     },
