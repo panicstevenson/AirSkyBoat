@@ -20,7 +20,7 @@ local function error(player, msg, sendDefault)
     end
 
     if sendDefault then
-        player:PrintToPlayer("!fishcontest [ help | stage | time | show | close | resume | reward ]", xi.msg.channel.SYSTEM_3)
+        player:PrintToPlayer("!fishcontest [ help | stage | fish | time | show | close | resume | reward ]", xi.msg.channel.SYSTEM_3)
     end
 end
 
@@ -99,6 +99,7 @@ local function cmdHelp(player, subCommand, option)
         player:PrintToPlayer("FISHING CONTEST UTILITIES", xi.msg.channel.SYSTEM_3)
         player:PrintToPlayer("----------------------------", xi.msg.channel.SYSTEM_3)
         player:PrintToPlayer("stage: Set the current stage of the active contest (for testing).", xi.msg.channel.SYSTEM_3)
+        player:PrintToPlayer("fish: Set the current fish ID (see fish.lua for a list).", xi.msg.channel.SYSTEM_3)
         player:PrintToPlayer("time: Show the amount of time remaining in the current contest stage.", xi.msg.channel.SYSTEM_3)
         player:PrintToPlayer("show: Display the conditions for the current contest.", xi.msg.channel.SYSTEM_3)
         player:PrintToPlayer("close: Suspend the competition until further notice.", xi.msg.channel.SYSTEM_3)
@@ -122,6 +123,10 @@ local function cmdHelp(player, subCommand, option)
         player:PrintToPlayer("!fishcontest stage <stage #> [ force ]", xi.msg.channel.SYSTEM_3)
         player:PrintToPlayer("WARNING: Adding 'force' will adjust the baseline starting time of the contest.", xi.msg.channel.SYSTEM_3)
         player:PrintToPlayer("If you just want to test, omit this parameter.", xi.msg.channel.SYSTEM_3)
+
+    elseif string.lower(subCommand) == "fish" then
+        player:PrintToPlayer("!fishcontest fish [ <fishId> | random ]", xi.msg.channel.SYSTEM_3)
+        player:PrintToPlayer("Set the new fish ID for the current contest.", xi.msg.channel.SYSTEM_3)
     end
 end
 
@@ -211,6 +216,43 @@ local function cmdClose(player, contest, hardClose)
     UpdateContestStatus(xi.fishing.contest.status.CLOSED, isTest)
 end
 
+local function cmdFish(player, contest, fishId)
+    if player:getGMLevel() < 3 then
+        error(player, "This command requires GM Level 3.")
+        return
+    end
+
+    local newFish = 0
+
+    if
+        fishId == nil
+    then
+        error(player, "!fishcontest fish [ <fishId> | random ]")
+        return
+    elseif
+        xi.fishing.findFishId(fishId) ~= 0
+    then
+        newFish = xi.fishing.findFishId(fishId)
+    elseif
+        tonumber(fishId) ~= nil and
+        xi.fishing.isBigFish(tonumber(fishId))
+    then
+        newFish = tonumber(fishId)
+    elseif
+        string.lower(fishId) == "random"
+    then
+        newFish = xi.fishing.contest.randomFish()
+    else
+        error(player, "Invalid fish ID.  Check fish.lua or use !fishcontest fish random to let the server decide.")
+        return
+    end
+
+    if newFish > 0 then
+        SetContestFish(newFish)
+        player:PrintToPlayer(string.format("Contest updated with Fish ID %s (%s).", newFish, xi.fishing.getFishName(newFish)), xi.msg.channel.SYSTEM_3)
+    end
+end
+
 local function cmdNew(player, contest)
     if player:getGMLevel() < 4 then
         error(player, "This command requires GM Level 4.")
@@ -273,6 +315,10 @@ function onTrigger(player, command, ...)
     -- Command: SHOW
     elseif command == "show" then
         cmdShow(player, contest)
+
+    -- Command: fish
+    elseif command == "fish" then
+        cmdFish(player, contest, unpack(arg))
 
     -- Command: New
     elseif command == "new" then

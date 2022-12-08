@@ -195,6 +195,7 @@ namespace luautils
         lua.set_function("GetFishingContest", &luautils::GetFishingContest);
         lua.set_function("GetCurrentFishingContest", &luautils::GetCurrentFishingContest);
         lua.set_function("SetContestStartTime", &luautils::SetContestStartTime);
+        lua.set_function("SetContestFish", &luautils::SetContestFish);
         lua.set_function("InitializeFishingContestSystem", &luautils::InitializeFishingContestSystem);
         lua.set_function("ProgressFishingContest", &luautils::ProgressFishingContest);
 
@@ -5423,6 +5424,11 @@ namespace luautils
     void SetContestStartTime(uint32 startTime)
     {
         fishingcontest::SetContestStartTime(startTime);
+    }
+
+    void SetContestFish(uint32 fishId)
+    {
+        fishingcontest::SetContestFish(fishId);
     }
 
     void InitializeFishingContestSystem()

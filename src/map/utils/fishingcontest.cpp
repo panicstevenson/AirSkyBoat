@@ -97,8 +97,10 @@ namespace fishingcontest
         else
         {
             FishingContest.fishId = 0;
-            ShowDebug("Attempted to create fishing contest with invalid Fish ID.");
+            ShowDebug("Attempted to apply invalid Fish ID to contest.");
         }
+
+        WriteContestData();
     }
 
     void SetContestStartTime(uint32 startTime)
