@@ -28,7 +28,6 @@ entity.onTrigger = function(player, npc)
         16531,  3523, 3,    -- Brass Xiphos
         16535,   241, 3,    -- Bronze Sword
         16565,  1674, 3,    -- Spatha
-        18638,   110, 3,    -- Rusty Greataxe
     }
 
     player:showText(npc, ID.text.ASH_THADI_ENE_SHOP_DIALOG)

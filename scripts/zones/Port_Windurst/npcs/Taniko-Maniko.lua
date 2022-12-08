@@ -23,7 +23,6 @@ entity.onTrigger = function(player, npc)
         16768,  309, 3,    -- Bronze Zaghnal
         16769, 2542, 3,    -- Brass Zaghnal
         16832,   97, 3,    -- Harpoon
-        18638,  110, 3,    -- Rusty Greataxe
         16448,  143, 3,    -- Bronze Dagger
         16449,  837, 3,    -- Brass Dagger
         16450, 1827, 3,    -- Dagger

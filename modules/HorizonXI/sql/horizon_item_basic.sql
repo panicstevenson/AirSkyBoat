@@ -3244,7 +3244,7 @@ REPLACE INTO `item_basic` (`itemid`, `subid`, `name`, `sortname`, `stackSize`, `
     (18064, 0, 'volunteers_scythe', 'volunt._scythe', 1, 63556, 0, 1, 0),
     (18065, 0, 'storm_zaghnal', 'storm_zaghnal', 1, 63552, 0, 1, 0),
     (18075, 0, 'rossignol', 'rossignol', 1, 63556, 0, 1, 0),
-    (18097, 0, 'perforater','perforator',1,59456,0,0,6788),
+    (18097, 0, 'perforator','perforator',1,59456,0,0,6788),
     (18100, 0, 'love_halberd', 'love_halberd', 1, 63556, 0, 1, 0),
     (18101, 0, 'zs_trident', 'zs_trident', 1, 63556, 0, 1, 0),
     (18102, 0, 'pitchfork', 'pitchfork', 1, 63552, 0, 1, 0),
@@ -3392,7 +3392,7 @@ REPLACE INTO `item_basic` (`itemid`, `subid`, `name`, `sortname`, `stackSize`, `
     (18625, 0, 'gerras_staff', 'gerras_staff', 1, 63556, 0, 0, 0),
     (18626, 0, 'plenitas_virga', 'plenitas_virga', 1, 63556, 0, 1, 0),
     (18627, 0, 'bryojas_staff', 'bryojas_staff', 1, 63556, 0, 1, 0),
-    (18638, 0, 'rusty_greataxe', 'rusty_greataxe', 1, 2084, 6, 0, 86),
+    (18638, 0, 'rusty_greataxe', 'rusty_greataxe', 1, 2052, 6, 0, 86),
     (18679, 0, 'soulgauger_sgr-1', 'soulgauger_sgr-1', 1, 64576, 0, 1, 0),
     (18680, 0, 'blank_gauger_plate', 'b._gauger_plate', 12, 30784, 0, 1, 0),
     (18683, 0, 'imperial_bow', 'imperial_bow', 1, 63556, 0, 1, 0),
@@ -5340,4 +5340,11 @@ REPLACE INTO `item_basic` (`itemid`, `subid`, `name`, `sortname`, `stackSize`, `
 
     -- Remove Sonic Belt from AH
     (13249, 0, 'sonic_belt', 'sonic_belt', 1, 2084, 23, 1, 4214),
-    (13250, 0, 'sonic_belt_+1', 'sonic_belt_+1', 1, 2080, 23, 1, 5267);
+    (13250, 0, 'sonic_belt_+1', 'sonic_belt_+1', 1, 2080, 23, 1, 5267),
+
+    -- Starlight Celebration vendor price nerf
+    (5542,0,'gateau_aux_fraises','gat._aux_fraises',1,1580,57,0,100),
+    (5550,0,'roll_of_buche_au_chocolat','buche_au_choco.',1,1580,57,0,100),
+    (5552,0,'serving_of_black_pudding','black_pudding',1,1580,57,0,100),
+    (5616,0,'lebkuchen_house','lebkuchen_house',1,1580,57,0,100),
+    (5617,0,'lebkuchen_manse','lebkuchen_manse',1,1580,57,0,100);
