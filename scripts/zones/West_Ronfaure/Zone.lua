@@ -21,6 +21,7 @@ zoneObject.onInitialize = function(zone)
         xi.mob.nmTODPersistCache(zone, ID.mob.AMANITA)
     end
 
+    hxi.spawner.spawnInitialMobs(zone)
     hxi.teleport.spawnNMs(zone)
 end
 
