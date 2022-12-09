@@ -63,9 +63,11 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../packets/message_combat.h"
 #include "../packets/message_special.h"
 #include "../packets/message_standard.h"
+#include "../packets/message_system.h"
 #include "../packets/monipulator1.h"
 #include "../packets/monipulator2.h"
 #include "../packets/quest_mission_log.h"
+#include "../packets/release.h"
 #include "../packets/roe_sparkupdate.h"
 #include "../packets/server_ip.h"
 #include "../packets/timer_bar_util.h"
@@ -3202,7 +3204,7 @@ namespace charutils
 
         PChar->delModifier(Mod::MEVA, PChar->m_magicEvasion);
 
-        PChar->m_magicEvasion = battleutils::GetMaxSkill(SKILL_ELEMENTAL_MAGIC, JOB_RDM, PChar->GetMLevel());
+        PChar->m_magicEvasion = battleutils::GetMaxSkill(13, PChar->GetMLevel());
         PChar->addModifier(Mod::MEVA, PChar->m_magicEvasion);
     }
 
@@ -7358,6 +7360,30 @@ namespace charutils
         return 0;
     }
 
+    void releaseEvent(CCharEntity* PChar, bool skipMessage)
+    {
+        if (!PChar)
+        {
+            return;
+        }
+
+        RELEASE_TYPE releaseType = RELEASE_TYPE::STANDARD;
+
+        if (PChar->isInEvent())
+        {
+            releaseType = RELEASE_TYPE::SKIPPING;
+            if (!skipMessage)
+            {
+                PChar->pushPacket(new CMessageSystemPacket(0, 0, 117));
+            }
+        }
+
+        PChar->inSequence = false;
+        PChar->pushPacket(new CReleasePacket(PChar, releaseType));
+        PChar->pushPacket(new CReleasePacket(PChar, RELEASE_TYPE::EVENT));
+        PChar->endCurrentEvent();
+    }
+
     uint8 GetHighestLevel(CCharEntity* PChar)
     {
         uint8 maxJobLevel = 0;
@@ -7528,5 +7554,4 @@ namespace charutils
             }
         }
     }
-
 }; // namespace charutils
