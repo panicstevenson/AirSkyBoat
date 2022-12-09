@@ -53,6 +53,7 @@ xi.eraShops.Zhikkom =
     16535,   246, 3, -- Bronze Sword
     16517,  9406, 3, -- Degen
     16551,   713, 3, -- Sapara
+    18638,   456, 3, -- Rusty Greataxe
 }
 
 xi.eraShops.Peritrage =
@@ -241,6 +242,7 @@ xi.eraShops.Ashene =
     16531,  3523, 3, -- Brass Xiphos
     16535,   241, 3, -- Bronze Sword
     16565,  1674, 3, -- Spatha
+    18638,   456, 3, -- Rusty Greataxe
 }
 
 xi.eraShops.Carautia =
@@ -348,6 +350,7 @@ xi.eraShops.TanikoManiko =
     16832,   97, 3, -- Harpoon
     17152,   40, 3, -- Bone Axe
     17319,    4, 3, -- Bone Arrow
+    18638,  456, 3, -- Rusty Greataxe
 }
 
 xi.eraShops.GurunaMaguruna =

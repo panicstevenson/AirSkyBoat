@@ -264,7 +264,7 @@ REPLACE INTO `item_mods` (`itemid`, `modid`, `value`) VALUES
     (18133, 11, 3), -- Combat Caster`s Boomerang +2 AGI: 3
     (18295, 2, 10), -- Wyrm Tongue HP: 10
     (18295, 5, 10), -- Wyrm Tongue MP: 10
-    (18295, 16, 10), -- Wyrm Tongue ICE_RES: 10
+    (18295, 16, 7), -- Wyrm Tongue ICE_RES: 7
     (18295, 25, 5), -- Wyrm Tongue Accuracy +5
     (23040, 25, 3), -- Nanaa's Lucky Charm Acc: 3
     (23040, 303, 1), -- Nanaa's Lucky Charm Treasure Hunter: 1

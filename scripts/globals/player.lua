@@ -33,11 +33,11 @@ local startingNationInfo =
 
 local startingJobGear =
 {
-    [xi.job.WAR] = { 16534 },       -- onion sword
+    [xi.job.WAR] = { 18271 },       -- onion greataxe
     [xi.job.MNK] = { 13184 },       -- white belt
     [xi.job.WHM] = { 17068, 4608 }, -- onion rod, scroll of cure
     [xi.job.BLM] = { 17104, 4607 }, -- onion staff, scroll of stone
-    [xi.job.RDM] = { 16482, 4606 }, -- onion dagger, scroll of dia
+    [xi.job.RDM] = { 16534, 4606 }, -- onion sword, scroll of dia
     [xi.job.THF] = { 16483 },       -- onion knife
 }
 
