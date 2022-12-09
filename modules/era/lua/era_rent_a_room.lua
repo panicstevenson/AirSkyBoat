@@ -21,8 +21,8 @@ local renterNPCs =
     "xi.zones.Lower_Jeuno.npcs.Miladi-Nildi",
     "xi.zones.Upper_Jeuno.npcs.Zekobi-Morokobi",
     "xi.zones.RuLude_Gardens.npcs.Perisa-Neburusa",
-    "xi.zones.Al_Zahbi.npcs.Krujaal",
-    "xi.zones.Aht_Urhgan_Whitegate.npcs.Zhamwaa",
+    -- "xi.zones.Al_Zahbi.npcs.Krujaal", (TOAU)
+    -- "xi.zones.Aht_Urhgan_Whitegate.npcs.Zhamwaa", (TOAU)
 }
 
 for _, npcString in pairs(renterNPCs) do

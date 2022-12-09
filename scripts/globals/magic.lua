@@ -213,7 +213,7 @@ local function getSpellBonusAcc(caster, target, spell, params)
     return magicAccBonus
 end
 
-xi.magic.calculateMagicHitRate = function(magicacc, magiceva, target, element, skillchainCount, skill, caster)
+xi.magic.calculateMagicHitRate = function(magicacc, magiceva, target, element, skillchainCount, skill, caster, hybridHit, dLvl)
     local p = 0
     local eemTier = 0
 
@@ -845,7 +845,7 @@ xi.magic.getMagicHitRate = function(caster, target, skillType, element, effectRe
     local maccFood = magicacc * (caster:getMod(xi.mod.FOOD_MACCP) / 100)
     magicacc = magicacc + utils.clamp(maccFood, 0, caster:getMod(xi.mod.FOOD_MACC_CAP))
 
-    return xi.magic.calculateMagicHitRate(magicacc, magiceva, target, element, skillchainCount, skillType, caster)
+    return xi.magic.calculateMagicHitRate(magicacc, magiceva, target, element, skillchainCount, skillType, caster, hybridHit, dLvl)
 end
 
 -- Returns resistance value from given magic hit rate (p)
