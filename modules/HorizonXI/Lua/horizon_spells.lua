@@ -275,20 +275,7 @@ m:addOverride("xi.globals.spells.songs.horde_lullaby.onSpellCast", function(cast
 end)
 
 m:addOverride("xi.globals.spells.white.enlight.onSpellCast", function(caster, target, spell)
-    local magicskill = target:getSkillLevel(xi.skill.DIVINE_MAGIC)
-    local potency = (magicskill / 30) + 10
-
-    if magicskill > 150 then
-        potency = 15 + ((magicskill - 150) / 15)
-    end
-
-    if target:addStatusEffect(xi.effect.ENLIGHT, potency, 3, 180) then
-        spell:setMsg(xi.msg.basic.MAGIC_GAIN_EFFECT)
-    else
-        spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
-    end
-
-    return xi.effect.ENLIGHT
+    return xi.spells.enhancing.useEnhancingSpell(caster, target, spell)
 end)
 
 return m

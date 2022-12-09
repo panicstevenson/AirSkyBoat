@@ -581,6 +581,11 @@ namespace battleutils
                 {
                     PAttacker->StatusEffectContainer->DelStatusEffect(EFFECT_ENLIGHT);
                 }
+
+                if (PAttacker->getMod(Mod::ENSPELL) > 0)
+                {
+                    PAttacker->setModifier(Mod::ENSPELL, 0);
+                }
             }
 
             damage += PAttacker->getMod(Mod::ENSPELL_DMG_BONUS);
@@ -1292,14 +1297,7 @@ namespace battleutils
                     Action->additionalEffect = enspell_subeffects[enspell - 1];
                     if (enspell >= ENSPELL_I_LIGHT) // Enlight or Endark
                     {
-                        uint8 effectPower      = PAttacker->StatusEffectContainer->GetStatusEffect(EFFECT_ENLIGHT)->GetPower();
                         Action->addEffectParam = CalculateEnspellDamage(PAttacker, PDefender, 3, enspell);
-
-                        if (effectPower > 0)
-                        {
-                            PAttacker->StatusEffectContainer->GetStatusEffect(EFFECT_ENLIGHT)->SetPower(effectPower - 1);
-                            PAttacker->delModifier(Mod::ACC, 1);
-                        }
                     }
                     else
                     {
@@ -2615,7 +2613,7 @@ namespace battleutils
             // Enlight gives an ACC bonus not a hit rate bonus, ACC bonus is equal to damage dealt
             if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_ENLIGHT))
             {
-                attackerAcc += PAttacker->getMod(Mod::ENSPELL_DMG);
+                attackerAcc += PAttacker->getMod(Mod::ENSPELL_DMG); // Enlight 1:1 DMG:ACC bonus (Era+)
             }
 
             hitrate += static_cast<int32>(std::floor((attackerAcc - PDefender->EVA()) / 2));

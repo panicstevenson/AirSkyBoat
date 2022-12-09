@@ -96,6 +96,7 @@ local pTable =
     [xi.magic.spell.ENSTONE_II   ] = { 2, xi.effect.ENSTONE_II,    52,    0,  180, true,  false, 0 },
     [xi.magic.spell.ENTHUNDER_II ] = { 2, xi.effect.ENTHUNDER_II,  50,    0,  180, true,  false, 0 },
     [xi.magic.spell.ENWATER_II   ] = { 2, xi.effect.ENWATER_II,    60,    0,  180, true,  false, 0 },
+    [xi.magic.spell.ENLIGHT      ] = { 3, xi.effect.ENLIGHT,       60,    0,  180, false, true,  0 },
 
     -- Flurry
     [xi.magic.spell.FLURRY       ] = { 1, xi.effect.FLURRY,        48,   15,  180, true,  false, 0 },
@@ -581,6 +582,11 @@ xi.spells.enhancing.useEnhancingSpell = function(caster, target, spell)
     if caster:hasStatusEffect(xi.effect.DIVINE_SEAL) and caster:hasTrait(69) and spellEffect == xi.effect.REGEN then -- If Divine Seal and Divine Veil and Regen
         duration = duration * 2
         finalPower = finalPower * 2
+    end
+
+    if spellEffect == xi.effect.ENLIGHT then
+        local divineSkill = target:getSkillLevel(xi.skill.DIVINE_MAGIC)
+        finalPower = utils.ternary(divineSkill > 150, 15 + ((divineSkill - 150) / 15), (divineSkill / 30) + 10)
     end
 
     ------------------------------------------------------------

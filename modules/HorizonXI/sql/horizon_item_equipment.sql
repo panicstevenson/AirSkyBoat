@@ -63,7 +63,7 @@ REPLACE INTO `item_equipment` (`itemId`, `name`, `level`, `ilevel`, `jobs`, `MId
     (18295,'wyrm_tongue',75,0,8192,841,0,0,1,0,0,255),
     (18392,'sacred_maul',38,0,1048644,116,0,0,3,0,0,255),
     (18638,'rusty_greataxe',1,0,129,93,0,0,3,0,0,255),
-    (23040,'nanaas_lucky_charm',70,0,32,0,0,0,512,0,0),
+    (23040,'nanaas_lucky_charm',70,0,32,0,0,0,512,0,0,255),
     (23045,'shepherds_bonnet',21,0,155904,383,0,0,16,0,0,255),
     (23112,'shepherds_doublet',39,0,155904,43,0,0,32,0,0,255),
     (23179,'shepherds_bracers',34,0,155904,24,0,0,64,0,0,255),
