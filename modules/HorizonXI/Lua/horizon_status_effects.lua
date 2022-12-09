@@ -106,23 +106,16 @@ m:addOverride("xi.globals.effects.arcane_circle.onEffectLose", function(target, 
 end)
 
 m:addOverride("xi.globals.effects.enlight.onEffectGain", function(target, effect)
-    target:addMod(xi.mod.ENMITY, 10)
-    target:addMod(xi.mod.ENSPELL, xi.magic.element.LIGHT)
-    target:addMod(xi.mod.ENSPELL_DMG, effect:getPower())
-    target:addMod(xi.mod.ACC, effect:getPower())
+    target:setMod(xi.mod.ENSPELL, xi.magic.element.LIGHT)
+    target:setMod(xi.mod.ENSPELL_DMG, effect:getPower())
 end)
 
 m:addOverride("xi.globals.effects.enlight.onEffectTick", function(target, effect)
 end)
 
 m:addOverride("xi.globals.effects.enlight.onEffectLose", function(target, effect)
-    local lightEffect_size = effect:getPower()
-    target:delMod(xi.mod.ENMITY, 10)
     target:setMod(xi.mod.ENSPELL_DMG, 0)
     target:setMod(xi.mod.ENSPELL, 0)
-    if lightEffect_size > 0 then
-        target:delMod(xi.mod.ACC, effect:getPower())
-    end
 end)
 
 m:addOverride("xi.globals.effects.perfect_dodge.onEffectGain", function(target, effect)

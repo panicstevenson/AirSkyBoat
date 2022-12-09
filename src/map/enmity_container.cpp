@@ -124,6 +124,8 @@ float CEnmityContainer::CalculateEnmityBonus(CBattleEntity* PEntity)
     TracyZoneScoped;
     int enmityBonus = PEntity->getMod(Mod::ENMITY);
 
+    enmityBonus += PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_ENLIGHT) ? 10 : 0; // Enlight flat +10 Enmity (Era+)
+
     if (auto* PChar = dynamic_cast<CCharEntity*>(PEntity))
     {
         enmityBonus += PChar->PMeritPoints->GetMeritValue(MERIT_ENMITY_INCREASE, PChar) - PChar->PMeritPoints->GetMeritValue(MERIT_ENMITY_DECREASE, PChar);
