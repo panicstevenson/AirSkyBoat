@@ -22,9 +22,9 @@ abilityObject.onUseAbility = function(player, target, ability)
         ability:setMsg(xi.msg.basic.JA_NO_EFFECT)
     else
         local duration = 55
-        if xi.settings.main.ENABLE_TOAU == 1 then
-            duration = 30
-        end
+        -- if xi.settings.main.ENABLE_TOAU == 1 then
+        duration = 30
+        -- end
         player:addStatusEffect(xi.effect.THIRD_EYE, 0, 0, duration) -- Power keeps track of procs
     end
 end

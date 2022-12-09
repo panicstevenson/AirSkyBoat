@@ -1643,6 +1643,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             PRecastContainer->Add(RECAST_ABILITY, (recastID == 94 ? 104 : 94), 300);
         }
 
+        /* -- Jobs were balanced with these in
         // Revert ToAU job buffs
         if (!luautils::IsContentEnabled("TOAU"))
         {
@@ -1652,6 +1653,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), (uint16)(action.recast * (5.f / 3.f)));
             }
         }
+        */
 
         // Revert WotG job buffs
         if (!luautils::IsContentEnabled("WOTG"))
