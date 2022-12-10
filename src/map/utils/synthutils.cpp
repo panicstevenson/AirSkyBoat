@@ -644,6 +644,7 @@ namespace synthutils
                     PChar->WorkingSkills.skill[skillID] += 0x20;
                     PChar->pushPacket(new CCharSkillsPacket(PChar));
                     PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, skillID, (charSkill + skillUpAmount) / 10, 53));
+                    luautils::OnPlayerCraftLevelUp(PChar, skillID);
                 }
 
                 charutils::SaveCharSkills(PChar, skillID);

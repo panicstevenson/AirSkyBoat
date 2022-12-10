@@ -16,27 +16,6 @@
 -- WHERE
 --     server_variables.`name` LIKE "WF_%" OR
 --     server_variables.`name` LIKE "WT_%"
-
--- First death /-
--- First delevel /-
--- First subjob unlock /-
--- First advanced job unlock /
--- First for all the limit breaks /
--- First level 75 for each individual job /
--- First Shadow Lord Kill /
--- First BCNM clear for all Nation 9-2 BCNMs /
--- first chocobo rider /
--- maat cap /
--- first relic /
--- 100 crafts
--- first HNM kills, sky gods, sea jailers /
--- First Ealdnarche kill /
--- First Promathia kill /
--- First group to obtain sky access /
--- First group to obtain sea access /
-
--- First for all the limit breaks while hardcore /
--- First level 75 for each individual job while hardcore /
 -----------------------------------
 require("modules/module_utils")
 require("scripts/globals/mobs")
@@ -62,6 +41,19 @@ local nmList =
     "Nidhogg",
     "Aspidochelone",
     "King_Behemoth"
+}
+
+local skillList =
+{
+    {xi.skill.FISHING, "Fishing"},
+    {xi.skill.WOODWORKING, "Woodworking"},
+    {xi.skill.SMITHING, "Smithing"},
+    {xi.skill.GOLDSMITHING, "Goldsmithing"},
+    {xi.skill.CLOTHCRAFT, "Clothcraft"},
+    {xi.skill.LEATHERCRAFT, "Leathercraft"},
+    {xi.skill.BONECRAFT, "Bonecraft"},
+    {xi.skill.ALCHEMY, "Alchemy"},
+    {xi.skill.COOKING, "Cooking"},
 }
 
 hxi.worldFirst.checkWorldFirstServerVar = function(player, varName, worldMessage)
@@ -94,22 +86,15 @@ end)
 m:addOverride("xi.player.onPlayerLevelUp", function(player)
     super(player)
 
-    -- checkWorldFirstServerVar(player,
-    --     "PLAYER_LEVEL_UP",
-    --     string.format("%s has been the first player to level up!", player:getName()))
-
-    local levelMilestones = { 75 }
-    for _, level in pairs(levelMilestones) do
-        if player:getMainLvl() == level then
-            if player:getCharVar("hardcore") == 1 then
-                hxi.worldFirst.checkWorldFirstServerVar(player,
-                    string.format("JOB_%u_%s_HARDCORE", level, xi.jobNames[player:getMainJob()][1]),
-                    string.format("%s has been the first hardcore player to reach level %u on %s!", player:getName(), level, xi.jobNames[player:getMainJob()][2]))
-            else
-                hxi.worldFirst.checkWorldFirstServerVar(player,
-                string.format("JOB_%u_%s", level, xi.jobNames[player:getMainJob()][1]),
-                string.format("%s has been the first player to reach level %u on %s!", player:getName(), level, xi.jobNames[player:getMainJob()][2]))
-            end
+    if player:getMainLvl() == 75 then
+        if player:getCharVar("hardcore") == 1 then
+            hxi.worldFirst.checkWorldFirstServerVar(player,
+                string.format("JOB_75_%s_HARDCORE", xi.jobNames[player:getMainJob()][1]),
+                string.format("%s has been the first hardcore player to reach level 75 on %s!", player:getName(), xi.jobNames[player:getMainJob()][2]))
+        else
+            hxi.worldFirst.checkWorldFirstServerVar(player,
+            string.format("JOB_75_%s", xi.jobNames[player:getMainJob()][1]),
+            string.format("%s has been the first player to reach level 75 on %s!", player:getName(), xi.jobNames[player:getMainJob()][2]))
         end
     end
 end)
@@ -145,21 +130,16 @@ m:addOverride("xi.mob.onMobDeathEx", function(mob, player, isKiller, isWeaponSki
     end
 end)
 
---[[
-    NOTE: For this to work, the quest "ELDER_MEMORIES" will need to be adjusted to use npcUtil.completeQuest,
-        : or be rewritten to use the interaction framework.
+m:addOverride("xi.player.onPlayerCraftLevelUp", function(player, skillID)
+    super(player)
 
-m:addOverride("npcUtil.completeQuest", function(player, area, quest, params)
-    local result = super(player, area, quest, params)
-
-    if result and area == xi.quest.log_id.OTHER_AREAS and quest == xi.quest.id.otherAreas.ELDER_MEMORIES then
-        checkWorldFirstServerVar(player,
-            "UNLOCK_SJ",
-            string.format("%s has been the first player to unlock their subjob!", player:getName()))
+    for _, v in pairs(skillList) do
+        if skillID == v[1] and player:getSkillLevel(v[1]) == 3209 then
+            hxi.worldFirst.checkWorldFirstServerVar(player,
+                "CRAFT_SKILL_" .. string.upper(v[2]),
+                string.format("%s has been the first player to attain level 100 %s!", player:getName(), v[2]))
+        end
     end
-
-    return result
 end)
-]]
 
 return m

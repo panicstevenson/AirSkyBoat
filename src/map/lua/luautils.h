@@ -332,6 +332,7 @@ namespace luautils
     void OnPlayerMount(CCharEntity* PChar);
     void OnPlayerEmote(CCharEntity* PChar, Emote EmoteID);
     void OnPlayerVolunteer(CCharEntity* PChar, std::string text);
+    void OnPlayerCraftLevelUp(CCharEntity* PChar, uint8 skillID);
 
     bool OnChocoboDig(CCharEntity* PChar, bool pre); // chocobo digging, pre = check
 

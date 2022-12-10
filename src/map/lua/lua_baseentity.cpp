@@ -4036,8 +4036,8 @@ std::string CLuaBaseEntity::getLinkshellName()
 {
     XI_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
 
-    auto PChar = static_cast<CCharEntity*>(m_PBaseEntity);
-    auto PLink = (CItemLinkshell*)PChar->getEquip(SLOT_LINK1);
+    auto PChar                         = static_cast<CCharEntity*>(m_PBaseEntity);
+    auto PLink                         = (CItemLinkshell*)PChar->getEquip(SLOT_LINK1);
     char signature[DecodeStringLength] = {};
 
     if (PLink)
