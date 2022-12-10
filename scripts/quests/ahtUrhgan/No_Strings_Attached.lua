@@ -140,6 +140,9 @@ quest.sections =
                         player:setPetName(xi.pet.type.AUTOMATON, option + 118)
                         player:unlockAttachment(xi.items.HARLEQUIN_FRAME)
                         player:unlockAttachment(xi.items.HARLEQUIN_HEAD)
+                        hxi.worldFirst.checkWorldFirstServerVar(player,
+                            "UNLOCK_PUP",
+                            string.format("%s has been the first player to unlock Puppetmaster!", player:getName()))
                     end
                 end,
             },

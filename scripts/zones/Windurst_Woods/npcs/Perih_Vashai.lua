@@ -110,6 +110,9 @@ entity.onEventFinish = function(player, csid, option)
         player:delKeyItem(xi.ki.OLD_TIGERS_FANG)
         player:unlockJob(xi.job.RNG)
         player:messageSpecial(ID.text.PERIH_VASHAI_DIALOG)
+        hxi.worldFirst.checkWorldFirstServerVar(player,
+            "UNLOCK_RNG",
+            string.format("%s has been the first player to unlock Ranger!", player:getName()))
 
     -- SIN HUNTING
     elseif csid == 523 then -- start quest RNG AF1

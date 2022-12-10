@@ -198,6 +198,9 @@ quest.sections =
                     if quest:complete(player) then
                         player:messageSpecial(norgID.text.YOU_CAN_NOW_BECOME_A_SAMURAI, xi.items.MUMEITO)
                         player:unlockJob(xi.job.SAM)
+                        hxi.worldFirst.checkWorldFirstServerVar(player,
+                            "UNLOCK_SAM",
+                            string.format("%s has been the first player to unlock Samurai!", player:getName()))
                     end
                 end,
 

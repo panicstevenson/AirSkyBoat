@@ -75,6 +75,10 @@ entity.onEventFinish = function(player, csid, option)
         npcUtil.completeQuest(player, xi.quest.log_id.OTHER_AREAS, xi.quest.id.otherAreas.ELDER_MEMORIES, {
             var = "VeraOldLadyVar",
         })
+        hxi.worldFirst.checkWorldFirstServerVar(player,
+            "UNLOCK_SJ",
+            string.format("%s has been the first player to unlock their subjob!", player:getName()
+        ))
     end
 end
 

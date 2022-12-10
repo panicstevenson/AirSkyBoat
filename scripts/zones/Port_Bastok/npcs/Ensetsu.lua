@@ -77,6 +77,9 @@ entity.onEventFinish = function(player, csid, option)
             fameArea = xi.quest.fame_area.BASTOK,
             fame = 30,
         })
+        hxi.worldFirst.checkWorldFirstServerVar(player,
+            "UNLOCK_NIN",
+            string.format("%s has been the first player to unlock Ninja!", player:getName()))
     elseif csid == 262 then
         player:setCharVar("twentyInPirateYearsCS", 3)
     elseif csid == 264 then

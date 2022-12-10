@@ -98,6 +98,9 @@ entity.onEventFinish = function(player, csid, option)
             npcUtil.giveKeyItem(player, xi.ki.JOB_GESTURE_GEOMANCER)
             player:setCharVar("GEO_DWL_Luopan", 0)
             player:completeQuest(xi.quest.log_id.ADOULIN, xi.quest.id.adoulin.DANCES_WITH_LUOPANS)
+            hxi.worldFirst.checkWorldFirstServerVar(player,
+                "UNLOCK_GEO",
+                string.format("%s has been the first player to unlock Geomancer!", player:getName()))
         end
     end
 

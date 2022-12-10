@@ -107,6 +107,15 @@ quest.sections =
                     if quest:complete(player) then
                         player:setLevelCap(75)
                         player:messageSpecial(ruludeID.text.YOUR_LEVEL_LIMIT_IS_NOW_75)
+                        hxi.worldFirst.checkWorldFirstServerVar(player,
+                            "UNLOCK_75",
+                            string.format("%s has been the first player to beat Maat!", player:getName()))
+
+                        if player:getCharVar("hardcore") == 1 then
+                            hxi.worldFirst.checkWorldFirstServerVar(player,
+                            "UNLOCK_75_HARDCORE",
+                            string.format("%s has been the first hardcore player to beat Maat!", player:getName()))
+                        end
                     end
                 end,
             },

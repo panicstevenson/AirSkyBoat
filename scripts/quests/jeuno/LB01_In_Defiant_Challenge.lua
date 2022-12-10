@@ -167,6 +167,15 @@ quest.sections =
                         player:setLevelCap(55)
                         -- Leaving this here for historic purposes. Unneeded. The event now returns this message on its own.
                         -- player:messageSpecial(ID.text.YOUR_LEVEL_LIMIT_IS_NOW_55)
+                        hxi.worldFirst.checkWorldFirstServerVar(player,
+                            "UNLOCK_55",
+                            string.format("%s has been the first player to complete Limit Break 1!", player:getName()))
+
+                        if player:getCharVar("hardcore") == 1 then
+                            hxi.worldFirst.checkWorldFirstServerVar(player,
+                                "UNLOCK_55_HARDCORE",
+                                string.format("%s has been the first hardcore player to complete Limit Break 1!", player:getName()))
+                        end
                     end
                 end,
             },

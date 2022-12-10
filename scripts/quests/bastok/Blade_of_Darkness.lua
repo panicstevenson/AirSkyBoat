@@ -99,6 +99,9 @@ quest.sections =
                     if quest:complete(player) then
                         player:unlockJob(xi.job.DRK)
                         player:messageSpecial(beadeauxID.text.YOU_CAN_NOW_BECOME_A_DARK_KNIGHT)
+                        hxi.worldFirst.checkWorldFirstServerVar(player,
+                            "UNLOCK_DRK",
+                            string.format("%s has been the first player to unlock Dark Knight!", player:getName()))
                     end
                 end,
             },

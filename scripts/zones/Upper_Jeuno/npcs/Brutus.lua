@@ -98,6 +98,9 @@ entity.onEventFinish = function(player, csid, option)
         npcUtil.completeQuest(player, xi.quest.log_id.JEUNO, xi.quest.id.jeuno.PATH_OF_THE_BEASTMASTER, { title = xi.title.ANIMAL_TRAINER })
         player:unlockJob(xi.job.BST)
         player:messageSpecial(ID.text.YOU_CAN_NOW_BECOME_A_BEASTMASTER)
+        hxi.worldFirst.checkWorldFirstServerVar(player,
+            "UNLOCK_BST",
+            string.format("%s has been the first player to unlock Beastmaster!", player:getName()))
 
     -- WINGS OF GOLD
     elseif (csid == 137 or csid == 139) and option == 1 then

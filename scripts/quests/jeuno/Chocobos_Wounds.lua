@@ -195,6 +195,9 @@ quest.sections =
 
                 [64] = function(player, csid, option, npc)
                     if quest:complete(player) then
+                        hxi.worldFirst.checkWorldFirstServerVar(player,
+                            "CHOCOBO_LICENSE",
+                            string.format("%s has been the first player to obtain a Chocobo License!", player:getName()))
                         player:confirmTrade()
                     end
                 end,

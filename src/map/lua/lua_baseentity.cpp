@@ -4026,6 +4026,29 @@ bool CLuaBaseEntity::addLinkpearl(std::string const& lsname, bool equip)
     return false;
 }
 
+/************************************************************************
+ *  Function: getLinkshellName()
+ *  Purpose : Returns the string name of the player's linkshell1
+ *  Example : player:getLinkshellName()
+ ************************************************************************/
+
+std::string CLuaBaseEntity::getLinkshellName()
+{
+    XI_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    auto PChar = static_cast<CCharEntity*>(m_PBaseEntity);
+    auto PLink = (CItemLinkshell*)PChar->getEquip(SLOT_LINK1);
+    char signature[DecodeStringLength] = {};
+
+    if (PLink)
+    {
+        DecodeStringLinkshell(PLink->getSignature(), signature);
+        return signature;
+    }
+
+    return "";
+}
+
 auto CLuaBaseEntity::addSoulPlate(std::string const& name, uint16 mobFamily, uint8 zeni, uint16 skillIndex, uint8 fp) -> std::optional<CLuaItem>
 {
     XI_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
@@ -16056,6 +16079,7 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("getCurrentGPItem", CLuaBaseEntity::getCurrentGPItem);
     SOL_REGISTER("breakLinkshell", CLuaBaseEntity::breakLinkshell);
     SOL_REGISTER("addLinkpearl", CLuaBaseEntity::addLinkpearl);
+    SOL_REGISTER("getLinkshellName", CLuaBaseEntity::getLinkshellName);
 
     SOL_REGISTER("addSoulPlate", CLuaBaseEntity::addSoulPlate);
 

@@ -54,6 +54,16 @@ function content:onEventFinishBattlefield(player, csid, option)
     volker:spawn()
 end
 
+function content:onBattlefieldWin(player, battlefield)
+    Battlefield.onBattlefieldWin(self, player, battlefield)
+    local worldFirst = string.format("WF_%s", "RANK_10_BASTOK")
+    if GetServerVariable(worldFirst) == 0 then
+        hxi.worldFirst.checkWorldFirstServerVar(player,
+            "RANK_10_BASTOK",
+            string.format("%s's group has been the first to attain Bastok nation Rank 10!", player:getName()))
+    end
+end
+
 content.groups =
 {
     -- Phase 1
