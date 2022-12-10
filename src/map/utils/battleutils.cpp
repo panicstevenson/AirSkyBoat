@@ -2611,10 +2611,7 @@ namespace battleutils
             uint16 attackerAcc = PAttacker->ACC(attackNumber, offsetAccuracy);
 
             // Enlight gives an ACC bonus not a hit rate bonus, ACC bonus is equal to damage dealt
-            if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_ENLIGHT))
-            {
-                attackerAcc += PAttacker->getMod(Mod::ENSPELL_DMG); // Enlight 1:1 DMG:ACC bonus (Era+)
-            }
+            attackerAcc += PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_ENLIGHT) ? PAttacker->getMod(Mod::ENSPELL_DMG) : 0; // Enlight 1:1 DMG:ACC bonus (Era+)
 
             hitrate += static_cast<int32>(std::floor((attackerAcc - PDefender->EVA()) / 2));
 
