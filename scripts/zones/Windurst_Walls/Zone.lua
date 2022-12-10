@@ -29,12 +29,7 @@ zoneObject.onZoneIn = function(player, prevZone)
         player:setPos(-257.5, -5.05, position, 0)
     end
 
-    if prevZone == player:getZoneID() then
-        xi.moghouse.exitJobChange(player, prevZone)
-    else
-        player:setVolatileCharVar('[MOGHOUSE]Exit_Pending', 0)
-        player:setVolatileCharVar('[MOGHOUSE]Exit_Job_Change', 0)
-    end
+    xi.moghouse.exitJobChange(player, prevZone)
 
     return cs
 end

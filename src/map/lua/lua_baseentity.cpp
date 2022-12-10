@@ -978,6 +978,18 @@ void CLuaBaseEntity::startOptionalCutscene(int32 EventID, sol::variadic_args va)
 }
 
 /************************************************************************
+ *  Function: startMenuEvent()
+ *  Purpose : Starts an event which is closable due to an attack.
+ *  Example : player:startMenuEvent(4)
+ *  Notes   : Event ID must be associated with the zone.
+ ************************************************************************/
+
+void CLuaBaseEntity::startMenuEvent(int32 EventID, sol::variadic_args va)
+{
+    StartEventHelper(EventID, va, EVENT_TYPE::MENU);
+}
+
+/************************************************************************
  *  Function: updateEvent()
  *  Purpose : Sends new arguments to an event
  *  Example : player:updateEvent(ring[1],ring[2],ring[3])
@@ -1095,25 +1107,13 @@ void CLuaBaseEntity::release(sol::object const& p0)
 {
     XI_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
 
-    auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
+    auto* PChar       = static_cast<CCharEntity*>(m_PBaseEntity);
+    uint8 stopMessage = (p0 != sol::lua_nil) ? p0.as<uint8>() : 0;
 
-    RELEASE_TYPE releaseType = RELEASE_TYPE::STANDARD;
-    uint8        stopMessage = (p0 != sol::lua_nil) ? p0.as<uint8>() : 0;
-
-    if (PChar->isInEvent())
+    if (PChar)
     {
-        // Message: Event skipped
-        releaseType = RELEASE_TYPE::SKIPPING;
-        if (stopMessage == 0)
-        {
-            PChar->pushPacket(new CMessageSystemPacket(0, 0, 117));
-        }
+        charutils::releaseEvent(PChar, stopMessage != 0);
     }
-
-    PChar->inSequence = false;
-    PChar->pushPacket(new CReleasePacket(PChar, releaseType));
-    PChar->pushPacket(new CReleasePacket(PChar, RELEASE_TYPE::EVENT));
-    PChar->endCurrentEvent();
 }
 
 /************************************************************************
@@ -3142,19 +3142,18 @@ void CLuaBaseEntity::setHomePoint()
 
 bool CLuaBaseEntity::isCurrentHomepoint()
 {
-    if (m_PBaseEntity != nullptr && m_PBaseEntity->objtype == TYPE_PC)
-    {
-        auto* PChar         = static_cast<CCharEntity*>(m_PBaseEntity);
-        auto  currentZone   = PChar->loc.zone;
-        auto  homepointZone = PChar->profile.home_point.zone;
-        auto  pos           = PChar->loc.p;
-        auto  homepoint     = PChar->profile.home_point.p;
+    XI_DEBUG_BREAK_IF(m_PBaseEntity == nullptr || m_PBaseEntity->objtype != TYPE_PC);
 
-        if ((abs(pos.x - homepoint.x) <= 1) && (abs(pos.y - homepoint.y) <= 1) &&
-            (abs(pos.z - homepoint.z) <= 1) && (currentZone == homepointZone))
-        {
-            return true;
-        }
+    auto* PChar         = static_cast<CCharEntity*>(m_PBaseEntity);
+    auto  currentZone   = PChar->loc.zone;
+    auto  homepointZone = PChar->profile.home_point.zone;
+    auto  pos           = PChar->loc.p;
+    auto  homepoint     = PChar->profile.home_point.p;
+
+    if ((abs(pos.x - homepoint.x) <= 1) && (abs(pos.y - homepoint.y) <= 1) &&
+        (abs(pos.z - homepoint.z) <= 1) && (currentZone == homepointZone))
+    {
+        return true;
     }
 
     return false;
@@ -9827,6 +9826,39 @@ bool CLuaBaseEntity::isInDynamis()
 }
 
 /************************************************************************
+ *  Function: setEnteredBattlefield()
+ *  Purpose : Sets if the player has entered the battlefield or not
+ *  Example : player:setEnteredBattlefield(true)
+ *  Notes   :
+ ************************************************************************/
+
+void CLuaBaseEntity::setEnteredBattlefield(bool entered)
+{
+    XI_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
+    if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_BATTLEFIELD))
+    {
+        CBattlefield::setPlayerEntered(PChar, entered);
+    }
+}
+
+/************************************************************************
+ *  Function: hasEnteredBattlefield()
+ *  Purpose : Checks if the player has entered the battlefield or not
+ *  Example : if player:hasEnteredBattlefield() then
+ *  Notes   :
+ ************************************************************************/
+
+bool CLuaBaseEntity::hasEnteredBattlefield()
+{
+    XI_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
+    return CBattlefield::hasPlayerEntered(PChar);
+}
+
+/************************************************************************
  *  Function: isAlive()
  *  Purpose : Returns true if an Entity is alive
  *  Example : if mob:isAlive() then
@@ -15895,6 +15927,7 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("startEvent", CLuaBaseEntity::startEvent);
     SOL_REGISTER("startCutscene", CLuaBaseEntity::startCutscene);
     SOL_REGISTER("startOptionalCutscene", CLuaBaseEntity::startOptionalCutscene);
+    SOL_REGISTER("startMenuEvent", CLuaBaseEntity::startMenuEvent);
     SOL_REGISTER("startEventString", CLuaBaseEntity::startEventString);
     SOL_REGISTER("updateEvent", CLuaBaseEntity::updateEvent);
     SOL_REGISTER("updateEventString", CLuaBaseEntity::updateEventString);
@@ -16327,6 +16360,8 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("enterBattlefield", CLuaBaseEntity::enterBattlefield);
     SOL_REGISTER("leaveBattlefield", CLuaBaseEntity::leaveBattlefield);
     SOL_REGISTER("isInDynamis", CLuaBaseEntity::isInDynamis);
+    SOL_REGISTER("setEnteredBattlefield", CLuaBaseEntity::setEnteredBattlefield);
+    SOL_REGISTER("hasEnteredBattlefield", CLuaBaseEntity::hasEnteredBattlefield);
 
     // Battle Utilities
     SOL_REGISTER("isAlive", CLuaBaseEntity::isAlive);

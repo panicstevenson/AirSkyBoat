@@ -207,6 +207,19 @@ uint8 CBattleEntity::GetHPP() const
     return hpp;
 }
 
+uint8 CBattleEntity::GetHPPNoPercentOrConvert()
+{
+    TracyZoneScoped;
+    // recalculate max HP using only raw HP mods; no convert or HPP, regardless of source, apply
+    int32 modHP = std::max(1, health.maxhp + getMod(Mod::HP));
+
+    uint8 hpp = (uint8)floor(((float)health.hp / (float)modHP) * 100);
+
+    // it may be possible that with convert gear, this hpp would be > 100, so clamp it
+    // this also handles the case where floor() returns 0 with 1/1000 hp
+    return health.hp <= 0 ? 0 : std::clamp<uint8>(hpp, 1, 100);
+}
+
 int32 CBattleEntity::GetMaxHP() const
 {
     return health.modhp;
@@ -618,13 +631,14 @@ int32 CBattleEntity::addMP(int32 mp)
 int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullptr*/, ATTACK_TYPE attackType /* = ATTACK_NONE*/,
                                 DAMAGE_TYPE damageType /* = DAMAGE_NONE*/)
 {
+    TracyZoneScoped;
+
     if (this->GetLocalVar("DAMAGE_NULL") == 1)
     {
         amount %= 2;
         this->SetLocalVar("DAMAGE_DEALT", amount);
     }
 
-    TracyZoneScoped;
     PLastAttacker                             = attacker;
     this->BattleHistory.lastHitTaken_atkType  = attackType;
     std::optional<CLuaBaseEntity> optAttacker = attacker ? std::optional<CLuaBaseEntity>(CLuaBaseEntity(attacker)) : std::nullopt;
@@ -636,6 +650,13 @@ int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullp
         if (amount > 0)
         {
             roeutils::event(ROE_EVENT::ROE_DMGTAKEN, static_cast<CCharEntity*>(this), RoeDatagram("dmg", amount));
+
+            auto PChar = static_cast<CCharEntity*>(this);
+
+            if (PChar && PChar->isInEvent() && PChar->currentEvent->type == EVENT_TYPE::MENU)
+            {
+                charutils::releaseEvent(PChar, false);
+            }
         }
     }
     else if (PLastAttacker && PLastAttacker->objtype == TYPE_PC)
@@ -648,6 +669,8 @@ int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullp
         // Took dmg from non ws source, so remove ws kill var
         this->SetLocalVar("weaponskillHit", 0);
     }
+
+    // if attack has master, if it has a master -> if its a PC and the enmity containter holds the mob
 
     return addHP(-amount);
 }
@@ -945,10 +968,19 @@ uint16 CBattleEntity::EVA()
 {
     int16 evasion = GetSkill(SKILL_EVASION);
 
+    // This check is for Players Only
     if (evasion > 200)
     { // Evasion skill is 0.9 evasion post-200
         evasion = (int16)(200 + (evasion - 200) * 0.9);
     }
+
+    // Mobs do not have SKILL_EVASION. Their stats are set in the mobutils.cpp. This will correctly set their evasion
+    if (this->objtype == TYPE_MOB || this->objtype == TYPE_PET)
+    {
+        int16 evasionMob = (200 + (m_modStat[Mod::EVA] - 200) * 0.9);
+        return std::max(0, (evasionMob + AGI() / 2));
+    }
+
     return std::max(0, (m_modStat[Mod::EVA] + evasion + AGI() / 2));
 }
 
@@ -2285,8 +2317,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
             zanshinChance        = std::clamp<uint16>(zanshinChance, 0, 100);
             // zanshin may only proc on a missed/guarded/countered swing or as SAM main with hasso up (at 25% of the base zanshin rate)
             if ((((actionTarget.reaction & REACTION::MISS) != REACTION::NONE || (actionTarget.reaction & REACTION::GUARDED) != REACTION::NONE || actionTarget.spikesEffect == SUBEFFECT_COUNTER) &&
-                 xirand::GetRandomNumber(100) < zanshinChance) ||
-                (GetMJob() == JOB_SAM && this->StatusEffectContainer->HasStatusEffect(EFFECT_HASSO) && xirand::GetRandomNumber(100) < (zanshinChance / 4)))
+                 xirand::GetRandomNumber(100) < zanshinChance))
             {
                 attackRound.AddAttackSwing(PHYSICAL_ATTACK_TYPE::ZANSHIN, PHYSICAL_ATTACK_DIRECTION::RIGHTATTACK, 1);
             }
