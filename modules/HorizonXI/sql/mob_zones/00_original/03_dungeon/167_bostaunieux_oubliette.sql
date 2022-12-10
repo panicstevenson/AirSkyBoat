@@ -224,7 +224,7 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
 (17461466, 0,  'Bloodsucker',              'Bloodsucker',              21,  -29.238,   16.945,    -177.829,  235 ),
 (17461467, 0,  'Bloodsucker',              'Bloodsucker',              21,  -58.895,   16.954,    -164.21,   208 ),
 (17461468, 0,  'Bloodsucker',              'Bloodsucker',              21,  -58.546,   17,        -159.8,    63  ),
-(17461469, 0,  'Gespenst',                 'Gespenst',                 22,  99.723,    0.000,     -43.806,   192 ),
+-- (17461469, 0,  'Gespenst',                 'Gespenst',                 22,  99.723,    0.000,     -43.806,   192 ),
 (17461470, 0,  'Gespenst',                 'Gespenst',                 22,  95.582,    0.25,      -281.135,  137 ),
 (17461471, 0,  'Manes',                    'Manes',                    23,  95.153,    0.388,     -285.77,   205 ),
 (17461472, 0,  'Bloodsucker',              'Bloodsucker',              21,  -17.073,   16.985,    -142.532,  22  ),
