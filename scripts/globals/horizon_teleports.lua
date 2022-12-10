@@ -39,7 +39,7 @@ local dialogTableGob =
         text1 = "Big Jeuno guards say we can't be servin' you at this time.",
         text2 = "The big guard guys say if you be doin' away with them monsters, we can start magicks again.",
     },
-    tooLow = "If you want a teleport, go find yourself here in Jeuno then I'll consider.",
+    tooLow = "No can tele you now, the beasties outside town are too restless.",
     noOPs =
     {
         text1 = 'Psh.. Hey you. My name is %s. I have the bestest secret magicks in town.',
@@ -50,7 +50,7 @@ local dialogTableGob =
         text6 = 'No can tele you now, you will have to come back later.',
     },
     welcome               = 'Welcome to my magicks service.',
-    teleport              = 'Do you want to go somewhere? It will cost ya',
+    teleport              = 'Do you want to go somewhere? It\'ll cost ya',
     teleportControlled    = "Your nation home done has control of that area. I'll charge %s gil to magicks you.",
     teleportNotControlled = "Your nation home done has no control of that area. I'll charge %s gil to magicks you.",
     noteleport            = 'Comes backs soon..',
@@ -132,7 +132,7 @@ local enableOPWarps =
     { ID = xi.zone.EAST_RONFAURE,         string = "East Ronfaure",         killVar = '[OP_Warp]Ron_2'   },
     { ID = xi.zone.JUGNER_FOREST,         string = "Jugner Forest",         killVar = '[OP_Warp]Jug_1'   },
     { ID = xi.zone.MERIPHATAUD_MOUNTAINS, string = "Meriphataud Mountains", killVar = '[OP_Warp]Merph_1' },
-    { ID = xi.zone.PASHHOW_MARSHLANDS,    string = "Pashow Marshlands",     killVar = '[OP_Warp]Pash_1'  },
+    { ID = xi.zone.PASHHOW_MARSHLANDS,    string = "Pashhow Marshlands",    killVar = '[OP_Warp]Pash_1'  },
     { ID = xi.zone.YUHTUNGA_JUNGLE,       string = "Yuhtunga Jungle",       killVar = '[OP_Warp]Yuht_1'  },
     { ID = xi.zone.BEAUCEDINE_GLACIER,    string = "Beaucedine Glacier",    killVar = '[OP_Warp]Beauc_1' },
     { ID = xi.zone.EASTERN_ALTEPA_DESERT, string = "Eastern Altepa Desert", killVar = '[OP_Warp]Altep_1' },
