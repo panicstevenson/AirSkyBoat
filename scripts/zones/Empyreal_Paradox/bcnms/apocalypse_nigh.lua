@@ -21,6 +21,14 @@ battlefieldObject.onBattlefieldLeave = function(player, battlefield, leavecode)
     if leavecode == xi.battlefield.leaveCode.WON then
         local _, clearTime, partySize = battlefield:getRecord()
         local arg8 = (player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.APOCALYPSE_NIGH) == QUEST_COMPLETED) and 1 or 0
+
+        local worldFirst = string.format("WF_%s", "APOC_NIGH")
+        if GetServerVariable(worldFirst) == 0 then
+            hxi.worldFirst.checkWorldFirstServerVar(player,
+                "APOC_NIGH",
+                string.format("%s's group has been the first to defeat Kamlaunaut and Eald'narche, completing Apocalypse Nigh!", player:getName()))
+        end
+
         player:startEvent(32001, battlefield:getArea(), clearTime, partySize, battlefield:getTimeInside(), 1, battlefield:getLocalVar("[cs]bit"), arg8)
     elseif leavecode == xi.battlefield.leaveCode.LOST then
         player:startEvent(32002)

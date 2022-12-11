@@ -46,6 +46,16 @@ function content:onEventFinishBattlefield(player, csid, option)
     mob:setMobAbilityEnabled(false)
 end
 
+function content:onBattlefieldWin(player, battlefield)
+    Battlefield.onBattlefieldWin(self, player, battlefield)
+    local worldFirst = string.format("WF_%s", "SHADOW_LORD")
+    if GetServerVariable(worldFirst) == 0 then
+        hxi.worldFirst.checkWorldFirstServerVar(player,
+            "SHADOW_LORD",
+            string.format("%s's group has been the first to defeat the Shadow Lord!", player:getName()))
+    end
+end
+
 content.groups =
 {
     -- Phase 1

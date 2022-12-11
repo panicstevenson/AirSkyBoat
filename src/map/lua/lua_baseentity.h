@@ -226,6 +226,7 @@ public:
     auto getCurrentGPItem(uint8 guildID) -> std::tuple<uint16, uint16>;                                 // Gets current GP item id and max points
     bool breakLinkshell(std::string const& lsname);                                                     // Breaks all pearls/sacks
     bool addLinkpearl(std::string const& lsname, bool equip);                                           // Creates a linkpearl (pearlsack for GMs)
+    auto getLinkshellName() -> std::string;                                                             // Gets Player's Linkshell1 name
 
     auto addSoulPlate(std::string const& name, uint16 mobFamily, uint8 zeni, uint16 skillIndex, uint8 fp) -> std::optional<CLuaItem>;
 

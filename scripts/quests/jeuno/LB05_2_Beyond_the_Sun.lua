@@ -49,6 +49,9 @@ quest.sections =
             onEventFinish =
             {
                 [74] = function(player, csid, option, npc)
+                    hxi.worldFirst.checkWorldFirstServerVar(player,
+                        "MAATS_CAP",
+                        string.format("%s has been the first player to obtain Maat's Cap!", player:getName()))
                     quest:complete(player)
                 end,
             },

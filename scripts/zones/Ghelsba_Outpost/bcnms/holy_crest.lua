@@ -50,6 +50,9 @@ battlefieldObject.onEventFinish = function(player, csid, option)
         player:unlockJob(xi.job.DRG)
         player:messageSpecial(ID.text.YOU_CAN_NOW_BECOME_A_DRAGOON)
         player:setPetName(xi.pet.type.WYVERN, option + 1)
+        hxi.worldFirst.checkWorldFirstServerVar(player,
+            "UNLOCK_DRG",
+            string.format("%s has been the first player to unlock Dragoon!", player:getName()))
     end
 end
 

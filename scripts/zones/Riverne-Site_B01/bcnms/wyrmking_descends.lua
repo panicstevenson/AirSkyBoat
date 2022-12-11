@@ -29,6 +29,12 @@ battlefield_object.onBattlefieldLeave = function(player, battlefield, leavecode)
     if leavecode == xi.battlefield.leaveCode.WON then
         local _, clearTime, partySize = battlefield:getRecord()
         local arg8 = (not player:hasKeyItem(xi.ki.WHISPER_OF_THE_WYRMKING)) and 1 or 0
+        local worldFirst = string.format("WF_%s", "BAHAMUT")
+        if GetServerVariable(worldFirst) == 0 then
+            hxi.worldFirst.checkWorldFirstServerVar(player,
+                "BAHAMUT",
+                string.format("%s's group has been the first to defeat Bahamut and clear The Wyrmking Descends!", player:getName()))
+        end
         player:startEvent(32001, battlefield:getArea(), clearTime, partySize, battlefield:getTimeInside(), 1, battlefield:getLocalVar("[cs]bit"), arg8)
     elseif leavecode == xi.battlefield.leaveCode.LOST then
         player:startEvent(32002)

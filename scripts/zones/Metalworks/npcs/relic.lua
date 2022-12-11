@@ -33,6 +33,9 @@ entity.onEventFinish = function(player, csid, option)
     then
         player:confirmTrade()
         player:setCharVar("RELIC_IN_PROGRESS", 0)
+        hxi.worldFirst.checkWorldFirstServerVar(player,
+            "ANNIHILATOR",
+            string.format("%s has been the first player to obtain the relic weapon Annihilator!", player:getName()))
     end
 end
 

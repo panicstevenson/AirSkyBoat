@@ -43,6 +43,9 @@ entity.onEventFinish = function(player, csid, option)
             gil = 3000,
             var = "PathOfTheBard_Event"
         })
+        hxi.worldFirst.checkWorldFirstServerVar(player,
+            "UNLOCK_BRD",
+            string.format("%s has been the first player to unlock Bard!", player:getName()))
     end
 end
 

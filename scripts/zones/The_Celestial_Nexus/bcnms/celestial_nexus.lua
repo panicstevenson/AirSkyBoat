@@ -42,6 +42,13 @@ battlefieldObject.onBattlefieldLeave = function(player, battlefield, leavecode)
             player:PrintToPlayer(str, xi.msg.channel.SYSTEM_3, "")
         end
 
+        local worldFirst = string.format("WF_%s", "ZILART_MISSION")
+        if GetServerVariable(worldFirst) == 0 then
+            hxi.worldFirst.checkWorldFirstServerVar(player,
+                "ZILART_MISSION",
+                string.format("%s's group has been the first to defeat Eald'narche and complete the Rise of the Zilart mission line!", player:getName()))
+        end
+
         player:startEvent(32001, battlefield:getArea(), clearTime, partySize, battlefield:getTimeInside(), 1, battlefield:getLocalVar("[cs]bit"), arg8)
     elseif leavecode == xi.battlefield.leaveCode.LOST then
         player:startEvent(32002)

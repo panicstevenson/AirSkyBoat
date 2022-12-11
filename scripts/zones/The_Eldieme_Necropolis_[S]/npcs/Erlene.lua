@@ -125,6 +125,9 @@ entity.onEventFinish = function(player, csid, option)
         player:setCharVar("SheetsofVellum", 0)
         player:messageSpecial(ID.text.YOU_CAN_NOW_BECOME_A_SCHOLAR)
         player:completeQuest(xi.quest.log_id.CRYSTAL_WAR, xi.quest.id.crystalWar.A_LITTLE_KNOWLEDGE)
+        hxi.worldFirst.checkWorldFirstServerVar(player,
+            "UNLOCK_SCH",
+            string.format("%s has been the first player to unlock Scholar!", player:getName()))
     elseif csid == 47 then
         if player:canLearnSpell(478) and player:canLearnSpell(502) then
             player:addSpell(478, true)

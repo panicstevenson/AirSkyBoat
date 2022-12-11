@@ -142,6 +142,9 @@ entity.onEventFinish = function(player, csid, option)
                 fameArea = xi.quest.fame_area.SANDORIA,
                 fame = 50,
             })
+            hxi.worldFirst.checkWorldFirstServerVar(player,
+                "UNLOCK_PLD",
+                string.format("%s has been the first player to unlock Paladin!", player:getName()))
         else
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, xi.items.KITE_SHIELD)
         end

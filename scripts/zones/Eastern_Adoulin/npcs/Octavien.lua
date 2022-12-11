@@ -104,6 +104,9 @@ entity.onEventFinish = function(player, csid, option)
             player:setCharVar("RUN_COTR", 0)
             player:delKeyItem(xi.ki.YAHSE_WILDFLOWER_PETAL)
             player:completeQuest(xi.quest.log_id.ADOULIN, xi.quest.id.adoulin.CHILDREN_OF_THE_RUNE)
+            hxi.worldFirst.checkWorldFirstServerVar(player,
+                "UNLOCK_RUN",
+                string.format("%s has been the first player to unlock Rune Fencer!", player:getName()))
         end
     end
 end

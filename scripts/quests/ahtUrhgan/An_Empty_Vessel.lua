@@ -187,6 +187,9 @@ quest.sections =
                             player:unlockJob(xi.job.BLU)
                             player:addKeyItem(xi.ki.MARK_OF_ZAHAK)
                             player:addKeyItem(xi.ki.JOB_GESTURE_BLUE_MAGE)
+                            hxi.worldFirst.checkWorldFirstServerVar(player,
+                                "UNLOCK_BLU",
+                                string.format("%s has been the first player to unlock Blue Mage!", player:getName()))
 
                             quest:setVar(player, 'completeEvent', 1)
                         end

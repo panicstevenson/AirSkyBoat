@@ -28,6 +28,13 @@ battlefieldObject.onBattlefieldLeave = function(player, battlefield, leavecode)
 
         player:setLocalVar("battlefieldWin", battlefield:getID())
 
+        local worldFirst = string.format("WF_%s", "RANK_10_WINDURST")
+        if GetServerVariable(worldFirst) == 0 then
+            hxi.worldFirst.checkWorldFirstServerVar(player,
+                "RANK_10_WINDURST",
+                string.format("%s's group has been the first to attain Windurst nation Rank 10!", player:getName()))
+        end
+
         player:startEvent(32001, battlefield:getArea(), clearTime, partySize, battlefield:getTimeInside(), 1, battlefield:getLocalVar("[cs]bit"), arg8)
     elseif leavecode == xi.battlefield.leaveCode.LOST then
         player:startEvent(32002)

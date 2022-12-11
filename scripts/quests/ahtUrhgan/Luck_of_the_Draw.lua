@@ -129,6 +129,9 @@ quest.sections =
                         player:delKeyItem(xi.ki.FORGOTTEN_HEXAGUN)
                         player:unlockJob(xi.job.COR)
                         player:messageSpecial(talaccaCoveID.text.YOU_CAN_NOW_BECOME_A_CORSAIR)
+                        hxi.worldFirst.checkWorldFirstServerVar(player,
+                            "UNLOCK_COR",
+                            string.format("%s has been the first player to unlock Corsair!", player:getName()))
                     end
                 end,
             },

@@ -138,6 +138,15 @@ quest.sections =
                         player:delKeyItem(xi.ki.SPIRITED_STONE)
                         player:setLevelCap(70)
                         player:messageSpecial(ruludeID.text.YOUR_LEVEL_LIMIT_IS_NOW_70)
+                        hxi.worldFirst.checkWorldFirstServerVar(player,
+                            "UNLOCK_70",
+                            string.format("%s has been the first player to complete Limit Break 4!", player:getName()))
+
+                        if player:getCharVar("hardcore") == 1 then
+                            hxi.worldFirst.checkWorldFirstServerVar(player,
+                            "UNLOCK_65_HARDCORE",
+                            string.format("%s has been the first hardcore player to complete Limit Break 4!", player:getName()))
+                        end
                     end
                 end,
             },

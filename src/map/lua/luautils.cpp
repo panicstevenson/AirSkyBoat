@@ -5080,6 +5080,26 @@ namespace luautils
         }
     }
 
+    void OnPlayerCraftLevelUp(CCharEntity* PChar, uint8 skillID)
+    {
+        TracyZoneScoped;
+
+        auto onPlayerCraftLevelUp = lua["xi"]["player"]["onPlayerCraftLevelUp"];
+        if (!onPlayerCraftLevelUp.valid())
+        {
+            ShowWarning("luautils::onPlayerCraftLevelUp");
+            return;
+        }
+
+        auto result = onPlayerCraftLevelUp(CLuaBaseEntity(PChar), skillID);
+        if (!result.valid())
+        {
+            sol::error err = result;
+            ShowError("luautils::onPlayerCraftLevelUp: %s", err.what());
+            return;
+        }
+    }
+
     void OnPlayerMount(CCharEntity* PChar)
     {
         TracyZoneScoped;

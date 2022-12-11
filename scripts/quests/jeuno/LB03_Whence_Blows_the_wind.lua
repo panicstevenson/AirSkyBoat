@@ -90,6 +90,15 @@ quest.sections =
                         player:delKeyItem(xi.ki.YAGUDO_CREST)
                         player:setLevelCap(65)
                         player:messageSpecial(ruludeID.text.YOUR_LEVEL_LIMIT_IS_NOW_65)
+                        hxi.worldFirst.checkWorldFirstServerVar(player,
+                            "UNLOCK_65",
+                            string.format("%s has been the first player to complete Limit Break 3!", player:getName()))
+
+                        if player:getCharVar("hardcore") == 1 then
+                            hxi.worldFirst.checkWorldFirstServerVar(player,
+                            "UNLOCK_65_HARDCORE",
+                            string.format("%s has been the first hardcore player to complete Limit Break 3!", player:getName()))
+                        end
                     end
                 end,
             },

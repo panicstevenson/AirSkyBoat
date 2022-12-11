@@ -50,6 +50,12 @@ end
 battlefieldObject.onBattlefieldLeave = function(player, battlefield, leavecode)
     if leavecode == xi.battlefield.leaveCode.WON then
         -- local name, clearTime, partySize = battlefield:getRecord()
+        local worldFirst = string.format("WF_%s", "PROMATHIA_MISSION")
+        if GetServerVariable(worldFirst) == 0 then
+            hxi.worldFirst.checkWorldFirstServerVar(player,
+                "PROMATHIA_MISSION",
+                string.format("%s's group has been the first to defeat Promathia and complete the Chains of Promathia mission line!", player:getName()))
+        end
         player:startEvent(6)
     elseif leavecode == xi.battlefield.leaveCode.LOST then
         player:startEvent(32002)

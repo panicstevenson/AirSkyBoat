@@ -285,4 +285,7 @@ end
 xi.player.onPlayerVolunteer = function(player, text)
 end
 
+xi.player.onPlayerCraftLevelUp = function(player, skillID)
+end
+
 return xi.player

@@ -119,6 +119,9 @@ quest.sections =
                         player:delKeyItem(xi.ki.STARDUST_PEBBLE)
                         npcUtil.giveKeyItem(player, xi.ki.JOB_GESTURE_DANCER)
                         player:needToZone(true)
+                        hxi.worldFirst.checkWorldFirstServerVar(player,
+                            "UNLOCK_DNC",
+                            string.format("%s has been the first player to unlock Dancer!", player:getName()))
                     end
                 end,
             },

@@ -44,6 +44,10 @@ entity.onEventFinish = function(player, csid, option)
 
         local rainbow = GetNPCByID(ID.npc.RAINBOW)
         rainbow:setLocalVar('setRainbow', 1)
+
+        hxi.worldFirst.checkWorldFirstServerVar(player,
+            "UNLOCK_SMN",
+            string.format("%s has been the first player to unlock Summoner!", player:getName()))
     end
 end
 

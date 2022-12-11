@@ -17,6 +17,11 @@ entity.onAdditionalEffect = function(mob, target, damage)
 end
 
 entity.onMobDeath = function(mob, player, optParams)
+    if optParams.isKiller then
+        hxi.worldFirst.checkWorldFirstServerVar(player,
+            "SKY_ACCESS",
+            string.format("%s's group has been the first to attain Sky access!", player:getName()))
+    end
 end
 
 return entity
