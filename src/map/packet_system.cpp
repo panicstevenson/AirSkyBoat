@@ -3898,6 +3898,7 @@ void SmallPacket0x05E(map_session_data_t* const PSession, CCharEntity* const PCh
     uint8  requestedZone = data.ref<uint8>(0x17);
 
     uint16 startingZone = PChar->getZone();
+    auto   startingPos  = PChar->loc.p;
 
     PChar->ClearTrusts();
 
@@ -3982,7 +3983,7 @@ void SmallPacket0x05E(map_session_data_t* const PSession, CCharEntity* const PCh
 
                 PChar->loc.p.rotation += 128;
 
-                PChar->pushPacket(new CMessageSystemPacket(0, 0, 2));
+                PChar->pushPacket(new CMessageSystemPacket(0, 0, 2)); // You could not enter the next area.
                 PChar->pushPacket(new CCSPositionPacket(PChar));
 
                 PChar->status = STATUS_TYPE::NORMAL;
@@ -4002,7 +4003,7 @@ void SmallPacket0x05E(map_session_data_t* const PSession, CCharEntity* const PCh
                                           (CharZone >= ZONE_WESTERN_ADOULIN && CharZone <= ZONE_EASTERN_ADOULIN);
                 // clang-format on
 
-                if ((PDestination->GetType() == ZONE_TYPE::CITY && (uint16)PDestination->GetID() == 0 && !RentExempt) &&
+                if ((PZoneLine->m_toZoneType == ZONE_TYPE::CITY && PZoneLine->m_toZone == 0 && !RentExempt) &&
                     (settings::get<bool>("map.RENT_A_ROOM") && settings::get<bool>("map.ERA_RENT_A_ROOM") ? !IsRentedCity : !IsInHomeNation && !IsRentedCity))
                 {
                     PChar->loc.p.rotation += 128;
@@ -4027,7 +4028,7 @@ void SmallPacket0x05E(map_session_data_t* const PSession, CCharEntity* const PCh
 
                     PChar->loc.p.rotation += 128;
 
-                    PChar->pushPacket(new CMessageSystemPacket(0, 0, 2));
+                    PChar->pushPacket(new CMessageSystemPacket(0, 0, 2)); // You could not enter the next area.
                     PChar->pushPacket(new CCSPositionPacket(PChar));
 
                     PChar->status = STATUS_TYPE::NORMAL;
@@ -4058,7 +4059,23 @@ void SmallPacket0x05E(map_session_data_t* const PSession, CCharEntity* const PCh
         return;
     }
 
-    uint64 ipp = zoneutils::GetZoneIPP(PChar->loc.destination == 0 ? PChar->getZone() : PChar->loc.destination);
+    auto   destination = PChar->loc.destination == 0 ? PChar->getZone() : PChar->loc.destination;
+    uint64 ipp         = zoneutils::GetZoneIPP(destination);
+    if (ipp == 0)
+    {
+        ShowWarning(fmt::format("Char {} requested zone ({}) returned IPP of 0", PChar->name, destination));
+        PChar->loc.destination = startingZone;
+        PChar->loc.p           = startingPos;
+
+        PChar->loc.p.rotation += 128;
+
+        PChar->pushPacket(new CMessageSystemPacket(0, 0, 2)); // You could not enter the next area.
+        PChar->pushPacket(new CCSPositionPacket(PChar));
+
+        PChar->status = STATUS_TYPE::NORMAL;
+
+        return;
+    }
 
     charutils::SendToZone(PChar, 2, ipp);
 }
