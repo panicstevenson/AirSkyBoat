@@ -3873,7 +3873,7 @@ void SmallPacket0x05D(map_session_data_t* const PSession, CCharEntity* const PCh
         }
     }
     // Attempting to use locked job emote.
-    else if (EmoteID == Emote::JOB && extra && !(PChar->jobs.unlocked & (1 << (extra - 0x1E))))
+    else if (EmoteID == Emote::JOB && extra && (!(PChar->jobs.unlocked & (1 << (extra - 0x1E))) || (PChar->jobs.job[(uint8)(extra - 30)] != 75)))
     {
         return;
     }
