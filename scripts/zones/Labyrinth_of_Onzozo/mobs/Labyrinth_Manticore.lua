@@ -19,9 +19,9 @@ entity.onMobDespawn = function(mob)
         id == ID.mob.WYVERN_PH or
         id == ID.mob.NARASIMHA_PH
     then
-        mob:setRespawnTimer(xi.mob.respawnTimer.DUNGEON)
+        mob:setRespawnTime(xi.mob.respawnTimer.DUNGEON)
     end
-    xi.mob.phOnDespawn(mob, ID.mob.WYVERN_PH, 20,1) -- Wyvern shared spawn
+    xi.mob.phOnDespawn(mob, ID.mob.WYVERN_PH, 20, 1) -- Wyvern shared spawn
     xi.mob.phOnDespawn(mob, ID.mob.NARASIMHA_PH, 10, 21600) -- 6 hour minimum
 end
 

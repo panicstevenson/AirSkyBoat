@@ -16,7 +16,7 @@ end
 
 entity.onMobDespawn = function(mob)
     if mob:getID() == ID.mob.WYVERNPOACHER_DRACHLOX_PH then
-        mob:setRespawnTimer(xi.mob.respawnTimer.DUNGEON)
+        mob:setRespawnTime(xi.mob.respawnTimer.DUNGEON)
     end
     xi.mob.phOnDespawn(mob, ID.mob.WYVERNPOACHER_DRACHLOX_PH, 5, 7200) -- 2 hour minimum
 end

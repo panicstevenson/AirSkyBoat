@@ -15,7 +15,7 @@ end
 
 entity.onMobDespawn = function(mob)
     if mob:getID() == ID.mob.BAOBHAN_SITH_PH then
-        mob:setRespawnTimer(xi.mob.respawnTimer.DUNGEON)
+        mob:setRespawnTime(xi.mob.respawnTimer.DUNGEON)
     end
     xi.mob.phOnDespawn(mob, ID.mob.BAOBHAN_SITH_PH, 5, math.random(14400, 28800)) -- 4 to 8 hours
 end
