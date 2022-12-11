@@ -13,6 +13,9 @@ entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)
+    if mob:getID() == ID.mob.GOLIATH_PH then
+        mob:setRespawnTime(xi.mob.respawnTimer.DUNGEON)
+    end
     xi.mob.phOnDespawn(mob, ID.mob.GOLIATH_PH, 10, 1) -- No minimum respawn
 
     if mob:getID() == 17613052 then

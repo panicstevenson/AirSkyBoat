@@ -14,6 +14,9 @@ entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)
+    if mob:getID() == ID.mob.AMIKIRI_PH then
+        mob:setRespawnTimer(xi.mob.respawnTimer.DUNGEON)
+    end
     xi.mob.phOnDespawn(mob, ID.mob.AMIKIRI_PH, 5, 25200) -- 7 hour minimum
 end
 

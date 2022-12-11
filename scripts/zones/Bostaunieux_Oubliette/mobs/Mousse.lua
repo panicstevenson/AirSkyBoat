@@ -12,6 +12,9 @@ entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)
+    if mob:getID() == ID.mob.SEWER_SYRUP_PH then
+        mob:setRespawnTime(xi.mob.respawnTimer.DUNGEON)
+    end
     xi.mob.phOnDespawn(mob, ID.mob.SEWER_SYRUP_PH, 10, 7200) -- 2 hour minimum
 end
 

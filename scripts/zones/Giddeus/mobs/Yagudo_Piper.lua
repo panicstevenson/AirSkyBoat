@@ -12,6 +12,9 @@ entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)
+    if mob:getID() == ID.mob.VUU_PUQU_THE_BEGUILER_PH then
+        mob:setRespawnTime(xi.mob.respawnTimer.DUNGEON)
+    end
     xi.mob.phOnDespawn(mob, ID.mob.VUU_PUQU_THE_BEGUILER_PH, 15, 900) -- 15 minutes
 end
 

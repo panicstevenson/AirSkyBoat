@@ -14,6 +14,9 @@ entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)
+    if mob:getID() == ID.mob.HOVERING_HOTPOT_PH then
+        mob:setRespawnTime(xi.mob.respawnTimer.DUNGEON)
+    end
     xi.mob.phOnDespawn(mob, ID.mob.HOVERING_HOTPOT_PH, 20, 1800) -- 30 minute minimum
 end
 

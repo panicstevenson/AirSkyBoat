@@ -15,6 +15,9 @@ end
 
 entity.onMobDespawn = function(mob)
     if mob:getWeather() == xi.weather.SAND_STORM then
+        if mob:getID() == ID.mob.NUSSKNACKER_PH then
+            mob:setRespawnTimer(xi.mob.respawnTimer.DUNGEON)
+        end
         xi.mob.phOnDespawn(mob, ID.mob.NUSSKNACKER_PH, 15, 5400) -- 1 1/2 hour minimum
     end
 end
