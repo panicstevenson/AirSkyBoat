@@ -19,7 +19,7 @@ local dialogTableOrg =
         text2 = 'At the previous Conference of Nations, it was decided that the restriction on "regional teleporting" would be lifted, and that cities could now offer teleportation services to various outposts.',
         text3 = 'We are now authorized to teleport you to any outpost you have previously visited on a supplies quest.',
         text4 = 'The nominal fee we require varies with the current control of the region.',
-        text5 = 'Also, depending on your level, there may be some areas I am not authorized to telepoort you to.',
+        text5 = 'Also, depending on your level, there may be some areas I am not authorized to teleport you to.',
         text6 = 'Unfortunately, at this time there is nowhere I can teleport you to. Please come again.',
     },
     welcome               = 'Welcome to the regional Teleporation Service!',
@@ -183,6 +183,13 @@ hxi.teleport.isFirstEnable = function()
     return utils.ternary(GetVolatileServerVariable('[OP_Warp]First_Enable') == 0, GetServerVariable('[OP_Warp]First_Enable') == 0, false)
 end
 
+hxi.teleport.customMenu = function(player, contextTable)
+    if player:getLocalVar("[Teleporter]Triggered") == 1 and player:getLocalVar("[Teleporter]Warping") ~= 1 then
+        player:customMenu(contextTable)
+        player:setLocalVar("[Teleporter]Triggered", 0)
+    end
+end
+
 hxi.teleport.processKills = function()
     local killCount = 0
 
@@ -283,6 +290,7 @@ hxi.teleport.handleNMDeath = function(mob, player)
 end
 
 hxi.teleport.triggerOPWarp = function(player, npc)
+    player:setLocalVar("[Teleporter]Triggered", 1)
     local dialogTable = dialogTableOrg
     local npcNation = npcTable[player:getZoneID()].nation
     local zoneId = player:getZoneID()
@@ -292,14 +300,10 @@ hxi.teleport.triggerOPWarp = function(player, npc)
     local teleportMenu =
     {
         onStart = function(playerArg)
-            playerArg:addStatusEffectEx(xi.effect.TERROR, xi.effect.TERROR, 69, 0, 99999, 0, 0, 1, xi.effectFlag.ON_ZONE, true)
         end,
         title = "Which region would you like to teleport to?",
         options = { },
         onEnd = function(playerArg)
-            if playerArg:hasStatusEffect(xi.effect.TERROR) then
-                playerArg:delStatusEffectSilent(xi.effect.TERROR)
-            end
         end,
     }
 
@@ -375,7 +379,7 @@ hxi.teleport.triggerOPWarp = function(player, npc)
     teleportMenu.options = pagesTable[1]
 
     player:timer(50, function(playerArg)
-        playerArg:customMenu(teleportMenu)
+        hxi.teleport.customMenu(playerArg, teleportMenu)
     end)
 end
 
@@ -394,14 +398,10 @@ hxi.teleport.createRegionMenus = function(player, availableWarps)
     local teleportMenu =
     {
         onStart = function(playerArg)
-            playerArg:addStatusEffectEx(xi.effect.TERROR, xi.effect.TERROR, 69, 0, 99999, 0, 0, 1, xi.effectFlag.ON_ZONE, true)
         end,
         title = "Which region would you like to teleport to?",
         options = { },
         onEnd = function(playerArg)
-            if playerArg:hasStatusEffect(xi.effect.TERROR) then
-                playerArg:delStatusEffectSilent(xi.effect.TERROR)
-            end
         end,
     }
 
@@ -465,14 +465,10 @@ hxi.teleport.sendPriceMenu = function(player, region)
     local priceMenu =
     {
         onStart = function(playerArg)
-            playerArg:addStatusEffectEx(xi.effect.TERROR, xi.effect.TERROR, 69, 0, 99999, 0, 0, 1, xi.effectFlag.ON_ZONE, true)
         end,
         title = "",
         options = { },
         onEnd = function(playerArg)
-            if playerArg:hasStatusEffect(xi.effect.TERROR) then
-                playerArg:delStatusEffectSilent(xi.effect.TERROR)
-            end
         end,
     }
 
@@ -523,8 +519,8 @@ hxi.teleport.handleOPWarp = function(player, region)
     if player:getGil() >= cost then
         player:PrintToPlayer(dialogTable.thanks, 0, name)
         if player:delGil(cost) then
+            player:setLocalVar("[Teleporter]Warping", 1)
             npc:independentAnimation(player, 122, 0)
-
             player:timer(750, function(playerArg)
                 playerArg:addStatusEffectEx(xi.effect.TELEPORT, 0, xi.teleport.id.OUTPOST, 0, 1, 0, region)
             end)
@@ -556,11 +552,11 @@ hxi.teleport.addNPC = function(zone)
 end
 
 hxi.teleport.triggerTaruWarp = function(player, npc)
+    player:setLocalVar("[Teleporter]Triggered", 1)
     local taru = taruTable[player:getZoneID()]
     local warpMenu =
     {
         onStart = function(playerArg)
-            playerArg:addStatusEffectEx(xi.effect.TERROR, xi.effect.TERROR, 69, 0, 99999, 0, 0, 1, xi.effectFlag.ON_ZONE, true)
         end,
         title = string.format(dialogTableTaru.menu, taru.destZoneString),
         options =
@@ -568,6 +564,7 @@ hxi.teleport.triggerTaruWarp = function(player, npc)
             {
                 "Yes",
                 function(playerArg)
+                    player:setLocalVar("[Teleporter]Warping", 1)
                     npc:independentAnimation(playerArg, 261, 0)
                     playerArg:timer(1300, function(playerArgg)
                         playerArgg:setPos(taru.dest.x, taru.dest.y, taru.dest.z, taru.dest.rot, taru.dest.zone)
@@ -581,9 +578,6 @@ hxi.teleport.triggerTaruWarp = function(player, npc)
             },
         },
         onEnd = function(playerArg)
-            if playerArg:hasStatusEffect(xi.effect.TERROR) then
-                playerArg:delStatusEffectSilent(xi.effect.TERROR)
-            end
         end,
     }
 
@@ -596,6 +590,6 @@ hxi.teleport.triggerTaruWarp = function(player, npc)
     end)
 
     player:timer(50, function(playerArg)
-        playerArg:customMenu(warpMenu)
+        hxi.teleport.customMenu(playerArg, warpMenu)
     end)
 end
