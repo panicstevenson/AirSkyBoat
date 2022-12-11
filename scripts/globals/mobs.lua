@@ -109,6 +109,7 @@ xi.mob.nmTODPersist = function(mob, cooldown)
     end
 
     UpdateNMSpawnPoint(mob:getID())
+
     mob:setRespawnTime(cooldown)
 end
 
@@ -119,20 +120,18 @@ xi.mob.nmTODPersistCache = function(zone, mobId)
         local respawn = GetServerVariable(string.format("[SPAWN]%s", mobId))
         zone:setLocalVar(string.format("[SPAWN]%s", mobId), respawn)
 
-        if respawn == 0 then
-            return
-        end
-
-        if mob:isAlive() then
+        if mob then
             DespawnMob(mobId)
-        end
 
-        UpdateNMSpawnPoint(mobId)
+            if CheckNMSpawnPoint(mobId) then
+                UpdateNMSpawnPoint(mobId)
+            end
 
-        if respawn <= os.time() then
-            mob:setRespawnTime(10)
-        else
-            mob:setRespawnTime(respawn - os.time())
+            if respawn <= os.time() then
+                mob:setRespawnTime(10)
+            else
+                mob:setRespawnTime(respawn - os.time())
+            end
         end
     end
 end

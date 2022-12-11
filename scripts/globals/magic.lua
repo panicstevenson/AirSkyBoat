@@ -27,32 +27,14 @@ local nullMod                  = { xi.mod.FIRE_NULL,             xi.mod.ICE_NULL
 local blmMerit                 = { xi.merit.FIRE_MAGIC_POTENCY,  xi.merit.ICE_MAGIC_POTENCY,  xi.merit.WIND_MAGIC_POTENCY,   xi.merit.EARTH_MAGIC_POTENCY,  xi.merit.LIGHTNING_MAGIC_POTENCY,  xi.merit.WATER_MAGIC_POTENCY                                                          }
 local rdmMerit                 = { xi.merit.FIRE_MAGIC_ACCURACY, xi.merit.ICE_MAGIC_ACCURACY, xi.merit.WIND_MAGIC_ACCURACY,  xi.merit.EARTH_MAGIC_ACCURACY, xi.merit.LIGHTNING_MAGIC_ACCURACY, xi.merit.WATER_MAGIC_ACCURACY                                                         }
 xi.magic.barSpell              = { xi.effect.BARFIRE,            xi.effect.BARBLIZZARD,       xi.effect.BARAERO,             xi.effect.BARSTONE,            xi.effect.BARTHUNDER,              xi.effect.BARWATER                                                                    }
-
 xi.magic.dayWeak               = { xi.day.WATERSDAY,             xi.day.FIRESDAY,             xi.day.ICEDAY,                 xi.day.WINDSDAY,               xi.day.EARTHSDAY,                  xi.day.LIGHTNINGDAY,            xi.day.DARKSDAY,            xi.day.LIGHTSDAY          }
 xi.magic.singleWeatherWeak     = { xi.weather.RAIN,              xi.weather.HOT_SPELL,        xi.weather.SNOW,               xi.weather.WIND,               xi.weather.DUST_STORM,             xi.weather.THUNDER,             xi.weather.GLOOM,           xi.weather.AURORAS        }
 xi.magic.doubleWeatherWeak     = { xi.weather.SQUALL,            xi.weather.HEAT_WAVE,        xi.weather.BLIZZARDS,          xi.weather.GALES,              xi.weather.SAND_STORM,             xi.weather.THUNDERSTORMS,       xi.weather.DARKNESS,        xi.weather.STELLAR_GLARE  }
 xi.magic.eemStatus             = { xi.effect.FIRE_EEM_MOD,       xi.effect.ICE_EEM_MOD,       xi.effect.WIND_EEM_MOD,        xi.effect.EARTH_EEM_MOD,       xi.effect.THUNDER_EEM_MOD,         xi.effect.WATER_EEM_MOD,        xi.effect.LIGHT_EEM_MOD,    xi.effect.DARK_EEM_MOD    }
+
 xi.magic.eem                   = { 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.40, 0.50, 0.60, 0.70, 0.85, 1.00, 1.15, 1.30, 1.50 }
-
-xi.magic.eemTiers =
-{
-    { eem = 1.50, tier = 15 },
-    { eem = 1.30, tier = 14 },
-    { eem = 1.15, tier = 13 },
-    { eem = 1.00, tier = 12 },
-    { eem = 0.85, tier = 11 },
-    { eem = 0.70, tier = 10 },
-    { eem = 0.60, tier = 9 },
-    { eem = 0.50, tier = 8 },
-    { eem = 0.40, tier = 7 },
-    { eem = 0.30, tier = 6 },
-    { eem = 0.25, tier = 5 },
-    { eem = 0.20, tier = 4 },
-    { eem = 0.15, tier = 3 },
-    { eem = 0.10, tier = 2 },
-    { eem = 0.05, tier = 1 },
-}
-
+xi.magic.eemTiers              = { { eem = 1.50, tier = -3 }, { eem = 1.30, tier = -2 }, { eem = 1.15, tier = -1 }, { eem = 1.00, tier = 0  }, { eem = 0.85, tier = 1  }, { eem = 0.70, tier = 2  }, { eem = 0.60, tier = 3  }, { eem = 0.50, tier = 4  }, { eem = 0.40, tier = 5  }, { eem = 0.30, tier = 6  }, { eem = 0.25, tier = 7  }, { eem = 0.20, tier = 8  }, { eem = 0.15, tier = 9  }, { eem = 0.10, tier = 10 }, { eem = 0.05, tier = 11 } }
+xi.magic.effectEva             = { [xi.effect.SLEEP_I] = xi.mod.SLEEP_MEVA, [xi.effect.SLEEP_II] = xi.mod.SLEEP_MEVA, [xi.effect.POISON] = xi.mod.POISON_MEVA, [xi.effect.PARALYSIS] = xi.mod.PARALYZE_MEVA, [xi.effect.BLINDNESS] = xi.mod.BLIND_MEVA, [xi.effect.SILENCE] = xi.mod.SILENCE_MEVA, [xi.effect.PLAGUE] = xi.mod.VIRUS_MEVA, [xi.effect.PETRIFICATION] = xi.effect.PETRIFY_MEVA }
 -- USED FOR DAMAGING MAGICAL SPELLS (Stages 1 and 2 in Calculating Magic Damage on wiki)
 --Calculates magic damage using the standard magic damage calc.
 --Does NOT handle resistance.
@@ -180,7 +162,7 @@ local function getSpellBonusAcc(caster, target, spell, params)
     end
 
     if caster:hasStatusEffect(xi.effect.ELEMENTAL_SEAL) then
-        magicAccBonus = magicAccBonus + 100
+        magicAccBonus = magicAccBonus + 256
     end
 
     switch(casterJob): caseof
@@ -231,9 +213,17 @@ local function getSpellBonusAcc(caster, target, spell, params)
     return magicAccBonus
 end
 
-local function calculateMagicHitRate(magicacc, magiceva, hybridHit, dLvl)
+xi.magic.calculateMagicHitRate = function(magicacc, magiceva, target, element, skillchainCount, skill, caster, hybridHit, dLvl)
     local p = 0
-    local magicAccDiff = magicacc - magiceva
+    local eemTier = 0
+
+    if target and element and element ~= xi.magic.ele.NONE and target:isMob() then
+        eemTier = xi.magic.calculateEEMTier(target, element, skillchainCount)
+    end
+
+    local resBuild = utils.ternary(target:isNM() and caster and skill == xi.skill.ELEMENTAL_MAGIC, xi.magic.tryBuildResistance(target, xi.magic.resistMod[element], false, caster), 0)
+
+    local magicAccDiff = magicacc - (magiceva * (1 + utils.clamp(eemTier + resBuild, -3, 11) * 0.075))
 
     if magicAccDiff < 0 and hybridHit then
         p = utils.clamp(((75 + math.floor(magicAccDiff / 2)) - (4 * dLvl)), 5, 95)
@@ -565,6 +555,7 @@ end
 
 xi.magic.differentEffect = function(caster, target, spell, params)
     if
+        params.effect and
         target:hasStatusEffect(params.effect) and
         utils.ternary(target:getStatusEffect(params.effect):getSubPower() > 0, target:getStatusEffect(params.effect):getSubPower(), 3) >= params.tier
     then
@@ -616,12 +607,12 @@ xi.magic.applyResistanceEffect = function(caster, target, spell, params)
     end
 
     if effect ~= nil then
-        effectRes = effectRes + xi.magic.getEffectResistance(target, effect, false, caster)
+        effectRes = utils.ternary(xi.magic.effectEva[effect], xi.magic.effectEva[effect], 0)
     end
 
     local p = xi.magic.getMagicHitRate(caster, target, skill, element, effectRes, magicaccbonus, skillchainCount, params.hybridHit)
 
-    return xi.magic.getMagicResist(p, target, element, effectRes, skillchainCount)
+    return xi.magic.getMagicResist(p, target, element, effectRes, skillchainCount, effect, caster, false)
 end
 
 -- Applies resistance for additional effects
@@ -633,7 +624,7 @@ xi.magic.applyResistanceAddEffect = function(player, target, element, effect, bo
     end
 
     if effect then
-        effectRes = xi.magic.getEffectResistance(target, effect, false, player)
+        effectRes = utils.ternary(xi.magic.effectEva[effect], xi.magic.effectEva[effect], 0)
     end
 
     if not element then
@@ -642,8 +633,8 @@ xi.magic.applyResistanceAddEffect = function(player, target, element, effect, bo
 
     local _, skillchainCount = xi.magic.FormMagicBurst(element, target)
 
-    local p = xi.magic.getMagicHitRate(player, target, nil, element, effectRes, bonus, 0, skillchainCount, hybridHit)
-    local resist = xi.magic.getMagicResist(p, target, element, effectRes, skillchainCount)
+    local p = xi.magic.getMagicHitRate(player, target, nil, element, effectRes, bonus, 0, skillchainCount)
+    local resist = xi.magic.getMagicResist(p, target, element, effectRes, skillchainCount, effect, player, false)
 
     if resist < 0.5 then
         resist = 0
@@ -660,7 +651,7 @@ xi.magic.applySkillchainResistance = function(player, target, element)
     end
 
     local p = xi.magic.getMagicHitRate(player, target, nil, element, 0, 0, 0, 0)
-    local resist = xi.magic.getMagicResist(p, target, element, 0, 0)
+    local resist = xi.magic.getMagicResist(p, target, element, 0, 0, nil, player, true)
 
     return resist
 end
@@ -691,11 +682,11 @@ xi.magic.applyAbilityResistance = function(player, target, params)
     local effectRes = 0
 
     if params.effect then
-        effectRes = xi.magic.getEffectResistance(target, params.effect, false, player)
+        effectRes = utils.ternary(xi.magic.effectEva[params.effect], xi.magic.effectEva[params.effect], 0)
     end
 
-    local p = xi.magic.getMagicHitRate(player, target, params.skillType, params.element, effectRes, params.maccBonus, skillchainCount, params.hybridHit)
-    local resist = xi.magic.getMagicResist(p, target, params.element, effectRes, skillchainCount)
+    local p = xi.magic.getMagicHitRate(player, target, params.skillType, params.element, effectRes, params.maccBonus, skillchainCount)
+    local resist = xi.magic.getMagicResist(p, target, params.element, effectRes, skillchainCount, params.effect, player, utils.ternary(params.damageSpell, true, false))
 
     if not params.ignoreStateLock then
         if resist < 0.5 then
@@ -828,7 +819,7 @@ xi.magic.getMagicHitRate = function(caster, target, skillType, element, effectRe
     end
 
     if element ~= xi.magic.ele.NONE then
-        resMod = utils.clamp(target:getMod(xi.magic.resistMod[element]) - 50, 0, 999)
+        resMod = target:getMod(xi.magic.resistMod[element])
         -- Add acc for elemental affinity accuracy and element specific accuracy
         local affinityBonus = AffinityBonusAcc(caster, element)
         local elementBonus = caster:getMod(spellAcc[element])
@@ -845,7 +836,7 @@ xi.magic.getMagicHitRate = function(caster, target, skillType, element, effectRe
     bonusAcc = bonusAcc + caster:getMerit(xi.merit.MAGIC_ACCURACY) + caster:getMerit(xi.merit.NIN_MAGIC_ACCURACY)
 
     if skillchainCount > 0 then
-        magicacc = magicacc + 25
+        magicacc = magicacc + 30
     end
 
     magicacc = magicacc + bonusAcc
@@ -854,38 +845,20 @@ xi.magic.getMagicHitRate = function(caster, target, skillType, element, effectRe
     local maccFood = magicacc * (caster:getMod(xi.mod.FOOD_MACCP) / 100)
     magicacc = magicacc + utils.clamp(maccFood, 0, caster:getMod(xi.mod.FOOD_MACC_CAP))
 
-    return calculateMagicHitRate(magicacc, magiceva, hybridHit, dLvl)
+    return xi.magic.calculateMagicHitRate(magicacc, magiceva, target, element, skillchainCount, skillType, caster, hybridHit, dLvl)
 end
 
 -- Returns resistance value from given magic hit rate (p)
-xi.magic.getMagicResist = function(magicHitRate, target, element, effectRes, skillchainCount)
+xi.magic.getMagicResist = function(magicHitRate, target, element, effectRes, skillchainCount, effect, caster, isDamageSpell)
     local eemVal = 1
     local resMod = 0
+    local eemTier = 0
+    local resistTier = utils.ternary(target:isNM(), xi.magic.getBuildResistance(target, xi.magic.resistMod[element]), 0)
+    local damageSpell = utils.ternary(isDamageSpell and isDamageSpell == true, true, false)
 
-    if not skillchainCount then
-        skillchainCount = 0
-    end
-
-    if target ~= nil and element ~= nil and element ~= xi.magic.ele.NONE and target:getObjType() == xi.objType.MOB then
-        local eemTier = 1
-        eemVal = target:getMod(xi.magic.eleEvaMult[element]) / 100
-
-        for _, eemTable in pairs(xi.magic.eemTiers) do -- Finds the highest tier for the resist.
-            if eemVal >= eemTable.eem then
-                eemTier = utils.clamp(eemTable.tier, 1, 15)
-                break
-            end
-        end
-
-        if skillchainCount > 0 then
-            eemTier = eemTier + 1
-        end
-
-        if target:hasStatusEffect(xi.magic.eemStatus[element]) then
-            eemTier = utils.clamp(eemTier - target:getStatusEffect(xi.magic.eemStatus[element]):getPower(), 1, 15)
-        end
-
-        eemVal = xi.magic.eem[eemTier]
+    if target and element and element ~= xi.magic.ele.NONE and target:isMob() then
+        eemTier = utils.clamp(xi.magic.calculateEEMTier(target, element, skillchainCount) + resistTier, -3, 11)
+        eemVal  = xi.magic.calculateEEMVal(eemTier)
     end
 
     local eighthTrigger = false
@@ -909,13 +882,18 @@ xi.magic.getMagicResist = function(magicHitRate, target, element, effectRes, ski
         quarterTrigger = true
     end
 
-    local baseRes = 1
-
-    if effectRes and effectRes > 0 then
-        baseRes = baseRes - (effectRes / 100)
+    if eemTier == -3 and damageSpell then
+        eighthTrigger  = false
+        quarterTrigger = false
     end
 
-    local p = utils.clamp(((magicHitRate * eemVal) / 100), 0.05, 0.95)
+    local baseRes = 1
+
+    if effect then
+        baseRes = baseRes - (xi.magic.getEffectResistance(target, effect, false, caster) / 100)
+    end
+
+    local p = utils.clamp((magicHitRate / 100), 0.05, 0.95)
 
     p = utils.clamp(p * baseRes, -1, 0.95)
 
@@ -938,7 +916,7 @@ xi.magic.getMagicResist = function(magicHitRate, target, element, effectRes, ski
         resist = 1.0
     end
 
-    if eemVal <= 0.5 then
+    if eemVal <= 0.50 and damageSpell then
         resist = resist / 2
     end
 
@@ -948,32 +926,37 @@ end
 xi.magic.tryBuildResistance = function(target, resistance, isEnfeeb, caster)
     local baseRes = target:getLocalVar(string.format("[RES]Base_%s", resistance))
     local castCool = target:getLocalVar(string.format("[RES]CastCool_%s", resistance))
-    local builtPercent = target:getLocalVar(string.format("[RES]BuiltPercent_%s", resistance))
+    local resBuilt = target:getLocalVar(string.format("[RES]ResTier_%s", resistance))
     local coolTime = 20
-    local buildPercent = 40
 
     if baseRes == 0 then
         target:setLocalVar(string.format("[RES]Base_%s", resistance), target:getMod(resistance))
     end
 
-    if not isEnfeeb then
-        buildPercent = buildPercent / 2 -- Reduce Resistence Build to 2%/1% To Help With Timed Casts
+    if castCool <= os.time() then -- Reset Mod If 20s Since Last Spell Elapsed
+        target:setLocalVar(string.format("[RES]ResTier_%s", resistance), 0) -- Reset BuiltPercent Var
+        target:setLocalVar(string.format("[RES]CastCool_%s", resistance), os.time() + coolTime) -- Start Cool Var
+        return 0
+    else
+        target:setLocalVar(string.format("[RES]ResTier_%s", resistance), resBuilt + 1)
+        target:setLocalVar(string.format("[RES]CastCool_%s", resistance), os.time() + coolTime)
+        resBuilt = target:getLocalVar(string.format("[RES]ResTier_%s", resistance))
+        return math.max(resBuilt - 1, 0)
     end
+end
+
+xi.magic.getBuildResistance = function(target, resistance)
+    local castCool = target:getLocalVar(string.format("[RES]CastCool_%s", resistance))
+    local coolTime = 20
 
     if castCool <= os.time() then -- Reset Mod If 20s Since Last Spell Elapsed
-        target:setLocalVar(string.format("[RES]BuiltPercent_%s", resistance), 0) -- Reset BuiltPercent Var
-        target:setMod(resistance, baseRes) -- Reset Mod To Base
+        target:setLocalVar(string.format("[RES]ResTier_%s", resistance), 0) -- Reset BuiltPercent Var
         target:setLocalVar(string.format("[RES]CastCool_%s", resistance), os.time() + coolTime) -- Start Cool Var
+        return 0
     else
-        if builtPercent + buildPercent + baseRes > 1000 then
-            buildPercent = 1000 - (builtPercent + baseRes)
-        end
-
-        target:setMod(resistance, baseRes + builtPercent + buildPercent)
-        target:setLocalVar(string.format("[RES]BuiltPercent_%s", resistance), builtPercent + buildPercent)
-        target:setLocalVar(string.format("[RES]CastCool_%s", resistance), os.time() + coolTime)
+        local resBuilt = target:getLocalVar(string.format("[RES]ResTier_%s", resistance))
+        return math.max(resBuilt - 1, 0)
     end
-
 end
 
 -- Returns the amount of resistance the
@@ -1867,4 +1850,44 @@ xi.magic.getCharmChance = function(charmer, target, includeCharmAffinityAndChanc
     charmChance = charmChance + dCHR;
 
     return utils.clamp(charmChance, 0, 95);
+end
+
+xi.magic.calculateEEMTier = function(target, element, skillchainCount)
+    local eemTier = 1
+
+    if not skillchainCount then
+        skillchainCount = 0
+    end
+
+    if target ~= nil and element ~= nil and element ~= xi.magic.ele.NONE and target:getObjType() == xi.objType.MOB then
+        local eemVal = target:getMod(xi.magic.eleEvaMult[element]) / 100
+        for _, eemTable in pairs(xi.magic.eemTiers) do -- Finds the highest tier for the resist.
+            if eemVal >= eemTable.eem then
+                eemTier = utils.clamp(eemTable.tier, -3, 11)
+                break
+            end
+        end
+
+        if skillchainCount > 0 then
+            eemTier = eemTier + 1
+        end
+
+        if target:hasStatusEffect(xi.magic.eemStatus[element]) then
+            eemTier = utils.clamp(eemTier - target:getStatusEffect(xi.magic.eemStatus[element]):getPower(), -3, 11)
+        end
+    end
+
+    return eemTier
+end
+
+xi.magic.calculateEEMVal = function(tier)
+    local eemVal = 0
+    for _, eemTable in pairs(xi.magic.eemTiers) do
+        if tier == eemTable.tier then
+            eemVal = eemTable.eem
+            break
+        end
+    end
+
+    return eemVal
 end

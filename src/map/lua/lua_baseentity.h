@@ -89,6 +89,7 @@ public:
     void       startEventString(int32 EventID, sol::variadic_args va);      // Begins Event with string param (0x33 packet)
     void       startCutscene(int32 EventID, sol::variadic_args va);         // Begins cutscene which locks the character
     void       startOptionalCutscene(int32 EventID, sol::variadic_args va); // Begins an event that can turn into a cutscene
+    void       startMenuEvent(int32 EventID, sol::variadic_args va);        // Begins an event that can be interrupted.
 
     void updateEvent(sol::variadic_args va);       // Updates event
     void updateEventString(sol::variadic_args va); // (string, string, string, string, uint32, ...)
@@ -539,6 +540,8 @@ public:
     bool  enterBattlefield(sol::object const& area);                                                                               // enter a battlefield entity is registered with
     bool  leaveBattlefield(uint8 leavecode);                                                                                       // leave battlefield if inside one
     bool  isInDynamis();                                                                                                           // If player is in Dynamis return true else false
+    void  setEnteredBattlefield(bool entered);                                                                                     // Sets if the player has entered into a battlefield or not
+    bool  hasEnteredBattlefield();                                                                                                 // If the player has entered into a battlefield return true else false
 
     // Battle Utilities
     bool isAlive();

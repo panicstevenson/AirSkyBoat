@@ -2330,6 +2330,9 @@ INSERT INTO `mob_skill_lists` VALUES ('Bullheaded_Grosvez', 504, 607); -- slam d
 INSERT INTO `mob_skill_lists` VALUES ('Bullheaded_Grosvez', 504, 608); -- arm block
 INSERT INTO `mob_skill_lists` VALUES ('Bullheaded_Grosvez', 504, 609); -- battle dance
 INSERT INTO `mob_skill_lists` VALUES ('Bullheaded_Grosvez', 504, 790); -- shoulder slam
+-- Values: 505 - 698 Available
+INSERT INTO `mob_skill_lists` VALUES ('Wreaker',699,1248); -- Trinary Absorption
+INSERT INTO `mob_skill_lists` VALUES ('Wreaker',699,1252); -- Shadow Spread
 INSERT INTO `mob_skill_lists` VALUES ('Demonic_Tiphia',700,334);
 INSERT INTO `mob_skill_lists` VALUES ('Demonic_Tiphia',700,335);
 INSERT INTO `mob_skill_lists` VALUES ('Demonic_Tiphia',700,336);
@@ -2486,6 +2489,7 @@ INSERT INTO `mob_skill_lists` VALUES ('Jug_Hare', 733, 673);
 INSERT INTO `mob_skill_lists` VALUES ('Jug_Hare', 733, 674);
 INSERT INTO `mob_skill_lists` VALUES ('Jug_Hare', 733, 735);
 INSERT INTO `mob_skill_lists` VALUES ('Jug_Mandragora', 734, 675);
+INSERT INTO `mob_skill_lists` VALUES ('Jug_Mandragora', 734, 676);
 INSERT INTO `mob_skill_lists` VALUES ('Jug_Mandragora', 734, 677);
 INSERT INTO `mob_skill_lists` VALUES ('Jug_Mandragora', 734, 678);
 INSERT INTO `mob_skill_lists` VALUES ('Jug_Mandragora', 734, 679);

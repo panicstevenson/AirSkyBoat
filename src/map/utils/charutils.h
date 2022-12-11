@@ -275,6 +275,8 @@ namespace charutils
     bool hasEntitySpawned(CCharEntity* PChar, CBaseEntity* entity);
 
     uint32 getCharIdFromName(std::string const& name);
+    void   releaseEvent(CCharEntity* PChar, bool skipMessage = false);
+
     uint8  GetHighestLevel(CCharEntity* PChar);
     bool   CanUseYell(CCharEntity* PChar);
     bool   IsYellSpamFiltered(CCharEntity* PChar);
