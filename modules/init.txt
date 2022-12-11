@@ -74,4 +74,4 @@ clustering/horizon_zone_settings.sql
 #-----------------------
 #		Custom
 #-----------------------
-#custom/sql/starlight_celebrations.sql
+custom/sql/starlight_celebrations.sql
