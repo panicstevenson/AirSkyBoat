@@ -1153,6 +1153,7 @@ UPDATE mob_groups SET minLevel = 23, maxLevel = 27 WHERE name = "Ghoul_blm"  and
 -- ------------------------------------------------------------
 
 UPDATE mob_groups SET minLevel='47',maxLevel='49' WHERE name='King_Crawler' AND groupid='16' AND zoneid='197';
+UPDATE mob_groups SET minLevel='40',maxLevel='45' WHERE name='Worker_Crawler' AND groupid='6' AND zoneid='197';
 UPDATE mob_groups SET minLevel='55',maxLevel='57',content_tag='ABYSSEA' WHERE name='Vespo' AND groupid='17' AND zoneid='197';
 UPDATE mob_groups SET minLevel='50',maxLevel='53' WHERE name='Dancing_Jewel' AND groupid='18' AND zoneid='197';
 UPDATE mob_groups SET minLevel='51',maxLevel='54',content_tag='ABYSSEA' WHERE name='Olid_Funguar' AND groupid='19' AND zoneid='197';

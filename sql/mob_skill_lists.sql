@@ -4025,6 +4025,11 @@ INSERT INTO `mob_skill_lists` VALUES ('JailerOfTemperance',4047,1469);
 INSERT INTO `mob_skill_lists` VALUES ('BeeLowLevel',4048,334);
 INSERT INTO `mob_skill_lists` VALUES ('BeeLowLevel',4048,335);
 
+INSERT INTO `mob_skill_lists` VALUES ('Cluster_NoDestruct',4049,567);
+INSERT INTO `mob_skill_lists` VALUES ('Cluster_NoDestruct',4049,568);
+INSERT INTO `mob_skill_lists` VALUES ('Cluster_NoDestruct',4049,569);
+INSERT INTO `mob_skill_lists` VALUES ('Cluster_NoDestruct',4049,570);
+
 -- End of AirSkyBoat section
 
 -- ------------------------------------------------------------

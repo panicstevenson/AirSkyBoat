@@ -53,6 +53,7 @@ zoneObject.onInitialize = function(zone)
     end
 
     xi.helm.initZone(zone, xi.helm.type.EXCAVATION)
+    hxi.spawner.spawnInitialMobs(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

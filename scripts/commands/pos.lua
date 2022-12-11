@@ -69,7 +69,7 @@ function onTrigger(player, arg1, arg2, arg3, arg4, arg5)
     -- report or move position
     if x == nil or y == nil or z == nil then
         player:PrintToPlayer(string.format("%s's position: X %.4f  Y %.4f  Z %.4f Rot %.4f", targ:getName(), targ:getXPos(), targ:getYPos(), targ:getZPos(), targ:getRotPos() ))
-        print(string.format("%s's position: xPos = %.4f, yPos = %.4f, zPos = %.4f, Rot = %.4f", targ:getName(), targ:getXPos(), targ:getYPos(), targ:getZPos(), targ:getRotPos() ))
+        print(string.format("%s's position: xPos = %.2f, yPos = %.2f, zPos = %.2f, Rot = %.4f", targ:getName(), targ:getXPos(), targ:getYPos(), targ:getZPos(), targ:getRotPos() ))
     else
         if zoneId == nil then
             zoneId = targ:getZoneID()

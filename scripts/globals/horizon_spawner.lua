@@ -33,6 +33,14 @@ local spawnerMobs =
     -- {
         -- { name = "something", groupId = 1, groupZone = 1, funcLookup = "Default", min = 1, max = 2, xPos = 1.123, yPos = 1.123, zPos = 1.123, rot = 0, respawn = 30, drops = 123, skills = 234, spells = 345, enabled = true, spawnType = xi.spawnType.spawnType },
     --  }
+    [xi.zone.ATTOHWA_CHASM] =
+    {
+        -- Additional mobs for F-6 Camp
+        { name = "Monarch Ogrefly", groupId = 31, groupZone = 7, funcLookup = "Default", min = 65, max = 67, xPos = -402.2323, yPos = -4.3715, zPos = 365.0803, rot =  55, respawn = 330 },
+        { name = "Monarch Ogrefly", groupId = 31, groupZone = 7, funcLookup = "Default", min = 65, max = 67, xPos = -423.1858, yPos = -4.5566, zPos = 331.6226, rot =  55, respawn = 330 },
+        { name = "Monarch Ogrefly", groupId = 31, groupZone = 7, funcLookup = "Default", min = 65, max = 67, xPos = -394.8933, yPos = -3.3378, zPos = 298.4017, rot =  55, respawn = 330 },
+        { name = "Sand Lizard",     groupId = 30, groupZone = 7, funcLookup = "Default", min = 65, max = 67, xPos = -388.6336, yPos = -3.6329, zPos = 317.4515, rot =  55, respawn = 330 },
+    },
     [xi.zone.BUBURIMU_PENINSULA] =
     {
         -- Camp 1, Birds/Mandragora
@@ -63,6 +71,14 @@ local spawnerMobs =
     {
         { name = "Flytrap", groupId = 13, groupZone = 2, funcLookup = "Default", min = 20, max = 22, xPos = -352.82, yPos = -5.4, zPos = 586.91, rot =  55, respawn = 330, drops = 852, skills = 114, spells = 0 },
         { name = "Flytrap", groupId = 13, groupZone = 2, funcLookup = "Default", min = 20, max = 22, xPos = -356.67, yPos = -5.6, zPos = 557.31, rot =  55, respawn = 330, drops = 852, skills = 114, spells = 0 },
+    },
+    [xi.zone.CRAWLERS_NEST] =
+    {
+        { name = "Rumble Crawler", groupId = 31, groupZone = 197, funcLookup = "Default", min = 53, max = 55, xPos = -65.41, yPos = -0.76, zPos = -376.56, rot =  55, respawn = 420 },
+        { name = "Labryinth Lizard", groupId = 27, groupZone = 197, funcLookup = "Default", min = 49, max = 51, xPos = 19.41, yPos = -0.17, zPos = 236.47, rot =  55, respawn = 420 },
+        { name = "Labryinth Lizard", groupId = 27, groupZone = 197, funcLookup = "Default", min = 49, max = 51, xPos = 72.32, yPos = -0.28, zPos = 220.64, rot =  55, respawn = 420 },
+        { name = "Den Beetle", groupId = 24, groupZone = 197, funcLookup = "Default", min = 56, max = 59, xPos = -153.12, yPos = -1.48, zPos = 350.26, rot =  55, respawn = 420 },
+        { name = "Den Beetle", groupId = 24, groupZone = 197, funcLookup = "Default", min = 56, max = 59, xPos = -133.89, yPos = -0.09, zPos = 373.04, rot =  55, respawn = 420 },
     },
     [xi.zone.EASTERN_ALTEPA_DESERT] =
     {
@@ -102,22 +118,13 @@ local spawnerMobs =
     {
         -- Level 10-12 exp camp
         { name = "Mineral Eater", groupId =   3, groupZone = 108, funcLookup = "Default", min = 15, max = 19, xPos = 202.69, yPos = 25.92, zPos = 494.16, rot =  51, respawn = 330 },
-        { name = "Mineral Eater", groupId =   3, groupZone = 108, funcLookup = "Default", min = 15, max = 19, xPos = 224.08, yPos = 22.66, zPos = 487.91, rot =  51, respawn = 330 },
         { name = "Mineral Eater", groupId =   3, groupZone = 108, funcLookup = "Default", min = 15, max = 19, xPos = 213.36, yPos = 22.95, zPos = 470.18, rot =  51, respawn = 330 },
-        { name = "Mineral Eater", groupId =   3, groupZone = 108, funcLookup = "Default", min = 15, max = 19, xPos = 237.35, yPos = 30.81, zPos = 509.44, rot =  51, respawn = 330 },
         { name = "Mineral Eater", groupId =   3, groupZone = 108, funcLookup = "Default", min = 15, max = 19, xPos = 232.56, yPos = 32.15, zPos = 535.62, rot =  51, respawn = 330 },
-        { name = "Mineral Eater", groupId =   3, groupZone = 108, funcLookup = "Default", min = 15, max = 19, xPos = 212.49, yPos = 32.46, zPos = 527.21, rot =  51, respawn = 330 },
         { name = "Mineral Eater", groupId =   3, groupZone = 108, funcLookup = "Default", min = 15, max = 19, xPos = 244.85, yPos = 31.59, zPos = 573.51, rot =  51, respawn = 330 },
-        { name = "Mineral Eater", groupId =   3, groupZone = 108, funcLookup = "Default", min = 15, max = 19, xPos = 238.80, yPos = 31.60, zPos = 599.30, rot =  51, respawn = 330 },
-        { name = "Mineral Eater", groupId =   3, groupZone = 108, funcLookup = "Default", min = 15, max = 19, xPos = 255.08, yPos = 31.85, zPos = 604.66, rot =  51, respawn = 330 },
         { name = "Mineral Eater", groupId =   3, groupZone = 108, funcLookup = "Default", min = 15, max = 19, xPos = 243.62, yPos = 36.58, zPos = 623.59, rot =  51, respawn = 330 },
-        { name = "Mineral Eater", groupId =   3, groupZone = 108, funcLookup = "Default", min = 15, max = 19, xPos = 256.22, yPos = 36.52, zPos = 639.09, rot =  51, respawn = 330 },
         { name = "Mineral Eater", groupId =   3, groupZone = 108, funcLookup = "Default", min = 15, max = 19, xPos = 279.30, yPos = 32.07, zPos = 634.44, rot =  51, respawn = 330 },
-        { name = "Yellow Jacket", groupId =  51, groupZone = 117, funcLookup = "Default", min = 17, max = 20, xPos = 215.97, yPos = 30.03, zPos = 508.35, rot =  51, respawn = 330 },
         { name = "Yellow Jacket", groupId =  51, groupZone = 117, funcLookup = "Default", min = 17, max = 20, xPos = 208.43, yPos = 32.48, zPos = 532.49, rot =  51, respawn = 330 },
-        { name = "Yellow Jacket", groupId =  51, groupZone = 117, funcLookup = "Default", min = 17, max = 20, xPos = 234.60, yPos = 32.16, zPos = 528.79, rot =  51, respawn = 330 },
         { name = "Yellow Jacket", groupId =  51, groupZone = 117, funcLookup = "Default", min = 17, max = 20, xPos = 280.05, yPos = 32.91, zPos = 618.83, rot =  51, respawn = 330 },
-        { name = "Yellow Jacket", groupId =  51, groupZone = 117, funcLookup = "Default", min = 17, max = 20, xPos = 253.69, yPos = 36.69, zPos = 622.09, rot =  51, respawn = 330 },
         { name = "Yellow Jacket", groupId =  51, groupZone = 117, funcLookup = "Default", min = 17, max = 20, xPos = 247.32, yPos = 32.16, zPos = 599.93, rot =  51, respawn = 330 },
         -- Level 10-12 near Dunes entrance
         { name = "Mineral Eater", groupId =   3, groupZone = 108, funcLookup = "Default", min = 15, max = 19, xPos = -235.97, yPos =  72.00, zPos = 839.03, rot =  51, respawn = 330 },
@@ -128,8 +135,18 @@ local spawnerMobs =
         { name = "Yellow Jacket", groupId =  51, groupZone = 117, funcLookup = "Default", min = 17, max = 20, xPos = -265.83, yPos =  65.79, zPos = 786.88, rot =  51, respawn = 330 },
         { name = "Yellow Jacket", groupId =  51, groupZone = 117, funcLookup = "Default", min = 17, max = 20, xPos = -275.22, yPos =  67.87, zPos = 819.20, rot =  51, respawn = 330 },
         { name = "Yellow Jacket", groupId =  51, groupZone = 117, funcLookup = "Default", min = 17, max = 20, xPos = -236.86, yPos =  72.27, zPos = 824.61, rot =  51, respawn = 330 },
-        { name = "Goblin Weaver", groupId =   6, groupZone = 108, funcLookup = "Default", min = 17, max = 20, xPos = -255.92, yPos =  70.73, zPos = 826.00, rot =  51, respawn = 330 },
-        { name = "Goblin Digger", groupId =  31, groupZone = 108, funcLookup = "Default", min = 17, max = 20, xPos = -268.81, yPos =  65.03, zPos = 778.83, rot =  51, respawn = 330 },
+        { name = "Goblin Weaver", groupId =   6, groupZone = 108, funcLookup = "Default", min = 8, max = 10, xPos = -255.92, yPos =  70.73, zPos = 826.00, rot =  51, respawn = 330 },
+        { name = "Goblin Digger", groupId =  31, groupZone = 108, funcLookup = "Default", min = 11, max = 14, xPos = -268.81, yPos =  65.03, zPos = 778.83, rot =  51, respawn = 330 },
+        -- L-6 10-12 camp
+        { name = "Mineral Eater", groupId =   3, groupZone = 108, funcLookup = "Default", min = 15, max = 19, xPos = 627.6542, yPos = 32.3982, zPos = 399.6770, rot =  51, respawn = 330 },
+        { name = "Mineral Eater", groupId =   3, groupZone = 108, funcLookup = "Default", min = 15, max = 19, xPos = 632.4895, yPos = 38.9642, zPos = 445.7001, rot =  51, respawn = 330 },
+        { name = "Mineral Eater", groupId =   3, groupZone = 108, funcLookup = "Default", min = 15, max = 19, xPos = 593.3698, yPos = 40.2504, zPos = 453.2258, rot =  51, respawn = 330 },
+        { name = "Mineral Eater", groupId =   3, groupZone = 108, funcLookup = "Default", min = 15, max = 19, xPos = 582.4508, yPos = 38.3179, zPos = 419.8404, rot =  51, respawn = 330 },
+        { name = "Mineral Eater", groupId =   3, groupZone = 108, funcLookup = "Default", min = 15, max = 19, xPos = 566.1836, yPos = 39.6973, zPos = 398.0089, rot =  51, respawn = 330 },
+        { name = "Mineral Eater", groupId =   3, groupZone = 108, funcLookup = "Default", min = 15, max = 19, xPos = 558.0540, yPos = 32.9444, zPos = 369.6863, rot =  51, respawn = 330 },
+        { name = "Yellow Jacket", groupId =  51, groupZone = 117, funcLookup = "Default", min = 17, max = 20, xPos = 626.1239, yPos = 35.0376, zPos = 420.2376, rot =  51, respawn = 330 },
+        { name = "Yellow Jacket", groupId =  51, groupZone = 117, funcLookup = "Default", min = 17, max = 20, xPos = 603.1894, yPos = 36.4646, zPos = 423.1826, rot =  51, respawn = 330 },
+        { name = "Yellow Jacket", groupId =  51, groupZone = 117, funcLookup = "Default", min = 17, max = 20, xPos = 583.4073, yPos = 34.9347, zPos = 402.5564, rot =  51, respawn = 330 },
     },
     [xi.zone.LA_THEINE_PLATEAU] =
     {
@@ -161,8 +178,8 @@ local spawnerMobs =
         { name = "Plateau Hare",  groupId =   6, groupZone = 102, funcLookup = "Default", min = 17, max = 20, xPos = 100.25, yPos = 31.96, zPos = -554.71, rot =  51, respawn = 330 },
         { name = "Plateau Hare",  groupId =   6, groupZone = 102, funcLookup = "Default", min = 17, max = 20, xPos = 58.34, yPos =  27.33, zPos = -562.29, rot =  51, respawn = 330 },
         { name = "Plateau Hare",  groupId =   6, groupZone = 102, funcLookup = "Default", min = 17, max = 20, xPos = 51.15, yPos =  32.36, zPos = -601.93, rot =  51, respawn = 330 },
-        { name = "Orcish Fodder",  groupId =  9, groupZone = 102, funcLookup = "Default", min = 17, max = 20, xPos = 80.32, yPos =  32.30, zPos = -611.61, rot =  51, respawn = 330 },
-        { name = "Orcish Grunt", groupId =  23, groupZone = 102, funcLookup = "Default", min = 17, max = 20, xPos = 59.41, yPos =  26.92, zPos = -553.60, rot =  51, respawn = 330 },
+        { name = "Orcish Fodder",  groupId =  9, groupZone = 102, funcLookup = "Default", min = 8, max = 10, xPos = 80.32, yPos =  32.30, zPos = -611.61, rot =  51, respawn = 330 },
+        { name = "Orcish Grunt", groupId =  23, groupZone = 102, funcLookup = "Default", min = 12, max = 16, xPos = 59.41, yPos =  26.92, zPos = -553.60, rot =  51, respawn = 330 },
     },
     [xi.zone.MERIPHATAUD_MOUNTAINS] =
     {
@@ -208,6 +225,13 @@ local spawnerMobs =
         { name = "Puma", groupId =  35, groupZone = 119, funcLookup = "Default", min = 29, max = 31, xPos = -478.47, yPos =  0.32, zPos = -309.56, rot =  51, respawn = 330 },
         { name = "Drooling Hound", groupId =  7, groupZone = 119, funcLookup = "Default", min = 31, max = 33, xPos = -481.46, yPos =  -3.46, zPos = -336.68, rot =  51, respawn = 330, spawnType = xi.spawnType.SPAWNTYPE_ATNIGHT },
         { name = "Drooling Hound", groupId =  7, groupZone = 119, funcLookup = "Default", min = 31, max = 33, xPos = -510.32, yPos =  8.29, zPos = -244.14, rot =  51, respawn = 330, spawnType = xi.spawnType.SPAWNTYPE_ATNIGHT },
+        -- Readding Crane Flys deleted for previous camp
+        { name = "Crane Fly", groupId =  33, groupZone = 119, funcLookup = "Default", min = 18, max = 21, xPos = -418.97, yPos =  -7.44, zPos = 250.33, rot =  51, respawn = 330 },
+        { name = "Crane Fly", groupId =  33, groupZone = 119, funcLookup = "Default", min = 18, max = 21, xPos = -343.71, yPos =  -8, zPos = 286.87, rot =  51, respawn = 330 },
+        { name = "Crane Fly", groupId =  33, groupZone = 119, funcLookup = "Default", min = 18, max = 21, xPos = -263.31, yPos =  -3.5, zPos = 298.87, rot =  51, respawn = 330 },
+        { name = "Crane Fly", groupId =  33, groupZone = 119, funcLookup = "Default", min = 18, max = 21, xPos = -320.24, yPos =  8.9, zPos = 340.65, rot =  51, respawn = 330 },
+        { name = "Crane Fly", groupId =  33, groupZone = 119, funcLookup = "Default", min = 18, max = 21, xPos = -92.12, yPos =  8.11, zPos = 447.79, rot =  51, respawn = 330 },
+        { name = "Crane Fly", groupId =  33, groupZone = 119, funcLookup = "Default", min = 18, max = 21, xPos = 38.70, yPos =  -11.06, zPos = 345.32, rot =  51, respawn = 330 },
     },
     [xi.zone.PASHHOW_MARSHLANDS] =
     {
@@ -614,6 +638,41 @@ local spawnerMobs =
         { name = "Helm Beetle", groupId =  8, groupZone = 208, funcLookup = "Default", min = 55, max = 59, xPos = 57.47, yPos = 0.00, zPos = -101.68, rot =  127, respawn = 420 },
         { name = "Helm Beetle", groupId =  8, groupZone = 208, funcLookup = "Default", min = 55, max = 59, xPos = 139.62, yPos = -8.00, zPos = -180.75, rot =  127, respawn = 420 },
     },
+    [xi.zone.ROMAEVE] =
+    {
+        -- Additional mobs for entrance camp
+        { name = "Killing Weapon", groupId =  2, groupZone = 122, funcLookup = "Default", min = 60, max = 64, xPos = 40.73, yPos = -2.00, zPos = -92.50, rot =  127, respawn = 420 },
+        { name = "Ominous Weapon", groupId =  3, groupZone = 122, funcLookup = "Default", min = 61, max = 65, xPos = -53.13, yPos = -2.00, zPos = -111.45, rot =  127, respawn = 420 },
+        -- Moongate merit camps
+        -- L-6 Camp
+        { name = "Lunar Guardian", groupId =  1, groupZone = 9, funcLookup = "Default", min = 81, max = 82, xPos = 194.21, yPos = -4.00, zPos = 85.91, rot =  127, respawn = 420, skills = 84 },
+        { name = "Lunar Guardian", groupId =  1, groupZone = 9, funcLookup = "Default", min = 81, max = 82, xPos = 176.58, yPos = -4.00, zPos = 99.75, rot =  127, respawn = 420, skills = 84 },
+        { name = "Lunar Guardian", groupId =  1, groupZone = 9, funcLookup = "Default", min = 81, max = 82, xPos = 129.75, yPos = -4.00, zPos = 127.18, rot =  127, respawn = 420, skills = 84 },
+        { name = "Lunar Guardian", groupId =  1, groupZone = 9, funcLookup = "Default", min = 81, max = 82, xPos = 117.13, yPos = -4.00, zPos = 89.82, rot =  127, respawn = 420, skills = 84 },
+        { name = "Lunar Guardian", groupId =  1, groupZone = 9, funcLookup = "Default", min = 81, max = 82, xPos = 141.14, yPos = -4.00, zPos = 76.49, rot =  127, respawn = 420, skills = 84 },
+        { name = "Lunar Guardian", groupId =  1, groupZone = 9, funcLookup = "Default", min = 81, max = 82, xPos = 166.69, yPos = -4.00, zPos = 58.48, rot =  127, respawn = 420, skills = 84 },
+        { name = "Lunar Guardian", groupId =  1, groupZone = 9, funcLookup = "Default", min = 81, max = 82, xPos = 169.23, yPos = 4.00, zPos = 96.75, rot =  127, respawn = 420, skills = 84 },
+        { name = "Lunar Guardian", groupId =  1, groupZone = 9, funcLookup = "Default", min = 81, max = 82, xPos = 147.98, yPos = 4.00, zPos = 80.46, rot =  127, respawn = 420, skills = 84 },
+        { name = "Lunar Guardian", groupId =  1, groupZone = 9, funcLookup = "Default", min = 81, max = 82, xPos = 148.74, yPos = 4.00, zPos = 107.90, rot =  127, respawn = 420, skills = 84 },
+        { name = "Lunar Guardian", groupId =  1, groupZone = 9, funcLookup = "Default", min = 81, max = 82, xPos = 108.44, yPos = 4.00, zPos = 114.56, rot =  127, respawn = 420, skills = 84 },
+        { name = "Luminous Cluster", groupId =  8, groupZone = 29, funcLookup = "Default", min = 81, max = 82, xPos = 139.37, yPos = 4.00, zPos = 92.77, rot =  127, respawn = 420, skills = 4049 },
+        { name = "Luminous Cluster", groupId =  8, groupZone = 29, funcLookup = "Default", min = 81, max = 82, xPos = 153.66, yPos = 4.00, zPos = 99.15, rot =  127, respawn = 420, skills = 4049 },
+        { name = "Luminous Cluster", groupId =  8, groupZone = 29, funcLookup = "Default", min = 81, max = 82, xPos = 153.52, yPos = 4.00, zPos = 78.77, rot =  127, respawn = 420, skills = 4049 },
+        -- B-8 Camp
+        { name = "Lunar Guardian", groupId =  1, groupZone = 9, funcLookup = "Default", min = 81, max = 82, xPos = -256.24, yPos = -4.00, zPos = 10.71, rot =  127, respawn = 420, skills = 84 },
+        { name = "Lunar Guardian", groupId =  1, groupZone = 9, funcLookup = "Default", min = 81, max = 82, xPos = -266.57, yPos = -4.00, zPos = -10.32, rot =  127, respawn = 420, skills = 84 },
+        { name = "Lunar Guardian", groupId =  1, groupZone = 9, funcLookup = "Default", min = 81, max = 82, xPos = -283.70, yPos = -4.00, zPos = -59.87, rot =  127, respawn = 420, skills = 84 },
+        { name = "Lunar Guardian", groupId =  1, groupZone = 9, funcLookup = "Default", min = 81, max = 82, xPos = -245.66, yPos = -4.00, zPos = -66.11, rot =  127, respawn = 420, skills = 84 },
+        { name = "Lunar Guardian", groupId =  1, groupZone = 9, funcLookup = "Default", min = 81, max = 82, xPos = -237.85, yPos = -4.00, zPos = -40.94, rot =  127, respawn = 420, skills = 84 },
+        { name = "Lunar Guardian", groupId =  1, groupZone = 9, funcLookup = "Default", min = 81, max = 82, xPos = -225.81, yPos = -4.00, zPos = -12.73, rot =  127, respawn = 420, skills = 84 },
+        { name = "Lunar Guardian", groupId =  1, groupZone = 9, funcLookup = "Default", min = 81, max = 82, xPos = -241.66, yPos = 4.00, zPos = -35.52, rot =  127, respawn = 420, skills = 84 },
+        { name = "Lunar Guardian", groupId =  1, groupZone = 9, funcLookup = "Default", min = 81, max = 82, xPos = -261.84, yPos = 4.00, zPos = -17.48, rot =  127, respawn = 420, skills = 84 },
+        { name = "Lunar Guardian", groupId =  1, groupZone = 9, funcLookup = "Default", min = 81, max = 82, xPos = -269.44, yPos = 4.00, zPos = -37.28, rot =  127, respawn = 420, skills = 84 },
+        { name = "Lunar Guardian", groupId =  1, groupZone = 9, funcLookup = "Default", min = 81, max = 82, xPos = -267.30, yPos = 4.00, zPos = -77.35, rot =  127, respawn = 420, skills = 84 },
+        { name = "Luminous Cluster", groupId =  8, groupZone = 29, funcLookup = "Default", min = 81, max = 82, xPos = -259.62, yPos = 4.00, zPos = -53.56, rot =  127, respawn = 420, skills = 4049 },
+        { name = "Luminous Cluster", groupId =  8, groupZone = 29, funcLookup = "Default", min = 81, max = 82, xPos = -264.11, yPos = 4.00, zPos = -30.70, rot =  127, respawn = 420, skills = 4049 },
+        { name = "Luminous Cluster", groupId =  8, groupZone = 29, funcLookup = "Default", min = 81, max = 82, xPos = -238.73, yPos = 3.86, zPos = -20.17, rot =  127, respawn = 420, skills = 4049 },
+    },
     [xi.zone.SAUROMUGUE_CHAMPAIGN] =
     {
         -- Camp 1, Beetles/Cockatrice
@@ -660,8 +719,37 @@ local spawnerMobs =
         { name = "Cactus Grub", groupId =  10, groupZone = 117, funcLookup = "Default", min = 17, max = 20, xPos = 187.66, yPos = -13.42, zPos = -84.77, rot =  51, respawn = 330 },
         { name = "Cactus Grub", groupId =  10, groupZone = 117, funcLookup = "Default", min = 17, max = 20, xPos = 158.28, yPos = -8.00, zPos = -115.77, rot =  51, respawn = 330 },
         { name = "Cactus Grub", groupId =  10, groupZone = 117, funcLookup = "Default", min = 17, max = 20, xPos = 211.79, yPos = -14.94, zPos = -110.97, rot =  51, respawn = 330 },
-        { name = "Yagudo Acolyte", groupId =  23, groupZone = 117, funcLookup = "Default", min = 17, max = 20, xPos = 238.53, yPos = -14.92, zPos = -100.21, rot =  51, respawn = 330 },
-        { name = "Yagudo Piper", groupId =  25, groupZone = 117, funcLookup = "Default", min = 17, max = 20, xPos = 181.79, yPos = -13.02, zPos = -121.81, rot =  51, respawn = 330 },
+        { name = "Yagudo Acolyte", groupId =  23, groupZone = 117, funcLookup = "Default", min = 8, max = 10, xPos = 238.53, yPos = -14.92, zPos = -100.21, rot =  51, respawn = 330 },
+        { name = "Yagudo Piper", groupId =  25, groupZone = 117, funcLookup = "Default", min = 12, max = 16, xPos = 181.79, yPos = -13.02, zPos = -121.81, rot =  51, respawn = 330 },
+    },
+    [xi.zone.THE_BOYAHDA_TREE] =
+    {
+        -- Additional mobs for H-9 camp
+        { name = "Robber Crab", groupId =  12, groupZone = 153, funcLookup = "Default", min = 62, max = 66, xPos = 158.22, yPos = 8.91, zPos = -79.57, rot =  51, respawn = 960 },
+        { name = "Robber Crab", groupId =  12, groupZone = 153, funcLookup = "Default", min = 62, max = 66, xPos = 198.31, yPos = 8.93, zPos = -87.32, rot =  51, respawn = 960 },
+        { name = "Robber Crab", groupId =  12, groupZone = 153, funcLookup = "Default", min = 62, max = 66, xPos = 200.76, yPos = 8.91, zPos = -39.49, rot =  51, respawn = 960 },
+        { name = "Knight Crawler", groupId =  10, groupZone = 153, funcLookup = "Default", min = 62, max = 66, xPos = 177.83, yPos = 6.4, zPos = -50.89, rot =  51, respawn = 420 },
+        { name = "Knight Crawler", groupId =  10, groupZone = 153, funcLookup = "Default", min = 62, max = 66, xPos = 169.83, yPos = 6.6, zPos = -57, rot =  51, respawn = 420 },
+        -- Additional mobs for D-5 camp
+        { name = "Knight Crawler", groupId =  10, groupZone = 153, funcLookup = "Default", min = 62, max = 66, xPos = 25.85, yPos = 5.96, zPos = 108.94, rot =  51, respawn = 420 },
+        { name = "Knight Crawler", groupId =  10, groupZone = 153, funcLookup = "Default", min = 62, max = 66, xPos = 29.77, yPos = 6.43, zPos = 100.85, rot =  51, respawn = 420 },
+        { name = "Knight Crawler", groupId =  10, groupZone = 153, funcLookup = "Default", min = 62, max = 66, xPos = 46.48, yPos = 8.50, zPos = 114.80, rot =  51, respawn = 420 },
+        -- Additional mobs for E-6 camp
+        { name = "Robber Crab", groupId =  12, groupZone = 153, funcLookup = "Default", min = 62, max = 66, xPos = 73.02, yPos = 9.56, zPos = 95.46, rot =  51, respawn = 960 },
+        { name = "Robber Crab", groupId =  12, groupZone = 153, funcLookup = "Default", min = 62, max = 66, xPos = 47.36, yPos = 9.59, zPos = 99.92, rot =  51, respawn = 960 },
+        { name = "Knight Crawler", groupId =  10, groupZone = 153, funcLookup = "Default", min = 62, max = 66, xPos = 113.25, yPos = 8.83, zPos = 85.40, rot =  51, respawn = 420 },
+        { name = "Knight Crawler", groupId =  10, groupZone = 153, funcLookup = "Default", min = 62, max = 66, xPos = 126.92, yPos = 8.74, zPos = 71.03, rot =  51, respawn = 420 },
+        { name = "Knight Crawler", groupId =  10, groupZone = 153, funcLookup = "Default", min = 62, max = 66, xPos = 125.81, yPos = 8.24, zPos = 51.19, rot =  51, respawn = 420 },
+        { name = "Knight Crawler", groupId =  10, groupZone = 153, funcLookup = "Default", min = 62, max = 66, xPos = 90.28, yPos = 8.24, zPos = 88.10, rot =  51, respawn = 420 },
+        { name = "Knight Crawler", groupId =  10, groupZone = 153, funcLookup = "Default", min = 62, max = 66, xPos = 84.01, yPos = 8.70, zPos = 73.56, rot =  51, respawn = 420 },
+        { name = "Knight Crawler", groupId =  10, groupZone = 153, funcLookup = "Default", min = 62, max = 66, xPos = 108.14, yPos = 8.78, zPos = 68.56, rot =  51, respawn = 420 },
+    },
+    [xi.zone.ULEGUERAND_RANGE] =
+    {
+        { name = "King Buffalo", groupId =  41, groupZone = 5, funcLookup = "Manaburn_Low", min = 79, max = 82, xPos = -69.90, yPos = -175.20, zPos = 20.34, rot =  51, respawn = 420 },
+        { name = "King Buffalo", groupId =  41, groupZone = 5, funcLookup = "Manaburn_Low", min = 79, max = 82, xPos = -46.17, yPos = -175.80, zPos = 10.16, rot =  51, respawn = 420 },
+        { name = "King Buffalo", groupId =  41, groupZone = 5, funcLookup = "Manaburn_Low", min = 79, max = 82, xPos = -77.38, yPos = -175.19, zPos = 56.24, rot =  51, respawn = 420 },
+        { name = "King Buffalo", groupId =  41, groupZone = 5, funcLookup = "Manaburn_Low", min = 79, max = 82, xPos = -87.23, yPos = -175.97, zPos = 6.67, rot =  51, respawn = 420 },
     },
     [xi.zone.VALKURM_DUNES] =
     {
@@ -686,6 +774,17 @@ local spawnerMobs =
         { name = "Desert Beetle", groupId =   12, groupZone = 125, funcLookup = "Default", min = 47, max = 51, xPos = -249.22, yPos = -3.45, zPos = -61.18, rot =  127, respawn = 330 },
         { name = "Desert Beetle", groupId =   12, groupZone = 125, funcLookup = "Default", min = 47, max = 51, xPos = -135.06, yPos = -1.59, zPos = -67.53, rot =  127, respawn = 330 },
         { name = "Desert Beetle", groupId =   12, groupZone = 125, funcLookup = "Default", min = 47, max = 51, xPos = -209.08, yPos = -0.29, zPos = -71.06, rot =  127, respawn = 330 },
+    },
+    [xi.zone.YHOATOR_JUNGLE] =
+    {
+        { name = "Opotrap",  groupId =   20, groupZone = 2,  funcLookup = "Default", min = 47, max = 49, xPos = 521.16, yPos = 0.00, zPos = -442.13, rot =  127, respawn = 330 },
+        { name = "Opotrap",  groupId =   20, groupZone = 2,  funcLookup = "Default", min = 47, max = 49, xPos = 515.24, yPos = 0.05, zPos = -404.66, rot =  127, respawn = 330 },
+        { name = "Opotrap",  groupId =   20, groupZone = 2,  funcLookup = "Default", min = 47, max = 49, xPos = 552.83, yPos = 0.24, zPos = -403.57, rot =  127, respawn = 330 },
+        { name = "Opotrap",  groupId =   20, groupZone = 2,  funcLookup = "Default", min = 47, max = 49, xPos = 556.47, yPos = 0.00, zPos = -446.37, rot =  127, respawn = 330 },
+        { name = "Snap Jaw", groupId =  21, groupZone = 124, funcLookup = "Default", min = 49, max = 51, xPos = 552.89, yPos = 0.12, zPos = -418.17, rot =  127, respawn = 330 },
+        { name = "Snap Jaw", groupId =  21, groupZone = 124, funcLookup = "Default", min = 49, max = 51, xPos = 534.93, yPos = 0.06, zPos = -407.72, rot =  127, respawn = 330 },
+        { name = "Snap Jaw", groupId =  21, groupZone = 124, funcLookup = "Default", min = 49, max = 51, xPos = 526.93, yPos = 0.11, zPos = -426.13, rot =  127, respawn = 330 },
+        { name = "Snap Jaw", groupId =  21, groupZone = 124, funcLookup = "Default", min = 49, max = 51, xPos = 540.54, yPos = 0.16, zPos = -433.23, rot =  127, respawn = 330 },
     },
     [xi.zone.EAST_SARUTABARUTA] =
     {
@@ -1156,11 +1255,11 @@ local spawnerFunctions =
         onDeath             = function(mob, playerArg, isKiller) end,
         onDespawn           = function(mob) end,
         mixins = {  },
-     },
-     ["Skillchain"] =
-     {
-         onSpawn             =
-         function(mob)
+    },
+    ["Skillchain"] =
+    {
+        onSpawn =
+        function(mob)
             mob:setMod(xi.mod.UDMGMAGIC, -9500)
             mob:setMod(xi.mod.UDMGPHYS, -9000)
 
@@ -1188,19 +1287,19 @@ local spawnerFunctions =
                     end
                 end
             end)
-         end,
-         onEngaged           = function(mob, target) end,
-         onFight             = function(mob, target) end,
-         onDisengage         = function(mob, target) end,
-         onWeaponskilPrepare = function(mob, target, skill) end,
-         onWeaponskill       = function(mob, target, skill) end,
-         onMagicPrepare      = function(mob, target, spell) end,
-         onRoam              = function(mob) end,
-         onDeath             = function(mob, playerArg, isKiller) end,
-         onDespawn           = function(mob) end,
-         mixins = {  },
-      },
- }
+        end,
+        onEngaged           = function(mob, target) end,
+        onFight             = function(mob, target) end,
+        onDisengage         = function(mob, target) end,
+        onWeaponskilPrepare = function(mob, target, skill) end,
+        onWeaponskill       = function(mob, target, skill) end,
+        onMagicPrepare      = function(mob, target, spell) end,
+        onRoam              = function(mob) end,
+        onDeath             = function(mob, playerArg, isKiller) end,
+        onDespawn           = function(mob) end,
+        mixins = {  },
+    },
+}
 
 -----------------------------------------------------------
 --                    Spawner Code                       --
