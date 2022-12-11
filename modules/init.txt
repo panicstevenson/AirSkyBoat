@@ -70,7 +70,8 @@ renamer
 HorizonXI/Lua
 HorizonXI/commands
 HorizonXI/sql
-clustering/horizon_zone_settings.sql
+#HorizonXI/production
+#HorizonXI/beta
 #-----------------------
 #		Custom
 #-----------------------
