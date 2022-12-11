@@ -11,6 +11,7 @@ zoneObject.onInitialize = function(zone)
     -- NM Persistence
     xi.mob.nmTODPersistCache(zone, ID.mob.ONI_CARCASS)
 
+    hxi.spawner.spawnInitialMobs(zone)
     xi.treasure.initZone(zone)
 end
 

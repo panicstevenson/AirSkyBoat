@@ -16,6 +16,7 @@ zoneObject.onInitialize = function(zone)
     end
 
     xi.treasure.initZone(zone)
+    hxi.spawner.spawnInitialMobs(zone)
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
 end
 

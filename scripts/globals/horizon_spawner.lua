@@ -1102,6 +1102,29 @@ local spawnerMobs =
         { name = "Tunnel Worm",  groupId =   8, groupZone = 107, funcLookup = "Default", min = 1, max = 1, xPos = 526.5021, yPos = -0.5201, zPos = 430.9588, Rot = 84.0000, respawn = 30 },
         { name = "Tunnel Worm",  groupId =   8, groupZone = 107, funcLookup = "Default", min = 1, max = 1, xPos = 508.4750, yPos = -0.1443, zPos = 394.8624, Rot = 82.0000, respawn = 30 },
     },
+    [xi.zone.RUAUN_GARDENS] =
+    {
+        -- Byakko Island Flamingos (G-5)
+        { name = "Flamingo", groupId =  2, groupZone = 130, funcLookup = "Default", min = 72, max = 74, xPos = -145.355, yPos = -40.2, zPos = 387.612, Rot = 132 , respawn = 330 },
+        { name = "Flamingo", groupId =  2, groupZone = 130, funcLookup = "Default", min = 72, max = 74, xPos = -157.85, yPos = -40.01, zPos = 428.137, Rot = 96 , respawn = 330 },
+        { name = "Flamingo", groupId =  2, groupZone = 130, funcLookup = "Default", min = 72, max = 74, xPos = -123.85, yPos = -40.2, zPos = 440.695, Rot = 222 , respawn = 330 },
+        -- Byakko Island Flamingos (F-6)
+        { name = "Flamingo", groupId =  2, groupZone = 130, funcLookup = "Default", min = 72, max = 74, xPos = -338.711, yPos = -40.02, zPos = 291.266, Rot = 79 , respawn = 330 },
+        { name = "Flamingo", groupId =  2, groupZone = 130, funcLookup = "Default", min = 72, max = 74, xPos = -371.192, yPos = -40.2, zPos = 284.874, Rot = 121 , respawn = 330 },
+        { name = "Flamingo", groupId =  2, groupZone = 130, funcLookup = "Default", min = 72, max = 74, xPos = -305.563, yPos = -40.01, zPos = 209.239, Rot = 52 , respawn = 330 },
+    },
+    [xi.zone.BOSTAUNIEUX_OUBLIETTE] =
+    {
+        -- Additional Hounds at (J-7)
+        { name = "Garm", groupId =   8, groupZone = 167, funcLookup = "Default", min = 64, max = 66, xPos = 100.35, yPos = -0.01, zPos = -38.639, Rot = 79 , respawn = 420 },
+        { name = "Garm", groupId =   8, groupZone = 167, funcLookup = "Default", min = 64, max = 66, xPos = 60.25, yPos = 0.02, zPos = -45.323, Rot = 18 , respawn = 420 },
+    },
+    [xi.zone.TORAIMARAI_CANAL] =
+    {
+        -- Additional Beetles at (H-8)
+        { name = "Starmite", groupId =  41, groupZone = 169, funcLookup = "Default", min = 65, max = 67, xPos = 137.55, yPos = -8.2, zPos = -78.812, Rot = 12 , respawn = 420 },
+        { name = "Starmite", groupId =  41, groupZone = 169, funcLookup = "Default", min = 65, max = 67, xPos = 117.85, yPos = -8.02, zPos = -98.791, Rot = 84 , respawn = 420 },
+    },
 }
 
 local spawnerFunctions =

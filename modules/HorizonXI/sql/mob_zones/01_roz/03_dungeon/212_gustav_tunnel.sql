@@ -218,7 +218,7 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
 (17645780, 0, 'Demonic_Pugil',            'Demonic Pugil',            27,  -70,       0.185,     204,       58  ),
 (17645781, 0, 'Doom_Warlock',             'Doom Warlock',             24,  -102.334,  -0.987,    185.746,   105 ),
 (17645782, 0, 'Doom_Warlock',             'Doom Warlock',             24,  -121.065,  -0.019,    191.866,   123 ),
-(17645783, 0, 'Demonic_Pugil',            'Demonic Pugil',            27,  -50,       1,         48,        127 ),
+-- (17645783, 0, 'Demonic_Pugil',            'Demonic Pugil',            27,  -50,       1,         48,        127 ),
 (17645784, 0, 'Typhoon_Wyvern',           'Typhoon Wyvern',           26,  -123.856,  0.239,     223.303,   67  ),
 (17645785, 0, 'Doom_Guard',               'Doom Guard',               23,  -116.249,  0.239,     243.809,   38  ),
 (17645786, 0, 'Doom_Guard',               'Doom Guard',               23,  -111.847,  -0.151,    218.968,   127 ),
