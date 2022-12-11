@@ -28,7 +28,7 @@ entity.onMobDespawn = function(mob)
             [5] = { -192.000, 0, 150.000, 255 },
             [6] = { -192.000, 0, 170.000, 255 },
         }
-        local randompos = math.random(1,6)
+        local randompos = math.random(1, 6)
         local xPos = path[randompos][1]
         local yPos = path[randompos][2]
         local zPos = path[randompos][3]
