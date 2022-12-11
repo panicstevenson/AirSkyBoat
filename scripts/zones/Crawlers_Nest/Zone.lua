@@ -15,6 +15,7 @@ zoneObject.onInitialize = function(zone)
     end
 
     xi.treasure.initZone(zone)
+    hxi.spawner.spawnInitialMobs(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

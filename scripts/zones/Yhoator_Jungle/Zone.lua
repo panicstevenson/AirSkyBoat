@@ -38,6 +38,7 @@ zoneObject.onInitialize = function(zone)
     xi.chocobo.initZone(zone)
 
     xi.bmt.updatePeddlestox(xi.zone.YUHTUNGA_JUNGLE, ID.npc.PEDDLESTOX)
+    hxi.spawner.spawnInitialMobs(zone)
 end
 
 zoneObject.onGameDay = function()
