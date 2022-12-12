@@ -17,23 +17,34 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
-    local dmg    = player:getHP() * 0.8 + player:getMainLvl() / 0.5
-    local resist = xi.mobskills.applyPlayerResistance(player, nil, target, player:getStat(xi.mod.INT)-target:getStat(xi.mod.INT), 0, xi.magic.ele.NONE)
+    -- Era Plus:
+    -- If Ninjutsu Skill < 25 then damage = 100
+    -- If Ninjutsu Skill > 25 then damage = Ninjutsu skill * 4
+    local dmg    = math.max(100, player:getSkillLevel(xi.skill.NINJUTSU) * 4)
+    local resist = xi.mobskills.applyPlayerResistance(player, nil, target, player:getStat(xi.mod.INT) - target:getStat(xi.mod.INT), 0, xi.magic.ele.NONE)
 
-    -- Job Point Bonus (3% per Level)
-    dmg = dmg * (1 + (player:getJobPointLevel(xi.jp.MIJIN_GAKURE_EFFECT) * 0.03))
     dmg = dmg * resist
-
-    if player:hasStatusEffect(xi.effect.WEAKNESS) then
-        player:delStatusEffect(xi.effect.WEAKNESS)
-    end
 
     dmg = utils.rampart(target, dmg)
     dmg = utils.stoneskin(target, dmg)
 
     target:takeDamage(dmg, player, xi.attackType.SPECIAL, xi.damageType.ELEMENTAL)
-    player:setLocalVar("MijinGakure", 1)
-    player:setHP(0)
+    target:updateEnmityFromDamage(player, dmg)
+
+    -- HP to 5% maxHP instead of 0
+    player:setHP(math.min(player:getHP(), math.floor(player:getMaxHP() * 0.05)))
+
+    -- Flash target
+    local params = {}
+    params.element = xi.magic.ele.NONE
+    params.attribute = xi.mod.MND
+    params.maccBonus = 200
+
+    local flashResist = xi.magic.applyAbilityResistance(player, target, params)
+    local duration = 12 * flashResist
+    if resist > 0.0625 then
+        target:addStatusEffectEx(xi.effect.FLASH, 0, 300, 4, duration)
+    end
 
     return dmg
 end

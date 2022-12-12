@@ -19,13 +19,11 @@ UPDATE `abilities` SET `content_tag` = 'WOTG' WHERE `name` = 'avatars_favor'; --
 UPDATE `abilities` SET `content_tag` = 'COP' WHERE `name` = 'ready'; -- ID 251: Ready (Change to COP)
 UPDATE `abilities` SET `recastTime` = 120 WHERE `name` = 'high_jump';
 UPDATE `abilities` SET `recastTime` = 1200, `content_tag` = 'COP' WHERE `name` = 'bestial_loyalty';
-UPDATE `abilities` SET `recastTime` = 7200, `content_tag` = 'COP', `level` = 0 WHERE `name` = 'mikage'; -- New NIN 2hr
 UPDATE `abilities` SET `level` = 39 WHERE `name` = 'crimson_howl';
 UPDATE `abilities` SET `level` = 38 WHERE `name` = 'whispering_wind';
 UPDATE `abilities` SET `level` = 54 WHERE `name` = 'ecliptic_growl';
 UPDATE `abilities` SET `level` = 47 WHERE `name` = 'spring_water';
 UPDATE `abilities` SET `level` = 43 WHERE `name` = 'ecliptic_howl';
 UPDATE `abilities` SET `content_tag` = 'COP' WHERE `name` = 'velocity_shot';
-DELETE FROM `abilities` WHERE `name` = 'mijin_gakure';
 
 UNLOCK TABLES;
