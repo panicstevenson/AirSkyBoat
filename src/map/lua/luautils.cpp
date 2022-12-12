@@ -5356,7 +5356,6 @@ namespace luautils
             if (onCancelled.valid())
             {
                 onCancelled(CLuaBaseEntity(PChar));
-                PChar->StatusEffectContainer->DelStatusEffect(EFFECT_STUN);
             }
         }
         else
@@ -5387,7 +5386,6 @@ namespace luautils
         if (onEnd.valid())
         {
             onEnd(CLuaBaseEntity(PChar));
-            PChar->StatusEffectContainer->DelStatusEffect(EFFECT_STUN);
         }
 
         customMenuContext.erase(PChar->id);
