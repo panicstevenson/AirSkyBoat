@@ -140,18 +140,18 @@ local enableOPWarps =
 
 local nmInformation =
 {
-    [xi.zone.WEST_SARUTABARUTA    ] = { mob = { x = 33.3175,   y = -1.0981,  z = -299.7995 }, npc = { x = 131.7015,  y = -0.5343,  z = -303.4812, rot = 105 } },
-    [xi.zone.EAST_SARUTABARUTA    ] = { mob = { x = -18.7612,  y = -5.1375,  z = -444.3516 }, npc = { x = -100.3674, y = -5.0000,  z = -530.9963, rot = 239 } },
-    [xi.zone.SOUTH_GUSTABERG      ] = { mob = { x = 354.9310,  y = 0.0000,   z = -280.5334 }, npc = { x = 277.4321,  y = 0.2846,   z = -211.5396, rot = 101 } },
-    [xi.zone.NORTH_GUSTABERG      ] = { mob = { x = 659.3683,  y = -1.1951,  z = 423.6087  }, npc = { x = 647.1167,  y = -0.4908,  z = 331.9160,  rot = 245 } },
-    [xi.zone.WEST_RONFAURE        ] = { mob = { x = -80.3467,  y = -49.8711, z = 154.9168  }, npc = { x = -154.1909, y = -59.9531, z = 262.1125,  rot = 96  } },
-    [xi.zone.EAST_RONFAURE        ] = { mob = { x = 246.2749,  y = -50.1826, z = 262.9442  }, npc = { x = 97.8416,   y = -59.9542, z = 246.5332,  rot = 29  } },
-    [xi.zone.JUGNER_FOREST        ] = { mob = { x = 87.3120,   y = 0.4215,   z = -167.4852 }, npc = { x = 67.0161,   y = 0.4000,   z = -11.9137,  rot = 191 } },
-    [xi.zone.MERIPHATAUD_MOUNTAINS] = { mob = { x = -276.1199, y = 16.4596,  z = 547.3623  }, npc = { x = -300.2154, y = 17.2139,  z = 425.6126,  rot = 94  } },
-    [xi.zone.PASHHOW_MARSHLANDS   ] = { mob = { x = 308.4476,  y = 25.0000,  z = 398.6894  }, npc = { x = 476.3608,  y = 24.6500,  z = 418.9649,  rot = 163 } },
-    [xi.zone.YUHTUNGA_JUNGLE      ] = { mob = { x = -222.8690, y = 0.3458,   z = 369.4553  }, npc = { x = -231.7470, y = 0.0000,   z = 469.4241,  rot = 201 } },
-    [xi.zone.BEAUCEDINE_GLACIER   ] = { mob = { x = 113.4453,  y = -59.8734, z = -39.7302  }, npc = { x = -29.8652,  y = -59.9276, z = -113.7092, rot = 163 } },
-    [xi.zone.EASTERN_ALTEPA_DESERT] = { mob = { x = -244.1881, y = 0.7810,   z = -56.2261  }, npc = { x = -268.4526, y = 8.3963,   z = -244.8563, rot = 186 } },
+    [xi.zone.WEST_SARUTABARUTA    ] = { mob = { x = 145.6839,  y = -38.7177, z = -318.5830 }, npc = { x = 131.7015,  y = -0.5343,  z = -303.4812, rot = 105 } },
+    [xi.zone.EAST_SARUTABARUTA    ] = { mob = { x = -440.9115, y = -32.2518, z = -444.3516 }, npc = { x = -100.3674, y = -5.0000,  z = -530.9963, rot = 239 } },
+    [xi.zone.SOUTH_GUSTABERG      ] = { mob = { x = 203.6385,  y = -59.6055, z = -430.2541 }, npc = { x = 277.4321,  y = 0.2846,   z = -211.5396, rot = 101 } },
+    [xi.zone.NORTH_GUSTABERG      ] = { mob = { x = 262.2035,  y = -59.8284, z = 518.8541  }, npc = { x = 647.1167,  y = -0.4908,  z = 331.9160,  rot = 245 } },
+    [xi.zone.WEST_RONFAURE        ] = { mob = { x = -126.5199, y = 0.3078,   z = -521.0609 }, npc = { x = -154.1909, y = -59.9531, z = 262.1125,  rot = 96  } },
+    [xi.zone.EAST_RONFAURE        ] = { mob = { x = 282.3010,  y = 0.0000,   z = -519.4476 }, npc = { x = 97.8416,   y = -59.9542, z = 246.5332,  rot = 29  } },
+    [xi.zone.JUGNER_FOREST        ] = { mob = { x = 125.2415,  y = 0.0609,   z = 441.9030  }, npc = { x = 67.0161,   y = 0.4000,   z = -11.9137,  rot = 191 } },
+    [xi.zone.MERIPHATAUD_MOUNTAINS] = { mob = { x = 665.1182,  y = -0.3126,  z = -426.7532 }, npc = { x = -300.2154, y = 17.2139,  z = 425.6126,  rot = 94  } },
+    [xi.zone.PASHHOW_MARSHLANDS   ] = { mob = { x = -406.5690, y = 24.5530,  z = 494.5933  }, npc = { x = 476.3608,  y = 24.6500,  z = 418.9649,  rot = 163 } },
+    [xi.zone.YUHTUNGA_JUNGLE      ] = { mob = { x = 285.7129,  y = 4.3811,   z = 209.6454  }, npc = { x = -231.7470, y = 0.0000,   z = 469.4241,  rot = 201 } },
+    [xi.zone.BEAUCEDINE_GLACIER   ] = { mob = { x = 393.0704,  y = 20.0478,  z = 471.9338  }, npc = { x = -29.8652,  y = -59.9276, z = -113.7092, rot = 163 } },
+    [xi.zone.EASTERN_ALTEPA_DESERT] = { mob = { x = 255.3349,  y = 8.5113,   z = -288.5604 }, npc = { x = -268.4526, y = 8.3963,   z = -244.8563, rot = 186 } },
 }
 
 local handleEnableMessage = function(mob)
