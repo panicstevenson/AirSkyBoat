@@ -14,13 +14,14 @@ end
 
 itemObject.onItemUse = function(target)
     local power = 1
+    local duration = 90
     local legs = target:getEquipID(xi.slot.LEGS)
     if legs == 11966 or legs == 11968 then -- Dream Trousers +1 & Dream Pants +1
-        power = power + 1
+        duration = duration + 30
     end
 
     if not target:hasStatusEffect(xi.effect.REFRESH) then
-        target:addStatusEffect(xi.effect.REFRESH, power, 3, 90)
+        target:addStatusEffect(xi.effect.REFRESH, power, 3, duration)
     else
         target:messageBasic(xi.msg.basic.NO_EFFECT)
     end

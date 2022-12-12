@@ -94,16 +94,27 @@ xi.hardcore.playerDeath = function(player)
         if player:checkNameFlags(xi.hardcore.hardcoreFlag) then
             player:setFlag(xi.hardcore.hardcoreFlag)
         end
+
         xi.hardcore.announceDeath(player)
-        player:timer(1500, function(playerArg)
-            playerArg:homepoint()
-        end)
+
+        if player:getCharVar("hardcoreLvlRewards") >= 51 then
+            player:timer(1500, function(playerArg)
+                playerArg:homepoint()
+            end)
+        end
+
+        local item = 28540 -- removing warp ring on death
+
+        if player:hasItem(item) then
+            local location = player:findItem(item):getLocationID()
+            player:delItem(item, 1, location)
+        end
     end
 end
 
 xi.hardcore.announceDeath = function(player)
-    local playerLvlRewards = player:getCharVar("harcoreLvlRewards")
-    local playtime = tostring(player:getPlaytime() / 3600)
+    local playerLvlRewards = player:getCharVar("hardcoreLvlRewards")
+    local playtime = tostring(math.floor(player:getPlaytime() / 3600))
     local name = player:getName()
     local lvl = tostring(player:getMainLvl())
     local jobs =
@@ -131,10 +142,11 @@ xi.hardcore.announceDeath = function(player)
         'GEO',
         'RUN'
     }
+
     local job = jobs[player:getMainJob()]
-    if playerLvlRewards >= 51 then
+    if playerLvlRewards >= 30 then
         -- turn this into death announcement
-        player:PrintToArea(name .. " has fallen as a hardcore adventurer. While playing as: " .. lvl .. job .. "With a playtime of: " .. playtime .. " hours.", xi.msg.channel.NS_SHOUT, xi.msg.area.SYSTEM)
+        player:PrintToArea(name .. " has fallen as a hardcore adventurer. While playing as: " .. lvl .. job .. " with a playtime of: " .. playtime .. " hours.", xi.msg.channel.NS_SHOUT, xi.msg.area.SYSTEM)
         player:PrintToPlayer("You have fallen as a hardcore adventurer..", xi.msg.channel.NS_SAY)
     else
         player:PrintToPlayer("You have fallen as a hardcore adventurer..", xi.msg.channel.NS_SAY)
@@ -147,25 +159,25 @@ xi.hardcore.levelUp = function(player)
         18, 30, 51, 56, 61, 66, 71, 75, 76, 77, 79, 84, 89, 96
     }
 
-    local playerLvlRewards = player:getCharVar("harcoreLvlRewards")
+    local playerLvlRewards = player:getCharVar("hardcoreLvlRewards")
     local level = player:getMainLvl()
     local reward = 0
 
     if playerLvlRewards ~= 76 then
-        for i in pairs(levelRewardTiers) do
-            if level == i then
-                reward = i
+        for i, rewardlvl in pairs(levelRewardTiers) do
+            if level == rewardlvl and level >= playerLvlRewards then
+                reward = rewardlvl
                 break
             end
         end
 
         if reward ~= 0 then
-            player:setCharVar("harcoreLvlRewards", reward)
+            player:setCharVar("hardcoreLvlRewards", reward)
             player:setCharVar("hardcoreLvlRewardAvail", 1)
             player:setCharVar("rewardsAvail", player:getCharVar("rewardsAvail") + 1)
         end
 
-    elseif playerLvlRewards > 75 then
+    elseif playerLvlRewards > 75 and player:getMainLvl() == 75 then
         player:setCharVar("hardcoreLvlRewards", playerLvlRewards + 1)
         for i in levelRewardTiers do
             if playerLvlRewards == i then
@@ -339,7 +351,7 @@ xi.hardcore.hcmenu = function(player)
 end
 
 xi.hardcore.giveRewards = function(player)
-    local lvlRewardsTier = player:getCharVar("hardCoreLvlRewards")
+    local lvlRewardsTier = player:getCharVar("hardcoreLvlRewards")
     local rewardAmount = player:getCharVar("rewardsAvail")
     local count = 1
     local rewardTier = 0
@@ -363,7 +375,7 @@ xi.hardcore.giveRewards = function(player)
             end
             count = count + 1
         end
-        if rewardAmount > 1 then
+        if rewardAmount >= 1 then
             for i = 0, rewardAmount - 1 do
                 player:addItem(levelRewardItems[rewardTier - i])
                 player:messageSpecial(zones[player:getZoneID()].text.ITEM_OBTAINED, levelRewardItems[rewardTier - i])

@@ -6,26 +6,31 @@
 cmdprops =
 {
     permission = 3,
-    parameters = "s"
+    parameters = "ss"
 }
 
 function error(player, msg)
     player:PrintToPlayer(msg)
-    player:PrintToPlayer("!spin <player>")
+    player:PrintToPlayer("!spin <player> <deg>")
 end
 
-function onTrigger(player, targ)
+function onTrigger(player, targ, amount)
     local target = nil
+    local rot = target:getRotPos()
     -- validate target
     if targ then
         target = GetPlayerByName(targ)
     elseif player:getCursorTarget() then
         target = player:getCursorTarget()
     else
-        return error("Invalid target.")
+        return error(player, "Invalid target.")
     end
 
-    target:setRotation(target:getRotPos() + 127)
+    if not amount then
+        return error(player, "No rotation inputted")
+    else
+        rot = tonumber(amount)
+    end
 
-    return player:PrintToPlayer(string.format("Hmm... let's see how much of a sussy wussy %s is!", target:getName()))
+    target:setRotation(target:getRotPos() + rot)
 end

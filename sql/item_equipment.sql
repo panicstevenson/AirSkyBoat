@@ -13996,7 +13996,7 @@ INSERT INTO `item_equipment` VALUES (28320,'kar._sollerets_+1',99,109,10689,342,
 INSERT INTO `item_equipment` VALUES (28321,'thur._boots_+1',99,109,2593826,343,0,0,256,0,0,255);
 INSERT INTO `item_equipment` VALUES (28322,'orvail_souliers_+1',99,109,3850780,344,0,0,256,0,0,255);
 INSERT INTO `item_equipment` VALUES (28323,'punchinellos',99,119,131072,382,0,0,256,0,0,255);
-INSERT INTO `item_equipment` VALUES (28324,'alliance_boots',1,0,4194303,0,0,0,256,0,0,255);
+INSERT INTO `item_equipment` VALUES (28324,'alliance_boots',1,0,4194303,354,0,0,256,0,0,255);
 INSERT INTO `item_equipment` VALUES (28325,'morass_boots',1,0,4194303,0,0,0,256,0,0,149);
 INSERT INTO `item_equipment` VALUES (28326,'woodland_boots',1,0,4194303,0,0,0,256,0,0,106);
 INSERT INTO `item_equipment` VALUES (28327,'gorney_sollerets',99,106,10689,354,0,0,256,0,0,255);
