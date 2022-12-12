@@ -13,5 +13,6 @@ UPDATE `zone_settings` SET `music_day` = 601, `music_night` = 601 WHERE `name` =
 UPDATE `zone_settings` SET `music_day` = 602, `music_night` = 602 WHERE `name` = 'The_Boyahda_Tree';
 UPDATE `zone_settings` SET `music_day` = 611, `music_night` = 611 WHERE `name` = 'Sea_Serpent_Grotto';
 UPDATE `zone_settings` SET `music_day` = 604, `music_night` = 604 WHERE `name` = 'Cape_Teriggan';
+UPDATE `zone_settings` SET `music_day` = 613, `music_night` = 613 WHERE `name` = 'Uleguerand_Range';
 
 UNLOCK TABLES;
