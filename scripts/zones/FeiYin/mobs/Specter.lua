@@ -14,6 +14,16 @@ entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)
+    local id = mob:getID()
+
+    if
+        id == ID.mob.NORTHERN_SHADOW_PH or
+        id == ID.mob.EASTERN_SHADOW_PH or
+        id == ID.mob.WESTERN_SHADOW_PH or
+        id == ID.mob.SOUTHERN_SHADOW_PH
+    then
+        mob:setRespawnTime(xi.mob.respawnTimer.DUNGEON)
+    end
     xi.mob.phOnDespawn(mob, ID.mob.NORTHERN_SHADOW_PH, 5, 57600) -- 16 hours
     xi.mob.phOnDespawn(mob, ID.mob.EASTERN_SHADOW_PH, 5, 36000) -- 10 hours
     xi.mob.phOnDespawn(mob, ID.mob.WESTERN_SHADOW_PH, 5, 36000) -- 10 hours

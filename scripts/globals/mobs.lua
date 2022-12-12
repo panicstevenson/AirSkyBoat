@@ -231,6 +231,16 @@ xi.mob.skills =
 }
 
 -----------------------------------
+-- Horizon Respawn Timers
+-- Time is in seconds
+-----------------------------------
+xi.mob.respawnTimer =
+{
+    OVERWORLD = 330, -- 5 min 30 seconds
+    DUNGEON   = 960, -- 16 minutes
+}
+
+-----------------------------------
 -- mob additional melee effects
 -----------------------------------
 

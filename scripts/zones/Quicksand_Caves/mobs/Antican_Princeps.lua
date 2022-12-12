@@ -21,6 +21,13 @@ entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)
+    local id = mob:getID()
+    if
+        id == ID.mob.SAGITTARIUS_X_XIII_PH or
+        id == ID.mob.ANTICAN_PRAEFECTUS_PH
+    then
+        mob:setRespawnTime(xi.mob.respawnTimer.DUNGEON)
+    end
     xi.mob.phOnDespawn(mob, ID.mob.SAGITTARIUS_X_XIII_PH, 10, 14400) -- 4 hours
     xi.mob.phOnDespawn(mob, ID.mob.ANTICAN_PRAEFECTUS_PH, 10, 3600) -- 1 hour
 end
