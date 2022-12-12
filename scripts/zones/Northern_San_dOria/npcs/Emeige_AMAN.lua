@@ -13,7 +13,6 @@ entity.onTrigger = function(player, npc)
 
     if not player:getMentor() then
         player:faceTarget(npc)
-        player:addStatusEffectEx(xi.effect.STUN, xi.effect.STUN, 1, 0, 8, 0, 0, 1, xi.effectFlag.ON_ZONE, true)
         if player:getMainLvl() >= 30 and player:getPlaytime() >= 648000 then
             player:PrintToPlayer("Greetings adventurer! I'm with the Adventurers' Mutual Aid Network (AMAN) and am now taking applications for new mentors.", xi.msg.channel.SAY, npc:getPacketName())
             player:timer(1000, function(playerArg) playerArg:PrintToPlayer("Congratulations! You are qualified to be a mentor!", xi.msg.channel.SAY, npc:getPacketName()) end)
