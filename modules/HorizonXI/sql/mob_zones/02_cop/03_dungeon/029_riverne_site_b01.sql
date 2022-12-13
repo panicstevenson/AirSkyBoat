@@ -160,7 +160,7 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
 (16896154, 0, 'Book_Browser_Bokabraq',    'Book Browser Bokabraq',    15,  289.313,   91.846,    828.107,   232 ),
 (16896155, 0, 'Unstable_Cluster',         'Unstable Cluster',         16,  306.306,   -0.76,     -709.803,  218 ),
 (16896156, 0, 'Bahamut',                  'Bahamut',                  17,  -691.716,  0.411,     817.579,   198 ),
-(16896157, 0, 'Bahamut',                  'Bahamut',                  17,  -704.021,  0.168,     822.955,   229 ),
+(16896157, 0, 'Bahamutv2',                'Bahamut',                  28,  -704.021,  0.168,     822.955,   229 ),
 (16896158, 0, 'Ouryu',                    'Ouryu',                    18,  -694.789,  0.099,     825.472,   255 ),
 (16896159, 0, 'Tiamat',                   'Tiamat',                   19,  -696.976,  0.151,     821.501,   208 ),
 (16896160, 0, 'Jormungand',               'Jormungand',               20,  -704.433,  0.464,     798.733,   150 ),
