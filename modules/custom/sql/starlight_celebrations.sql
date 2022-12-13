@@ -50,3 +50,8 @@ UPDATE npc_list SET pos_rot = 94, pos_x = -66.605, pos_y = -0.200, pos_z = 65.11
 
 UPDATE npc_list SET pos_rot = 139, pos_x = 136.2782, pos_y = -7.6649, pos_z = 96.8022, flag = 98305, namevis = 8, status = 0, entityFlags = 98305, look = 0x0000FE0200000000000000000000000000000000, name_prefix = 34, widescan = 0 WHERE npcid = 17199707 AND name = 'Moogle';
 UPDATE npc_list SET pos_rot = 139, pos_x = 142.2639, pos_y = -7.2481, pos_z = 103.2505, flag = 98305, namevis = 8, status = 0, entityFlags = 98305, look = 0x0000FE0200000000000000000000000000000000, name_prefix = 34, widescan = 0 WHERE npcid = 17199708 AND name = 'Moogle';
+
+-- ------------------------------------------------------------
+-- Windurst Woods (Zone 103)
+-- ------------------------------------------------------------
+UPDATE npc_list SET content_tag = 'NULL' where name = 'Kayeel-Payeel'
