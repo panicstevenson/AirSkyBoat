@@ -13,6 +13,7 @@ local zoneObject = {}
 zoneObject.onInitialize = function(zone)
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
     xi.voidwalker.zoneOnInit(zone)
+    hxi.spawner.spawnInitialMobs(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)
@@ -52,7 +53,7 @@ end
 zoneObject.onZoneOut = function(player)
     if player:hasStatusEffect(xi.effect.BATTLEFIELD) then
         player:delStatusEffect(xi.effect.BATTLEFIELD)
-	end
+    end
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype)

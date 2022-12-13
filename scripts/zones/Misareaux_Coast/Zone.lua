@@ -12,7 +12,9 @@ zoneObject.onInitialize = function(zone)
     xi.helm.initZone(zone, xi.helm.type.LOGGING)
     misareauxGlobal.ziphiusHandleQM()
 
-    GetMobByID(ID.mob.ODQAN):setLocalVar("chooseOdqan", math.random(1,2))
+    hxi.spawner.spawnInitialMobs(zone)
+
+    GetMobByID(ID.mob.ODQAN):setLocalVar("chooseOdqan", math.random(1, 2))
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype)

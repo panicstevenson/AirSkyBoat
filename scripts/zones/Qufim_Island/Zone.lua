@@ -10,6 +10,7 @@ local zoneObject = {}
 zoneObject.onInitialize = function(zone)
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
     hxi.hnm.startup(zone)
+    hxi.spawner.spawnInitialMobs(zone)
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype)

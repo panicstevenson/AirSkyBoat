@@ -20,11 +20,11 @@ zoneObject.onInitialize = function(zone)
         SpawnMob(v)
     end
     if xi.settings.main.ENABLE_WOTG == 1 then
-        GetMobByID(ID.mob.YALUN_EKE):setLocalVar("chooseYalun", math.random(1,2))
+        GetMobByID(ID.mob.YALUN_EKE):setLocalVar("chooseYalun", math.random(1, 2))
     end
 
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
-
+    hxi.spawner.spawnInitialMobs(zone)
     xi.helm.initZone(zone, xi.helm.type.LOGGING)
 end
 

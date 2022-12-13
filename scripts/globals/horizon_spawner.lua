@@ -91,6 +91,50 @@ local spawnerMobs =
         -- Additional goblins added to outpost camp
         { name = "Goblin Digger", groupId =   31, groupZone = 125, funcLookup = "Default", min = 51, max = 54, xPos = -291.79, yPos = 7.76, zPos = -188.57, rot =  127, respawn = 330 },
         { name = "Goblin Digger", groupId =   31, groupZone = 125, funcLookup = "Default", min = 51, max = 54, xPos = -269.93, yPos = 6.50, zPos = -296.84, rot =  127, respawn = 330 },
+        -- mb camp 1
+        { name = "Sand Worm", groupId =   3, groupZone = 108, funcLookup = "Manaburn_Low", min = 36, max = 39, xPos = -196.3393, yPos = 0.0727, zPos = 234.5167, Rot = 48.0000, respawn = 330 },
+        { name = "Sand Worm", groupId =   3, groupZone = 108, funcLookup = "Manaburn_Low", min = 36, max = 39, xPos = -200.6867, yPos = 0.6389, zPos = 225.5639, Rot = 48.0000, respawn = 330 },
+        { name = "Sand Worm", groupId =   3, groupZone = 108, funcLookup = "Manaburn_Low", min = 36, max = 39, xPos = -196.8237, yPos = 0.8121, zPos = 216.2493, Rot = 52.0000, respawn = 330 },
+        { name = "Sand Worm", groupId =   3, groupZone = 108, funcLookup = "Manaburn_Low", min = 36, max = 39, xPos = -184.2011, yPos = -0.0032, zPos = 212.2462, Rot = 3.0000, respawn = 330 },
+        { name = "Sand Worm", groupId =   3, groupZone = 108, funcLookup = "Manaburn_Low", min = 36, max = 39, xPos = -177.5651, yPos = 0.6058, zPos = 234.3903, Rot = 210.0000, respawn = 330 },
+        { name = "Sand Worm", groupId =   3, groupZone = 108, funcLookup = "Manaburn_Low", min = 36, max = 39, xPos = -169.1868, yPos = -0.6899, zPos = 251.8922, Rot = 210.0000, respawn = 330 },
+        { name = "Sand Worm", groupId =   3, groupZone = 108, funcLookup = "Manaburn_Low", min = 36, max = 39, xPos = -183.3658, yPos = -4.5365, zPos = 262.4681, Rot = 154.0000, respawn = 330 },
+        { name = "Sand Worm", groupId =   3, groupZone = 108, funcLookup = "Manaburn_Low", min = 36, max = 39, xPos = -192.2340, yPos = -4.6546, zPos = 262.7031, Rot = 134.0000, respawn = 330 },
+        { name = "Sand Worm", groupId =   3, groupZone = 108, funcLookup = "Manaburn_Low", min = 36, max = 39, xPos = -201.4799, yPos = -6.8314, zPos = 270.3956, Rot = 166.0000, respawn = 330 },
+        { name = "Sand Worm", groupId =   3, groupZone = 108, funcLookup = "Manaburn_Low", min = 36, max = 39, xPos = -202.9428, yPos = -8.1953, zPos = 284.9627, Rot = 212.0000, respawn = 330 },
+        -- sc camp 1
+        { name = "Muddy Slime", groupId =   30, groupZone = 173, funcLookup = "Skillchain", min = 33, max = 36, xPos = 376.1334, yPos = 0.8063, zPos = -158.2605, Rot = 171.0000, respawn = 330 },
+        { name = "Muddy Slime", groupId =   30, groupZone = 173, funcLookup = "Skillchain", min = 33, max = 36, xPos = 373.6307, yPos = -0.4155, zPos = -147.7101, Rot = 178.0000, respawn = 330 },
+        { name = "Muddy Slime", groupId =   30, groupZone = 173, funcLookup = "Skillchain", min = 33, max = 36, xPos = 385.6814, yPos = -3.0427, zPos = -141.8613, Rot = 237.0000, respawn = 330 },
+        { name = "Muddy Slime", groupId =   30, groupZone = 173, funcLookup = "Skillchain", min = 33, max = 36, xPos = 400.1080, yPos = -3.1493, zPos = -141.2657, Rot = 237.0000, respawn = 330 },
+        { name = "Muddy Slime", groupId =   30, groupZone = 173, funcLookup = "Skillchain", min = 33, max = 36, xPos = 407.4135, yPos = -7.4772, zPos = -130.5746, Rot = 204.0000, respawn = 330 },
+        { name = "Muddy Slime", groupId =   30, groupZone = 173, funcLookup = "Skillchain", min = 33, max = 36, xPos = 394.3851, yPos = -7.2796, zPos = -125.9208, Rot = 105.0000, respawn = 330 },
+        { name = "Muddy Slime", groupId =   30, groupZone = 173, funcLookup = "Skillchain", min = 33, max = 36, xPos = 355.9179, yPos = 0.9525, zPos = -140.2991, Rot = 140.0000, respawn = 330 },
+        { name = "Muddy Slime", groupId =   30, groupZone = 173, funcLookup = "Skillchain", min = 33, max = 36, xPos = 339.0568, yPos = -0.9044, zPos = -148.3801, Rot = 99.0000, respawn = 330 },
+        { name = "Muddy Slime", groupId =   30, groupZone = 173, funcLookup = "Skillchain", min = 33, max = 36, xPos = 366.9660, yPos = 0.3767, zPos = -183.3280, Rot = 235.0000, respawn = 330 },
+        { name = "Muddy Slime", groupId =   30, groupZone = 173, funcLookup = "Skillchain", min = 33, max = 36, xPos = 367.8614, yPos = -0.7402, zPos = -200.8196, Rot = 62.0000, respawn = 330 },
+        -- mb camp 2
+        { name = "Muddyeyes", groupId =   18, groupZone = 166, funcLookup = "Manaburn_Low", min = 62, max = 66, xPos = 296.4819, yPos = 8.4470, zPos = -328.5648, Rot = 127.0000, respawn = 330 },
+        { name = "Muddyeyes", groupId =   18, groupZone = 166, funcLookup = "Manaburn_Low", min = 62, max = 66, xPos = 292.1534, yPos = 8.4049, zPos = -322.1583, Rot = 167.0000, respawn = 330 },
+        { name = "Muddyeyes", groupId =   18, groupZone = 166, funcLookup = "Manaburn_Low", min = 62, max = 66, xPos = 303.1624, yPos = 8.8413, zPos = -316.4022, Rot = 245.0000, respawn = 330 },
+        { name = "Muddyeyes", groupId =   18, groupZone = 166, funcLookup = "Manaburn_Low", min = 62, max = 66, xPos = 279.6900, yPos = 6.5921, zPos = -333.5170, Rot = 102.0000, respawn = 330 },
+        { name = "Muddyeyes", groupId =   18, groupZone = 166, funcLookup = "Manaburn_Low", min = 62, max = 66, xPos = 277.0023, yPos = 8.1692, zPos = -312.5803, Rot = 177.0000, respawn = 330 },
+        { name = "Muddyeyes", groupId =   18, groupZone = 166, funcLookup = "Manaburn_Low", min = 62, max = 66, xPos = 263.0165, yPos = 8.7081, zPos = -313.2022, Rot = 147.0000, respawn = 330 },
+        { name = "Muddyeyes", groupId =   18, groupZone = 166, funcLookup = "Manaburn_Low", min = 62, max = 66, xPos = 262.0640, yPos = 8.1391, zPos = -333.4863, Rot = 71.0000, respawn = 330 },
+        { name = "Muddyeyes", groupId =   18, groupZone = 166, funcLookup = "Manaburn_Low", min = 62, max = 66, xPos = 260.1965, yPos = 8.6428, zPos = -291.3883, Rot = 207.0000, respawn = 330 },
+        { name = "Muddyeyes", groupId =   18, groupZone = 166, funcLookup = "Manaburn_Low", min = 62, max = 66, xPos = 265.7609, yPos = 8.6190, zPos = -277.5266, Rot = 209.0000, respawn = 330 },
+        { name = "Muddyeyes", groupId =   18, groupZone = 166, funcLookup = "Manaburn_Low", min = 62, max = 66, xPos = 260.5104, yPos = 6.4434, zPos = -345.8040, Rot = 71.0000, respawn = 330 },
+        -- sc camp 2
+        { name = "Mud Crab", groupId =   12, groupZone = 153, funcLookup = "Skillchain", min = 59, max = 62, xPos = -318.5992, yPos = 8.0437, zPos = -115.0999, Rot = 134.0000, respawn = 330 },
+        { name = "Mud Crab", groupId =   12, groupZone = 153, funcLookup = "Skillchain", min = 59, max = 62, xPos = -328.4233, yPos = 5.6870, zPos = -127.4335, Rot = 105.0000, respawn = 330 },
+        { name = "Mud Crab", groupId =   12, groupZone = 153, funcLookup = "Skillchain", min = 59, max = 62, xPos = -310.1703, yPos = 7.7805, zPos = -126.3868, Rot = 0.0000, respawn = 330 },
+        { name = "Mud Crab", groupId =   12, groupZone = 153, funcLookup = "Skillchain", min = 59, max = 62, xPos = -290.1970, yPos = 8.3075, zPos = -118.7263, Rot = 253.0000, respawn = 330 },
+        { name = "Mud Crab", groupId =   12, groupZone = 153, funcLookup = "Skillchain", min = 59, max = 62, xPos = -269.2609, yPos = 5.9383, zPos = -117.6161, Rot = 253.0000, respawn = 330 },
+        { name = "Mud Crab", groupId =   12, groupZone = 153, funcLookup = "Skillchain", min = 59, max = 62, xPos = -268.0031, yPos = 1.8701, zPos = -95.8281, Rot = 191.0000, respawn = 330 },
+        { name = "Mud Crab", groupId =   12, groupZone = 153, funcLookup = "Skillchain", min = 59, max = 62, xPos = -252.7201, yPos = -1.5763, zPos = -99.9319, Rot = 238.0000, respawn = 330 },
+        { name = "Mud Crab", groupId =   12, groupZone = 153, funcLookup = "Skillchain", min = 59, max = 62, xPos = -251.6408, yPos = 5.5897, zPos = -117.2755, Rot = 89.0000, respawn = 330 },
+        { name = "Mud Crab", groupId =   12, groupZone = 153, funcLookup = "Skillchain", min = 59, max = 62, xPos = -258.0820, yPos = 3.5303, zPos = -134.8506, Rot = 72.0000, respawn = 330 },
+        { name = "Mud Crab", groupId =   12, groupZone = 153, funcLookup = "Skillchain", min = 59, max = 62, xPos = -272.4070, yPos = 8.1749, zPos = -143.8342, Rot = 94.0000, respawn = 330 },
     },
     [xi.zone.GARLAIGE_CITADEL] =
     {
@@ -705,6 +749,17 @@ local spawnerMobs =
         { name = "Young Uragnite",       groupId = 8, groupZone = 4, funcLookup = "Manaburn_Low", min = 36, max = 42, xPos = 378.97, yPos = 40, zPos = 419.51, rot = 100, respawn = 330 },
         { name = "Young Uragnite",       groupId = 8, groupZone = 4, funcLookup = "Manaburn_Low", min = 36, max = 42, xPos = 358.59, yPos = 40, zPos = 439.57, rot = 110, respawn = 330 },
         { name = "Young Uragnite",       groupId = 8, groupZone = 4, funcLookup = "Manaburn_Low", min = 36, max = 42, xPos = 361.89, yPos = 40, zPos = 419.58, rot = 109, respawn = 330 },
+        --sc camp
+        { name = "Flying Beetle",       groupId = 1, groupZone = 200, funcLookup = "Skillchain", min = 35, max = 37, xPos = 309.6248, yPos = 16.5514, zPos = -107.0512, Rot = 64.0000, respawn = 330 },
+        { name = "Flying Beetle",       groupId = 1, groupZone = 200, funcLookup = "Skillchain", min = 35, max = 37, xPos = 303.9861, yPos = 16.6000, zPos = -111.6822, Rot = 70.0000, respawn = 330 },
+        { name = "Flying Beetle",       groupId = 1, groupZone = 200, funcLookup = "Skillchain", min = 35, max = 37, xPos = 306.4798, yPos = 16.5473, zPos = -120.8742, Rot = 80.0000, respawn = 330 },
+        { name = "Flying Beetle",       groupId = 1, groupZone = 200, funcLookup = "Skillchain", min = 35, max = 37, xPos = 311.0781, yPos = 16.2449, zPos = -116.2332, Rot = 209.000, respawn = 330 },
+        { name = "Flying Beetle",       groupId = 1, groupZone = 200, funcLookup = "Skillchain", min = 35, max = 37, xPos = 317.3699, yPos = 16.0000, zPos = -122.6967, Rot = 18.0000, respawn = 330 },
+        { name = "Flying Beetle",       groupId = 1, groupZone = 200, funcLookup = "Skillchain", min = 35, max = 37, xPos = 319.2726, yPos = 16.1104, zPos = -113.7675, Rot = 180.000, respawn = 330 },
+        { name = "Flying Beetle",       groupId = 1, groupZone = 200, funcLookup = "Skillchain", min = 35, max = 37, xPos = 321.3459, yPos = 16.0381, zPos = -115.2157, Rot = 71.0000, respawn = 330 },
+        { name = "Flying Beetle",       groupId = 1, groupZone = 200, funcLookup = "Skillchain", min = 35, max = 37, xPos = 300.2156, yPos = 16.6021, zPos = -129.9326, Rot = 99.0000, respawn = 330 },
+        { name = "Flying Beetle",       groupId = 1, groupZone = 200, funcLookup = "Skillchain", min = 35, max = 37, xPos = 310.2253, yPos = 16.6000, zPos = -137.1183, Rot = 93.0000, respawn = 330 },
+        { name = "Flying Beetle",       groupId = 1, groupZone = 200, funcLookup = "Skillchain", min = 35, max = 37, xPos = 290.8542, yPos = 16.3416, zPos = -118.7580, Rot = 75.0000, respawn = 330 },
     },
     [xi.zone.TAHRONGI_CANYON] =
     {
@@ -774,6 +829,50 @@ local spawnerMobs =
         { name = "Desert Beetle", groupId =   12, groupZone = 125, funcLookup = "Default", min = 47, max = 51, xPos = -249.22, yPos = -3.45, zPos = -61.18, rot =  127, respawn = 330 },
         { name = "Desert Beetle", groupId =   12, groupZone = 125, funcLookup = "Default", min = 47, max = 51, xPos = -135.06, yPos = -1.59, zPos = -67.53, rot =  127, respawn = 330 },
         { name = "Desert Beetle", groupId =   12, groupZone = 125, funcLookup = "Default", min = 47, max = 51, xPos = -209.08, yPos = -0.29, zPos = -71.06, rot =  127, respawn = 330 },
+        -- MB camp 1
+        { name = "Desert Worm", groupId =   7, groupZone = 125, funcLookup = "Manaburn_Low", min = 58, max = 61, xPos = -423.6056, yPos = 0.6016, zPos = 24.4972, Rot = 63.0000, respawn = 330 },
+        { name = "Desert Worm", groupId =   7, groupZone = 125, funcLookup = "Manaburn_Low", min = 58, max = 61, xPos = -403.5758, yPos = 0.9368, zPos = 21.2466, Rot = 7.0000, respawn = 330 },
+        { name = "Desert Worm", groupId =   7, groupZone = 125, funcLookup = "Manaburn_Low", min = 58, max = 61, xPos = -397.3880, yPos = 0.0000, zPos = 39.1913, Rot = 209.0000, respawn = 330 },
+        { name = "Desert Worm", groupId =   7, groupZone = 125, funcLookup = "Manaburn_Low", min = 58, max = 61, xPos = -413.9589, yPos = -0.1308, zPos = 53.0030, Rot = 154.0000, respawn = 330 },
+        { name = "Desert Worm", groupId =   7, groupZone = 125, funcLookup = "Manaburn_Low", min = 58, max = 61, xPos = -397.0207, yPos = 0.9777, zPos = 60.4230, Rot = 32.0000, respawn = 330 },
+        { name = "Desert Worm", groupId =   7, groupZone = 125, funcLookup = "Manaburn_Low", min = 58, max = 61, xPos = -421.7028, yPos = 0.7670, zPos = 18.2357, Rot = 44.0000, respawn = 330 },
+        { name = "Desert Worm", groupId =   7, groupZone = 125, funcLookup = "Manaburn_Low", min = 58, max = 61, xPos = -410.8212, yPos = 0.2496, zPos = 9.9460, Rot = 10.0000, respawn = 330 },
+        { name = "Desert Worm", groupId =   7, groupZone = 125, funcLookup = "Manaburn_Low", min = 58, max = 61, xPos = -433.2023, yPos = 0.4529, zPos = 8.2495, Rot = 124.0000, respawn = 330 },
+        { name = "Desert Worm", groupId =   7, groupZone = 125, funcLookup = "Manaburn_Low", min = 58, max = 61, xPos = -437.6984, yPos = 0.0000, zPos = -0.6538, Rot = 43.0000, respawn = 330 },
+        { name = "Desert Worm", groupId =   7, groupZone = 125, funcLookup = "Manaburn_Low", min = 58, max = 61, xPos = -454.3929, yPos = 0.5241, zPos = -10.0331, Rot = 107.0000, respawn = 330 },
+        -- sc camp 1
+        { name = "Desert Slime", groupId =   30, groupZone = 173, funcLookup = "Skillchain", min = 61, max = 64, xPos = -124.0722, yPos = 0.9683, zPos = -419.7139, Rot = 184.0000, respawn = 330 },
+        { name = "Desert Slime", groupId =   30, groupZone = 173, funcLookup = "Skillchain", min = 61, max = 64, xPos = -117.1385, yPos = 0.1565, zPos = -407.1659, Rot = 201.0000, respawn = 330 },
+        { name = "Desert Slime", groupId =   30, groupZone = 173, funcLookup = "Skillchain", min = 61, max = 64, xPos = -130.0187, yPos = 0.2986, zPos = -402.9300, Rot = 106.0000, respawn = 330 },
+        { name = "Desert Slime", groupId =   30, groupZone = 173, funcLookup = "Skillchain", min = 61, max = 64, xPos = -132.3067, yPos = 0.3336, zPos = -394.8069, Rot = 210.0000, respawn = 330 },
+        { name = "Desert Slime", groupId =   30, groupZone = 173, funcLookup = "Skillchain", min = 61, max = 64, xPos = -147.4776, yPos = -0.1088, zPos = -416.2399, Rot = 90.0000, respawn = 330 },
+        { name = "Desert Slime", groupId =   30, groupZone = 173, funcLookup = "Skillchain", min = 61, max = 64, xPos = -161.5852, yPos = 0.4957, zPos = -426.9869, Rot = 99.0000, respawn = 330 },
+        { name = "Desert Slime", groupId =   30, groupZone = 173, funcLookup = "Skillchain", min = 61, max = 64, xPos = -171.5430, yPos = -1.2231, zPos = -422.7166, Rot = 157.0000, respawn = 330 },
+        { name = "Desert Slime", groupId =   30, groupZone = 173, funcLookup = "Skillchain", min = 61, max = 64, xPos = -154.7287, yPos = 0.3241, zPos = -411.8248, Rot = 252.0000, respawn = 330 },
+        { name = "Desert Slime", groupId =   30, groupZone = 173, funcLookup = "Skillchain", min = 61, max = 64, xPos = -138.1386, yPos = -0.2006, zPos = -418.3904, Rot = 48.0000, respawn = 330 },
+        { name = "Desert Slime", groupId =   30, groupZone = 173, funcLookup = "Skillchain", min = 61, max = 64, xPos = -186.8939, yPos = -1.9619, zPos = -414.4692, Rot = 8.0000, respawn = 330 },
+        -- mb camp 2
+        { name = "Bloody Beetle", groupId =   12, groupZone = 125, funcLookup = "Manaburn_Low", min = 53, max = 56, xPos = -699.0569, yPos = -7.3636, zPos = -645.4842, Rot = 58.0000, respawn = 330 },
+        { name = "Bloody Beetle", groupId =   12, groupZone = 125, funcLookup = "Manaburn_Low", min = 53, max = 56, xPos = -709.1216, yPos = -7.4736, zPos = -632.2339, Rot = 179.0000, respawn = 330 },
+        { name = "Bloody Beetle", groupId =   12, groupZone = 125, funcLookup = "Manaburn_Low", min = 53, max = 56, xPos = -723.6881, yPos = -7.6154, zPos = -628.0916, Rot = 146.0000, respawn = 330 },
+        { name = "Bloody Beetle", groupId =   12, groupZone = 125, funcLookup = "Manaburn_Low", min = 53, max = 56, xPos = -714.8328, yPos = -7.4998, zPos = -613.0583, Rot = 209.0000, respawn = 330 },
+        { name = "Bloody Beetle", groupId =   12, groupZone = 125, funcLookup = "Manaburn_Low", min = 53, max = 56, xPos = -721.2653, yPos = -8.0000, zPos = -597.7471, Rot = 179.0000, respawn = 330 },
+        { name = "Bloody Beetle", groupId =   12, groupZone = 125, funcLookup = "Manaburn_Low", min = 53, max = 56, xPos = -706.0934, yPos = -7.3341, zPos = -596.7548, Rot = 19.0000, respawn = 330 },
+        { name = "Bloody Beetle", groupId =   12, groupZone = 125, funcLookup = "Manaburn_Low", min = 53, max = 56, xPos = -695.3547, yPos = -7.5534, zPos = -607.6351, Rot = 23.0000, respawn = 330 },
+        { name = "Bloody Beetle", groupId =   12, groupZone = 125, funcLookup = "Manaburn_Low", min = 53, max = 56, xPos = -682.5167, yPos = -8.0000, zPos = -642.8656, Rot = 65.0000, respawn = 330 },
+        { name = "Bloody Beetle", groupId =   12, groupZone = 125, funcLookup = "Manaburn_Low", min = 53, max = 56, xPos = -681.3167, yPos = -7.0035, zPos = -659.9456, Rot = 6.0000, respawn = 330 },
+        { name = "Bloody Beetle", groupId =   12, groupZone = 125, funcLookup = "Manaburn_Low", min = 53, max = 56, xPos = -666.0634, yPos = -5.7835, zPos = -652.4943, Rot = 245.0000, respawn = 330 },
+        -- sc camp 2
+        { name = "Bloodmite", groupId =   11, groupZone = 27, funcLookup = "Skillchain", min = 56, max = 59, xPos = -681.5272, yPos = 0.0000, zPos = -281.6132, Rot = 208.0000, respawn = 330 },
+        { name = "Bloodmite", groupId =   11, groupZone = 27, funcLookup = "Skillchain", min = 56, max = 59, xPos = -671.8376, yPos = 0.2062, zPos = -279.2775, Rot = 227.0000, respawn = 330 },
+        { name = "Bloodmite", groupId =   11, groupZone = 27, funcLookup = "Skillchain", min = 56, max = 59, xPos = -662.4979, yPos = -0.7096, zPos = -272.9044, Rot = 28.0000, respawn = 330 },
+        { name = "Bloodmite", groupId =   11, groupZone = 27, funcLookup = "Skillchain", min = 56, max = 59, xPos = -655.2121, yPos = 0.7919, zPos = -287.7570, Rot = 47.0000, respawn = 330 },
+        { name = "Bloodmite", groupId =   11, groupZone = 27, funcLookup = "Skillchain", min = 56, max = 59, xPos = -676.5853, yPos = 0.7732, zPos = -304.2280, Rot = 90.0000, respawn = 330 },
+        { name = "Bloodmite", groupId =   11, groupZone = 27, funcLookup = "Skillchain", min = 56, max = 59, xPos = -674.2623, yPos = 0.2244, zPos = -317.2826, Rot = 47.0000, respawn = 330 },
+        { name = "Bloodmite", groupId =   11, groupZone = 27, funcLookup = "Skillchain", min = 56, max = 59, xPos = -692.5848, yPos = -2.1347, zPos = -321.2444, Rot = 117.0000, respawn = 330 },
+        { name = "Bloodmite", groupId =   11, groupZone = 27, funcLookup = "Skillchain", min = 56, max = 59, xPos = -692.2900, yPos = -2.1232, zPos = -330.4538, Rot = 63.0000, respawn = 330 },
+        { name = "Bloodmite", groupId =   11, groupZone = 27, funcLookup = "Skillchain", min = 56, max = 59, xPos = -678.6187, yPos = 0.3683, zPos = -331.4180, Rot = 11.0000, respawn = 330 },
+        { name = "Bloodmite", groupId =   11, groupZone = 27, funcLookup = "Skillchain", min = 56, max = 59, xPos = -674.0308, yPos = 0.4438, zPos = -346.5161, Rot = 50.0000, respawn = 330 },
     },
     [xi.zone.YHOATOR_JUNGLE] =
     {
@@ -785,6 +884,17 @@ local spawnerMobs =
         { name = "Snap Jaw", groupId =  21, groupZone = 124, funcLookup = "Default", min = 49, max = 51, xPos = 534.93, yPos = 0.06, zPos = -407.72, rot =  127, respawn = 330 },
         { name = "Snap Jaw", groupId =  21, groupZone = 124, funcLookup = "Default", min = 49, max = 51, xPos = 526.93, yPos = 0.11, zPos = -426.13, rot =  127, respawn = 330 },
         { name = "Snap Jaw", groupId =  21, groupZone = 124, funcLookup = "Default", min = 49, max = 51, xPos = 540.54, yPos = 0.16, zPos = -433.23, rot =  127, respawn = 330 },
+        -- SC Camp one
+        { name = "Jungle Crab", groupId =  9, groupZone = 115, funcLookup = "Skillchain", min = 51, max = 53, xPos = 232.1366, yPos = -0.0268, zPos = -451.9647, Rot = 184.0000, respawn = 330 },
+        { name = "Jungle Crab", groupId =  9, groupZone = 115, funcLookup = "Skillchain", min = 51, max = 53, xPos = 224.6868, yPos = 0.0000, zPos = -456.6467, Rot = 73.0000, respawn = 330 },
+        { name = "Jungle Crab", groupId =  9, groupZone = 115, funcLookup = "Skillchain", min = 51, max = 53, xPos = 226.9991, yPos = -0.8109, zPos = -467.6865, Rot = 112.0000, respawn = 330 },
+        { name = "Jungle Crab", groupId =  9, groupZone = 115, funcLookup = "Skillchain", min = 51, max = 53, xPos = 215.5907, yPos = -0.0744, zPos = -466.2247, Rot = 123.0000, respawn = 330 },
+        { name = "Jungle Crab", groupId =  9, groupZone = 115, funcLookup = "Skillchain", min = 51, max = 53, xPos = 210.2572, yPos = 0.2114, zPos = -472.9173, Rot = 96.0000, respawn = 330 },
+        { name = "Jungle Crab", groupId =  9, groupZone = 115, funcLookup = "Skillchain", min = 51, max = 53, xPos = 202.6955, yPos = 0.0000, zPos = -479.6897, Rot = 98.0000, respawn = 330 },
+        { name = "Jungle Crab", groupId =  9, groupZone = 115, funcLookup = "Skillchain", min = 51, max = 53, xPos = 196.9443, yPos = 0.0000, zPos = -472.0216, Rot = 156.0000, respawn = 330 },
+        { name = "Jungle Crab", groupId =  9, groupZone = 115, funcLookup = "Skillchain", min = 51, max = 53, xPos = 190.4720, yPos = 0.0000, zPos = -482.8654, Rot = 88.0000, respawn = 330 },
+        { name = "Jungle Crab", groupId =  9, groupZone = 115, funcLookup = "Skillchain", min = 51, max = 53, xPos = 191.1496, yPos = 0.0000, zPos = -488.7232, Rot = 91.0000, respawn = 330 },
+        { name = "Jungle Crab", groupId =  9, groupZone = 115, funcLookup = "Skillchain", min = 51, max = 53, xPos = 188.3348, yPos = 0.0000, zPos = -496.1241, Rot = 77.0000, respawn = 330 },
     },
     [xi.zone.EAST_SARUTABARUTA] =
     {
@@ -1224,6 +1334,203 @@ local spawnerMobs =
         { name = "Starmite", groupId =  41, groupZone = 169, funcLookup = "Default", min = 65, max = 67, xPos = 137.55, yPos = -8.2, zPos = -78.812, Rot = 12 , respawn = 420 },
         { name = "Starmite", groupId =  41, groupZone = 169, funcLookup = "Default", min = 65, max = 67, xPos = 117.85, yPos = -8.02, zPos = -98.791, Rot = 84 , respawn = 420 },
     },
+    [xi.zone.QUFIM_ISLAND] =
+    {
+        -- Skillchain camp 1
+        { name = "Island Goop", groupId =  30, groupZone = 173, funcLookup = "Skillchain", min = 25, max = 28, xPos = -334.5498, yPos = -12.6227, zPos = 504.5517, Rot = 51.0000, respawn = 330 },
+        { name = "Island Goop", groupId =  30, groupZone = 173, funcLookup = "Skillchain", min = 25, max = 28, xPos = -336.4561, yPos = -11.0453, zPos = 496.1287, Rot = 100.0000, respawn = 330 },
+        { name = "Island Goop", groupId =  30, groupZone = 173, funcLookup = "Skillchain", min = 25, max = 28, xPos = -325.6833, yPos = -11.0428, zPos = 490.9676, Rot = 55.0000, respawn = 330 },
+        { name = "Island Goop", groupId =  30, groupZone = 173, funcLookup = "Skillchain", min = 25, max = 28, xPos = -328.2449, yPos = -11.5373, zPos = 479.2206, Rot = 84.0000, respawn = 330 },
+        { name = "Island Goop", groupId =  30, groupZone = 173, funcLookup = "Skillchain", min = 25, max = 28, xPos = -315.4494, yPos = -12.0079, zPos = 485.4332, Rot = 234.0000, respawn = 330 },
+        { name = "Island Goop", groupId =  30, groupZone = 173, funcLookup = "Skillchain", min = 25, max = 28, xPos = -320.3004, yPos = -11.2746, zPos = 466.1390, Rot = 36.0000, respawn = 330 },
+        { name = "Island Goop", groupId =  30, groupZone = 173, funcLookup = "Skillchain", min = 25, max = 28, xPos = -306.7655, yPos = -11.3799, zPos = 486.0744, Rot = 223.0000, respawn = 330 },
+        { name = "Island Goop", groupId =  30, groupZone = 173, funcLookup = "Skillchain", min = 25, max = 28, xPos = -294.8305, yPos = -11.4477, zPos = 483.7655, Rot = 199.0000, respawn = 330 },
+        { name = "Island Goop", groupId =  30, groupZone = 173, funcLookup = "Skillchain", min = 25, max = 28, xPos = -284.8098, yPos = -11.7161, zPos = 473.0795, Rot = 232.0000, respawn = 330 },
+        { name = "Island Goop", groupId =  30, groupZone = 173, funcLookup = "Skillchain", min = 25, max = 28, xPos = -274.3688, yPos = -11.8036, zPos = 478.6925, Rot = 251.0000, respawn = 330 },
+        -- MB camp 1
+        { name = "Snowmite", groupId =  11, groupZone = 27, funcLookup = "Manaburn_Low", min = 30, max = 33, xPos = -259.4673, yPos = -20.0000, zPos = 268.2498, Rot = 187.0000, respawn = 330 },
+        { name = "Snowmite", groupId =  11, groupZone = 27, funcLookup = "Manaburn_Low", min = 30, max = 33, xPos = -249.9078, yPos = -19.8709, zPos = 274.6054, Rot = 228.0000, respawn = 330 },
+        { name = "Snowmite", groupId =  11, groupZone = 27, funcLookup = "Manaburn_Low", min = 30, max = 33, xPos = -240.8366, yPos = -19.4087, zPos = 266.0399, Rot = 22.0000, respawn = 330 },
+        { name = "Snowmite", groupId =  11, groupZone = 27, funcLookup = "Manaburn_Low", min = 30, max = 33, xPos = -227.0802, yPos = -19.5128, zPos = 276.1140, Rot = 236.0000, respawn = 330 },
+        { name = "Snowmite", groupId =  11, groupZone = 27, funcLookup = "Manaburn_Low", min = 30, max = 33, xPos = -219.6111, yPos = -19.8206, zPos = 261.1883, Rot = 37.0000, respawn = 330 },
+        { name = "Snowmite", groupId =  11, groupZone = 27, funcLookup = "Manaburn_Low", min = 30, max = 33, xPos = -230.9991, yPos = -20.1089, zPos = 247.5311, Rot = 90.0000, respawn = 330 },
+        { name = "Snowmite", groupId =  11, groupZone = 27, funcLookup = "Manaburn_Low", min = 30, max = 33, xPos = -246.3627, yPos = -19.8527, zPos = 244.6289, Rot = 107.0000, respawn = 330 },
+        { name = "Snowmite", groupId =  11, groupZone = 27, funcLookup = "Manaburn_Low", min = 30, max = 33, xPos = -252.4510, yPos = -19.9595, zPos = 230.9475, Rot = 67.0000, respawn = 330 },
+        { name = "Snowmite", groupId =  11, groupZone = 27, funcLookup = "Manaburn_Low", min = 30, max = 33, xPos = -260.6238, yPos = -19.8071, zPos = 250.6451, Rot = 173.0000, respawn = 330 },
+    },
+    [xi.zone.BATALLIA_DOWNS] =
+    {
+        -- MB Camps
+        { name = "Rancideyes", groupId =  18, groupZone = 166, funcLookup = "Manaburn_Low", min = 48, max = 51, xPos = -121.7566, yPos = 0.0516, zPos = 434.9446, Rot = 145.0000, respawn = 330 },
+        { name = "Rancideyes", groupId =  18, groupZone = 166, funcLookup = "Manaburn_Low", min = 48, max = 51, xPos = -125.2483, yPos = -0.0887, zPos = 444.1116, Rot = 184.0000, respawn = 330 },
+        { name = "Rancideyes", groupId =  18, groupZone = 166, funcLookup = "Manaburn_Low", min = 48, max = 51, xPos = -132.9644, yPos = -0.8035, zPos = 424.4820, Rot = 60.0000, respawn = 330 },
+        { name = "Rancideyes", groupId =  18, groupZone = 166, funcLookup = "Manaburn_Low", min = 48, max = 51, xPos = -124.6039, yPos = 0.1069, zPos = 412.4097, Rot = 43.0000, respawn = 330 },
+        { name = "Rancideyes", groupId =  18, groupZone = 166, funcLookup = "Manaburn_Low", min = 48, max = 51, xPos = -112.8687, yPos = -0.6932, zPos = 410.9455, Rot = 58.0000, respawn = 330 },
+        { name = "Rancideyes", groupId =  18, groupZone = 166, funcLookup = "Manaburn_Low", min = 48, max = 51, xPos = -115.3754, yPos = -0.3871, zPos = 398.6610, Rot = 69.0000, respawn = 330 },
+        { name = "Rancideyes", groupId =  18, groupZone = 166, funcLookup = "Manaburn_Low", min = 48, max = 51, xPos = -126.2421, yPos = -1.9044, zPos = 391.2888, Rot = 104.0000, respawn = 330 },
+        { name = "Rancideyes", groupId =  18, groupZone = 166, funcLookup = "Manaburn_Low", min = 48, max = 51, xPos = -134.6058, yPos = -1.2018, zPos = 391.5387, Rot = 121.0000, respawn = 330 },
+        { name = "Rancideyes", groupId =  18, groupZone = 166, funcLookup = "Manaburn_Low", min = 48, max = 51, xPos = -144.3291, yPos = -3.1491, zPos = 382.1882, Rot = 95.0000, respawn = 330 },
+        { name = "Rancideyes", groupId =  18, groupZone = 166, funcLookup = "Manaburn_Low", min = 48, max = 51, xPos = -154.3630, yPos = 0.1543, zPos = 394.5046, Rot = 160.0000, respawn = 330 },
+        -- sc camp
+        { name = "Downslime", groupId =  30, groupZone = 173, funcLookup = "Skillchain", min = 41, max = 44, xPos = 145.3829, yPos = 8.3094, zPos = -432.9579, Rot = 215.0000, respawn = 330 },
+        { name = "Downslime", groupId =  30, groupZone = 173, funcLookup = "Skillchain", min = 41, max = 44, xPos = 135.5898, yPos = 5.2269, zPos = -422.3209, Rot = 172.0000, respawn = 330 },
+        { name = "Downslime", groupId =  30, groupZone = 173, funcLookup = "Skillchain", min = 41, max = 44, xPos = 122.1859, yPos = 4.9273, zPos = -418.8327, Rot = 163.0000, respawn = 330 },
+        { name = "Downslime", groupId =  30, groupZone = 173, funcLookup = "Skillchain", min = 41, max = 44, xPos = 120.6419, yPos = -0.2191, zPos = -402.7064, Rot = 193.0000, respawn = 330 },
+        { name = "Downslime", groupId =  30, groupZone = 173, funcLookup = "Skillchain", min = 41, max = 44, xPos = 116.9359, yPos = -2.0767, zPos = -383.6024, Rot = 180.0000, respawn = 330 },
+        { name = "Downslime", groupId =  30, groupZone = 173, funcLookup = "Skillchain", min = 41, max = 44, xPos = 100.6431, yPos = 4.3420, zPos = -389.4092, Rot = 118.0000, respawn = 330 },
+        { name = "Downslime", groupId =  30, groupZone = 173, funcLookup = "Skillchain", min = 41, max = 44, xPos = 89.3531, yPos = 7.9297, zPos = -402.0945, Rot = 90.0000, respawn = 330 },
+        { name = "Downslime", groupId =  30, groupZone = 173, funcLookup = "Skillchain", min = 41, max = 44, xPos = 84.3567, yPos = 8.6010, zPos = -414.0518, Rot = 68.0000, respawn = 330 },
+        { name = "Downslime", groupId =  30, groupZone = 173, funcLookup = "Skillchain", min = 41, max = 44, xPos = 84.1205, yPos = 8.1721, zPos = -432.5351, Rot = 64.0000, respawn = 330 },
+        { name = "Downslime", groupId =  30, groupZone = 173, funcLookup = "Skillchain", min = 41, max = 44, xPos = 99.5462, yPos = 8.6833, zPos = -451.3817, Rot = 46.0000, respawn = 330 },
+    },
+    [xi.zone.ROLANBERRY_FIELDS] =
+    {
+        -- SC Camp
+        { name = "Shell Grub", groupId =  10, groupZone = 110, funcLookup = "Skillchain", min = 38, max = 41, xPos = -596.8442, yPos = -23.6215, zPos = -89.3462, Rot = 161.0000 , respawn = 330 },
+        { name = "Shell Grub", groupId =  10, groupZone = 110, funcLookup = "Skillchain", min = 38, max = 41, xPos = -605.2640, yPos = -23.9380, zPos = -79.4098, Rot = 93.0000 , respawn = 330 },
+        { name = "Shell Grub", groupId =  10, groupZone = 110, funcLookup = "Skillchain", min = 38, max = 41, xPos = -618.1882, yPos = -24.8421, zPos = -96.4095, Rot = 97.0000 , respawn = 330 },
+        { name = "Shell Grub", groupId =  10, groupZone = 110, funcLookup = "Skillchain", min = 38, max = 41, xPos = -619.9592, yPos = -23.8171, zPos = -114.7895, Rot = 90.0000 , respawn = 330 },
+        { name = "Shell Grub", groupId =  10, groupZone = 110, funcLookup = "Skillchain", min = 38, max = 41, xPos = -629.0940, yPos = -23.0713, zPos = -124.6779, Rot = 116.0000, respawn = 330 },
+        { name = "Shell Grub", groupId =  10, groupZone = 110, funcLookup = "Skillchain", min = 38, max = 41, xPos = -647.2643, yPos = -23.5957, zPos = -121.9966, Rot = 129.0000, respawn = 330 },
+        { name = "Shell Grub", groupId =  10, groupZone = 110, funcLookup = "Skillchain", min = 38, max = 41, xPos = -671.0684, yPos = -23.7546, zPos = -118.2524, Rot = 146.0000, respawn = 330 },
+        { name = "Shell Grub", groupId =  10, groupZone = 110, funcLookup = "Skillchain", min = 38, max = 41, xPos = -698.2170, yPos = -23.0903, zPos = -120.3831, Rot = 132.0000, respawn = 330 },
+    },
+    [xi.zone.YUHTUNGA_JUNGLE] =
+    {
+        -- MB Camp
+        { name = "Jungle Crawler", groupId =  41, groupZone = 169, funcLookup = "Manaburn_Low", min = 44, max = 48, xPos = -132.0034, yPos = 0.2975, zPos = -330.4871, Rot = 86.0000, respawn = 330 },
+        { name = "Jungle Crawler", groupId =  41, groupZone = 169, funcLookup = "Manaburn_Low", min = 44, max = 48, xPos = -142.2798, yPos = 0.6768, zPos = -326.5808, Rot = 168.0000, respawn = 330 },
+        { name = "Jungle Crawler", groupId =  41, groupZone = 169, funcLookup = "Manaburn_Low", min = 44, max = 48, xPos = -157.2870, yPos = 0.0000, zPos = -320.9605, Rot = 112.0000, respawn = 330 },
+        { name = "Jungle Crawler", groupId =  41, groupZone = 169, funcLookup = "Manaburn_Low", min = 44, max = 48, xPos = -168.2751, yPos = 0.3126, zPos = -322.9077, Rot = 128.0000, respawn = 330 },
+        { name = "Jungle Crawler", groupId =  41, groupZone = 169, funcLookup = "Manaburn_Low", min = 44, max = 48, xPos = -160.9436, yPos = 0.0000, zPos = -317.0564, Rot = 36.0000, respawn = 330 },
+        { name = "Jungle Crawler", groupId =  41, groupZone = 169, funcLookup = "Manaburn_Low", min = 44, max = 48, xPos = -132.5759, yPos = 0.5024, zPos = -315.9912, Rot = 238.0000, respawn = 330 },
+        { name = "Jungle Crawler", groupId =  41, groupZone = 169, funcLookup = "Manaburn_Low", min = 44, max = 48, xPos = -119.9659, yPos = 0.0000, zPos = -323.3748, Rot = 241.0000, respawn = 330 },
+        { name = "Jungle Crawler", groupId =  41, groupZone = 169, funcLookup = "Manaburn_Low", min = 44, max = 48, xPos = -113.0666, yPos = 0.1461, zPos = -311.9643, Rot = 195.0000, respawn = 330 },
+    },
+    [xi.zone.BEAUCEDINE_GLACIER] =
+    {
+        -- mb 1
+        { name = "Snofallo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 43, max = 46, xPos = 101.5825, yPos = -59.8839, zPos = 238.9311, Rot = 187.0000, respawn = 330 },
+        { name = "Snofallo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 43, max = 46, xPos = 106.2161, yPos = -59.8575, zPos = 225.5900, Rot = 51.0000, respawn = 330 },
+        { name = "Snofallo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 43, max = 46, xPos = 114.2982, yPos = -59.6689, zPos = 222.8508, Rot = 13.0000, respawn = 330 },
+        { name = "Snofallo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 43, max = 46, xPos = 124.8931, yPos = -60.3736, zPos = 214.6566, Rot = 55.0000, respawn = 330 },
+        { name = "Snofallo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 43, max = 46, xPos = 123.3635, yPos = -60.0000, zPos = 204.1308, Rot = 48.0000, respawn = 330 },
+        { name = "Snofallo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 43, max = 46, xPos = 114.8989, yPos = -59.6631, zPos = 192.9158, Rot = 101.0000, respawn = 330 },
+        { name = "Snofallo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 43, max = 46, xPos = 106.4660, yPos = -59.4514, zPos = 198.6779, Rot = 110.0000, respawn = 330 },
+        { name = "Snofallo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 43, max = 46, xPos = 97.4771, yPos = -58.1201, zPos = 189.8503, Rot = 104.0000, respawn = 330 },
+        { name = "Snofallo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 43, max = 46, xPos = 85.5317, yPos = -59.9246, zPos = 199.0718, Rot = 103.0000, respawn = 330 },
+        { name = "Snofallo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 43, max = 46, xPos = 83.5325, yPos = -60.5024, zPos = 187.9744, Rot = 48.0000, respawn = 330 },
+        -- sc 1
+        { name = "Winter Worm", groupId =  3, groupZone = 108, funcLookup = "Skillchain", min = 39, max = 42, xPos = 162.8982, yPos = -20.5185, zPos = -227.9094, Rot = 163.0000, respawn = 330 },
+        { name = "Winter Worm", groupId =  3, groupZone = 108, funcLookup = "Skillchain", min = 39, max = 42, xPos = 154.8054, yPos = -20.0399, zPos = -231.6471, Rot = 139.0000, respawn = 330 },
+        { name = "Winter Worm", groupId =  3, groupZone = 108, funcLookup = "Skillchain", min = 39, max = 42, xPos = 153.1347, yPos = -19.8579, zPos = -243.0338, Rot = 65.0000, respawn = 330 },
+        { name = "Winter Worm", groupId =  3, groupZone = 108, funcLookup = "Skillchain", min = 39, max = 42, xPos = 138.7565, yPos = -19.3605, zPos = -245.9127, Rot = 148.0000, respawn = 330 },
+        { name = "Winter Worm", groupId =  3, groupZone = 108, funcLookup = "Skillchain", min = 39, max = 42, xPos = 130.1270, yPos = -20.1379, zPos = -248.5840, Rot = 115.0000, respawn = 330 },
+        { name = "Winter Worm", groupId =  3, groupZone = 108, funcLookup = "Skillchain", min = 39, max = 42, xPos = 130.3076, yPos = -19.6935, zPos = -264.8890, Rot = 92.0000, respawn = 330 },
+        { name = "Winter Worm", groupId =  3, groupZone = 108, funcLookup = "Skillchain", min = 39, max = 42, xPos = 126.4967, yPos = -19.9503, zPos = -274.0334, Rot = 80.0000, respawn = 330 },
+        { name = "Winter Worm", groupId =  3, groupZone = 108, funcLookup = "Skillchain", min = 39, max = 42, xPos = 114.0267, yPos = -20.0640, zPos = -268.9967, Rot = 93.0000, respawn = 330 },
+        { name = "Winter Worm", groupId =  3, groupZone = 108, funcLookup = "Skillchain", min = 39, max = 42, xPos = 106.8542, yPos = -20.5000, zPos = -277.6172, Rot = 191.0000, respawn = 330 },
+        { name = "Winter Worm", groupId =  3, groupZone = 108, funcLookup = "Skillchain", min = 39, max = 42, xPos = 98.4730, yPos = -20.4000, zPos = -267.3458, Rot = 36.0000, respawn = 330 },
+        -- mb 2
+        { name = "Winter Slime", groupId =  30, groupZone = 173, funcLookup = "Manaburn_Low", min = 39, max = 42, xPos = -52.1783, yPos = -0.6048, zPos = -408.2371, Rot = 119.0000, respawn = 330 },
+        { name = "Winter Slime", groupId =  30, groupZone = 173, funcLookup = "Manaburn_Low", min = 39, max = 42, xPos = -48.8983, yPos = 0.2438, zPos = -400.4561, Rot = 216.0000, respawn = 330 },
+        { name = "Winter Slime", groupId =  30, groupZone = 173, funcLookup = "Manaburn_Low", min = 39, max = 42, xPos = -58.5761, yPos = -0.1628, zPos = -387.8914, Rot = 166.0000, respawn = 330 },
+        { name = "Winter Slime", groupId =  30, groupZone = 173, funcLookup = "Manaburn_Low", min = 39, max = 42, xPos = -65.7623, yPos = 0.6192, zPos = -399.7862, Rot = 84.0000, respawn = 330 },
+        { name = "Winter Slime", groupId =  30, groupZone = 173, funcLookup = "Manaburn_Low", min = 39, max = 42, xPos = -76.6366, yPos = -0.1596, zPos = -407.1696, Rot = 102.0000, respawn = 330 },
+        { name = "Winter Slime", groupId =  30, groupZone = 173, funcLookup = "Manaburn_Low", min = 39, max = 42, xPos = -82.2260, yPos = 0.0000, zPos = -396.5581, Rot = 164.0000, respawn = 330 },
+        { name = "Winter Slime", groupId =  30, groupZone = 173, funcLookup = "Manaburn_Low", min = 39, max = 42, xPos = -77.8817, yPos = 0.6909, zPos = -385.0450, Rot = 207.0000, respawn = 330 },
+        { name = "Winter Slime", groupId =  30, groupZone = 173, funcLookup = "Manaburn_Low", min = 39, max = 42, xPos = -74.5979, yPos = 0.1687, zPos = -371.7253, Rot = 201.0000, respawn = 330 },
+        { name = "Winter Slime", groupId =  30, groupZone = 173, funcLookup = "Manaburn_Low", min = 39, max = 42, xPos = -72.4284, yPos = -0.1797, zPos = -363.0061, Rot = 201.0000, respawn = 330 },
+        { name = "Winter Slime", groupId =  30, groupZone = 173, funcLookup = "Manaburn_Low", min = 39, max = 42, xPos = -83.4473, yPos = 0.2708, zPos = -369.4395, Rot = 106.0000, respawn = 330 },
+        -- sc 2
+        { name = "Snow Uragnite", groupId =  8, groupZone = 4, funcLookup = "Skillchain", min = 47, max = 50, xPos = 386.8497, yPos = 0.5104, zPos = 41.7157, Rot = 49.0000, respawn = 330 },
+        { name = "Snow Uragnite", groupId =  8, groupZone = 4, funcLookup = "Skillchain", min = 47, max = 50, xPos = 396.4828, yPos = 0.1613, zPos = 32.7511, Rot = 31.0000, respawn = 330 },
+        { name = "Snow Uragnite", groupId =  8, groupZone = 4, funcLookup = "Skillchain", min = 47, max = 50, xPos = 404.6030, yPos = 0.2500, zPos = 11.2391, Rot = 51.0000, respawn = 330 },
+        { name = "Snow Uragnite", groupId =  8, groupZone = 4, funcLookup = "Skillchain", min = 47, max = 50, xPos = 397.3808, yPos = -0.0323, zPos = -5.3637, Rot = 100.0000, respawn = 330 },
+        { name = "Snow Uragnite", groupId =  8, groupZone = 4, funcLookup = "Skillchain", min = 47, max = 50, xPos = 378.7673, yPos = 0.8261, zPos = -5.7485, Rot = 162.0000, respawn = 330 },
+        { name = "Snow Uragnite", groupId =  8, groupZone = 4, funcLookup = "Skillchain", min = 47, max = 50, xPos = 372.0771, yPos = 0.4027, zPos = 3.7056, Rot = 165.0000, respawn = 330 },
+        { name = "Snow Uragnite", groupId =  8, groupZone = 4, funcLookup = "Skillchain", min = 47, max = 50, xPos = 362.0521, yPos = 0.5261, zPos = 13.3083, Rot = 133.0000, respawn = 330 },
+        { name = "Snow Uragnite", groupId =  8, groupZone = 4, funcLookup = "Skillchain", min = 47, max = 50, xPos = 352.5573, yPos = 0.1573, zPos = 13.1074, Rot = 123.0000, respawn = 330 },
+        { name = "Snow Uragnite", groupId =  8, groupZone = 4, funcLookup = "Skillchain", min = 47, max = 50, xPos = 341.0693, yPos = 0.1693, zPos = 23.4087, Rot = 152.0000, respawn = 330 },
+        { name = "Snow Uragnite", groupId =  8, groupZone = 4, funcLookup = "Skillchain", min = 47, max = 50, xPos = 333.0817, yPos = 0.5036, zPos = 40.9763, Rot = 179.0000, respawn = 330 },
+        -- mb 3
+        { name = "Frost Mite", groupId =  11, groupZone = 27, funcLookup = "Manaburn_Low", min = 50, max = 53, xPos = 353.8761, yPos = 20.8813, zPos = 537.6508, Rot = 43.0000, respawn = 330 },
+        { name = "Frost Mite", groupId =  11, groupZone = 27, funcLookup = "Manaburn_Low", min = 50, max = 53, xPos = 365.5932, yPos = 20.1803, zPos = 529.2447, Rot = 49.0000, respawn = 330 },
+        { name = "Frost Mite", groupId =  11, groupZone = 27, funcLookup = "Manaburn_Low", min = 50, max = 53, xPos = 348.1555, yPos = 20.3910, zPos = 518.8175, Rot = 116.0000, respawn = 330 },
+        { name = "Frost Mite", groupId =  11, groupZone = 27, funcLookup = "Manaburn_Low", min = 50, max = 53, xPos = 337.0134, yPos = 20.2053, zPos = 505.6037, Rot = 84.0000, respawn = 330 },
+        { name = "Frost Mite", groupId =  11, groupZone = 27, funcLookup = "Manaburn_Low", min = 50, max = 53, xPos = 349.1178, yPos = 20.3821, zPos = 495.8668, Rot = 16.0000, respawn = 330 },
+        { name = "Frost Mite", groupId =  11, groupZone = 27, funcLookup = "Manaburn_Low", min = 50, max = 53, xPos = 368.0068, yPos = 20.1803, zPos = 496.5663, Rot = 249.0000, respawn = 330 },
+        { name = "Frost Mite", groupId =  11, groupZone = 27, funcLookup = "Manaburn_Low", min = 50, max = 53, xPos = 328.9519, yPos = 20.2439, zPos = 515.9736, Rot = 160.0000, respawn = 330 },
+        { name = "Frost Mite", groupId =  11, groupZone = 27, funcLookup = "Manaburn_Low", min = 50, max = 53, xPos = 323.4768, yPos = 20.1727, zPos = 528.7137, Rot = 177.0000, respawn = 330 },
+        { name = "Frost Mite", groupId =  11, groupZone = 27, funcLookup = "Manaburn_Low", min = 50, max = 53, xPos = 324.5591, yPos = 19.8472, zPos = 541.3019, Rot = 195.0000, respawn = 330 },
+        { name = "Frost Mite", groupId =  11, groupZone = 27, funcLookup = "Manaburn_Low", min = 50, max = 53, xPos = 357.3018, yPos = 20.8065, zPos = 543.8475, Rot = 119.0000, respawn = 330 },
+        -- sc 3
+        { name = "Glacier Crab", groupId =  9, groupZone = 115, funcLookup = "Skillchain", min = 69, max = 72, xPos = 357.3018, yPos = 20.8065, zPos = 543.8475, Rot = 119.0000, respawn = 330 },
+        { name = "Glacier Crab", groupId =  9, groupZone = 115, funcLookup = "Skillchain", min = 69, max = 72, xPos = 357.3018, yPos = 20.8065, zPos = 543.8475, Rot = 119.0000, respawn = 330 },
+        { name = "Glacier Crab", groupId =  9, groupZone = 115, funcLookup = "Skillchain", min = 69, max = 72, xPos = 357.3018, yPos = 20.8065, zPos = 543.8475, Rot = 119.0000, respawn = 330 },
+        { name = "Glacier Crab", groupId =  9, groupZone = 115, funcLookup = "Skillchain", min = 69, max = 72, xPos = 357.3018, yPos = 20.8065, zPos = 543.8475, Rot = 119.0000, respawn = 330 },
+        { name = "Glacier Crab", groupId =  9, groupZone = 115, funcLookup = "Skillchain", min = 69, max = 72, xPos = 357.3018, yPos = 20.8065, zPos = 543.8475, Rot = 119.0000, respawn = 330 },
+        { name = "Glacier Crab", groupId =  9, groupZone = 115, funcLookup = "Skillchain", min = 69, max = 72, xPos = 357.3018, yPos = 20.8065, zPos = 543.8475, Rot = 119.0000, respawn = 330 },
+        { name = "Glacier Crab", groupId =  9, groupZone = 115, funcLookup = "Skillchain", min = 69, max = 72, xPos = 357.3018, yPos = 20.8065, zPos = 543.8475, Rot = 119.0000, respawn = 330 },
+        { name = "Glacier Crab", groupId =  9, groupZone = 115, funcLookup = "Skillchain", min = 69, max = 72, xPos = 357.3018, yPos = 20.8065, zPos = 543.8475, Rot = 119.0000, respawn = 330 },
+        { name = "Glacier Crab", groupId =  9, groupZone = 115, funcLookup = "Skillchain", min = 69, max = 72, xPos = 357.3018, yPos = 20.8065, zPos = 543.8475, Rot = 119.0000, respawn = 330 },
+        { name = "Glacier Crab", groupId =  9, groupZone = 115, funcLookup = "Skillchain", min = 69, max = 72, xPos = 357.3018, yPos = 20.8065, zPos = 543.8475, Rot = 119.0000, respawn = 330 },
+    },
+    [xi.zone.LUFAISE_MEADOWS] =
+    {
+        -- mb 1
+        { name = "Meadow Buffalo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 75, max = 78, xPos = -114.6113, yPos = -15.1427, zPos = -9.4837, Rot = 95.0000, respawn = 330 },
+        { name = "Meadow Buffalo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 75, max = 78, xPos = -112.6649, yPos = -15.8736, zPos = 0.7640, Rot = 236.0000, respawn = 330 },
+        { name = "Meadow Buffalo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 75, max = 78, xPos = -103.1070, yPos = -15.5783, zPos = 5.2270, Rot = 224.0000, respawn = 330 },
+        { name = "Meadow Buffalo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 75, max = 78, xPos = -104.8876, yPos = -16.1097, zPos = 20.7132, Rot = 137.0000, respawn = 330 },
+        { name = "Meadow Buffalo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 75, max = 78, xPos = -101.0484, yPos = -16.3696, zPos = 25.1223, Rot = 84.0000, respawn = 330 },
+        { name = "Meadow Buffalo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 75, max = 78, xPos = -95.7745, yPos = -16.5558, zPos = 18.2863, Rot = 28.0000, respawn = 330 },
+        { name = "Meadow Buffalo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 75, max = 78, xPos = -87.2842, yPos = -16.4342, zPos = 16.9295, Rot = 252.0000, respawn = 330 },
+        { name = "Meadow Buffalo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 75, max = 78, xPos = -91.6687, yPos = -15.7004, zPos = 9.2362, Rot = 73.0000, respawn = 330 },
+        { name = "Meadow Buffalo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 75, max = 78, xPos = -94.1348, yPos = -15.3923, zPos = -0.0018, Rot = 37.0000, respawn = 330 },
+        { name = "Meadow Buffalo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 75, max = 78, xPos = -98.1460, yPos = -14.3943, zPos = -8.1019, Rot = 77.0000, respawn = 330 },
+        { name = "Meadow Buffalo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 75, max = 78, xPos = -100.0916, yPos = -11.7998, zPos = -17.3778, Rot = 204.000, respawn = 330 },
+    },
+    [xi.zone.MISAREAUX_COAST] =
+    {
+        -- mb 1
+        { name = "Coastal Slime", groupId =  30, groupZone = 173, funcLookup = "Manaburn_Low", min = 78, max = 81, xPos = -114.6113, yPos = -15.1427, zPos = -9.4837, Rot = 95.0000, respawn = 330 },
+        { name = "Coastal Slime", groupId =  30, groupZone = 173, funcLookup = "Manaburn_Low", min = 78, max = 81, xPos = -112.6649, yPos = -15.8736, zPos = 0.7640, Rot = 236.0000, respawn = 330 },
+        { name = "Coastal Slime", groupId =  30, groupZone = 173, funcLookup = "Manaburn_Low", min = 78, max = 81, xPos = -103.1070, yPos = -15.5783, zPos = 5.2270, Rot = 224.0000, respawn = 330 },
+        { name = "Coastal Slime", groupId =  30, groupZone = 173, funcLookup = "Manaburn_Low", min = 78, max = 81, xPos = -104.8876, yPos = -16.1097, zPos = 20.7132, Rot = 137.0000, respawn = 330 },
+        { name = "Coastal Slime", groupId =  30, groupZone = 173, funcLookup = "Manaburn_Low", min = 78, max = 81, xPos = -101.0484, yPos = -16.3696, zPos = 25.1223, Rot = 84.0000, respawn = 330 },
+        { name = "Coastal Slime", groupId =  30, groupZone = 173, funcLookup = "Manaburn_Low", min = 78, max = 81, xPos = -95.7745, yPos = -16.5558, zPos = 18.2863, Rot = 28.0000, respawn = 330 },
+        { name = "Coastal Slime", groupId =  30, groupZone = 173, funcLookup = "Manaburn_Low", min = 78, max = 81, xPos = -87.2842, yPos = -16.4342, zPos = 16.9295, Rot = 252.0000, respawn = 330 },
+        { name = "Coastal Slime", groupId =  30, groupZone = 173, funcLookup = "Manaburn_Low", min = 78, max = 81, xPos = -91.6687, yPos = -15.7004, zPos = 9.2362, Rot = 73.0000, respawn = 330 },
+        { name = "Coastal Slime", groupId =  30, groupZone = 173, funcLookup = "Manaburn_Low", min = 78, max = 81, xPos = -94.1348, yPos = -15.3923, zPos = -0.0018, Rot = 37.0000, respawn = 330 },
+        { name = "Coastal Slime", groupId =  30, groupZone = 173, funcLookup = "Manaburn_Low", min = 78, max = 81, xPos = -98.1460, yPos = -14.3943, zPos = -8.1019, Rot = 77.0000, respawn = 330 },
+        { name = "Coastal Slime", groupId =  30, groupZone = 173, funcLookup = "Manaburn_Low", min = 78, max = 81, xPos = -100.0916, yPos = -11.7998, zPos = -17.3778, Rot = 204.000, respawn = 330 },
+    },
+    [xi.zone.XARCABARD] =
+    {
+        -- mb 1
+        { name = "Icefallo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 81, max = 82, xPos = 438.7906, yPos = 0.3936, zPos = -23.2206, Rot = 82.0000, respawn = 330 },
+        { name = "Icefallo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 81, max = 82, xPos = 442.6024, yPos = 0.0232, zPos = -35.5160, Rot = 62.0000, respawn = 330 },
+        { name = "Icefallo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 81, max = 82, xPos = 428.1024, yPos = 0.2210, zPos = -32.4376, Rot = 133.0000, respawn = 330 },
+        { name = "Icefallo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 81, max = 82, xPos = 422.1524, yPos = -0.3334, zPos = -48.6944, Rot = 114.0000, respawn = 330 },
+        { name = "Icefallo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 81, max = 82, xPos = 415.2004, yPos = -0.4317, zPos = -32.8501, Rot = 198.0000, respawn = 330 },
+        { name = "Icefallo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 81, max = 82, xPos = 409.8328, yPos = 0.2905, zPos = -43.6147, Rot = 30.0000, respawn = 330 },
+        { name = "Icefallo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 81, max = 82, xPos = 407.8519, yPos = 0.0069, zPos = -56.2248, Rot = 68.0000, respawn = 330 },
+        { name = "Icefallo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 81, max = 82, xPos = 402.1705, yPos = 0.1741, zPos = -47.5032, Rot = 150.0000, respawn = 330 },
+        { name = "Icefallo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 81, max = 82, xPos = 396.1634, yPos = 0.1859, zPos = -61.6574, Rot = 32.0000, respawn = 330 },
+        { name = "Icefallo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 81, max = 82, xPos = 401.5385, yPos = 0.2993, zPos = -69.9938, Rot = 41.0000, respawn = 330 },
+        -- sc 1
+        { name = "Ice Crab", groupId =  9, groupZone = 115, funcLookup = "Skillchain", min = 81, max = 82, xPos = 360.1076, yPos = 0.0000, zPos = -279.8465, Rot = 174.0000, respawn = 330 },
+        { name = "Ice Crab", groupId =  9, groupZone = 115, funcLookup = "Skillchain", min = 81, max = 82, xPos = 360.6508, yPos = 0.3473, zPos = -269.0309, Rot = 170.0000, respawn = 330 },
+        { name = "Ice Crab", groupId =  9, groupZone = 115, funcLookup = "Skillchain", min = 81, max = 82, xPos = 370.6365, yPos = -0.7400, zPos = -268.0855, Rot = 255.0000, respawn = 330 },
+        { name = "Ice Crab", groupId =  9, groupZone = 115, funcLookup = "Skillchain", min = 81, max = 82, xPos = 367.5284, yPos = -0.1685, zPos = -260.2079, Rot = 181.0000, respawn = 330 },
+        { name = "Ice Crab", groupId =  9, groupZone = 115, funcLookup = "Skillchain", min = 81, max = 82, xPos = 381.1558, yPos = -0.9139, zPos = -257.7687, Rot = 210.0000, respawn = 330 },
+        { name = "Ice Crab", groupId =  9, groupZone = 115, funcLookup = "Skillchain", min = 81, max = 82, xPos = 377.2016, yPos = 0.8589, zPos = -243.7626, Rot = 195.0000, respawn = 330 },
+        { name = "Ice Crab", groupId =  9, groupZone = 115, funcLookup = "Skillchain", min = 81, max = 82, xPos = 378.2231, yPos = 0.9100, zPos = -242.4697, Rot = 214.0000, respawn = 330 },
+        { name = "Ice Crab", groupId =  9, groupZone = 115, funcLookup = "Skillchain", min = 81, max = 82, xPos = 385.1669, yPos = 0.4895, zPos = -238.3073, Rot = 249.0000, respawn = 330 },
+        { name = "Ice Crab", groupId =  9, groupZone = 115, funcLookup = "Skillchain", min = 81, max = 82, xPos = 397.3310, yPos = 0.0000, zPos = -237.0403, Rot = 251.0000, respawn = 330 },
+        { name = "Ice Crab", groupId =  9, groupZone = 115, funcLookup = "Skillchain", min = 81, max = 82, xPos = 402.2140, yPos = -0.0587, zPos = -245.1509, Rot = 155.0000, respawn = 330 },
+    },
 }
 
 local spawnerFunctions =
@@ -1244,8 +1551,10 @@ local spawnerFunctions =
     },
     ["Manaburn_Low"] =
     {
-        onSpawn             = function(mob) mob:addMod(xi.mod.DMGPHYS, -9000) mob:addMod(xi.mod.DMGMAGIC, 500) mob:addMod(xi.mod.MEVA, -10) mob:setMobMod(xi.mobMod.NO_AGGRO, 0) end,
-        onEngaged           = function(mob, target) end,
+        onSpawn             = function(mob) mob:addMod(xi.mod.DMGPHYS, -9000) mob:addMod(xi.mod.DMGMAGIC, 500) mob:addMod(xi.mod.MEVA, -10) mob:setMobMod(xi.mobMod.NO_AGGRO, 0) mob:setMobMod(xi.mobMod.NO_LINK, 0) end,
+        onEngaged           = function(mob, target) for _, member in ipairs(target:getParty()) do
+            member:PrintToPlayer("The monster has raised its defenses!", xi.msg.channel.NS_SAY)
+        end end,
         onFight             = function(mob, target) end,
         onDisengage         = function(mob, target) end,
         onWeaponskilPrepare = function(mob, target, skill) end,
@@ -1260,8 +1569,10 @@ local spawnerFunctions =
     {
         onSpawn =
         function(mob)
-            mob:setMod(xi.mod.UDMGMAGIC, -9500)
+            mob:setMod(xi.mod.UDMGMAGIC, -9000)
             mob:setMod(xi.mod.UDMGPHYS, -9000)
+            mob:setMobMod(xi.mobMod.NO_AGGRO, 0)
+            mob:setMobMod(xi.mobMod.NO_LINK, 0)
 
             mob:addListener('SKILLCHAIN_TAKE', 'SC_Breakdown', function(attacker, mobArg, damage)
                 mobArg:setMod(xi.mod.UDMGMAGIC, 2000)
@@ -1288,7 +1599,9 @@ local spawnerFunctions =
                 end
             end)
         end,
-        onEngaged           = function(mob, target) end,
+        onEngaged           = function(mob, target) for _, member in ipairs(target:getParty()) do
+            member:PrintToPlayer("The monster has raised its defenses!", xi.msg.channel.NS_SAY)
+        end end,
         onFight             = function(mob, target) end,
         onDisengage         = function(mob, target) end,
         onWeaponskilPrepare = function(mob, target, skill) end,

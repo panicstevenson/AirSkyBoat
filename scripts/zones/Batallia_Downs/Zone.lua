@@ -46,6 +46,7 @@ zoneObject.onInitialize = function(zone)
 
     xi.voidwalker.zoneOnInit(zone)
     hxi.teleport.spawnNMs(zone)
+    hxi.spawner.spawnInitialMobs(zone)
     hxi.hnm.startup(zone)
 end
 

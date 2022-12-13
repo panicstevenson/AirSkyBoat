@@ -16,7 +16,7 @@ zoneObject.onInitialize = function(zone)
 
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
     xi.voidwalker.zoneOnInit(zone)
-
+    hxi.spawner.spawnInitialMobs(zone)
     hxi.teleport.spawnNMs(zone)
 end
 
