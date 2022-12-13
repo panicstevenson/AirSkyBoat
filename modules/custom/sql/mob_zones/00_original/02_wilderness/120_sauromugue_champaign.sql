@@ -413,9 +413,9 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (17269170, 0 , 'Hizamaru_Armor',           'Hizamaru Armor',           62,  0,         0,         0,         0  ),
     (17269171, 0 , 'Ubuginu_Armor',            'Ubuginu Armor',            63,  0,         0,         0,         0  ),
     (17269172, 0 , 'Hachiryu_Armor',           'Hachiryu Armor',           64,  0,         0,         0,         0  ),
-    (17269173, 0 , 'Omodaka_Armor',            'Omodaka Armor',            65,  0,         0,         0,         0  ),
-    (17269174, 0 , 'Goblin_Bounty_Hunter',     'Goblin Bounty Hunter',     66,  374.238,   39.41,     446.799,   36 ),
-    (17269175, 0 , 'Goblin_Bounty_Hunter',     'Goblin Bounty Hunter',     66,  322.368,   39.24,     406.795,   226),
-    (17269176, 0 , 'Goblin_Bounty_Hunter',     'Goblin Bounty Hunter',     66,  306.908,   42.103,    412.325,   30 ),
-    (17269177, 0 , 'Goblin_Bounty_Hunter',     'Goblin Bounty Hunter',     66,  254.067,   38.46,     428.696,   230),
-    (17269178, 0 , 'Goblin_Bounty_Hunter',     'Goblin Bounty Hunter',     66,  241.937,   39.829,    451.606,   255);
+    (17269173, 0 , 'Omodaka_Armor',            'Omodaka Armor',            65,  0,         0,         0,         0  );
+    -- (17269174, 0 , 'Goblin_Bounty_Hunter',     'Goblin Bounty Hunter',     66,  374.238,   39.41,     446.799,   36 ),
+    -- (17269175, 0 , 'Goblin_Bounty_Hunter',     'Goblin Bounty Hunter',     66,  322.368,   39.24,     406.795,   226),
+    -- (17269176, 0 , 'Goblin_Bounty_Hunter',     'Goblin Bounty Hunter',     66,  306.908,   42.103,    412.325,   30 ),
+    -- (17269177, 0 , 'Goblin_Bounty_Hunter',     'Goblin Bounty Hunter',     66,  254.067,   38.46,     428.696,   230),
+    -- (17269178, 0 , 'Goblin_Bounty_Hunter',     'Goblin Bounty Hunter',     66,  241.937,   39.829,    451.606,   255);
