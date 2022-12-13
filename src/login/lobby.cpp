@@ -386,24 +386,28 @@ int32 lobbydata_parse(int32 fd)
                                          ZoneID, ip2str(ntohl(ZoneIP)), ZonePort, charid));
 
                     // Check the number of sessions
+                    // uint16      accountOnIP  = 0;
                     uint16      accountsOnIP = 0;
-                    uint16      accountOnIP  = 0;
+                    uint16      accountCheck = 0;
+                    uint16      accountID    = sd->accid;
                     uint32      addr         = sd->client_addr;
                     std::string accountIP    = std::to_string((addr & 0xFF000000) >> 24) + "." +
                                             std::to_string((addr & 0xFF0000) >> 16) + "." +
                                             std::to_string((addr & 0xFF00) >> 8) + "." +
                                             std::to_string(addr & 0xFF);
 
-                    fmtQuery = "SELECT count(accid) \
-                                FROM account_ip_record \
-                                WHERE client_ip = '%s' \
-                                AND accid = %u";
+                    // leaving this for now: JIC we need it later
 
-                    if (sql->Query(fmtQuery, accountIP, sd->accid) != SQL_ERROR && sql->NumRows() != 0)
-                    {
-                        sql->NextRow();
-                        accountOnIP = (uint16)sql->GetIntData(0);
-                    }
+                    // fmtQuery = "SELECT count(accid)
+                    // FROM account_ip_record
+                    // WHERE client_ip = '%s'
+                    // AND accid = %u";
+
+                    // if (sql->Query(fmtQuery, accountIP, sd->accid) != SQL_ERROR && sql->NumRows() != 0)
+                    // {
+                    // sql->NextRow();
+                    // ccountOnIP = (uint16)sql->GetIntData(0);
+                    // }
 
                     fmtQuery = "SELECT count(DISTINCT accid) \
                                 FROM account_ip_record \
@@ -428,6 +432,16 @@ int32 lobbydata_parse(int32 fd)
                         exceptionTime = sql->GetUInt64Data(0);
                     }
 
+                    fmtQuery = "SELECT * \
+                                FROM ip_owners \
+                                WHERE client_ip = '%s';";
+
+                    if (sql->Query(fmtQuery, accountIP) != SQL_ERROR && sql->NumRows() != 0)
+                    {
+                        sql->NextRow();
+                        accountCheck = sql->GetUIntData(1);
+                    }
+
                     fmtQuery = "SELECT COUNT(*) \
                                 FROM account_ip_record \
                                 WHERE client_ip = '%s' \
@@ -445,17 +459,43 @@ int32 lobbydata_parse(int32 fd)
                         childCheck = (uint16)sql->GetIntData(0);
                     }
 
-                    uint64 timeStamp    = std::chrono::duration_cast<std::chrono::seconds>(server_clock::now().time_since_epoch()).count();
-                    bool   isNotMaint   = !settings::get<bool>("login.MAINT_MODE");
-                    auto   loginLimit   = settings::get<uint8>("login.LOGIN_LIMIT");
-                    bool   excepted     = exceptionTime > timeStamp;
-                    bool   amIgood      = accountOnIP > 0;
-                    bool   loginLimitOK = loginLimit == 0 || excepted || amIgood || accountsOnIP == 0 || childCheck;
-                    bool   isGM         = gmlevel > 0;
+                    uint64 timeStamp  = std::chrono::duration_cast<std::chrono::seconds>(server_clock::now().time_since_epoch()).count();
+                    bool   isNotMaint = !settings::get<bool>("login.MAINT_MODE");
+                    auto   loginLimit = settings::get<uint8>("login.LOGIN_LIMIT");
+                    bool   excepted   = exceptionTime > timeStamp;
+                    bool   isChild    = childCheck > 0;
+                    bool   isGM       = gmlevel > 0;
+                    bool   loginLimitOK;
+                    // bool   amIgood      = accountOnIP > 0;
+
+                    if (excepted || isChild) // Has Exception
+                    {
+                        loginLimitOK = true;
+                    }
+
+                    // leaving this for now: JIC we need it later
+                    // else if (accountsOnIP == 1 && amIgood) // Is the only person on the IP
+                    // {
+                    //     loginLimitOK = true;
+                    // }
+
+                    else if (accountsOnIP == 0) // IP has no known users
+                    {
+                        loginLimitOK = true;
+                    }
+                    else if (accountID == accountCheck || accountCheck == 0) // Is this the original IP user?
+                    {
+                        loginLimitOK = true;
+                    }
+                    else // didn't pass the above? Failed
+                    {
+                        loginLimitOK = false;
+                    }
 
                     if (!loginLimitOK)
                     {
-                        ShowWarning(fmt::format("{} already has {} active session(s), limit is {}", addr, accountsOnIP, loginLimit));
+                        ShowWarning(fmt::format("{} already has {} known users(s), limit is {}", accountIP, accountsOnIP, loginLimit));
+                        ShowWarning(fmt::format("The following user tried to login: {}", sd->accid));
                     }
 
                     if ((isNotMaint && loginLimitOK) || isGM)
@@ -475,6 +515,11 @@ int32 lobbydata_parse(int32 fd)
 
                         char session_key[sizeof(key3) * 2 + 1];
                         bin2hex(session_key, key3, sizeof(key3));
+
+                        if (accountCheck == 0 || accountsOnIP == 0)
+                        {
+                            sql->Query("REPLACE INTO `ip_owners` VALUES ('%s',%u)", accountIP, sd->accid);
+                        }
 
                         fmtQuery = "INSERT INTO accounts_sessions(accid,charid,session_key,server_addr,server_port,client_addr, version_mismatch) "
                                    "VALUES(%u,%u,x'%s',%u,%u,%u,%u)";
