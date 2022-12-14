@@ -20,6 +20,10 @@ local updateRegen = function(mob)
     end
 end
 
+entity.onMobInitialize = function(mob)
+    mob:setMod(xi.mod.CLAIMSHIELD, 4000)
+end
+
 entity.onMobSpawn = function(mob)
     mob:setLocalVar("timeToGrow", os.time() + math.random(36000, 37800)) -- 10:00:00 to 10:30:00
 end
