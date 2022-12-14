@@ -103,6 +103,7 @@ player_data = [
     "accounts_banned.sql",
     "auction_house.sql",
     "account_ip_record.sql",
+    "bazaar_log.sql",
     "char_blacklist.sql",
     "char_chocobos.sql",
     "char_effects.sql",
@@ -129,10 +130,13 @@ player_data = [
     "chars.sql",
     "conquest_system.sql",
     "delivery_box.sql",
+    "delivery_box_log.sql",
     "ip_exceptions.sql",
     "linkshells.sql",
     "server_variables.sql",
+    "trade_log.sql",
     "unity_system.sql",
+    "vendor_sell_log.sql",
     'zone_settings.sql',
 ]
 
