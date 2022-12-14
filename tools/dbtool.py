@@ -132,6 +132,7 @@ player_data = [
     "delivery_box.sql",
     "delivery_box_log.sql",
     "ip_exceptions.sql",
+    "ip_owners.sql",
     "linkshells.sql",
     "server_variables.sql",
     "trade_log.sql",
