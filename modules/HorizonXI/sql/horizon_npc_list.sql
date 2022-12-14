@@ -12,5 +12,9 @@ INSERT INTO `npc_list` VALUES (17764831,'Polo-Colo','Polo-Colo',3,-57.3764,1.126
 UPDATE `npc_list` SET `content_tag` = 'SOA' WHERE `npcid` = 17301567; -- ADAMANTOISE_QM
 UPDATE `npc_list` SET `content_tag` = 'SOA' WHERE `npcid` = 17297459; -- BEHEMOTH_QM
 UPDATE `npc_list` SET `content_tag` = 'SOA' WHERE `npcid` = 17408033; -- FAFNIR_QM
+UPDATE `npc_list` SET `content_tag` = 'SOA' WHERE `npcid` = 17424518; -- Alky ???
+UPDATE `npc_list` SET `content_tag` = 'SOA' WHERE `npcid` = 17424519; -- Pallas ???
+UPDATE `npc_list` SET `content_tag` = 'SOA' WHERE `npcid` = 17428873; -- Sozu Rogberry ???
+UPDATE `npc_list` SET `content_tag` = 'SOA' WHERE `npcid` = 17506694; -- Ulli ???
 
 UNLOCK TABLES;
