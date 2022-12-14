@@ -6,6 +6,9 @@ local ID = require("scripts/zones/Maze_of_Shakhrami/IDs")
 -----------------------------------
 local entity = {}
 
+entity.onMobInitialize = function(mob)
+    mob:setMod(xi.mod.CLAIMSHIELD, 4000)
+end
 entity.onMobDeath = function(mob, player, optParams)
 end
 

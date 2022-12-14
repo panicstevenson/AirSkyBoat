@@ -13,6 +13,9 @@ require("scripts/globals/regimes")
 local entity = {}
 
 -- TODO: Implement better pathing systems for guards to follow master
+entity.onMobInitialize = function(mob)
+    mob:setMod(xi.mod.CLAIMSHIELD, 4000)
+end
 
 entity.onMobSpawn = function(mob)
     -- Takes half damage from all attacks

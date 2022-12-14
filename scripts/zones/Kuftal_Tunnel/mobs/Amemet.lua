@@ -146,6 +146,7 @@ entity.onMobSpawn = function(mob)
     mob:setLocalVar("isPaused", 0)
     mob:setLocalVar("mobPath", 1)
     mob:pathThrough(pathStart, xi.path.flag.COORDS)
+    mob:setMod(xi.mod.CLAIMSHIELD, 4000)
 end
 
 entity.onPath = function(mob)

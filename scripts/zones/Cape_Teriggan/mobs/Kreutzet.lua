@@ -6,6 +6,10 @@ require("scripts/globals/world")
 -----------------------------------
 local entity = {}
 
+entity.onMobInitialize = function(mob)
+    mob:setMod(xi.mod.CLAIMSHIELD, 4000)
+end
+
 entity.onMobRoam = function(mob)
     if
         not (mob:getWeather() == xi.weather.WIND or

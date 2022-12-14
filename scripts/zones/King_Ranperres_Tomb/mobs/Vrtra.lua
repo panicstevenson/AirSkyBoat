@@ -18,6 +18,7 @@ entity.onMobSpawn = function(mob)
     mob:setMobMod(xi.mobMod.NO_STANDBACK, 1)
     mob:setMobMod(xi.mobMod.SIGHT_RANGE, 30)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
+    mob:setMod(xi.mod.CLAIMSHIELD, 4000)
 end
 
 entity.onMobEngaged = function(mob, target)

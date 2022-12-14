@@ -9,6 +9,10 @@ require("scripts/quests/tutorial")
 
 local entity = {}
 
+entity.onMobInitialize = function(mob)
+    mob:setMod(xi.mod.CLAIMSHIELD, 4000)
+end
+
 entity.onMobSpawn = function(mob)
 end
 

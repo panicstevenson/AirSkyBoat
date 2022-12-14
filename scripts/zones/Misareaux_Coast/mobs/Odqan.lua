@@ -9,6 +9,10 @@ local ID = require("scripts/zones/Misareaux_Coast/IDs")
 ------------------------------
 local entity = {}
 
+entity.onMobInitialize = function(mob)
+    mob:setMod(xi.mod.CLAIMSHIELD, 4000)
+end
+
 entity.onMobRoam = function(mob)
     if mob:getWeather() ~= xi.weather.FOG then
         DespawnMob(mob:getID())

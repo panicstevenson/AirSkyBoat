@@ -19,6 +19,7 @@ entity.onMobSpawn = function(mob)
 
     mob:setMod(xi.mod.UFASTCAST, 99)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
+    mob:setMod(xi.mod.CLAIMSHIELD, 4000)
     mob:setMod(xi.mod.ATT, 398)
     mob:setMod(xi.mod.DEF, 475)
     mob:setMod(xi.mod.EVA, 434)

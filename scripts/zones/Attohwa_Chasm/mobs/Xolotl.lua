@@ -11,6 +11,7 @@ local entity = {}
 
 entity.onMobSpawn = function(mob)
     mob:setLocalVar("xolotlDead", 0)
+    mob:setMod(xi.mod.CLAIMSHIELD, 4000)
 end
 
 entity.onMobFight = function(mob, target)

@@ -8,6 +8,8 @@ local entity = {}
 
 entity.onMobInitialize = function(mob)
     mob:setMod(xi.mod.TRIPLE_ATTACK, 5)
+    mob:setMod(xi.mod.CLAIMSHIELD, 4000)
+
 end
 
 entity.onMobRoam = function(mob)

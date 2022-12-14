@@ -1,13 +1,11 @@
 -----------------------------------
--- Area: Upper Delkfutt's Tower
---   NM: Pallas
------------------------------------
-mixins = { require("scripts/mixins/job_special") }
+-- Area: Ordelle's Caves
+--  Mob: Stroper Chyme
 -----------------------------------
 local entity = {}
 
 entity.onMobInitialize = function(mob)
-    mob:setMod(xi.mod.CLAIMSHIELD, 4000)
+    mob:setMod(xi.mod.CLAIMSHIELD, 1000)
 end
 
 entity.onMobDeath = function(mob, player, optParams)

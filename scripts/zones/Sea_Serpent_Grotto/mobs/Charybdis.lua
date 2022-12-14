@@ -10,6 +10,7 @@ local entity = {}
 
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.MULTI_HIT, 5)
+    mob:setMod(xi.mod.CLAIMSHIELD, 4000)
 end
 
 entity.onMobSpawn = function(mob)

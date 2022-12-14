@@ -169,6 +169,10 @@ local handleSlaveGlobesRoam = function(mg, validSlavePositions)
     end
 end
 
+entity.onMobInitialize = function(mob)
+    mob:setMod(xi.mod.CLAIMSHIELD, 4000)
+end
+
 entity.onMobSpawn = function(mob)
     mob:setAutoAttackEnabled(true)
     mob:setMagicCastingEnabled(true)
