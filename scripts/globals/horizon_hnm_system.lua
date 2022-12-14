@@ -349,6 +349,7 @@ hxi.hnm.spawnFafnir = function(zone)
             fafnirArg:setMobMod(xi.mobMod.DRAW_IN_FRONT, 1)
             fafnirArg:setLocalVar("[rage]timer", 3600) -- 60 minutes
             fafnirArg:setMod(xi.mod.ATT, 489)
+            fafnirArg:setMod(xi.mod.CLAIMSHIELD, 4000)
         end,
         mixins =
         {
@@ -424,6 +425,7 @@ hxi.hnm.spawnNidhogg = function(zone)
             fafnirArg:setMobMod(xi.mobMod.DRAW_IN, 1)
             fafnirArg:setMobMod(xi.mobMod.DRAW_IN_CUSTOM_RANGE, 20)
             fafnirArg:setMobMod(xi.mobMod.DRAW_IN_FRONT, 1)
+            fafnirArg:setMod(xi.mod.CLAIMSHIELD, 4000)
         end,
         onMobFight = function(fafnirArg, target)
             local battletime = fafnirArg:getBattleTime()
@@ -510,6 +512,7 @@ hxi.hnm.spawnAddy = function(zone)
             fafnirArg:setMobLevel(70)
             fafnirArg:setMod(xi.mod.DEF, 4120)
             fafnirArg:setMod(xi.mod.ATT, 493)
+            fafnirArg:setMod(xi.mod.CLAIMSHIELD, 4000)
         end,
         mixins = { require("scripts/mixins/rage") }
     })
@@ -590,6 +593,7 @@ hxi.hnm.spawnAspid = function(zone)
             fafnirArg:setMod(xi.mod.DEF, 702)
             fafnirArg:setMod(xi.mod.ATT, 446)
             fafnirArg:setMod(xi.mod.EVA, 325)
+            fafnirArg:setMod(xi.mod.CLAIMSHIELD, 4000)
 
             fafnirArg:setLocalVar("dmgToChange", fafnirArg:getHP() - 1000)
             fafnirArg:setAnimationSub(2)
@@ -694,6 +698,7 @@ hxi.hnm.spawnBehemoth = function(zone)
             fafnirArg:setMod(xi.mod.MDEF, 20)
             fafnirArg:setMod(xi.mod.EVA, 315)
             fafnirArg:setMod(xi.mod.ATT, 256)
+            fafnirArg:setMod(xi.mod.CLAIMSHIELD, 4000)
             if fafnirArg:getZoneID() ~= xi.zone.BEHEMOTHS_DOMINION then
                 fafnirArg:setMobMod(xi.mobMod.DRAW_IN, 1)
                 fafnirArg:setMobMod(xi.mobMod.DRAW_IN_CUSTOM_RANGE, 33)
@@ -804,6 +809,7 @@ hxi.hnm.spawnKingBehe = function(zone)
             fafnirArg:setMod(xi.mod.EVA, 400)
             fafnirArg:addMod(xi.mod.GRAVITYRESBUILD, 30)
             fafnirArg:setMod(xi.mod.TRIPLE_ATTACK, 5)
+            fafnirArg:setMod(xi.mod.CLAIMSHIELD, 4000)
             fafnirArg:setLocalVar("delay", os.time() + math.random(20, 25))
             if fafnirArg:getZoneID() ~= xi.zone.BEHEMOTHS_DOMINION then
                 fafnirArg:setMobMod(xi.mobMod.DRAW_IN, 1)

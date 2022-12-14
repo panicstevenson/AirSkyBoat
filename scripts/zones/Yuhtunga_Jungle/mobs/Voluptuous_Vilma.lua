@@ -22,10 +22,11 @@ end
 
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
+    mob:setMod(xi.mod.CLAIMSHIELD, 4000)
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)
-    local random = math.random(1,5)
+    local random = math.random(1, 5)
     if random == 5 then
         return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.WEIGHT)
     elseif random == 4 then

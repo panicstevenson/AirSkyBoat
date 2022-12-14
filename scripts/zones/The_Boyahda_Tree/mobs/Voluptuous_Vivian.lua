@@ -9,6 +9,10 @@ require("scripts/globals/titles")
 local entity = {}
 
 entity.onMobInitialize = function(mob)
+    mob:setMod(xi.mod.CLAIMSHIELD, 4000)
+end
+
+entity.onMobSpawn = function(mob)
     mob:setMobMod(xi.mobMod.DRAW_IN, 1)
     mob:setMobMod(xi.mobMod.DRAW_IN_INCLUDE_PARTY, 1)
     mob:addMod(xi.mod.SLEEPRES, 500)

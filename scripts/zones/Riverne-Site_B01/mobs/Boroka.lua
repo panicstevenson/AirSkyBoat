@@ -11,6 +11,7 @@ local entity = {}
 entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.FASTCAST, 20)
     mob:addMod(xi.mod.SILENCERES, 80)
+    mob:setMod(xi.mod.CLAIMSHIELD, 4000)
 
     xi.mix.jobSpecial.config(mob, {
         specials =

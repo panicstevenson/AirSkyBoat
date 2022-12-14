@@ -12,6 +12,7 @@ entity.onMobInitialize = function(mob)
     mob:addMod(xi.mod.MACC, 100)
     mob:addMod(xi.mod.SILENCERES, 80)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
+    mob:setMod(xi.mod.CLAIMSHIELD, 4000)
     mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
 end
 
