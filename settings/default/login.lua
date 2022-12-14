@@ -26,10 +26,10 @@ xi.settings.login =
     MAINT_MODE = 0,
 
     -- Logging of user IP address to database (true/false)
-    LOG_USER_IP = false,
+    LOG_USER_IP = true,
 
     -- Allow account creation via the loader (true/false)
-    ACCOUNT_CREATION = true,
+    ACCOUNT_CREATION = false,
 
     -- Allow character creation through the lobby (true/false)
     CHARA_CREATION_ENABLED = false,
@@ -38,7 +38,7 @@ xi.settings.login =
     CHARACTER_DELETION = false,
 
     -- Number of simultaneous game sessions per IP (0 for no limit)
-    LOGIN_LIMIT = 0,
+    LOGIN_LIMIT = 1,
 
     -- If true, blocks character creation with names of NPCs and Mobs in the database (Fafnir, Shantotto, etc.)
     DISABLE_MOB_NPC_CHAR_NAMES = false,
