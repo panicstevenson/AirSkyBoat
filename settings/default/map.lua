@@ -46,7 +46,7 @@ xi.settings.map =
     -- Max open listings per player, 0 = no limit. (Default 7)
     -- Note = Settings over 7 may need client-side plugin to work under all circumstances.
     -- If this is the case, consider using the ah_pagination module
-    AH_LIST_LIMIT = 7,
+    AH_LIST_LIMIT = 21,
 
     -- Misc EXP related settings
     EXP_RATE                = 1.0,
@@ -213,7 +213,7 @@ xi.settings.map =
     MAX_MERIT_POINTS = 10,
 
     -- Minimum time between uses of yell command (in seconds).
-    YELL_COOLDOWN = 30,
+    YELL_COOLDOWN = 300,
     YELL_MIN_LEVEL = 10,
 
     -- Prevent players from sending tells to hidden GMs. You will still receive them from other GMs.
@@ -229,9 +229,9 @@ xi.settings.map =
     AUDIT_CHAT      = false,
     AUDIT_SAY       = false,
     AUDIT_SHOUT     = false,
-    AUDIT_TELL      = false,
+    AUDIT_TELL      = true,
     AUDIT_YELL      = false,
-    AUDIT_LINKSHELL = false,
+    AUDIT_LINKSHELL = true,
     AUDIT_UNITY     = false,
     AUDIT_PARTY     = false,
 
