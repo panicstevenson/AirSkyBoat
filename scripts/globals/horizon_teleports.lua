@@ -140,8 +140,8 @@ local enableOPWarps =
 
 local nmInformation =
 {
-    [xi.zone.WEST_SARUTABARUTA    ] = { mob = { x = 145.6839,  y = -38.7177, z = -318.5830 }, npc = { x = 131.7015,  y = -0.5343,  z = -303.4812, rot = 105 } },
-    [xi.zone.EAST_SARUTABARUTA    ] = { mob = { x = -440.9115, y = -32.2518, z = -444.3516 }, npc = { x = -100.3674, y = -5.0000,  z = -530.9963, rot = 239 } },
+    [xi.zone.WEST_SARUTABARUTA    ] = { mob = { x = 145.6839,  y = -38.7177, z = 318.5830 }, npc = { x = 131.7015,  y = -0.5343,  z = -303.4812, rot = 105 } },
+    [xi.zone.EAST_SARUTABARUTA    ] = { mob = { x = -55.8501, y = -34.0000,  z = 677.3773 }, npc = { x = -100.3674, y = -5.0000,  z = -530.9963, rot = 239 } },
     [xi.zone.SOUTH_GUSTABERG      ] = { mob = { x = 203.6385,  y = -59.6055, z = -430.2541 }, npc = { x = 277.4321,  y = 0.2846,   z = -211.5396, rot = 101 } },
     [xi.zone.NORTH_GUSTABERG      ] = { mob = { x = 262.2035,  y = -59.8284, z = 518.8541  }, npc = { x = 647.1167,  y = -0.4908,  z = 331.9160,  rot = 245 } },
     [xi.zone.WEST_RONFAURE        ] = { mob = { x = -126.5199, y = 0.3078,   z = -521.0609 }, npc = { x = -154.1909, y = -59.9531, z = 262.1125,  rot = 96  } },
