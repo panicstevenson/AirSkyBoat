@@ -150,10 +150,10 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (17621135, 0, 'Earth_Golem',              'Earth Golem',              27,  400,       197,       -396,      195 ),
 
     -- Demolition Squad (BS60)
-    (17621137, 0, 'Nephiyl_Rampartbreacher',  'Nephiyl Rampartbreacher',  28,  -493,      -202,      400,       192 ),
+    (17621137, 0, 'Nephiyl_Rampartbreacher',  'Nephiyl Rampartbreacher',  28,  -393,      -202,      400,       192 ),
     (17621138, 0, 'Nephiyl_Keepcollapser',    'Nephiyl Keepcollapser',    29,  -407,      -202,      400,       192 ),
     (17621139, 0, 'Nephiyl_Moatfiller',       'Nephiyl Moatfiller',       30,  -400,      -202,      400,       192 ),
-    (17621140, 0, 'Nephiyl_Pinnacletosser',   'Nephiyl Pinnacletosser',   31,  -400,      -202,      493,       192 ),
+    (17621140, 0, 'Nephiyl_Pinnacletosser',   'Nephiyl Pinnacletosser',   31,  -400,      -202,      393,       192 ),
     (17621142, 0, 'Nephiyl_Rampartbreacher',  'Nephiyl Rampartbreacher',  28,  7,         -2,        0,         192 ),
     (17621143, 0, 'Nephiyl_Keepcollapser',    'Nephiyl Keepcollapser',    29,  -7,        -2,        0,         192 ),
     (17621144, 0, 'Nephiyl_Moatfiller',       'Nephiyl Moatfiller',       30,  0,         -2,        0,         192 ),

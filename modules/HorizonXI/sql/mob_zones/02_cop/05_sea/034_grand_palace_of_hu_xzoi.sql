@@ -336,7 +336,7 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
 (16916810, 0,  'Eoaern',                   'Eo\'aern',                 18,  420.766,   -0.465,    499.413,   68  ),
 (16916811, 0,  'Eoaern',                   'Eo\'aern',                 12,  428.138,   -0.499,    511.283,   61  ),
 (16916812, 0,  'Aerns_Euvhi',              'Aern\'s Euvhi',            19,  1,         1,         1,         0   ),
-(16916813, 0,  'Ixghrah',                  'Ix\'ghrah',                22,  416.258,   -0.5,      423.663,   202 ),
+(16916813, 0,  'Ixghrah',                  'Ix\'ghrah',                22,  420.03,    0,         401.56,    190 ),
 (16916814, 0,  'Jailer_of_Temperance',     'Jailer of Temperance',     23,  -420,      -1.5,      757,       64  ),
 (16916815, 0,  'Ixaern_MNK',               'Ix\'aern',                 24,  463.778,   -0.5,      536.957,   65  ),
 (16916816, 0,  'Qnaern',                   'Qn\'aern',                 25,  463.095,   -0.5,      538.11,    150 ),
