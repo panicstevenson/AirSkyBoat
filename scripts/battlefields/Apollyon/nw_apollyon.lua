@@ -415,7 +415,7 @@ content.loot =
             { item = xi.items.ARGYRO_RIVET, weight = xi.loot.weight.NORMAL },
             { item = xi.items.SPOOL_OF_LIGHT_FILAMENT, weight = xi.loot.weight.NORMAL },
             { item = xi.items.SQUARE_OF_BROWN_DOESKIN, weight = xi.loot.weight.NORMAL },
-            { item = xi.items.SQUARE_OF_FLAMESHUN_CLOTH, weight = xi.loot.weight.NORMAL },
+            -- { item = xi.items.SQUARE_OF_FLAMESHUN_CLOTH, weight = xi.loot.weight.NORMAL },
         },
 
         {
@@ -423,7 +423,7 @@ content.loot =
             { item = xi.items.SPOOL_OF_DIABOLIC_YARN, weight = xi.loot.weight.LOW },
             { item = xi.items.BLACK_RIVET, weight = xi.loot.weight.LOW },
             { item = xi.items.SQUARE_OF_ASTRAL_LEATHER, weight = xi.loot.weight.LOW },
-            { item = xi.items.GOLD_STUD, weight = xi.loot.weight.LOW },
+            -- { item = xi.items.GOLD_STUD, weight = xi.loot.weight.LOW },
         },
     },
 
@@ -438,7 +438,7 @@ content.loot =
             { item = xi.items.SPOOL_OF_BENEDICT_YARN, weight = xi.loot.weight.NORMAL },
             { item = xi.items.SPOOL_OF_DIABOLIC_YARN, weight = xi.loot.weight.NORMAL },
             { item = xi.items.POT_OF_EBONY_LACQUER, weight = xi.loot.weight.NORMAL },
-            { item = xi.items.SQUARE_OF_CANVAS_TOILE, weight = xi.loot.weight.NORMAL },
+            -- { item = xi.items.SQUARE_OF_CANVAS_TOILE, weight = xi.loot.weight.NORMAL },
         },
 
         {
@@ -446,7 +446,7 @@ content.loot =
             { item = xi.items.ANCIENT_BRASS_INGOT, weight = xi.loot.weight.LOW },
             { item = xi.items.WHITE_RIVET, weight = xi.loot.weight.LOW },
             { item = xi.items.BLUE_RIVET, weight = xi.loot.weight.LOW },
-            { item = xi.items.ELECTRUM_STUD, weight = xi.loot.weight.LOW },
+            -- { item = xi.items.ELECTRUM_STUD, weight = xi.loot.weight.LOW },
         },
     },
 
@@ -466,7 +466,7 @@ content.loot =
             { item = xi.items.ANCIENT_BRASS_INGOT, weight = xi.loot.weight.NORMAL },
             { item = xi.items.SQUARE_OF_CHARCOAL_COTTON, weight = xi.loot.weight.NORMAL },
             { item = xi.items.BLUE_RIVET, weight = xi.loot.weight.NORMAL },
-            { item = xi.items.SQUARE_OF_CORDUROY_CLOTH, weight = xi.loot.weight.NORMAL },
+            -- { item = xi.items.SQUARE_OF_CORDUROY_CLOTH, weight = xi.loot.weight.NORMAL },
         },
 
         {
@@ -474,7 +474,7 @@ content.loot =
             { item = xi.items.SPOOL_OF_BENEDICT_YARN, weight = xi.loot.weight.LOW },
             { item = xi.items.SPOOL_OF_LIGHT_FILAMENT, weight = xi.loot.weight.LOW },
             { item = xi.items.SQUARE_OF_BROWN_DOESKIN, weight = xi.loot.weight.LOW },
-            { item = xi.items.SQUARE_OF_CANVAS_TOILE, weight = xi.loot.weight.LOW },
+            -- { item = xi.items.SQUARE_OF_CANVAS_TOILE, weight = xi.loot.weight.LOW },
         },
 
         {
@@ -513,7 +513,7 @@ content.loot =
             { item = xi.items.SQUARE_OF_CARDINAL_CLOTH, weight = xi.loot.weight.NORMAL },
             { item = xi.items.FETID_LANOLIN_CUBE, weight = xi.loot.weight.NORMAL },
             { item = xi.items.SHEET_OF_KUROGANE, weight = xi.loot.weight.NORMAL },
-            { item = xi.items.ELECTRUM_STUD, weight = xi.loot.weight.NORMAL },
+            -- { item = xi.items.ELECTRUM_STUD, weight = xi.loot.weight.NORMAL },
         },
 
         {
@@ -521,7 +521,7 @@ content.loot =
             { item = xi.items.ARGYRO_RIVET, weight = xi.loot.weight.LOW },
             { item = xi.items.POT_OF_EBONY_LACQUER, weight = xi.loot.weight.LOW },
             { item = xi.items.SQUARE_OF_CHARCOAL_COTTON, weight = xi.loot.weight.LOW },
-            { item = xi.items.SQUARE_OF_FLAMESHUN_CLOTH, weight = xi.loot.weight.LOW },
+            -- { item = xi.items.SQUARE_OF_FLAMESHUN_CLOTH, weight = xi.loot.weight.LOW },
         },
     },
 
@@ -536,7 +536,7 @@ content.loot =
             { item = xi.items.WHITE_RIVET, weight = xi.loot.weight.NORMAL },
             { item = xi.items.BLACK_RIVET, weight = xi.loot.weight.NORMAL },
             { item = xi.items.SQUARE_OF_ASTRAL_LEATHER, weight = xi.loot.weight.NORMAL },
-            { item = xi.items.GOLD_STUD, weight = xi.loot.weight.NORMAL },
+            -- { item = xi.items.GOLD_STUD, weight = xi.loot.weight.NORMAL },
         },
 
         {
@@ -544,7 +544,7 @@ content.loot =
             { item = xi.items.SQUARE_OF_CARDINAL_CLOTH, weight = xi.loot.weight.LOW },
             { item = xi.items.FETID_LANOLIN_CUBE, weight = xi.loot.weight.LOW },
             { item = xi.items.SHEET_OF_KUROGANE, weight = xi.loot.weight.LOW },
-            { item = xi.items.SQUARE_OF_CORDUROY_CLOTH, weight = xi.loot.weight.LOW },
+            -- { item = xi.items.SQUARE_OF_CORDUROY_CLOTH, weight = xi.loot.weight.LOW },
         },
 
         {
