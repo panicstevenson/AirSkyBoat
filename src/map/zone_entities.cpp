@@ -62,6 +62,7 @@ namespace
 {
     const float CHARACTER_SYNC_DISTANCE                = 45.0f;
     const float CHARACTER_DESPAWN_DISTANCE             = 50.0f;
+    const float CHARACTER_DESPAWN_DISTANCE_CAMERA      = 150.0f;
     const int   CHARACTER_SWAP_MAX                     = 5;
     const int   CHARACTER_SYNC_LIMIT_MAX               = 32;
     const int   CHARACTER_SYNC_DISTANCE_SWAP_THRESHOLD = 30;
@@ -721,7 +722,7 @@ void CZoneEntities::SpawnPCs(CCharEntity* PChar)
 
         // Despawn character if it's currently spawned and is far away
         float charDistance = distance(PChar->loc.p, pc->loc.p);
-        if (charDistance >= CHARACTER_DESPAWN_DISTANCE)
+        if (charDistance >= CHARACTER_DESPAWN_DISTANCE || !(PChar->getCharVar("[Camera]Enabled") == 1 && charDistance >= CHARACTER_DESPAWN_DISTANCE_CAMERA))
         {
             toRemove.push_back(pc);
             continue;

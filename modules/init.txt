@@ -70,8 +70,9 @@ renamer
 HorizonXI/Lua
 HorizonXI/commands
 HorizonXI/sql
-HorizonXI/production
+#HorizonXI/production
 #HorizonXI/beta
+#HorizonXI/music
 #-----------------------
 #		Custom
 #-----------------------
