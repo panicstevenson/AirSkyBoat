@@ -16,16 +16,16 @@ local loot =
             { itemid = 1945, droprate = 29 }, -- DRK
             { itemid = 1957, droprate = 12 }, -- DRG
             { itemid = 1949, droprate = 35 }, -- BRD
-            { itemid = 2659, droprate = 35 }, -- COR
+            -- { itemid = 2659, droprate = 35 }, -- COR
             { itemid = 1939, droprate = 12 }, -- RDM
             { itemid = 1951, droprate = 12 }, -- RNG
-            { itemid = 2661, droprate = 12 }, -- PUP
+            -- { itemid = 2661, droprate = 12 }, -- PUP
             { itemid = 1937, droprate = 18 }, -- BLM
             { itemid = 1955, droprate = 29 }, -- NIN
-            { itemid = 2717, droprate = 12 }, -- SCH
+            -- { itemid = 2717, droprate = 12 }, -- SCH
             { itemid = 1947, droprate = 12 }, -- BST
-            { itemid = 2657, droprate = 18 }, -- BLU
-            { itemid = 2715, droprate =  5 }, -- DNC
+            -- { itemid = 2657, droprate = 18 }, -- BLU
+            -- { itemid = 2715, droprate =  5 }, -- DNC
             { itemid = 1953, droprate = 35 }, -- SAM
             { itemid = 1941, droprate = 41 }, -- THF
             { itemid = 1943, droprate = 18 }, -- PLD

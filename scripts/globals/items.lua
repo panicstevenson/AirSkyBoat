@@ -635,6 +635,7 @@ xi.items =
     CHAMELEON_DIAMOND               = 1666,
     CLUSTER_CORE                    = 1667,
     CLEAN_SNAP_ROD                  = 1668,
+    LIGHT_STEEL_INGOT               = 1681,
     INGOT_OF_ROYAL_TREASURY_GOLD    = 1682,
     PIECE_OF_ATTOHWA_GINSENG        = 1683,
     GOLD_KEY                        = 1684,
