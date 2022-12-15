@@ -722,7 +722,7 @@ void CZoneEntities::SpawnPCs(CCharEntity* PChar)
 
         // Despawn character if it's currently spawned and is far away
         float charDistance = distance(PChar->loc.p, pc->loc.p);
-        if (charDistance >= CHARACTER_DESPAWN_DISTANCE || !(PChar->getCharVar("[Camera]Enabled") == 1 && charDistance >= CHARACTER_DESPAWN_DISTANCE_CAMERA))
+        if (charDistance >= (PChar->getCharVar("[Camera]Enabled") == 1 ? CHARACTER_DESPAWN_DISTANCE_CAMERA : CHARACTER_DESPAWN_DISTANCE))
         {
             toRemove.push_back(pc);
             continue;
