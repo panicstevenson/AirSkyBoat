@@ -14,6 +14,7 @@ local entity = {}
 entity.onMobInitialize = function(mob)
     mob:addMod(xi.mod.SLEEPRES, 100)
     mob:setMobMod(xi.mobMod.DRAW_IN, 1)
+    mob:setMod(xi.mod.CLAIMSHIELD, 4000)
 end
 
 entity.onMobEngaged = function(mob, target)

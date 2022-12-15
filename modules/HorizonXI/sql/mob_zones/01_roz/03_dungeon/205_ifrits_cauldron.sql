@@ -5,7 +5,7 @@
 
 REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`, `groupid`, `pos_x`, `pos_y`, `pos_z`, `pos_rot`) VALUES
 (17616897, 0,  'Salamander',               'Salamander',               1,   171.207,   0.148,     -21.488,   200 ),
-(17616898, 0,  'Magma',                    'Magma',                    2,   171.472,   -0.516,    -22.799,   194 ),
+(17616898, 0,  'Magma',                    'Magma',                    2,   171,       0.6,       -22.1,     194 ),
 (17616899, 0,  'Volcanic_Gas',             'Volcanic Gas',             3,   39.493,    3.999,     -282.08,   133 ),
 (17616900, 0,  'Old_Opo-opo',              'Old Opo-opo',              4,   47.593,    3.998,     -283.073,  5   ),
 (17616901, 0,  'Old_Opo-opo',              'Old Opo-opo',              4,   31.512,    3.369,     -268.373,  169 ),

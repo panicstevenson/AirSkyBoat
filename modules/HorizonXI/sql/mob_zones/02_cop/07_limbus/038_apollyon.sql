@@ -31,8 +31,6 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (16932893, 0,  'Arboricole_Beetle',        'Arboricole Beetle',        7,   -220.488,  -0.5,      -416.709,  87  ),
     (16932894, 0,  'Arboricole_Crawler',       'Arboricole Crawler',       8,   -202.371,  -0.5,      -483.903,  2   ),
     (16932895, 0,  'Apollyon_Sapling',         'Apollyon Sapling',         9,   -119.785,  -0.585,    -517.7,    90  ),
-    (16932896, 0,  'Armoury_Crate',            'Armoury Crate',            10,  -286,      -0.6,      -280,      0   ),
-    (16932897, 0,  'Armoury_Crate',            'Armoury Crate',            10,  -286,      -0.6,      -282,      0   ),
     (16932898, 0,  'Armoury_Crate_Recover',    'Armoury Crate',            80,  655,       -2,        -610,      0   ),
     (16932899, 0,  'Armoury_Crate_Mimic',      'Armoury Crate',            10,  -320,      -0.5,      -270,      0   ),
     (16932900, 0,  'Armoury_Crate_Mimic',      'Armoury Crate',            10,  -336,      -0.5,      -292,      0   ),
@@ -44,6 +42,7 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (16932906, 0,  'Armoury_Crate_Mimic',      'Armoury Crate',            10,  -354,      -0.5,      -312,      0   ),
     (16932907, 0,  'Armoury_Crate_Mimic',      'Armoury Crate',            10,  -373,      -0.5,      -285,      0   ),
     (16932908, 0,  'Armoury_Crate_Mimic',      'Armoury Crate',            10,  -387,      -0.5,      -251,      0   ),
+    (16932910, 0,  'Air_Elemental',            'Air Elemental',            11,  -602.263,  0,         -369.095,  113 ),
     (16932911, 0,  'Dark_Elemental',           'Dark Elemental',           12,  -604.192,  0,         -373.12,   111 ),
     (16932912, 0,  'Earth_Elemental',          'Earth Elemental',          13,  -564.041,  0,         -324.52,   109 ),
     (16932913, 0,  'Fire_Elemental',           'Fire Elemental',           14,  -549.872,  0,         -354.613,  105 ),
@@ -204,7 +203,7 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (16933106, 0,  'Kerkopes',                 'Kerkopes',                 49,  565.79,    -0.5,      561.87,    16  ),
     (16933107, 0,  'Kerkopes',                 'Kerkopes',                 49,  558.58,    -0.48,     531.79,    228 ),
     (16933108, 0,  'Kerkopes',                 'Kerkopes',                 49,  584.88,    -0.5,      596.53,    30  ),
-    (16933109, 0,  'Kerkopes',                 'Kerkopes',                 49,  588.764,   -0.499,    569.74,    47  ),
+    (16933109, 0,  'Kerkopes',                 'Kerkopes',                 49,  595.74,    -0.39,     553.03,    47  ),
     (16933113, 0,  'Criosphinx',               'Criosphinx',               50,  555,       -0.5,      347,       64  ),
     (16933114, 0,  'Hieracosphinx',            'Hieracosphinx',            51,  565,       -0.5,      347,       64  ),
     (16933115, 0,  'Troglodyte_Dhalmel',       'Troglodyte Dhalmel',       52,  525.18,    -0.5,      288.169,   38  ),
@@ -280,4 +279,3 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (16933193, 0,  'Gunpod',                   'Gunpod',                   92,  0,         0,         0,         0   ),
     (16933194, 0,  'Gunpod',                   'Gunpod',                   92,  0,         0,         0,         0   ),
     (16933195, 0,  'Gunpod',                   'Gunpod',                   92,  0,         0,         0,         0   );
-

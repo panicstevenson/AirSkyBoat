@@ -8,6 +8,8 @@ local entity = {}
 
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.ALWAYS_AGGRO, 1)
+    mob:setMod(xi.mod.CLAIMSHIELD, 4000)
+
 end
 
 entity.onMobDeath = function(mob, player, optParams)

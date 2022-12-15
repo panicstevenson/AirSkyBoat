@@ -9,6 +9,10 @@ local ID = require("scripts/zones/Misareaux_Coast/IDs")
 ------------------------------
 local entity = {}
 
+entity.onMobInitialize = function(mob)
+    mob:setMod(xi.mod.CLAIMSHIELD, 4000)
+end
+
 entity.onMobRoam = function(mob)
     if mob:getWeather() ~= xi.weather.FOG then
         DespawnMob(mob:getID())
@@ -28,7 +32,7 @@ end
 entity.onMobDespawn = function(mob)
     UpdateNMSpawnPoint(mob:getID())
     -- Using ID.mob.ODQAN to choose master Odqan for local var reference
-    GetMobByID(ID.mob.ODQAN):setLocalVar("chooseOdqan", math.random(1,2)) -- Choose which Odqan will spawn next
+    GetMobByID(ID.mob.ODQAN):setLocalVar("chooseOdqan", math.random(1, 2)) -- Choose which Odqan will spawn next
     GetMobByID(ID.mob.ODQAN):setLocalVar("odqanRespawn", os.time() + math.random(7200, 18000))  -- 2 to 5 hrs
     DisallowRespawn(mob:getID(), true)
 end

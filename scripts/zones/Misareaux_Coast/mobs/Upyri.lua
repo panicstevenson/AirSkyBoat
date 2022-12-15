@@ -4,6 +4,10 @@
 -----------------------------------
 local entity = {}
 
+entity.onMobInitialize = function(mob)
+    mob:setMod(xi.mod.CLAIMSHIELD, 4000)
+end
+
 entity.onMobRoam = function(mob)
     -- Nonaggressive during the day. Has Regain, more potent at night.
     local hour = VanadielHour()

@@ -12,6 +12,7 @@ local entity = {}
 
 entity.onMobInitialize = function(mob)
     mob:addMod(xi.mod.REGAIN, 1000)
+    mob:setMod(xi.mod.CLAIMSHIELD, 4000)
 
     mob:addListener("WEAPONSKILL_USE", "ULLI_WEAPONSKILL_USE", function(mobArg, target, wsid, tp, action)
         if action:param(target:getID()) > 1 then

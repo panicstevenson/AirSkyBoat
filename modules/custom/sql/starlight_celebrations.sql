@@ -54,4 +54,4 @@ UPDATE npc_list SET pos_rot = 139, pos_x = 142.2639, pos_y = -7.2481, pos_z = 10
 -- ------------------------------------------------------------
 -- Windurst Woods (Zone 103)
 -- ------------------------------------------------------------
-UPDATE npc_list SET content_tag = 'NULL' where name = 'Kayeel-Payeel'
+UPDATE npc_list SET content_tag = NULL where name = 'Kayeel-Payeel'

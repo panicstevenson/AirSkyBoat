@@ -67,9 +67,12 @@ xi.settings.main =
     LandKingSystem_NQ = 0, -- Default to pop system as loading the module turns off the pop system.
 
     -- Magian Trials
-    ENABLE_MAGIAN_TRIALS             = 1,
+    ENABLE_MAGIAN_TRIALS             = 0,
     MAGIAN_TRIALS_MOBKILL_MULTIPLIER = 1,
     MAGIAN_TRIALS_TRADE_MULTIPLIER   = 1,
+
+    -- Explorer Moogles
+    ENABLE_EXPLORERMOOGLE = false,
 
     -- VoidWalker
     ENABLE_VOIDWALKER = 0,
@@ -126,8 +129,8 @@ xi.settings.main =
     DISABLE_PARTY_EXP_PENALTY        = false, -- true/false.
 
     -- TRUSTS
-    ENABLE_TRUST_CASTING           = 1,
-    ENABLE_TRUST_QUESTS            = 1,
+    ENABLE_TRUST_CASTING           = 0,
+    ENABLE_TRUST_QUESTS            = 0,
     ENABLE_TRUST_CUSTOM_ENGAGEMENT = 0,
 
     ENABLE_TRUST_ALTER_EGO_EXTRAVAGANZA          = 0, -- 0 = disabled, 1 = summer/ny, 2 = spring/autumn, 3 = both
@@ -231,10 +234,10 @@ xi.settings.main =
     -- Chocobo digging
     DIG_RATE                     = 85, -- % chance to receive an item from chocbo digging during favorable weather.  Set between 0 and 100.
     DIG_FATIGUE                  = 100,  -- Set max amount of items a player can dig every 24 hours. Set to 0 to disable.
-    DIG_ZONE_LIMIT               = 60,  -- Set max amount of items that can be dug from a specific zone every Vana'Diel Day. Set to 0 to disable.
+    DIG_ZONE_LIMIT               = 150,  -- Set max amount of items that can be dug from a specific zone every Vana'Diel Day. Set to 0 to disable.
     DIG_GRANT_BURROW             = 0,
     DIG_GRANT_BORE               = 0,
-    DIG_DISTANCE_REQ             = 0, -- Sets the distance squared in yalms of how far a player has to move.
+    DIG_DISTANCE_REQ             = 3, -- Sets the distance squared in yalms of how far a player has to move.
     DIG_FATIGUE_SKILL_UP         = false, -- Allows for skilling up while at fatigue.
 
     -- MISC
@@ -252,6 +255,7 @@ xi.settings.main =
     FORCE_SPAWN_QM_RESET_TIME    = 300,   -- Number of seconds the ??? remains hidden for after the despawning of the mob it force spawns.
     GOBBIE_BOX_MIN_AGE           = 45,    -- Minimum character age in days before a character can sign up for Gobbie Mystery Box
     MAP_VENDORS_ALL_MAPS         = false, -- If true, all map vendors can sell all vendorable maps
+    ENABLE_TUTORIAL              = true, -- If true, enable Tutorial NPCs (WotG): Alaune (17719618), Gulldago (17739939), Selele (17764600)
 
     -- Synergy
     ENABLE_SYNERGY = 0, -- Default to off as Synergy is not coded

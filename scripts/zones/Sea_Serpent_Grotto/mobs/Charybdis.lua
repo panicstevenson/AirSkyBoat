@@ -10,6 +10,7 @@ local entity = {}
 
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.MULTI_HIT, 5)
+    mob:setMod(xi.mod.CLAIMSHIELD, 4000)
 end
 
 entity.onMobSpawn = function(mob)
@@ -24,7 +25,7 @@ end
 
 entity.onMobDeath = function(mob, player, optParams)
     -- Only one Charbydis PH is up at one time
-    local chooseManta = math.random(1,2)
+    local chooseManta = math.random(1, 2)
     local mantaOne = ID.mob.CHARYBDIS - 2
     local mantaTwo = ID.mob.CHARYBDIS - 4
     if chooseManta == 2 then

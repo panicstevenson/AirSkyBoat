@@ -8,6 +8,10 @@ require("scripts/globals/mobs")
 -----------------------------------
 local entity = {}
 
+entity.onMobInitialize = function(mob)
+    mob:setMod(xi.mod.CLAIMSHIELD, 4000)
+end
+
 entity.onMobDeath = function(mob, player, optParams)
     xi.regime.checkRegime(player, mob, 610, 1, xi.regime.type.GROUNDS)
 end

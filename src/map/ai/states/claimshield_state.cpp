@@ -26,7 +26,7 @@ CClaimShieldState::CClaimShieldState(CBaseEntity* PEntity)
 
         PMob->setModifier(Mod::CLAIMSHIELD_FAKE_SPAWN, xirand::GetRandomNumber(4000, 8000));
         PMob->setModifier(Mod::CLAIMBOT_REPORT_CHECK, 0);
-        PMob->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_STUN, EFFECT_STUN, 1, 0, (PMob->getMod(Mod::CLAIMSHIELD) + PMob->getMod(Mod::CLAIMSHIELD_FAKE_SPAWN)) / 1000), false);
+        PMob->PAI->Inactive(std::chrono::milliseconds(PMob->getMod(Mod::CLAIMSHIELD) + PMob->getMod(Mod::CLAIMSHIELD_FAKE_SPAWN)), true);
 
         // clang-format off
         PMob->PAI->QueueAction(queueAction_t(std::chrono::milliseconds(PMob->getMod(Mod::CLAIMSHIELD_FAKE_SPAWN)), false, [](CBaseEntity* PEntity)
@@ -49,15 +49,13 @@ bool CClaimShieldState::Update(time_point tick)
 
     auto* PMob = static_cast<CMobEntity*>(m_PEntity);
 
-    if (PMob != nullptr)
+    if (PMob)
     {
         if (!IsCompleted() &&
-            (tick > (GetEntryTime() + std::chrono::milliseconds(PMob->getMod(Mod::CLAIMSHIELD)) + std::chrono::milliseconds(PMob->getMod(Mod::CLAIMSHIELD_FAKE_SPAWN)))) &&
-            PMob->getMod(Mod::CLAIMBOT_REPORT_CHECK) != 0)
+            tick >= GetEntryTime() + std::chrono::milliseconds(PMob->getMod(Mod::CLAIMSHIELD) + PMob->getMod(Mod::CLAIMSHIELD_FAKE_SPAWN)))
         {
-            Complete();
             battleutils::DoClaimShieldLottery(PMob);
-
+            Complete();
             return true;
         }
     }
