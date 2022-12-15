@@ -102,6 +102,8 @@ player_data = [
     "accounts.sql",
     "accounts_banned.sql",
     "auction_house.sql",
+    "audit_chat.sql",
+    "audit_gm.sql",
     "account_ip_record.sql",
     "bazaar_log.sql",
     "char_blacklist.sql",
