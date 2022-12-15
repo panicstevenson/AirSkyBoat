@@ -5348,3 +5348,12 @@ REPLACE INTO `item_basic` (`itemid`, `subid`, `name`, `sortname`, `stackSize`, `
     (5552,0,'serving_of_black_pudding','black_pudding',1,1580,57,0,100),
     (5616,0,'lebkuchen_house','lebkuchen_house',1,1580,57,0,100),
     (5617,0,'lebkuchen_manse','lebkuchen_manse',1,1580,57,0,100);
+
+    -- Nerf Vendor Stuff
+    UPDATE `item_basic` SET BaseSell = 8469 WHERE name = "darksteel_pick" or name = "darksteel_pick_+1";
+    UPDATE `item_basic` SET BaseSell = 6669 WHERE name = "mythril_pick" or name = "mythril_pick_+1";
+    UPDATE `item_basic` SET BaseSell = 8469 WHERE name = "war_brais" or name = "war_brais_+1";
+    UPDATE `item_basic` SET BaseSell = 5869 WHERE name = "coeurl_trousers";
+    UPDATE `item_basic` SET BaseSell = 469 WHERE name = "remedy";
+    UPDATE `item_basic` SET BaseSell = 130 WHERE name = "flask_of_holy_water";
+    UPDATE `item_basic` SET BaseSell = 1200 WHERE name = "green_ribbon" or name = "green_ribbon_+1";
