@@ -900,7 +900,7 @@ m:addOverride("xi.globals.weaponskills.frostbite.onUseWeaponSkill", function(pla
     params.skillType = xi.skill.GREAT_SWORD
     params.includemab = true
 
-    local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary)
+    local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary)
     return tpHits, extraHits, criticalHit, damage
 end)
 
@@ -1169,7 +1169,7 @@ m:addOverride("xi.globals.weaponskills.starburst.onUseWeaponSkill", function(pla
         params.element = xi.magic.ele.DARK
     end
 
-    local damage, criticalHit, tpHits, extraHits = doMagicWeaponskill(player, target, wsID, params, tp, action, primary)
+    local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doMagicWeaponskill(player, target, wsID, params, tp, action, primary)
     return tpHits, extraHits, criticalHit, damage
 end)
 
@@ -1189,7 +1189,7 @@ m:addOverride("xi.globals.weaponskills.sunburst.onUseWeaponSkill", function(play
         params.element = xi.magic.ele.DARK
     end
 
-    local damage, criticalHit, tpHits, extraHits = doMagicWeaponskill(player, target, wsID, params, tp, action, primary)
+    local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doMagicWeaponskill(player, target, wsID, params, tp, action, primary)
     return tpHits, extraHits, criticalHit, damage
 end)
 
