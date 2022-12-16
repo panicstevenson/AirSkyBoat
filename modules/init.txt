@@ -76,4 +76,5 @@ HorizonXI/sql
 #-----------------------
 #		Custom
 #-----------------------
+custom/cpp
 custom/sql/starlight_celebrations.sql
