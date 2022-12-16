@@ -18,9 +18,8 @@ end
 
 abilityObject.onUseAbility = function(player, target, ability)
     -- Era Plus:
-    -- If Ninjutsu Skill < 25 then damage = 100
-    -- If Ninjutsu Skill > 25 then damage = Ninjutsu skill * 4
-    local dmg    = math.max(100, player:getSkillLevel(xi.skill.NINJUTSU) * 4)
+    -- Max of: floor(3.5 * lvl) + 50 or Ninjutsu skill * 4
+    local dmg    = math.max(math.floor(3.5 * player:getMainLvl()) + 50, player:getSkillLevel(xi.skill.NINJUTSU) * 4)
     local resist = xi.mobskills.applyPlayerResistance(player, nil, target, player:getStat(xi.mod.INT) - target:getStat(xi.mod.INT), 0, xi.magic.ele.NONE)
 
     dmg = dmg * resist
