@@ -3204,17 +3204,25 @@ void CLuaBaseEntity::setJailCell()
 
 void CLuaBaseEntity::resetPlayer(const char* charName)
 {
-    uint32 id = 0;
+    uint32 id   = 0;
+    uint32 zone = 0;
+    float  x    = 0;
+    float  y    = 0;
+    float  z    = 0;
 
     // char will not be logged in so get the id manually
     char escapedCharName[16 * 2 + 1];
     sql->EscapeString(escapedCharName, charName);
-    const char* Query = "SELECT charid FROM chars WHERE charname = '%s';";
+    const char* Query = "SELECT * FROM chars WHERE charname = '%s';";
     int32       ret   = sql->Query(Query, escapedCharName);
 
     if (ret != SQL_ERROR && sql->NumRows() != 0 && sql->NextRow() == SQL_SUCCESS)
     {
-        id = sql->GetIntData(0);
+        id   = sql->GetUIntData(0);
+        zone = sql->GetUIntData(12);
+        x    = sql->GetFloatData(14);
+        y    = sql->GetFloatData(15);
+        z    = sql->GetFloatData(16);
     }
 
     // could not get player from database
@@ -3242,14 +3250,14 @@ void CLuaBaseEntity::resetPlayer(const char* charName)
             "WHERE charid = %u;";
 
     sql->Query(Query,
-               245,     // lower jeuno
-               122,     // prev zone
-               86,      // rotation
-               33.464f, // x
-               -5.000f, // y
-               69.162f, // z
-               0,       // boundary,
-               0,       // moghouse,
+               zone, // lower jeuno
+               122,  // prev zone
+               86,   // rotation
+               x,    // x
+               y,    // y
+               z,    // z
+               0,    // boundary,
+               0,    // moghouse,
                id);
 
     ShowDebug("Player reset was successful.");
