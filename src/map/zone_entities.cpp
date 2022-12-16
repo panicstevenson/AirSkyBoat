@@ -62,7 +62,6 @@ namespace
 {
     const float CHARACTER_SYNC_DISTANCE                = 45.0f;
     const float CHARACTER_DESPAWN_DISTANCE             = 50.0f;
-    const float CHARACTER_DESPAWN_DISTANCE_CAMERA      = 150.0f;
     const int   CHARACTER_SWAP_MAX                     = 5;
     const int   CHARACTER_SYNC_LIMIT_MAX               = 32;
     const int   CHARACTER_SYNC_DISTANCE_SWAP_THRESHOLD = 30;
@@ -701,7 +700,7 @@ void CZoneEntities::SpawnPCs(CCharEntity* PChar)
         CBaseEntity* target = state->GetTarget();
         if (target && target->objtype == TYPE_PC && target->id != PChar->id)
         {
-            scoreBonus[target->id] += CHARACTER_SYNC_DISTANCE_SWAP_THRESHOLD;
+            scoreBonus[target->id] += (PChar->getCharVar("[Camera]Enabled") > 0 ? float(PChar->getCharVar("[Camera]Enabled")) : CHARACTER_SYNC_DISTANCE_SWAP_THRESHOLD);
         }
     }
 
@@ -722,7 +721,7 @@ void CZoneEntities::SpawnPCs(CCharEntity* PChar)
 
         // Despawn character if it's currently spawned and is far away
         float charDistance = distance(PChar->loc.p, pc->loc.p);
-        if (charDistance >= (PChar->getCharVar("[Camera]Enabled") == 1 ? CHARACTER_DESPAWN_DISTANCE_CAMERA : CHARACTER_DESPAWN_DISTANCE))
+        if (charDistance >= (PChar->getCharVar("[Camera]Enabled") > 0 ? float(PChar->getCharVar("[Camera]Enabled")) : CHARACTER_DESPAWN_DISTANCE))
         {
             toRemove.push_back(pc);
             continue;
@@ -771,7 +770,7 @@ void CZoneEntities::SpawnPCs(CCharEntity* PChar)
             }
 
             float charDistance = distance(PChar->loc.p, PCurrentChar->loc.p);
-            if (charDistance > CHARACTER_SYNC_DISTANCE)
+            if (charDistance > (PChar->getCharVar("[Camera]Enabled") > 0 ? float(PChar->getCharVar("[Camera]Enabled")) : CHARACTER_SYNC_DISTANCE))
             {
                 continue;
             }
@@ -814,13 +813,13 @@ void CZoneEntities::SpawnPCs(CCharEntity* PChar)
         // Loop through candidates to be spawned from best to worst
         for (auto candidatePair : candidates)
         {
-            if (swapCount >= CHARACTER_SWAP_MAX)
+            if (swapCount >= (PChar->getCharVar("[Camera]Enabled") > 0 ? float(PChar->getCharVar("[Camera]Enabled")) : CHARACTER_SWAP_MAX))
             {
                 break;
             }
 
             // If max amount of characters are currently spawned, we need to despawn one before we can spawn a new one
-            if (PChar->SpawnPCList.size() >= CHARACTER_SYNC_LIMIT_MAX)
+            if (PChar->SpawnPCList.size() >= (PChar->getCharVar("[Camera]Enabled") > 0 ? float(300) : CHARACTER_SYNC_LIMIT_MAX))
             {
                 if (spawnedCharacters.size() == 0)
                 {

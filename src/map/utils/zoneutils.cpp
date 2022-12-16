@@ -648,11 +648,11 @@ namespace zoneutils
 
             // Spawn Initial Amount For Each Multispawn Group
             for (auto const& [key, val] : PZone->m_MultiSpawnVector) { // Iterates through each key to pull the vector associated.
-                auto* PMobOrg = static_cast<CMobEntity*>(zoneutils::GetEntity(val[0], TYPE_MOB | TYPE_PET)); // Use val (vector) index 0 to pull PMob data.
+                auto* PMobOrg = dynamic_cast<CMobEntity*>(zoneutils::GetEntity(val[0], TYPE_MOB | TYPE_PET)); // Use val (vector) index 0 to pull PMob data.
                 if (PMobOrg != nullptr)
                 {
                    for (int i = 0; i < PMobOrg->m_setMaxSpawns; i++) { // Start at index 0 and go as long as we are under the max spawns. This will get us the exact amount.
-                       auto* PMob = static_cast<CMobEntity*>(zoneutils::GetEntity(val[i], TYPE_MOB | TYPE_PET)); // Use val (vector) at index i to pull PMob.
+                       auto* PMob = dynamic_cast<CMobEntity*>(zoneutils::GetEntity(val[i], TYPE_MOB | TYPE_PET)); // Use val (vector) at index i to pull PMob.
                         if (PMob != nullptr)
                         {
                           PMob->m_AllowRespawn = true; // Allow respawn just in case something fails.
