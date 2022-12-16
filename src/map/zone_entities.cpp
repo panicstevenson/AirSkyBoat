@@ -701,7 +701,7 @@ void CZoneEntities::SpawnPCs(CCharEntity* PChar)
         CBaseEntity* target = state->GetTarget();
         if (target && target->objtype == TYPE_PC && target->id != PChar->id)
         {
-            scoreBonus[target->id] += CHARACTER_SYNC_DISTANCE_SWAP_THRESHOLD;
+            scoreBonus[target->id] += (PChar->getCharVar("[Camera]Enabled") > 0 ? float(PChar->getCharVar("[Camera]Enabled")) : CHARACTER_SYNC_DISTANCE_SWAP_THRESHOLD);
         }
     }
 
@@ -814,13 +814,13 @@ void CZoneEntities::SpawnPCs(CCharEntity* PChar)
         // Loop through candidates to be spawned from best to worst
         for (auto candidatePair : candidates)
         {
-            if (swapCount >= CHARACTER_SWAP_MAX)
+            if (swapCount >= (PChar->getCharVar("[Camera]Enabled") > 0 ? float(PChar->getCharVar("[Camera]Enabled")) : CHARACTER_SWAP_MAX))
             {
                 break;
             }
 
             // If max amount of characters are currently spawned, we need to despawn one before we can spawn a new one
-            if (PChar->SpawnPCList.size() >= CHARACTER_SYNC_LIMIT_MAX)
+            if (PChar->SpawnPCList.size() >= (PChar->getCharVar("[Camera]Enabled") > 0 ? float(300) : CHARACTER_SYNC_LIMIT_MAX))
             {
                 if (spawnedCharacters.size() == 0)
                 {
