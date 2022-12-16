@@ -1,11 +1,11 @@
 -----------------------------------
--- func: test 
+-- func: test
 -- desc: shows testers the available commands that will help with testing
 -----------------------------------
 
 cmdprops =
 {
-    permission = 3,
+    permission = 5,
     parameters = ""
 }
 

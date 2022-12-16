@@ -6,7 +6,7 @@ require("scripts/globals/msg")
 
 cmdprops =
 {
-    permission = 1,
+    permission = 4,
     parameters = "i"
 }
 

@@ -24,7 +24,7 @@ function onTrigger(player, target)
 		14301, 15350, 16263, 14792, 14380, 14782, 13301,
 		--AF Below
 		12641, 13964, 13856, 14092, 14217,
-		
+
     }
 
     -- validate target
@@ -48,14 +48,14 @@ function onTrigger(player, target)
         silent = false
         sendUpdate = false
         save = true
-		
+
 		if player:getFreeSlotsCount() == 0 then
 			player:PrintToPlayer("IInventory is full, please check your inventory and try again.")
         return
 		end
-				
+
 		itemToGet = tonumber(item)
-		
+
 		if (targ:hasItem(itemToGet)) then
 			--player:PrintToPlayer(string.format("%s has item %i.", targ:getName(), itemToGet))
 		else

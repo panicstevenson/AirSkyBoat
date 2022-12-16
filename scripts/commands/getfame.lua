@@ -5,7 +5,7 @@ require("scripts/globals/msg")
 
 cmdprops =
 {
-    permission = 3,
+    permission = 2,
     parameters = "si"
 }
 
@@ -74,5 +74,5 @@ function onTrigger(player, target, famezone)
         player:PrintToPlayer( string.format( "%s's reputation in fame area %i (%s) is %i (Level %i). Next level at %i (%i points to go).", targ:getName(), famezone, fameAreas[famezone+1], fame, level, fameBaseValues[level+1], fameBaseValues[level+1]-fame), xi.msg.channel.SYSTEM_3)
     else
         player:PrintToPlayer( string.format( "%s's reputation in fame area %i (%s) is %i (Level %i).", targ:getName(), famezone, fameAreas[famezone+1], fame, level), xi.msg.channel.SYSTEM_3)
-    end 
+    end
 end
