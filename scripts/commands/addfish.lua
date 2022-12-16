@@ -7,7 +7,7 @@ require("scripts/globals/fish")
 
 cmdprops =
 {
-    permission = 1,
+    permission = 4,
     parameters = "sii"
 }
 
