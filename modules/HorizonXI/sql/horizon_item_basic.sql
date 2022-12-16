@@ -5358,4 +5358,8 @@ REPLACE INTO `item_basic` (`itemid`, `subid`, `name`, `sortname`, `stackSize`, `
     UPDATE `item_basic` SET BaseSell = 5869 WHERE name = "coeurl_trousers";
     UPDATE `item_basic` SET BaseSell = 469 WHERE name = "remedy";
     UPDATE `item_basic` SET BaseSell = 130 WHERE name = "flask_of_holy_water";
-    UPDATE `item_basic` SET BaseSell = 1200 WHERE name = "green_ribbon" or name = "green_ribbon_+1";
+    UPDATE `item_basic` SET BaseSell = 1269 WHERE name = "green_ribbon" or name = "green_ribbon_+1";
+    UPDATE `item_basic` SET BaseSell = 7069 WHERE name = "dragon_mask";
+    UPDATE `item_basic` SET BaseSell = 9469 WHERE name = "dragon_cuisses";
+    UPDATE `item_basic` SET BaseSell = 7069 WHERE name = "dragon_mask_+1";
+    UPDATE `item_basic` SET BaseSell = 7369 WHERE name = "dragon_cuisses_+1";
