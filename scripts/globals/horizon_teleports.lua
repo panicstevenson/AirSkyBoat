@@ -332,7 +332,7 @@ hxi.teleport.triggerOPWarp = function(player, npc)
         return
     end
 
-    if zoneId == xi.zone.LOWER_JEUNO and player:getRank(player:getNation()) < 5 then
+    if zoneId == xi.zone.LOWER_JEUNO and player:getRank(player:getNation()) < 3 then
         player:PrintToPlayer(dialogTable.tooLow, 0, name)
         return
     end
