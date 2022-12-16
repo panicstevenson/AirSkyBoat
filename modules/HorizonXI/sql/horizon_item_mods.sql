@@ -50,9 +50,6 @@ DELETE FROM `item_mods` WHERE `itemid` = 14061 and `modid` = 14;  -- Kaiser Hand
 DELETE FROM `item_mods` WHERE `itemid` = 13971 and `modid` = 9;   -- Hunters Bracers Remove DEX
 DELETE FROM `item_mods` WHERE `itemid` = 16480 and `modid` = 303; -- Thief's Knife Remove Treasure Hunter
 
--- Bolt Temp Changes
-UPDATE `item_mods` SET `value` = 80 WHERE itemId = 18148 and modId = 501; -- Acid bolt proc chance should be 80% for at your level or below (Base is currently 10%)
-
 REPLACE INTO `item_mods` (`itemid`, `modid`, `value`) VALUES
     (12304, 23, 5), -- Musketeer Commanders Shield ATT: 5
     (12344, 1, 18),    -- Master Shield DEF: 18
