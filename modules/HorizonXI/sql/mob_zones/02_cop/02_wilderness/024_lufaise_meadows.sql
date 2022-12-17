@@ -88,8 +88,8 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
 (16875602, 0,  'Miner_Bee',                'Miner Bee',                12,  276.807,   1.703,     -139.973,  10  ),
 (16875603, 0,  'Bugard',                   'Bugard',                   14,  224.512,   1.591,     -64.396,   118 ),
 (16875604, 0,  'Cluster',                  'Cluster',                  15,  372.255,   0.146,     -179.111,  13  ),
-(16875605, 0,  'Bugard',                   'Bugard',                   14,  376.519,   0.263,     -207.106,  130 ),
-(16875606, 0,  'Bugard',                   'Bugard',                   14,  431.442,   -0.33,     -168.081,  120 ),
+-- (16875605, 0,  'Bugard',                   'Bugard',                   14,  376.519,   0.263,     -207.106,  130 ), -- Removed for exp camp
+-- (16875606, 0,  'Bugard',                   'Bugard',                   14,  431.442,   -0.33,     -168.081,  120 ), -- Removed for exp camp
 (16875607, 0,  'Bugard',                   'Bugard',                   14,  381.671,   0.173,     -143.379,  238 ),
 (16875608, 20, 'Gigas_Fighter',            'Gigas Fighter',            26,  371.137,   0.521,     -140.282,  83  ),
 (16875609, 20, 'Gigas_Wrestler',           'Gigas Wrestler',           27,  407.7,     -0.126,    -199.682,  206 ),
@@ -99,12 +99,12 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
 (16875613, 0,  'Tavnazian_Sheep',          'Tavnazian Sheep',          13,  415.418,   -0.2,      -156.933,  129 ),
 (16875614, 0,  'Tavnazian_Sheep',          'Tavnazian Sheep',          13,  360.578,   0.035,     -137.525,  56  ),
 (16875615, 0,  'Padfoot',                  'Padfoot',                  20,  390.972,   -0.049,    -189.321,  187 ),
-(16875616, 0,  'Bugard',                   'Bugard',                   14,  512.805,   1.095,     -233.532,  88  ),
-(16875617, 0,  'Bugard',                   'Bugard',                   14,  466.954,   0.195,     -192.667,  176 ),
-(16875618, 5,  'Gigas_Wrestler',           'Gigas Wrestler',           27,  520.64,    0.462,     -222.209,  213 ),
-(16875619, 5,  'Gigas_Slinger',            'Gigas Slinger',            28,  466.393,   0.684,     -206.194,  81  ),
-(16875620, 0,  'Tavnazian_Sheep',          'Tavnazian Sheep',          13,  502.314,   3.405,     -218.251,  148 ),
-(16875621, 0,  'Tavnazian_Sheep',          'Tavnazian Sheep',          13,  480.373,   0.857,     -209.165,  0   ),
+-- (16875616, 0,  'Bugard',                   'Bugard',                   14,  512.805,   1.095,     -233.532,  88  ), -- Removed for exp camp
+-- (16875617, 0,  'Bugard',                   'Bugard',                   14,  466.954,   0.195,     -192.667,  176 ), -- Removed for exp camp
+-- (16875618, 5,  'Gigas_Wrestler',           'Gigas Wrestler',           27,  520.64,    0.462,     -222.209,  213 ), -- Removed for exp camp
+-- (16875619, 5,  'Gigas_Slinger',            'Gigas Slinger',            28,  466.393,   0.684,     -206.194,  81  ), -- Removed for exp camp
+-- (16875620, 0,  'Tavnazian_Sheep',          'Tavnazian Sheep',          13,  502.314,   3.405,     -218.251,  148 ), -- Removed for exp camp
+-- (16875621, 0,  'Tavnazian_Sheep',          'Tavnazian Sheep',          13,  480.373,   0.857,     -209.165,  0   ), -- Removed for exp camp
 (16875622, 0,  'Air_Elemental',            'Air Elemental',            22,  497.686,   1.253,     -211.537,  166 ),
 (16875623, 0,  'Bugard',                   'Bugard',                   14,  362.111,   0.105,     -93.814,   143 ),
 (16875624, 0,  'Tavnazian_Sheep',          'Tavnazian Sheep',          13,  365.71,    -0.153,    -83.852,   119 ),

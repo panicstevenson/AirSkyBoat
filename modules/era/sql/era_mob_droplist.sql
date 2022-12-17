@@ -26799,17 +26799,16 @@ INSERT INTO `mob_droplist` VALUES (6067,2,0,1000,749,0);        -- Mythril Beast
 
 -- Horizon Stuf
 -- Magic Diremite Camps
-INSERT INTO `mob_droplist` VALUES (7000,0,0,1000,1700,@UNCOMMON); -- Spool Of Bloodthread (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (7000,0,0,1000,1626,@VRARE);     -- Bottle Of Avatar Blood (Very Rare, 1%)
+INSERT INTO `mob_droplist` VALUES (7000,0,0,1000,2013,@UNCOMMON); -- Lizard Blood (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (7000,2,0,1000,924,0);          -- Vial Of Fiend Blood (Steal)
 INSERT INTO `mob_droplist` VALUES (7000,4,0,1000,1700,0);         -- Spool Of Bloodthread (Despoil)
 
 -- Magic buffalo camps
-INSERT INTO `mob_droplist` VALUES (7001,0,0,1000,5152,180); -- Slice Of Buffalo Meat (18.0%)
-INSERT INTO `mob_droplist` VALUES (7001,0,0,1000,1628,70);  -- Buffalo Hide (7.0%)
-INSERT INTO `mob_droplist` VALUES (7001,4,0,1000,1615,0);   -- Buffalo Horn (Despoil)
-INSERT INTO `mob_droplist` VALUES (7001,4,0,1000,1628,0);   -- Buffalo Hide (Despoil)
-INSERT INTO `mob_droplist` VALUES (7001,4,0,1000,5152,0);   -- Slice Of Buffalo Meat (Despoil)
+INSERT INTO `mob_droplist` VALUES (7001,0,0,1000,5152,@UNCOMMON); -- Slice Of Buffalo Meat (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (7001,0,0,1000,1628,@RARE);     -- Buffalo Hide (Rare, 5%)
+INSERT INTO `mob_droplist` VALUES (7001,4,0,1000,1615,0);         -- Buffalo Horn (Despoil)
+INSERT INTO `mob_droplist` VALUES (7001,4,0,1000,1628,0);         -- Buffalo Hide (Despoil)
+INSERT INTO `mob_droplist` VALUES (7001,4,0,1000,5152,0);         -- Slice Of Buffalo Meat (Despoil)
 
 /*!40000 ALTER TABLE `mob_droplist` ENABLE KEYS */;
 UNLOCK TABLES;

@@ -165,8 +165,8 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
 (17293471, 0,  'Clipper',                  'Clipper',                  9,   -253.738,  -20.839,   50.184,    249 ),
 (17293472, 0,  'Clipper',                  'Clipper',                  9,   -299.699,  -21.797,   67.048,    125 ),
 (17293473, 0,  'Clipper',                  'Clipper',                  9,   -290.691,  -20.266,   61.113,    31  ),
-(17293474, 0,  'Greater_Pugil',            'Greater Pugil',            20,  -193.185,  -20.084,   -23.071,   139 ),
-(17293475, 0,  'Greater_Pugil',            'Greater Pugil',            20,  -194.149,  -20.782,   -16.406,   39  ),
+(17293474, 0,  'Greater_Pugil',            'Greater Pugil',            20,  -340.48,   -20.0,     41.5,      139 ), -- Move for new xp camp
+(17293475, 0,  'Greater_Pugil',            'Greater Pugil',            20,  -324.53,   -20.4,     59.2,      39  ), -- Move for new xp camp
 (17293476, 0,  'Greater_Pugil',            'Greater Pugil',            20,  -289.513,  -20.828,   70.621,    220 ),
 (17293477, 0,  'Greater_Pugil',            'Greater Pugil',            20,  -287.018,  -20.236,   65.202,    167 ),
 (17293478, 0,  'Acrophies',                'Acrophies',                24,  -277.582,  -20.467,   40.83,     70  ),
