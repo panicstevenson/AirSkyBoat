@@ -194,8 +194,7 @@ m:addOverride("xi.globals.abilities.pets.whispering_wind.onPetAbility", function
 end)
 
 m:addOverride("xi.globals.abilities.pets.ecliptic_howl.onPetAbility", function(target, pet, skill, summoner)
-    local bonusTime = utils.clamp(summoner:getSkillLevel(xi.skill.SUMMONING_MAGIC) - 300, 0, 200)
-    local duration = 180 + bonusTime
+    local duration = 180
     local moon = VanadielMoonLatentPhase()
     local accuracy = 0
     local evasion = 0
