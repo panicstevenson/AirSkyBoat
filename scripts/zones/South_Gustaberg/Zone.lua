@@ -52,8 +52,7 @@ end
 zoneObject.onGameDay = function()
     SetServerVariable("[DIG]ZONE107_ITEMS", 0)
     if xi.events.starlightCelebration.isStarlightEnabled ~= 0 then
-        local zone = 107
-        xi.events.starlightCelebration.resetSmileHelpers(zone)
+        xi.events.starlightCelebration.resetSmileHelpers(xi.zone.SOUTH_GUSTABERG)
     end
 end
 

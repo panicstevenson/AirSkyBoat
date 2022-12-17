@@ -457,7 +457,7 @@ function xi.events.starlightCelebration.applyStarlightDecorations(zoneid)
     if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
         local decoration = zones[zoneid].npc.STARLIGHT_DECORATIONS
         if decoration then
-            for id, v in pairs(decoration) do
+            for _, id in pairs(decoration) do
                 local npc = GetNPCByID(id)
                 if npc then
                     npc:setStatus(xi.status.NORMAL)
@@ -471,7 +471,7 @@ function xi.events.starlightCelebration.toggleSmileHelpers(zoneid)
     if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
         local smileHelper = zones[zoneid].npc.SMILE_HELPERS
         if smileHelper then
-            for id, v in pairs(smileHelper) do
+            for _, id in pairs(smileHelper) do
                 local npc = GetNPCByID(id)
                 if npc then
                     npc:setStatus(xi.status.NORMAL)
@@ -486,11 +486,13 @@ function xi.events.starlightCelebration.resetSmileHelpers(zoneid)
     if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
         local smileHelper = zones[zoneid].npc.SMILE_HELPERS
         if smileHelper then
-            for id, v in pairs(smileHelper) do
+            for _, id in pairs(smileHelper) do
                 local npc = GetNPCByID(id)
-                local depopTime = npc:getLocalVar("depopTime")
-                if depopTime < os.time() then
-                    npc:setStatus(xi.status.DISAPPEAR)
+                if npc then
+                    local depopTime = npc:getLocalVar("depopTime")
+                    if depopTime < os.time() then
+                        npc:setStatus(xi.status.DISAPPEAR)
+                    end
                 end
             end
         end
