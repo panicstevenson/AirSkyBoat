@@ -2147,7 +2147,7 @@ local spawnerMobs =
         { name = "Meadow Buffalo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 75, max = 78, xPos = 516.98,   yPos = 0.7, zPos = -239.87, Rot = 236, respawn = 330, drops = 7001 },
         { name = "Meadow Buffalo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 75, max = 78, xPos = 513.88,   yPos = -1, zPos = -223.8, Rot = 236.0000, respawn = 330, drops = 7001 },
         { name = "Meadow Buffalo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 75, max = 78, xPos = 517.1070, yPos = 0, zPos = -200.52, Rot = 224.0000, respawn = 330, drops = 7001 },
-        { name = "Meadow Buffalo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 75, max = 78, xPos = 487.8876, yPos = 0.3, zPos =-202.38, Rot = 137.0000, respawn = 330, drops = 7001 },
+        { name = "Meadow Buffalo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 75, max = 78, xPos = 487.8876, yPos = 0.3, zPos = -202.38, Rot = 137.0000, respawn = 330, drops = 7001 },
         { name = "Meadow Buffalo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 75, max = 78, xPos = 466.0484, yPos = 0.7, zPos = -198.36, Rot = 84.0000, respawn = 330, drops = 7001 },
         { name = "Meadow Buffalo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 75, max = 78, xPos = 447.7745, yPos = 0.8, zPos = -183.9, Rot = 28.0000, respawn = 330, drops = 7001 },
         { name = "Meadow Buffalo", groupId =  5, groupZone = 5, funcLookup = "Manaburn_Low", min = 75, max = 78, xPos = 421.2842, yPos = 0.9, zPos = -200, Rot = 252.0000, respawn = 330, drops = 7001 },
