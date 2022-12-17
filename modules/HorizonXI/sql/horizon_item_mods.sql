@@ -8,6 +8,8 @@ LOCK TABLE `item_mods` WRITE;
 
 -- Remove all mods from these items due to complete item rework
 DELETE FROM `item_mods` WHERE `itemid` = 18295; -- Remove base stats from Bravura lv 80
+DELETE FROM `item_mods` WHERE `itemid` = 18271; -- Remove base stats from Mandau lv 80
+DELETE FROM `item_mods` WHERE `itemid` = 18638; -- Remove base stats from Mandau lv 85
 DELETE FROM `item_mods` WHERE `itemid` = 23045; -- Remove base stats from Pillagers +2 gear
 DELETE FROM `item_mods` WHERE `itemid` = 23112; -- Remove base stats from Pillagers +2 gear
 DELETE FROM `item_mods` WHERE `itemid` = 23179; -- Remove base stats from Pillagers +2 gear
