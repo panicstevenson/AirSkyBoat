@@ -9042,7 +9042,7 @@ INSERT INTO `mob_droplist` VALUES (1103,0,0,1000,4733,@RARE);  -- Scroll Of Prot
 INSERT INTO `mob_droplist` VALUES (1103,0,0,1000,4745,@RARE);  -- Scroll Of Sneak (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1103,0,0,1000,750,@VRARE);  -- Silver Beastcoin (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1103,0,0,1000,510,@VRARE);  -- Goblin Armor (Very Rare, 1%)
-INSERT INTO `mob_droplist` VALUES (1103,0,0,1000,4666,@RARE); -- Scroll Of Paralyze (Rare, 5%)
+INSERT INTO `mob_droplist` VALUES (1103,0,0,1000,4666,@RARE);  -- Scroll Of Paralyze (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1103,0,0,1000,4667,@VRARE); -- Scroll Of Silence (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1103,0,0,1000,4744,@VRARE); -- Scroll Of Invisible (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1103,0,0,1000,4746,@VRARE); -- Scroll Of Deodorize (Very Rare, 1%)
@@ -22087,10 +22087,10 @@ INSERT INTO `mob_droplist` VALUES (2692,0,0,1000,498,@VCOMMON); -- Yagudo Bead N
 INSERT INTO `mob_droplist` VALUES (2692,0,0,1000,841,@VCOMMON); -- Yagudo Feather (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (2692,0,0,1000,841,@VCOMMON); -- Yagudo Feather (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (2692,0,0,1000,841,@VCOMMON); -- Yagudo Feather (Very Common, 24%)
-INSERT INTO `mob_droplist` VALUES (2692,1,1,@UCOMMON,4666,300);  -- Scroll Of Paralyze (Group 1 - 30%)
-INSERT INTO `mob_droplist` VALUES (2692,1,1,@UCOMMON,4733,300);  -- Scroll Of Protectra (Group 1 - 30%)
-INSERT INTO `mob_droplist` VALUES (2692,1,1,@UCOMMON,4680,300);  -- Scroll Of Barsleep (Group 1 - 30%)
-INSERT INTO `mob_droplist` VALUES (2692,1,1,@UCOMMON,4745,100);  -- Scroll Of Sneak (Group 1 - 20%)
+INSERT INTO `mob_droplist` VALUES (2692,1,1,@UNCOMMON,4666,300);  -- Scroll Of Paralyze (Group 1 - 30%)
+INSERT INTO `mob_droplist` VALUES (2692,1,1,@UNCOMMON,4733,300);  -- Scroll Of Protectra (Group 1 - 30%)
+INSERT INTO `mob_droplist` VALUES (2692,1,1,@UNCOMMON,4680,300);  -- Scroll Of Barsleep (Group 1 - 30%)
+INSERT INTO `mob_droplist` VALUES (2692,1,1,@UNCOMMON,4745,100);  -- Scroll Of Sneak (Group 1 - 20%)
 INSERT INTO `mob_droplist` VALUES (2692,2,0,1000,656,0);        -- Beastcoin (Steal)
 
 -- ZoneID: 117 - Yagudo Acolyte
