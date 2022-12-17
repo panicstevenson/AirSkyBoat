@@ -35,7 +35,6 @@ mission.reward =
     keyItem = xi.ki.ADVENTURERS_CERTIFICATE,
     rank    = 3,
     title   = xi.title.CERTIFIED_ADVENTURER,
-    item    = xi.items.BASTOKAN_RING,
 }
 
 local handleAcceptMission = function(player, csid, option, npc)
