@@ -3257,14 +3257,14 @@ namespace charutils
 
             if (SkillID == SKILL_PARRY || SkillID == SKILL_GUARD || SkillID == SKILL_SHIELD || SkillID == SKILL_EVASION)
             {
-                if (CurSkill < 175)
+                if ((CurSkill / 10) < 175)
                 {
                     SkillUpChance = 0.25;
                 }
                 else
                 {
-                    Diff          = (CurSkill / (pow((1.0 + CurSkill / 100), 3.0) * 10));
-                    SkillUpChance = Diff / 10.0 + settings::get<double>("map.SKILLUP_CHANCE_MULTIPLIER") * (2.0 - log10(1.0 + (CurSkill - 175) / 100));
+                    Diff          = ((CurSkill / 10) / (pow((1.0 + (CurSkill / 10) / 100), 3.0) * 10));
+                    SkillUpChance = Diff / 10.0 + settings::get<double>("map.SKILLUP_CHANCE_MULTIPLIER") * (2.0 - log10(1.0 + ((CurSkill / 10) - 175) / 10));
                 }
             }
 
