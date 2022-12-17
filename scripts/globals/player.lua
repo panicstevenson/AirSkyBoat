@@ -256,6 +256,8 @@ xi.player.onPlayerLevelUp = function(player)
     if player:getCharVar("hardcore") == 1 then
         xi.hardcore.levelUp(player)
     end
+
+    player:setCharVar("hardcoreAvail", 1)
 end
 
 xi.player.onPlayerLevelDown = function(player)

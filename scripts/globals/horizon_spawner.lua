@@ -44,28 +44,28 @@ local spawnerMobs =
     [xi.zone.BUBURIMU_PENINSULA] =
     {
         -- Camp 1, Birds/Mandragora
-        { name = "Zu",        groupId =   8, groupZone = 118, funcLookup = "Default", min = 16, max = 20, xPos = 418.441, yPos =  -7.772, zPos = -237.247, rot =  127, respawn = 330, drops =  2812, skills = 55, spells = 0 },
+        { name = "Zu",        groupId =   8, groupZone = 118, funcLookup = "Default", min = 16, max = 20, xPos = 418.441, yPos =  -7.772, zPos = -237.247, rot =  127, respawn = 60, drops =  2812, skills = 55, spells = 0 },
         -- Camp 2, Rabbits/Bees TODO: DROPLIST
-        { name = "Cactus Bee",      groupId =   27, groupZone = 109, funcLookup = "Default", min = 20, max = 22, xPos = -199.4067, yPos =  -31.9499, zPos = 205.0240, rot =  127, respawn = 330, drops =  2812, skills = 48, spells = 0 },
-        { name = "Cactus Bee",      groupId =   27, groupZone = 109, funcLookup = "Default", min = 20, max = 22, xPos = -169.145, yPos =  -33.046, zPos = 233.089, rot =  32, respawn = 330, drops =  2812, skills = 48, spells = 0 },
-        { name = "Cactus Bee",      groupId =   27, groupZone = 109, funcLookup = "Default", min = 20, max = 22, xPos = -181.8291, yPos =  -33.1041, zPos = 219.6246, rot =  127, respawn = 330, drops =  2812, skills = 48, spells = 0 },
-        { name = "Cactus Bee",      groupId =   27, groupZone = 109, funcLookup = "Default", min = 20, max = 22, xPos = -177.8612, yPos =  -32.2039, zPos = 231.2208, rot =  40, respawn = 330, drops =  2812, skills = 48, spells = 0 },
-        { name = "Cactus Bee",      groupId =   27, groupZone = 109, funcLookup = "Default", min = 20, max = 22, xPos = -189.9689, yPos =  -31.6995, zPos = 239.6820, rot =  127, respawn = 330, drops =  2812, skills = 48, spells = 0 },
-        { name = "Cape Coney",      groupId =    7, groupZone = 118, funcLookup = "Default", min = 20, max = 22, xPos = -201.269, yPos =  -31.898, zPos = 215.811, rot =  111, respawn = 330, drops =  1670, skills = 206, spells = 0 },
-        { name = "Cape Coney",      groupId =    7, groupZone = 118, funcLookup = "Default", min = 20, max = 22, xPos = -197.218, yPos =  -32.584, zPos = 193.997, rot =  24, respawn = 330, drops =  1670, skills = 206, spells = 0 },
-        { name = "Cape Coney",      groupId =    7, groupZone = 118, funcLookup = "Default", min = 20, max = 22, xPos = -190.3863, yPos =  -32.1293, zPos = 231.5365, rot =  127, respawn = 330, drops =  1670, skills = 206, spells = 0 },
-        { name = "Cape Coney",      groupId =    7, groupZone = 118, funcLookup = "Default", min = 20, max = 22, xPos = -210.1475, yPos =  -33.3674, zPos = 239.9679, rot =  127, respawn = 330, drops =  1670, skills = 206, spells = 0 },
+        { name = "Cactus Bee",      groupId =   27, groupZone = 109, funcLookup = "Default", min = 20, max = 22, xPos = -199.4067, yPos =  -31.9499, zPos = 205.0240, rot =  127, respawn = 60, drops =  2812, skills = 48, spells = 0 },
+        { name = "Cactus Bee",      groupId =   27, groupZone = 109, funcLookup = "Default", min = 20, max = 22, xPos = -169.145, yPos =  -33.046, zPos = 233.089, rot =  32, respawn = 60, drops =  2812, skills = 48, spells = 0 },
+        { name = "Cactus Bee",      groupId =   27, groupZone = 109, funcLookup = "Default", min = 20, max = 22, xPos = -181.8291, yPos =  -33.1041, zPos = 219.6246, rot =  127, respawn = 60, drops =  2812, skills = 48, spells = 0 },
+        { name = "Cactus Bee",      groupId =   27, groupZone = 109, funcLookup = "Default", min = 20, max = 22, xPos = -177.8612, yPos =  -32.2039, zPos = 231.2208, rot =  40, respawn = 60, drops =  2812, skills = 48, spells = 0 },
+        { name = "Cactus Bee",      groupId =   27, groupZone = 109, funcLookup = "Default", min = 20, max = 22, xPos = -189.9689, yPos =  -31.6995, zPos = 239.6820, rot =  127, respawn = 60, drops =  2812, skills = 48, spells = 0 },
+        { name = "Cape Coney",      groupId =    7, groupZone = 118, funcLookup = "Default", min = 20, max = 22, xPos = -201.269, yPos =  -31.898, zPos = 215.811, rot =  111, respawn = 60, drops =  1670, skills = 206, spells = 0 },
+        { name = "Cape Coney",      groupId =    7, groupZone = 118, funcLookup = "Default", min = 20, max = 22, xPos = -197.218, yPos =  -32.584, zPos = 193.997, rot =  24, respawn = 60, drops =  1670, skills = 206, spells = 0 },
+        { name = "Cape Coney",      groupId =    7, groupZone = 118, funcLookup = "Default", min = 20, max = 22, xPos = -190.3863, yPos =  -32.1293, zPos = 231.5365, rot =  127, respawn = 60, drops =  1670, skills = 206, spells = 0 },
+        { name = "Cape Coney",      groupId =    7, groupZone = 118, funcLookup = "Default", min = 20, max = 22, xPos = -210.1475, yPos =  -33.3674, zPos = 239.9679, rot =  127, respawn = 60, drops =  1670, skills = 206, spells = 0 },
         -- Camp 3, Dhalmel/Goblins
-        { name = "Cape Dhalmel",      groupId =   16, groupZone = 118, funcLookup = "Default", min = 24, max = 26, xPos = 91.7002, yPos =  -17.1401, zPos = 149.2057, rot =  110, respawn = 330, drops =  385, skills = 80, spells = 0 },
-        { name = "Cape Dhalmel",      groupId =   16, groupZone = 118, funcLookup = "Default", min = 24, max = 26, xPos = 71.5231, yPos =  -21.1037, zPos = 179.0625, rot =  60, respawn = 330, drops =  385, skills = 80, spells = 0 },
-        { name = "Cape Dhalmel",      groupId =   16, groupZone = 118, funcLookup = "Default", min = 24, max = 26, xPos = 65.1330, yPos =  -17.4409, zPos = 145.7298, rot =  22, respawn = 330, drops =  385, skills = 80, spells = 0 },
-        { name = "Cape Dhalmel",      groupId =   16, groupZone = 118, funcLookup = "Default", min = 24, max = 26, xPos = 127.215, yPos =  -24.067, zPos = 176.114, rot =  127, respawn = 330, drops =  385, skills = 80, spells = 0 },
-        { name = "Cape Dhalmel",      groupId =   16, groupZone = 118, funcLookup = "Default", min = 24, max = 26, xPos = 121.431, yPos =  -23.798, zPos = 155.742, rot =  59, respawn = 330, drops =  385, skills = 80, spells = 0 },
-        { name = "Cape Dhalmel",      groupId =   16, groupZone = 118, funcLookup = "Default", min = 24, max = 26, xPos = 136.7270, yPos = -15.2011, zPos = 119.8664, rot =  127, respawn = 330, drops =  385, skills = 80, spells = 0 },
-        { name = "Cape Dhalmel",      groupId =   16, groupZone = 118, funcLookup = "Default", min = 24, max = 26, xPos = 131.127, yPos = -13.923, zPos = 104.942, rot =  95, respawn = 330, drops =  385, skills = 80, spells = 0 },
-        { name = "Goblin Mugger",     groupId =   17, groupZone = 118, funcLookup = "Default", min = 22, max = 24, xPos = 155.971, yPos = -24.811, zPos = 164.991, rot =  126, respawn = 330, drops =  1017, skills = 133, spells = 0 },
-        { name = "Goblin Leecher",    groupId =   18, groupZone = 118, funcLookup = "Default", min = 22, max = 24, xPos = 145.083, yPos = -23.895, zPos = 160.387, rot =  127, respawn = 330, drops =  1103, skills = 133, spells = 1 },
-        { name = "Goblin Gambler",    groupId =   19, groupZone = 118, funcLookup = "Default", min = 22, max = 24, xPos = 158.330, yPos = -20.332, zPos = 135.762, rot =  55, respawn = 330, drops =  1078, skills = 133, spells = 2 },
+        { name = "Cape Dhalmel",      groupId =   16, groupZone = 118, funcLookup = "Default", min = 24, max = 26, xPos = 91.7002, yPos =  -17.1401, zPos = 149.2057, rot =  110, respawn = 60, drops =  385, skills = 80, spells = 0 },
+        { name = "Cape Dhalmel",      groupId =   16, groupZone = 118, funcLookup = "Default", min = 24, max = 26, xPos = 71.5231, yPos =  -21.1037, zPos = 179.0625, rot =  60, respawn = 60, drops =  385, skills = 80, spells = 0 },
+        { name = "Cape Dhalmel",      groupId =   16, groupZone = 118, funcLookup = "Default", min = 24, max = 26, xPos = 65.1330, yPos =  -17.4409, zPos = 145.7298, rot =  22, respawn = 60, drops =  385, skills = 80, spells = 0 },
+        { name = "Cape Dhalmel",      groupId =   16, groupZone = 118, funcLookup = "Default", min = 24, max = 26, xPos = 127.215, yPos =  -24.067, zPos = 176.114, rot =  127, respawn = 60, drops =  385, skills = 80, spells = 0 },
+        { name = "Cape Dhalmel",      groupId =   16, groupZone = 118, funcLookup = "Default", min = 24, max = 26, xPos = 121.431, yPos =  -23.798, zPos = 155.742, rot =  59, respawn = 60, drops =  385, skills = 80, spells = 0 },
+        { name = "Cape Dhalmel",      groupId =   16, groupZone = 118, funcLookup = "Default", min = 24, max = 26, xPos = 136.7270, yPos = -15.2011, zPos = 119.8664, rot =  127, respawn = 60, drops =  385, skills = 80, spells = 0 },
+        { name = "Cape Dhalmel",      groupId =   16, groupZone = 118, funcLookup = "Default", min = 24, max = 26, xPos = 131.127, yPos = -13.923, zPos = 104.942, rot =  95, respawn = 60, drops =  385, skills = 80, spells = 0 },
+        { name = "Goblin Mugger",     groupId =   17, groupZone = 118, funcLookup = "Default", min = 22, max = 24, xPos = 155.971, yPos = -24.811, zPos = 164.991, rot =  126, respawn = 60, drops =  1017, skills = 133, spells = 0 },
+        { name = "Goblin Leecher",    groupId =   18, groupZone = 118, funcLookup = "Default", min = 22, max = 24, xPos = 145.083, yPos = -23.895, zPos = 160.387, rot =  127, respawn = 60, drops =  1103, skills = 133, spells = 1 },
+        { name = "Goblin Gambler",    groupId =   19, groupZone = 118, funcLookup = "Default", min = 22, max = 24, xPos = 158.330, yPos = -20.332, zPos = 135.762, rot =  55, respawn = 60, drops =  1078, skills = 133, spells = 2 },
     },
     [xi.zone.CARPENTERS_LANDING] =
     {
@@ -809,14 +809,14 @@ local spawnerMobs =
     [xi.zone.VALKURM_DUNES] =
     {
         -- Additional mobs to (D-7) Lizard camp
-        { name = "Hill Lizard",          groupId =   23, groupZone = 103, funcLookup = "Default", min = 15, max = 19, xPos = -522.5940, yPos =  -8.1269, zPos = 165.6588, rot =  127, respawn = 330, drops =  1316, skills = 174, spells = 0 },
-        { name = "Hill Lizard",          groupId =   23, groupZone = 103, funcLookup = "Default", min = 15, max = 19, xPos = -480.8232, yPos =  -7.6422, zPos = 91.3019, rot =  127, respawn = 330, drops =  1316, skills = 174, spells = 0 },
+        { name = "Hill Lizard",          groupId =   23, groupZone = 103, funcLookup = "Default", min = 15, max = 19, xPos = -522.5940, yPos =  -8.1269, zPos = 165.6588, rot =  127, respawn = 60, drops =  1316, skills = 174, spells = 0 },
+        { name = "Hill Lizard",          groupId =   23, groupZone = 103, funcLookup = "Default", min = 15, max = 19, xPos = -480.8232, yPos =  -7.6422, zPos = 91.3019, rot =  127, respawn = 60, drops =  1316, skills = 174, spells = 0 },
         -- Additional mobs to (K-9) Lizard camp
-        { name = "Hill Lizard",          groupId =   23, groupZone = 103, funcLookup = "Default", min = 15, max = 19, xPos = 698.8024, yPos =  -4.7393, zPos = -184.5671, rot =  46, respawn = 330, drops =  1316, skills = 174, spells = 0 },
+        { name = "Hill Lizard",          groupId =   23, groupZone = 103, funcLookup = "Default", min = 15, max = 19, xPos = 698.8024, yPos =  -4.7393, zPos = -184.5671, rot =  46, respawn = 60, drops =  1316, skills = 174, spells = 0 },
         -- Additional mobs to (H-9) Pugil camp
-        { name = "Beach Pugil",          groupId =   28, groupZone = 103, funcLookup = "Default", min = 23, max = 26, xPos = -156.5827, yPos =  4.0, zPos = -125.7460, rot =  4, respawn = 330, drops =  248, skills = 197, spells = 0 },
+        { name = "Beach Pugil",          groupId =   28, groupZone = 103, funcLookup = "Default", min = 23, max = 26, xPos = -156.5827, yPos =  4.0, zPos = -125.7460, rot =  4, respawn = 60, drops =  248, skills = 197, spells = 0 },
         -- Additional mobs to (E-9) Pugil camp
-        { name = "Beach Pugil",          groupId =   28, groupZone = 103, funcLookup = "Default", min = 23, max = 26, xPos = -232.1026, yPos =  4.3, zPos = -49.2252, rot =  4, respawn = 330, drops =  248, skills = 197, spells = 0 },
+        { name = "Beach Pugil",          groupId =   28, groupZone = 103, funcLookup = "Default", min = 23, max = 26, xPos = -232.1026, yPos =  4.3, zPos = -49.2252, rot =  4, respawn = 60, drops =  248, skills = 197, spells = 0 },
     },
     [xi.zone.WESTERN_ALTEPA_DESERT] =
     {
