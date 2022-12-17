@@ -2237,7 +2237,6 @@ local spawnerFunctions =
             mob:setMobMod(xi.mobMod.NO_LINK, 1)
             mob:setMobMod(xi.mobMod.CHARMABLE, 0)
             mob:setMobMod(xi.mobMod.EXP_BONUS, 10)
-            
             mob:addListener('SKILLCHAIN_TAKE', 'SC_Breakdown', function(attacker, mobArg, damage)
                 mobArg:setMod(xi.mod.UDMGMAGIC, 2500)
                 for _, member in ipairs(attacker:getParty()) do
