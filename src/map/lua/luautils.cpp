@@ -5453,7 +5453,7 @@ namespace luautils
             }
             else
             {
-                return sol::nil;
+                return sol::lua_nil;
             }
         }
         else

@@ -15825,7 +15825,7 @@ auto CLuaBaseEntity::getAvailableContestRewards(uint16 contestId) -> sol::table
         }
     }
 
-    return sol::nil;
+    return sol::lua_nil;
 }
 
 void CLuaBaseEntity::giveContestReward(uint16 contestId)
