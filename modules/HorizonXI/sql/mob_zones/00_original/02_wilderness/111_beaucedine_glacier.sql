@@ -67,8 +67,8 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
 (17231933, 0,  'Bat_Eye',                  'Bat Eye',                  13,  5.458,     -60.027,   103.26,    10  ),
 (17231934, 0,  'Bat_Eye',                  'Bat Eye',                  13,  18.926,    -59.849,   67.539,    127 ),
 (17231935, 0,  'Bat_Eye',                  'Bat Eye',                  13,  2.577,     -59.975,   -13.931,   127 ),
-(17231936, 0,  'Bat_Eye',                  'Bat Eye',                  13,  60,        -59,       190,       110 ),
-(17231937, 0,  'Bat_Eye',                  'Bat Eye',                  13,  44.12,     -60.278,   150.809,   91  ),
+-- (17231936, 0,  'Bat_Eye',                  'Bat Eye',                  13,  60,        -59,       190,       110 ), -- Removed for camp
+-- (17231937, 0,  'Bat_Eye',                  'Bat Eye',                  13,  44.12,     -60.278,   150.809,   91  ), -- Removed for camp
 (17231938, 0,  'Bat_Eye',                  'Bat Eye',                  13,  28,        -60,       112,       47  ),
 (17231939, 0,  'Bat_Eye',                  'Bat Eye',                  13,  -104.457,  -79.966,   84.139,    127 ),
 (17231940, 0,  'Bat_Eye',                  'Bat Eye',                  13,  -104.233,  -80.048,   164.126,   94  ),
@@ -185,16 +185,16 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
 (17232051, 0,  'Living_Statue',            'Living Statue',            12,  59.218,    -0.75,     -339.465,  68  ),
 (17232052, 0,  'Tundra_Tiger',             'Tundra Tiger',             6,   61.532,    -0.359,    -487.095,  62  ),
 (17232053, 0,  'Tundra_Tiger',             'Tundra Tiger',             6,   -58.297,   -0.432,    -323.913,  18  ),
-(17232054, 5,  'Cold_Gigas',               'Cold Gigas',               14,  -107,      -0.611,    -358,      57  ),
-(17232055, 5,  'Snow_Gigas',               'Snow Gigas',               15,  0,         0,         0,         0   ),
-(17232056, 5,  'Rime_Gigas',               'Rime Gigas',               16,  -104.91,   0.209,     -359.595,  230 ),
-(17232057, 0,  'Gigass_Tiger',             'Gigas\'s Tiger',           17,  -108.53,   -0.042,    -362.476,  230 ),
-(17232058, 5,  'Sleet_Gigas',              'Sleet Gigas',              18,  0,         0,         0,         0   ),
-(17232059, 6,  'Cold_Gigas',               'Cold Gigas',               14,  -116,      0.6,       -385,      0   ),
-(17232060, 6,  'Snow_Gigas',               'Snow Gigas',               15,  -126.888,  -0.804,    -365.477,  235 ),
-(17232061, 6,  'Rime_Gigas',               'Rime Gigas',               16,  0,         0,         0,         0   ),
-(17232062, 0,  'Gigass_Tiger',             'Gigas\'s Tiger',           17,  0,         0,         0,         0   ),
-(17232063, 6,  'Sleet_Gigas',              'Sleet Gigas',              18,  -87,       -0.402,    -391,      127 ),
+-- (17232054, 5,  'Cold_Gigas',               'Cold Gigas',               14,  -107,      -0.611,    -358,      57  ), -- Removed for exp camp
+-- (17232055, 5,  'Snow_Gigas',               'Snow Gigas',               15,  0,         0,         0,         0   ), -- Removed for exp camp
+-- (17232056, 5,  'Rime_Gigas',               'Rime Gigas',               16,  -104.91,   0.209,     -359.595,  230 ), -- Removed for exp camp
+-- (17232057, 0,  'Gigass_Tiger',             'Gigas\'s Tiger',           17,  -108.53,   -0.042,    -362.476,  230 ), -- Removed for exp camp
+-- (17232058, 5,  'Sleet_Gigas',              'Sleet Gigas',              18,  0,         0,         0,         0   ), -- Removed for exp camp
+-- (17232059, 6,  'Cold_Gigas',               'Cold Gigas',               14,  -116,      0.6,       -385,      0   ), -- Removed for exp camp
+-- (17232060, 6,  'Snow_Gigas',               'Snow Gigas',               15,  -126.888,  -0.804,    -365.477,  235 ), -- Removed for exp camp
+-- (17232061, 6,  'Rime_Gigas',               'Rime Gigas',               16,  0,         0,         0,         0   ), -- Removed for exp camp
+-- (17232062, 0,  'Gigass_Tiger',             'Gigas\'s Tiger',           17,  0,         0,         0,         0   ), -- Removed for exp camp
+-- (17232063, 6,  'Sleet_Gigas',              'Sleet Gigas',              18,  -87,       -0.402,    -391,      127 ), -- Removed for exp camp
 (17232064, 0,  'Ice_Elemental',            'Ice Elemental',            20,  -95.191,   0.259,     -362.142,  35  ),
 (17232065, 0,  'Ice_Elemental',            'Ice Elemental',            20,  -111.703,  0.038,     -370.741,  45  ),
 (17232066, 0,  'Tundra_Tiger',             'Tundra Tiger',             6,   382.007,   0.143,     -164.481,  127 ),
