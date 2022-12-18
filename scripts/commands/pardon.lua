@@ -5,7 +5,7 @@
 
 cmdprops =
 {
-    permission = 2,
+    permission = 1,
     parameters = "s"
 }
 
@@ -22,10 +22,11 @@ function onTrigger(player, target)
         return
     end
 
-    if (targ:getCharVar( '[JAIL]inJail' ) >= 1) then
-        local message = string.format( '%s is pardoning %s from jail.', player:getName(), targ:getName() )
-        printf( message )
+    if targ:getCharVar('inJail') >= 1 then
+        local message = string.format('%s is pardoning %s from jail.', player:getName(), targ:getName())
+        printf(message)
 
-        xi.jail.pardon(targ)
+        targ:setCharVar('inJail', 0)
+        targ:warp()
     end
 end

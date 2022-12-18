@@ -630,6 +630,8 @@ void CZone::updateCharLevelRestriction(CCharEntity* PChar)
     {
         PChar->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_LEVEL_RESTRICTION, EFFECT_LEVEL_RESTRICTION, m_levelRestriction, 0, 0));
     }
+
+    charutils::CheckValidEquipment(PChar);
 }
 
 void CZone::SetWeather(WEATHER weather)

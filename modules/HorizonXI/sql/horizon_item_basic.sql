@@ -5363,3 +5363,6 @@ REPLACE INTO `item_basic` (`itemid`, `subid`, `name`, `sortname`, `stackSize`, `
     UPDATE `item_basic` SET BaseSell = 9469 WHERE name = "dragon_cuisses";
     UPDATE `item_basic` SET BaseSell = 7069 WHERE name = "dragon_mask_+1";
     UPDATE `item_basic` SET BaseSell = 7369 WHERE name = "dragon_cuisses_+1";
+
+    -- Scroll vendor fix
+    UPDATE `item_basic` set BaseSell = BaseSell * 0.6 WHERE itemid >= 4752 and itemid <= 4822;
