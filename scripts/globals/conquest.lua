@@ -730,8 +730,8 @@ end
 
 local overseerInvCommon =
 {
-    [32928] = { cp =     7, lvl =  1, item =  4182 },             -- scroll_of_instant_reraise
-    [32929] = { cp =    10, lvl =  1, item =  4181 },             -- scroll_of_instant_warp
+    [32928] = { cp =   750, lvl =  1, item =  4182 },             -- scroll_of_instant_reraise
+    [32929] = { cp =   750, lvl =  1, item =  4181 },             -- scroll_of_instant_warp
     [32930] = { cp =  2500, lvl =  1, item = 15542 },             -- return_ring
     [32931] = { cp =  9000, lvl =  1, item = 15541 },             -- homing_ring
     [32933] = { cp =   500, lvl =  1, item = 15761 },             -- chariot_band

@@ -680,6 +680,10 @@ INSERT INTO `mob_droplist` VALUES (68,2,0,1000,656,0);        -- Beastcoin (Stea
 
 -- ZoneID: 143 - Amethyst Quadav
 INSERT INTO `mob_droplist` VALUES (69,0,0,1000,596,@COMMON);  -- Quadav Backplate (Common, 15%)
+INSERT INTO `mob_droplist` VALUES (69,1,1,@UNCOMMON,606,250); -- Quadav Fetich Head (Group 1 - Uncommon, 10% * 25%)
+INSERT INTO `mob_droplist` VALUES (69,1,1,@UNCOMMON,607,250); -- Quadav Fetich Torso (Group 1 - Uncommon, 10% * 25%)
+INSERT INTO `mob_droplist` VALUES (69,1,2,@UNCOMMON,608,250); -- Quadav Fetich Arms (Group 1 - Uncommon, 10% * 25%)
+INSERT INTO `mob_droplist` VALUES (69,1,2,@UNCOMMON,609,250); -- Quadav Fetich Legs (Group 1 - Uncommon, 10% * 25%)
 INSERT INTO `mob_droplist` VALUES (69,0,0,1000,4666,@VRARE);  -- Scroll Of Paralyze (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (69,0,0,1000,4733,@VRARE);  -- Scroll Of Protectra (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (69,0,0,1000,4680,@VRARE);  -- Scroll Of Barsleep (Very Rare, 1%)
@@ -3299,8 +3303,8 @@ INSERT INTO `mob_droplist` VALUES (351,2,0,1000,750,0);          -- Silver Beast
 
 -- ZoneID: 143 - Brass Quadav
 INSERT INTO `mob_droplist` VALUES (352,0,0,1000,17397,@VCOMMON); -- Shell Bug (Very Common, 24%)
-INSERT INTO `mob_droplist` VALUES (352,1,1,@RARE,607,500);       -- Quadav Fetich Torso (Group 1 - Rare, 5% * 50%)
-INSERT INTO `mob_droplist` VALUES (352,1,1,@RARE,608,500);       -- Quadav Fetich Arms (Group 1 - Rare, 5% * 50%)
+INSERT INTO `mob_droplist` VALUES (352,1,1,@UNCOMMON,607,500);   -- Quadav Fetich Torso (Group 1 - Uncommon, 10% * 50%)
+INSERT INTO `mob_droplist` VALUES (352,1,1,@UNCOMMON,608,500);   -- Quadav Fetich Arms (Group 1 -Uncommon, 10% * 50%)
 INSERT INTO `mob_droplist` VALUES (352,0,0,1000,1025,@VRARE);    -- Palborough Chest Key (Very Rare, 1%)
 -- INSERT INTO `mob_droplist` VALUES (352,0,0,1000,2758,@VRARE);    -- Quadav Backscale (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (352,0,0,1000,12449,@VRARE);   -- Brass Cap (Very Rare, 1%)
@@ -9042,7 +9046,7 @@ INSERT INTO `mob_droplist` VALUES (1103,0,0,1000,4733,@RARE);  -- Scroll Of Prot
 INSERT INTO `mob_droplist` VALUES (1103,0,0,1000,4745,@RARE);  -- Scroll Of Sneak (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1103,0,0,1000,750,@VRARE);  -- Silver Beastcoin (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1103,0,0,1000,510,@VRARE);  -- Goblin Armor (Very Rare, 1%)
-INSERT INTO `mob_droplist` VALUES (1103,0,0,1000,4666,@RARE);  -- Scroll Of Paralyze (Rare, 5%)
+INSERT INTO `mob_droplist` VALUES (1103,0,0,1000,4666,@RARE); -- Scroll Of Paralyze (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1103,0,0,1000,4667,@VRARE); -- Scroll Of Silence (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1103,0,0,1000,4744,@VRARE); -- Scroll Of Invisible (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1103,0,0,1000,4746,@VRARE); -- Scroll Of Deodorize (Very Rare, 1%)
@@ -10126,11 +10130,11 @@ INSERT INTO `mob_droplist` VALUES (1235,2,0,1000,656,0);          -- Beastcoin (
 
 -- ZoneID: 143 - Greater Quadav
 INSERT INTO `mob_droplist` VALUES (1236,0,0,1000,13116,@UNCOMMON); -- Silver Name Tag (Uncommon, 10%)
--- INSERT INTO `mob_droplist` VALUES (1236,0,0,1000,2758,@VRARE);     -- Quadav Backscale (Very Rare, 1%) AMK item
-INSERT INTO `mob_droplist` VALUES (1236,1,1,@RARE,606,250);        -- Quadav Fetich Head (Group 1 - Rare, 5% * 25%)
-INSERT INTO `mob_droplist` VALUES (1236,1,1,@RARE,607,250);        -- Quadav Fetich Torso (Group 1 - Rare, 5% * 25%)
-INSERT INTO `mob_droplist` VALUES (1236,1,1,@RARE,608,250);        -- Quadav Fetich Arms (Group 1 - Rare, 5% * 25%)
-INSERT INTO `mob_droplist` VALUES (1236,1,1,@RARE,609,250);        -- Quadav Fetich Legs (Group 1 - Rare, 5% * 25%)
+-- INSERT INTO `mob_droplist` VALUES (1236,0,0,1000,2758,@VRARE);  -- Quadav Backscale (Very Rare, 1%) AMK item
+INSERT INTO `mob_droplist` VALUES (1236,1,1,@UNCOMMON,606,250);    -- Quadav Fetich Head (Group 1 - Uncommon, 10% * 25%)
+INSERT INTO `mob_droplist` VALUES (1236,1,1,@UNCOMMON,607,250);    -- Quadav Fetich Torso (Group 1 - Uncommon, 10% * 25%)
+INSERT INTO `mob_droplist` VALUES (1236,1,2,@UNCOMMON,608,250);    -- Quadav Fetich Arms (Group 1 - Uncommon, 10% * 25%)
+INSERT INTO `mob_droplist` VALUES (1236,1,2,@UNCOMMON,609,250);    -- Quadav Fetich Legs (Group 1 - Uncommon, 10% * 25%)
 INSERT INTO `mob_droplist` VALUES (1236,2,0,1000,656,0);           -- Beastcoin (Steal)
 
 -- ZoneID:  51 - Great Ameretat
@@ -14943,10 +14947,10 @@ INSERT INTO `mob_droplist` VALUES (1848,2,0,1000,750,0);        -- Silver Beastc
 -- ZoneID: 143 - Old Quadav
 -- INSERT INTO `mob_droplist` VALUES (1849,0,0,1000,2758,@RARE);     -- Quadav Backscale (Rare, 5%) AMK item
 INSERT INTO `mob_droplist` VALUES (1849,0,0,1000,1025,@RARE);     -- Palborough Chest Key (Rare, 5%)
-INSERT INTO `mob_droplist` VALUES (1849,1,1,@RARE,606,250);       -- Quadav Fetich Head (Group 1 - Rare, 5% * 25%)
-INSERT INTO `mob_droplist` VALUES (1849,1,1,@RARE,607,250);       -- Quadav Fetich Torso (Group 1 - Rare, 5% * 25%)
-INSERT INTO `mob_droplist` VALUES (1849,1,1,@RARE,608,250);       -- Quadav Fetich Arms (Group 1 - Rare, 5% * 25%)
-INSERT INTO `mob_droplist` VALUES (1849,1,1,@RARE,609,250);       -- Quadav Fetich Legs (Group 1 - Rare, 5% * 25%)
+INSERT INTO `mob_droplist` VALUES (1849,1,1,@UNCOMMON,606,250);       -- Quadav Fetich Head (Group 1 - Uncommon, 10% * 25%)
+INSERT INTO `mob_droplist` VALUES (1849,1,1,@UNCOMMON,607,250);       -- Quadav Fetich Torso (Group 1 - Uncommon, 10% * 25%)
+INSERT INTO `mob_droplist` VALUES (1849,1,2,@UNCOMMON,608,250);       -- Quadav Fetich Arms (Group 1 - Uncommon, 10% * 25%)
+INSERT INTO `mob_droplist` VALUES (1849,1,2,@UNCOMMON,609,250);       -- Quadav Fetich Legs (Group 1 - Uncommon, 10% * 25%)
 INSERT INTO `mob_droplist` VALUES (1849,0,0,1000,12449,@VRARE);   -- Brass Cap (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1849,0,0,1000,12705,@VRARE);   -- Brass Mittens (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1849,0,0,1000,12833,@VRARE);   -- Brass Subligar (Very Rare, 1%)
@@ -15084,10 +15088,10 @@ INSERT INTO `mob_droplist` VALUES (1864,2,0,1000,656,0);      -- Beastcoin (Stea
 
 -- ZoneID: 143 - Onyx Quadav
 -- INSERT INTO `mob_droplist` VALUES (1865,0,0,1000,2758,@VRARE);  -- Quadav Backscale (Very Rare, 1%) AMK item
-INSERT INTO `mob_droplist` VALUES (1865,1,1,@RARE,606,250);     -- Quadav Fetich Head (Group 1 - Rare, 5% * 25%)
-INSERT INTO `mob_droplist` VALUES (1865,1,1,@RARE,607,250);     -- Quadav Fetich Torso (Group 1 - Rare, 5% * 25%)
-INSERT INTO `mob_droplist` VALUES (1865,1,1,@RARE,608,250);     -- Quadav Fetich Arms (Group 1 - Rare, 5% * 25%)
-INSERT INTO `mob_droplist` VALUES (1865,1,1,@RARE,609,250);     -- Quadav Fetich Legs (Group 1 - Rare, 5% * 25%)
+INSERT INTO `mob_droplist` VALUES (1865,1,1,@UNCOMMON,606,250);     -- Quadav Fetich Head (Group 1 - Uncommon, 10% * 25%)
+INSERT INTO `mob_droplist` VALUES (1865,1,1,@UNCOMMON,607,250);     -- Quadav Fetich Torso (Group 1 - Uncommon, 10% * 25%)
+INSERT INTO `mob_droplist` VALUES (1865,1,2,@UNCOMMON,608,250);     -- Quadav Fetich Arms (Group 1 - Uncommon, 10% * 25%)
+INSERT INTO `mob_droplist` VALUES (1865,1,2,@UNCOMMON,609,250);     -- Quadav Fetich Legs (Group 1 - Uncommon, 10% * 25%)
 INSERT INTO `mob_droplist` VALUES (1865,0,0,1000,12473,@VRARE); -- Poets Circlet (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1865,0,0,1000,12729,@VRARE); -- Linen Cuffs (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1865,0,0,1000,12857,@VRARE); -- Linen Slops (Very Rare, 1%)
@@ -21173,10 +21177,10 @@ INSERT INTO `mob_droplist` VALUES (2578,2,0,1000,2531,0);         -- Shard Of Ob
 
 -- ZoneID: 143 - Veteran Quadav
 -- INSERT INTO `mob_droplist` VALUES (2579,0,0,1000,2758,@VRARE);  -- Quadav Backscale (Very Rare, 1%) AMK item
-INSERT INTO `mob_droplist` VALUES (2579,1,1,@RARE,606,250);     -- Quadav Fetich Head (Group 1 - Rare, 5% * 25%)
-INSERT INTO `mob_droplist` VALUES (2579,1,1,@RARE,607,250);     -- Quadav Fetich Torso (Group 1 - Rare, 5% * 25%)
-INSERT INTO `mob_droplist` VALUES (2579,1,1,@RARE,608,250);     -- Quadav Fetich Arms (Group 1 - Rare, 5% * 25%)
-INSERT INTO `mob_droplist` VALUES (2579,1,1,@RARE,609,250);     -- Quadav Fetich Legs (Group 1 - Rare, 5% * 25%)
+INSERT INTO `mob_droplist` VALUES (2579,1,1,@UNCOMMON,606,250);     -- Quadav Fetich Head (Group 1 - Uncommon, 10% * 25%)
+INSERT INTO `mob_droplist` VALUES (2579,1,1,@UNCOMMON,607,250);     -- Quadav Fetich Torso (Group 1 - Uncommon, 10% * 25%)
+INSERT INTO `mob_droplist` VALUES (2579,1,2,@UNCOMMON,608,250);     -- Quadav Fetich Arms (Group 1 - Uncommon, 10% * 25%)
+INSERT INTO `mob_droplist` VALUES (2579,1,2,@UNCOMMON,609,250);     -- Quadav Fetich Legs (Group 1 - Uncommon, 10% * 25%)
 INSERT INTO `mob_droplist` VALUES (2579,0,0,1000,12432,@VRARE); -- Faceguard (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (2579,0,0,1000,12688,@VRARE); -- Scale Finger Gauntlets (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (2579,0,0,1000,12944,@VRARE); -- Scale Greaves (Very Rare, 1%)
@@ -22863,6 +22867,10 @@ INSERT INTO `mob_droplist` VALUES (2789,2,0,1000,656,0);           -- Beastcoin 
 
 -- ZoneID: 143 - Young Quadav
 INSERT INTO `mob_droplist` VALUES (2790,0,0,1000,12415,@UNCOMMON); -- Shell Shield (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (2790,1,1,@UNCOMMON,606,250);    -- Quadav Fetich Head (Group 1 - Uncommon, 10% * 25%)
+INSERT INTO `mob_droplist` VALUES (2790,1,1,@UNCOMMON,607,250);    -- Quadav Fetich Torso (Group 1 - Uncommon, 10% * 25%)
+INSERT INTO `mob_droplist` VALUES (2790,1,2,@UNCOMMON,608,250);    -- Quadav Fetich Arms (Group 1 - Uncommon, 10% * 25%)
+INSERT INTO `mob_droplist` VALUES (2790,1,2,@UNCOMMON,609,250);    -- Quadav Fetich Legs (Group 1 - Uncommon, 10% * 25%)
 INSERT INTO `mob_droplist` VALUES (2790,0,0,1000,12704,@VRARE);    -- Bronze Mittens (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (2790,0,0,1000,12448,@VRARE);    -- Bronze Cap (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (2790,0,0,1000,12832,@VRARE);    -- Bronze Subligar (Very Rare, 1%)
@@ -26453,13 +26461,13 @@ INSERT INTO `mob_droplist` VALUES (6016,0,0,1000,4400,@RARE);    -- Slice Of Lan
 INSERT INTO `mob_droplist` VALUES (6016,0,0,1000,881,@VRARE);    -- Crab Shell (Very Rare, 1%)
 
 -- ZoneID: 143 - Amber Quadav
-INSERT INTO `mob_droplist` VALUES (6017,0,0,1000,4866,@VRARE); -- Scroll Of Bind (Very Rare, 1%)
-INSERT INTO `mob_droplist` VALUES (6017,0,0,1000,4862,@VRARE); -- Scroll Of Blind (Very Rare, 1%)
-INSERT INTO `mob_droplist` VALUES (6017,1,1,@RARE,606,250);    -- Quadav Fetich Head (Group 1 - Rare, 5% * 25%)
-INSERT INTO `mob_droplist` VALUES (6017,1,1,@RARE,607,250);    -- Quadav Fetich Torso (Group 1 - Rare, 5% * 25%)
-INSERT INTO `mob_droplist` VALUES (6017,1,1,@RARE,608,250);    -- Quadav Fetich Arms (Group 1 - Rare, 5% * 25%)
-INSERT INTO `mob_droplist` VALUES (6017,1,1,@RARE,609,250);    -- Quadav Fetich Legs (Group 1 - Rare, 5% * 25%)
-INSERT INTO `mob_droplist` VALUES (6017,2,0,1000,656,0);       -- Beastcoin (Steal)
+INSERT INTO `mob_droplist` VALUES (6017,0,0,1000,4866,@VRARE);  -- Scroll Of Bind (Very Rare, 1%)
+INSERT INTO `mob_droplist` VALUES (6017,0,0,1000,4862,@VRARE);  -- Scroll Of Blind (Very Rare, 1%)
+INSERT INTO `mob_droplist` VALUES (6017,1,1,@UNCOMMON,606,250); -- Quadav Fetich Head (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (6017,1,1,@UNCOMMON,607,250); -- Quadav Fetich Torso (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (6017,1,2,@UNCOMMON,608,250); -- Quadav Fetich Arms (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (6017,1,2,@UNCOMMON,609,250); -- Quadav Fetich Legs (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (6017,2,0,1000,656,0);        -- Beastcoin (Steal)
 
 -- ZoneID: 190 - Plague Bats
 INSERT INTO `mob_droplist` VALUES (6018,0,0,1000,922,@VCOMMON);  -- Bat Wing (Very Common, 24%)
