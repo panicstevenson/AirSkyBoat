@@ -1363,7 +1363,6 @@ INSERT INTO `mob_spawn_sets` VALUES (5, 17, 6);
 INSERT INTO `mob_spawn_sets` VALUES (103, 1, 19);
 INSERT INTO `mob_spawn_sets` VALUES (103, 2, 3);
 INSERT INTO `mob_spawn_sets` VALUES (103, 3, 3);
-INSERT INTO `mob_spawn_sets` VALUES (103, 4, 5);
 INSERT INTO `mob_spawn_sets` VALUES (103, 5, 3);
 INSERT INTO `mob_spawn_sets` VALUES (103, 6, 1);
 INSERT INTO `mob_spawn_sets` VALUES (103, 7, 6);
