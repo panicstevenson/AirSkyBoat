@@ -26,11 +26,12 @@ local mission = Mission:new(xi.mission.log_id.SANDORIA, xi.mission.id.sandoria.S
 mission.reward =
 {
     -- First Time Completion
-    -- gil = 1000,
-    -- rank = 2,
-
+    gil = 1000,
+    rank = 2,
+    item    = xi.items.SAN_DORIAN_RING,
     -- Repeat Only
-    -- rankPoints = 250,
+    rankPoints = 250,
+
 }
 
 local handleAcceptMission = function(player, csid, option, npc)

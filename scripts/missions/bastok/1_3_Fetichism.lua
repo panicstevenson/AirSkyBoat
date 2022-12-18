@@ -31,6 +31,7 @@ mission.reward =
     gil = 1000,
     rank = 2,
     rankPoints = 200,
+    item    = xi.items.BASTOKAN_RING,
 }
 
 local handleAcceptMission = function(player, csid, option, npc)
