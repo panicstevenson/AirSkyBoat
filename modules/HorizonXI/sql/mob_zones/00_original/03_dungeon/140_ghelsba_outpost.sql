@@ -4,14 +4,14 @@
 -- ZONE 140 - Ghelsba Outpost
 
 REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`, `groupid`, `pos_x`, `pos_y`, `pos_z`, `pos_rot`) VALUES
-(17350657, 0 , 'Pugil',                    'Pugil',                    1,   1,         1,         1,         0  ),
-(17350658, 0 , 'Pugil',                    'Pugil',                    1,   1,         1,         1,         0  ),
-(17350659, 0 , 'Pug_Pugil',                'Pug Pugil',                2,   1,         1,         1,         0  ),
-(17350660, 0 , 'Giant_Pugil',              'Giant Pugil',              3,   1,         1,         1,         0  ),
-(17350661, 0 , 'Puffer_Pugil',             'Puffer Pugil',             4,   1,         1,         1,         0  ),
-(17350662, 0,  'Fodderchief_Vokdek',       'Fodderchief Vokdek',       5,   -199.086,  -10.058,   33.472,    220 ),
-(17350663, 0,  'Sureshot_Snatgat',         'Sureshot Snatgat',         6,   -191.798,  -10.5,     41.334,    94  ),
-(17350664, 0,  'Strongarm_Zodvad',         'Strongarm Zodvad',         7,   -193.149,  -10.5,     41.205,    89  ),
+(17350657, 0,  'Pugil',                    'Pugil',                    1,   1,         1,         1,         0  ),
+(17350658, 0,  'Pugil',                    'Pugil',                    1,   1,         1,         1,         0  ),
+(17350659, 0,  'Pug_Pugil',                'Pug Pugil',                2,   1,         1,         1,         0  ),
+(17350660, 0,  'Giant_Pugil',              'Giant Pugil',              3,   1,         1,         1,         0  ),
+(17350661, 0,  'Puffer_Pugil',             'Puffer Pugil',             4,   1,         1,         1,         0  ),
+(17350662, 0,  'Fodderchief_Vokdek',       'Fodderchief Vokdek',       5,   -189,      -10,       44,        104),
+(17350663, 0,  'Sureshot_Snatgat',         'Sureshot Snatgat',         6,   -189,      -10,       46,        104),
+(17350664, 0,  'Strongarm_Zodvad',         'Strongarm Zodvad',         7,   -189,      -10,       42,        104),
 (17350665, 0,  'Warchief_Vatgit',          'Warchief Vatgit',          8,   -83.893,   -33.642,   265.348,   253 ),
 (17350666, 0,  'Fogweaver_Mozzfuzz',       'Fogweaver Mozzfuzz',       9,   -84.454,   -33.723,   265.104,   50  ),
 (17350667, 0,  'Bloody_Vrukwuk',           'Bloody Vrukwuk',           10,  -82.753,   -33.578,   264.923,   212 ),
