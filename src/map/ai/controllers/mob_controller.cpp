@@ -1000,8 +1000,8 @@ void CMobController::DoRoamTick(time_point tick)
 
                     FollowRoamPath();
 
-                    // move back every 5 seconds
-                    m_LastActionTime = m_Tick - (std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_ROAM_COOL)) + 5s);
+                    // move back every x seconds
+                    m_LastActionTime = m_Tick + std::chrono::seconds(settings::get<uint8>("ROAM_HOME_COOL"));
                 }
                 else if (!(PMob->getMobMod(MOBMOD_NO_DESPAWN) != 0) && !settings::get<bool>("map.MOB_NO_DESPAWN"))
                 {

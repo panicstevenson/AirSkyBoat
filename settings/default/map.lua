@@ -283,5 +283,7 @@ xi.settings.map =
     KEEP_JUGPET_THROUGH_ZONING = true,
 
     -- Engage Time Reduction
-    ENGAGE_TIME_REDUCTION = 0.5; -- Decreases re-engage time(ms) by a percentage. (float)
+    ENGAGE_TIME_REDUCTION = 0.5, -- Decreases re-engage time(ms) by a percentage. (float)
+    VERTICAL_CHASE_RANGE  = -10,
+    ROAM_HOME_COOL        = 1,
 }
