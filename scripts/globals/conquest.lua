@@ -730,14 +730,14 @@ end
 
 local overseerInvCommon =
 {
-    [32928] = { cp =   750, lvl =  1, item =  4182 },             -- scroll_of_instant_reraise
-    [32929] = { cp =   750, lvl =  1, item =  4181 },             -- scroll_of_instant_warp
-    [32930] = { cp =  2500, lvl =  1, item = 15542 },             -- return_ring
-    [32931] = { cp =  9000, lvl =  1, item = 15541 },             -- homing_ring
-    [32933] = { cp =   500, lvl =  1, item = 15761 },             -- chariot_band
-    [32934] = { cp =  1000, lvl =  1, item = 15762 },             -- empress_band
-    [32935] = { cp =  2000, lvl =  1, item = 15763 },             -- emperor_band
-    [32936] = { cp =  5000, lvl =  1, item = 28540 },             -- warp_ring
+    [32928] = { cp =   750, lvl =  1, item =  4182 },   -- scroll_of_instant_reraise
+    [32929] = { cp =   750, lvl =  1, item =  4181 },   -- scroll_of_instant_warp
+    [32930] = { cp =  2500, lvl =  1, item = 15542 },   -- return_ring
+    [32931] = { cp =  9000, lvl =  1, item = 15541 },   -- homing_ring
+    [32933] = { cp =   500, lvl =  1, item = 15761 },   -- chariot_band
+    [32934] = { cp =  1000, lvl =  1, item = 15762 },   -- empress_band
+    [32935] = { cp =  2000, lvl =  1, item = 15763 },   -- emperor_band
+    [32936] = { cp =  300000, lvl =  1, item = 28540 }, -- warp_ring
 }
 
 local overseerInvNation =
