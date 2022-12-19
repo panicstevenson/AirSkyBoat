@@ -20,6 +20,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 */
 
 #include "pathfind.h"
+#include "../../../common/settings.h"
 #include "../../../common/utils.h"
 #include "../../entities/baseentity.h"
 #include "../../entities/mobentity.h"
@@ -156,7 +157,7 @@ bool CPathFind::PathInRange(const position_t& point, float range, uint8 pathFlag
     {
         auto PMob = static_cast<CMobEntity*>(m_POwner);
 
-        if (point.y - m_POwner->loc.p.y < -6 && !PMob->PAI->IsRoaming()) // Target is over 6 yalms above me, I should process disengage if needed.
+        if (point.y - m_POwner->loc.p.y <= settings::get<int8>("map.VERTICAL_CHASE_RANGE") && !PMob->PAI->IsRoaming()) // Target is over 6 yalms above me, I should process disengage if needed.
         {
             auto disengageMod = PMob->getMobMod(MOBMOD_DISENGAGE_NO_PATH);
 
