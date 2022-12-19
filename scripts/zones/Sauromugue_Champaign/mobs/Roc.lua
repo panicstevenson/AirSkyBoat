@@ -11,9 +11,10 @@ require("scripts/globals/titles")
 -----------------------------------
 local entity = {}
 
-entity.onMobInitialize = function(mob)
+entity.onMobSpawn = function(mob)
     mob:setMobMod(xi.mobMod.DRAW_IN, 1)
-    mob:setMod(xi.mod.CLAIMSHIELD, 4000)
+    -- custom distance from retail capture
+    mob:setMobMod(xi.mobMod.DRAW_IN_CUSTOM_RANGE, 34)
 end
 
 entity.onMobDeath = function(mob, player, optParams)
