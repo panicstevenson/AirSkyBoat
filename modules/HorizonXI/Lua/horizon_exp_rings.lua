@@ -10,11 +10,11 @@ m:addOverride("xi.globals.items.empress_band.onItemUse", function(target)
 end)
 
 m:addOverride("xi.globals.items.emperor_band.onItemUse", function(target)
-    target:addStatusEffect(xi.effect.DEDICATION, 75, 0, 9000, 0, 2250)
+    target:addStatusEffect(xi.effect.DEDICATION, 75, 0, 10800, 0, 2250)
 end)
 
 m:addOverride("xi.globals.items.chariot_band.onItemUse", function(target)
-    target:addStatusEffect(xi.effect.DEDICATION, 100, 0, 7200, 0, 4000)
+    target:addStatusEffect(xi.effect.DEDICATION, 100, 0, 14400, 0, 4000)
 end)
 
 m:addOverride("xi.globals.items.anniversary_ring.onItemUse", function(target)
