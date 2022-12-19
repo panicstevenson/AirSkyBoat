@@ -20,8 +20,7 @@ end
 
 entity.onTrigger = function(player, npc)
     if xi.events.starlightCelebration.isStarlightEnabled ~= 0 then
-        if player:getLocalVar("[StarlightNPCGifts]Started") ~= 0 then
-            xi.events.starlightCelebration.npcGiftsNpcOnTrigger(player, 4)
+        if xi.events.starlightCelebration.npcGiftsNpcOnTrigger(player, 4) then
             return
         end
 
@@ -75,6 +74,7 @@ entity.onTrigger = function(player, npc)
         else
             player:startEvent(32742)
         end
+        player:PrintToPlayer("Please note: Teleports have been disabled for the current Starlight Celebration. Merry Starlight!", xi.msg.channel.UNKNOWN_32, "")
     end
 end
 
@@ -82,10 +82,10 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
-    local fame = player:getFameLevel(xi.quest.fame_area.HOLIDAY)
-    local cost = 90
-    local famebefore = player:getLocalVar("famebefore")
-    local fameafter = (famebefore - cost)
+    -- local fame = player:getFameLevel(xi.quest.fame_area.HOLIDAY)
+    -- local cost = 90
+    -- local famebefore = player:getLocalVar("famebefore")
+    -- local fameafter = (famebefore - cost)
     -- if csid == 32741 and fame > 3 then
         -- if option == 1 then
         --     player:setFame(xi.quest.fame_area.HOLIDAY, fameafter)
@@ -111,6 +111,7 @@ entity.onEventFinish = function(player, csid, option)
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, xi.items.PRESENT_FOR_THE_KIDDIES)
         end
     end
+    player:PrintToPlayer("Please note: Teleports have been disabled for the current Starlight Celebration. Merry Starlight!", xi.msg.channel.UNKNOWN_32, "")
 end
 
 return entity
