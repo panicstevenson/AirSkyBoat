@@ -182,5 +182,9 @@ xi.spells.healing.doHealingSpell = function(caster, target, spell, isWhiteMagic)
         caster:addMP(curetomp)
     end
 
+    if caster:isPC() then
+        caster:updateEnmityFromCure(target, final)
+    end
+
     return final
 end
